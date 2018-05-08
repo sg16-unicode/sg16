@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-07 Mon 09:31 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Update The Reference To The Unicode Standard</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+ ins  {background-color: #CCFFCC; text-decoration: none;}
+ del  {background-color: #FFCACA; text-decoration: none;}
+</style>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Update The Reference To The Unicode Standard</h1>
+<ul class="org-ul">
+<li>Document number: P1025R0</li>
+<li>Date:  2018-04-23</li>
+<li>Author: Steve Downey &lt;sdowney2@bloomberg.net&gt;</li>
+<li>Audience: Core, LWG, SG16</li>
+</ul>
+
+<div id="outline-container-org404aba5" class="outline-2">
+<h2 id="org404aba5">Abstract</h2>
+<div class="outline-text-2" id="text-org404aba5">
+<p>
+The reference to the Unicode Standard in the C++ Standard should be updated to the stable base standard or any successor standard.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8ed2ba3" class="outline-2">
+<h2 id="org8ed2ba3">References</h2>
+<div class="outline-text-2" id="text-org8ed2ba3">
+<p>
+<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0417r1.html">P0417R1</a> : C++17 should refer to ISO/IEC 10646 2014 instead of 1994 (R1)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org986ce42" class="outline-2">
+<h2 id="org986ce42">Preferred New Reference</h2>
+<div class="outline-text-2" id="text-org986ce42">
+<p>
+The Unicode Consortium, the entity responsible for the Unicode standard, documents the <a href="http://www.unicode.org/versions/index.html#Citations">preferred citations</a> for the the Unicode Standard. The current standard is version 10.0. The existing reference should be changed to:
+</p>
+
+<blockquote>
+<p>
+The Unicode Standard, Version 10.0 or later
+</p>
+
+<p>
+The Unicode Consortium. The Unicode Standard, Version 10.0.0, (Mountain View, CA: The Unicode Consortium, 2017. ISBN 978-1-936213-16-0)
+<a href="http://www.unicode.org/versions/Unicode10.0.0/">http://www.unicode.org/versions/Unicode10.0.0/</a>
+</p>
+
+<p>
+The Unicode Consortium. The Unicode Standard.
+<a href="http://www.unicode.org/versions/latest/">http://www.unicode.org/versions/latest/</a>
+</p>
+</blockquote>
+
+<p>
+The reason for not referring to the equivalent ISO Standard, 10646, is that the ISO standard is incomplete with respect to the Unicode Standard. From  <a href="http://unicode.org/faq/unicode_iso.html">the Unicode and ISO 10646 FAQ</a>
+</p>
+<blockquote>
+<p>
+Although the character codes and encoding forms are synchronized between Unicode and ISO/IEC 10646, the Unicode Standard imposes additional constraints on implementations to ensure that they treat characters uniformly across platforms and applications. To this end, it supplies an extensive set of functional character specifications, character data, algorithms and substantial background material that is not in ISO/IEC 10646.
+</p>
+</blockquote>
+<p>
+For existing purposes, the C++ Standard is only concerned with character codes and encoding forms. However, to standardise any Unicode text processing, the algorithms and character data will need to be referenced. Therefore, we might as well update the reference now.
+</p>
+
+<p>
+Referring to 10.0 or later sets a baseline, but allows implementors to move to later standards, including new emoji, at their discretion.
+</p>
+
+<p>
+The equivalent to the 10.0 standard is ISO/IEC 10646:2017 with some additions from the first amendment to 10646. If there are strong reasons not to refer to the Unicode Standard itself, the reference for character sets and encoding should be changed to:
+</p>
+<blockquote>
+<p>
+ISO/IEC 10646:2017 Information technology &#x2013; Universal Coded Character Set (UCS) plus 10646:2017/DAmd 1, or successor
+</p>
+</blockquote>
+
+<p>
+The 'or successor' wording is borrowed from the current ECMAScript standard, <a href="https://www.ecma-international.org/ecma-262/8.0/index.html#sec-normative-references">ECMAScript® 2017 Language Specification (ECMA-262, 8th edition, June 2017)</a>. The 'or successor' language has been in place since at least the 2015 standard.
+</p>
+
+<p>
+The Unicode Consortium has made a number of stability guarantees based on the referenced standard, promising that any currently conforming Unicode text will continue to be interpreted the same way in the future for purposes of encoding, collation, registration, and locales. They are documented as part of their <a href="https://www.unicode.org/policies/policies.html">policies</a>.
+</p>
+
+
+<p>
+This means that it is safe to allow implementations to adopt newer Unicode standards without affecting the interpretation of existing conforming text. Since in practice, due to customer demand, everyone ships the latest Unicode data and algorithms available, this allows conformance to existing practice, particularly as new, advanced, unicode libraries are incorporated into the standard.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf0f4a92" class="outline-2">
+<h2 id="orgf0f4a92">Immediate Effects</h2>
+<div class="outline-text-2" id="text-orgf0f4a92">
+<p>
+The Unicode standard that the C++ Standard refers to predates UTF-16 and UTF-32, instead defining UCS2 and UCS4. Moving to a newer standard would make the former terms well defined in the C++ Standard. It has been argued that the ECMAScript standard referred to uses a newer Unicode standard, in which those terms are defined, so those terms are defined for the C++ Standard by transitive reference. If that argument is accepted, then moving to the newer version makes the intent explicit.
+</p>
+
+<p>
+In addition, in 1996, as part of amendments 5, 6 and 7, the original set of Hangul characters were removed and added at a new location, as well as Tibetan characters added again. This places the current citation in the standard of "ISO/IEC 10646-1:1993" in conflict with the version imported by way of the ECMAScript standard. In practice, all implementors adopt the later version for conversion operations.
+</p>
+
+<p>
+The <a href="https://en.wikipedia.org/wiki/Unicode#Versions">Wikipidia article on Unicode</a> has a summary of the changes over the years.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb6fc959" class="outline-2">
+<h2 id="orgb6fc959">UCS2 and UCS4 in <code>codecvt</code> facets</h2>
+<div class="outline-text-2" id="text-orgb6fc959">
+<p>
+The last proposal to update the Unicode Standard reference, P0417R1, was entangled with deprecation of UCS2 and UCS4. The remaining references are in the now deprecated codecvt facets [depr.locale.stdcvt.req]. There is resistance to changing those to UTF-16 and UTF-32, since, particularly for UCS2, there are real changes in behavior. UTF-32 can be viewed as UCS4. UTF-16 can not be similarly viewed as UCS2. Since there may be users of the facility depending on the behavior as it was when standardized this paper does not propose changing them, but instead leaving them in place, as deprecated features, with no formal definition, as there is none to refer to anymore. This should not be interpreted as requiring any onus on implememtors to change the existing, deprecated, facets.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org150f361" class="outline-2">
+<h2 id="org150f361"><code>__STDC_ISO_10646__</code> macro</h2>
+<div class="outline-text-2" id="text-org150f361">
+<p>
+The macro <code>__STDC_ISO_10646__</code> in [cpp.predefined] can be left unchanged. The ISO/IEC 10646 version will be the version that corresponds to the Unicode Standard in effect.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgabe1612" class="outline-2">
+<h2 id="orgabe1612">Fall-back Reference</h2>
+<div class="outline-text-2" id="text-orgabe1612">
+<p>
+The current Unicode standard, 10.0, is equivalent to
+</p>
+<blockquote>
+<p>
+10646:2017, fifth edition, plus the following additions from Amendment 1 to the fifth edition:
+</p>
+
+<p>
+56 emoji characters
+</p>
+
+<p>
+285 hentaigana
+</p>
+
+<p>
+3 additional Zanabazar Square characters
+</p>
+</blockquote>
+<p>
+according to <a href="https://www.unicode.org/versions/Unicode10.0.0/">the Unicode 10.0 Standard</a>
+</p>
+
+<p>
+The 2017 standard is ISO/IEC 10646:2017 so as a fall-back position, the standard should be updated to
+</p>
+<blockquote>
+<p>
+ISO/IEC 10646:2017 Information technology &#x2013; Universal Coded Character Set (UCS) plus 10646:2017/DAmd 1
+</p>
+</blockquote>
+
+<p>
+Without reference to the latest standard.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc9930d1" class="outline-2">
+<h2 id="orgc9930d1">Proposed Changes</h2>
+<div class="outline-text-2" id="text-orgc9930d1">
+<p><i>Strike the wording <del>high-lighted in red</del> and add the wording <ins>high-lighted in
+green</ins>.</i></p>
+<blockquote>
+<p>
+1.2 Normative references [intro.refs]
+</p>
+
+<p>
+<del>— ISO/IEC 10646-1:1993, Information technology — Universal Multiple-Octet Coded Character Set (UCS) — Part 1: Architecture and Basic Multilingual Plane</del>
+</p>
+
+<p>
+  <ins>
+— The Unicode Consortium. The Unicode Standard, Version 10.0.0, (Mountain View, CA: The Unicode Consortium, 2017. ISBN 978-1-936213-16-0) <a href="http://www.unicode.org/versions/Unicode10.0.0/">http://www.unicode.org/versions/Unicode10.0.0/</a></ins>
+</p>
+
+<p>
+<ins>— The Unicode Consortium. The Unicode Standard.
+<a href="http://www.unicode.org/versions/latest/">http://www.unicode.org/versions/latest/</a></ins>
+</p>
+
+<p>
+<ins>— ISO/IEC 10646, Information technology — Universal Multiple-Octet Coded Character Set (UCS)</ins>
+</p>
+
+<p>
+Add:
+</p>
+
+<p>
+<ins>5 The ISO/IEC 10646 version is the corresponding version to the Unicode Standard, as documented by the Unicode Standard. For version 10.0 this is ISO/IEC 10646:2017 plus 10646:2017/DAmd 1.</ins>
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgf890a52" class="outline-2">
+<h2 id="orgf890a52">Links</h2>
+<div class="outline-text-2" id="text-orgf890a52">
+<ol class="org-ol">
+<li><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0417r1.html">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0417r1.html</a></li>
+
+<li><a href="http://www.unicode.org/versions/index.html#Citations">http://www.unicode.org/versions/index.html#Citations</a></li>
+
+<li><a href="http://unicode.org/faq/unicode_iso.html">http://unicode.org/faq/unicode_iso.html</a></li>
+
+<li><a href="https://www.ecma-international.org/ecma-262/8.0/index.html#sec-normative-references">https://www.ecma-international.org/ecma-262/8.0/index.html#sec-normative-references</a></li>
+
+<li><a href="https://www.unicode.org/policies/policies.html">https://www.unicode.org/policies/policies.html</a></li>
+
+<li><a href="https://en.wikipedia.org/wiki/Unicode#Versions">https://en.wikipedia.org/wiki/Unicode#Versions</a></li>
+
+<li><a href="https://www.unicode.org/versions/Unicode10.0.0/">https://www.unicode.org/versions/Unicode10.0.0/</a></li>
+</ol>
+</div>
+</div>
+</div>
+</body>
+</html>
