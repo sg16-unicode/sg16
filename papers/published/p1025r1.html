@@ -184,8 +184,8 @@
 <div id="content">
 <h1 class="title">Update The Reference To The Unicode Standard</h1>
 <ul class="org-ul">
-<li>Document number: D1025R1</li>
-<li>Date:  2018-06-05</li>
+<li>Document number: P1025R1</li>
+<li>Date:  2018-06-07</li>
 <li>Authors: Steve Downey &lt;sdowney2@bloomberg.net&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JeanHeyd Meneide &lt;phdofthehouse@gmail.com&gt;<br>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Martinho Fernandes &lt;cpp@rmf.io&gt;</li>
@@ -196,7 +196,7 @@
 <h2>Changelog</h2>
 <div class="outline-text-2">
  <dl>
-  <dt>r1 - 2018-06-05</dt><dd>Do not remove the reference to ISO/IEC 10646-1:1993, 
+  <dt>r1 - 2018-06-07</dt><dd>Do not remove the reference to ISO/IEC 10646-1:1993, 
   as it should remain for D.18 to make sense. Remove Fallback Reference section, 
   as it no longer applies. Add Core discussion of removing Unicode Reference 
   until such an algorithm outside of 10646 is proposed.</dd><dd>
@@ -239,7 +239,7 @@ The Unicode Standard, Version 11.0 or later
 
 <blockquote>
 The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain 
-View, CA: The Unicode Consortium, 2017. ISBN 978-1-936213-16-0)
+View, CA: The Unicode Consortium, 2017. ISBN 978-1-936213-19-1)
 <a href="http://www.unicode.org/versions/Unicode11.0.0/">http://www.unicode.org/versions/Unicode11.0.0/</a>
 </blockquote>
 
@@ -344,8 +344,7 @@ The <a href="https://en.wikipedia.org/wiki/Unicode#Versions">Wikipidia article o
 Keeping with the discussion with Core, an undated Unicode reference will 
 only be introduced at the time when a paper actually introducing those 
 algorithms is proposed. This paper will focus on fixing the 
-ISO/IEC 10646 reference, as laying the ground work for future proposals 
-related to character encodings.
+ISO/IEC 10646 reference.
 </p>
 </div>
 </div>
@@ -369,12 +368,11 @@ that is only used for those facilities.
 <p>
 Keeping from discussion with Core, we keep a normative, dated reference 
 to ISO/IEC 10646-1:1993 and then have an unqualified reference to
-ISO/IEC 10646 in general to use the latest. ISO/IEC 10646 is a 
+ISO/IEC 10646 in general to specify the latest. ISO/IEC 10646 is a 
 well-behaved standard that will not break the standard upon update. It 
 is also impossible to observe the difference between UCS4 and UTF-32
 for any C++ implementation, therefore the references to UCS4 have 
-been updated to UTF-32. Editorial changes for a better UCS2 reference
-will be done in a Core issue.
+been updated to UTF-32.
 </p>
 </div>
 </div>
@@ -394,7 +392,9 @@ corresponds to the Unicode Standard in effect.
 <h2 id="orgc9930d1">Proposed Changes</h2>
 <div class="outline-text-2" id="text-orgc9930d1">
 <p>Add the wording <ins>high-lighted in
-green</ins>.</i></p> This proposed wording is in relation to <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4750.pdf">N4750</a>.
+green</ins>. Remove the wording <del>high-lighted in red</del>.</p>
+
+<p>This proposed wording is in relation to <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4750.pdf">N4750</a>.</p>
 
 <h3>
 1.2 Normative references [intro.refs]
