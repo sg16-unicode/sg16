@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
+<!--?xml version="1.0" encoding="utf-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
 <!-- 2018-05-07 Mon 09:31 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Update The Reference To The Unicode Standard</title>
-<meta name="generator" content="Org mode" />
+<meta name="generator" content="Org mode">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -196,7 +194,8 @@
 <h2 id="org404aba5">Abstract</h2>
 <div class="outline-text-2" id="text-org404aba5">
 <p>
-The reference to the Unicode Standard in the C++ Standard should be updated to the stable base standard or any successor standard.
+The reference to the Unicode Standard in the C++ Standard should be 
+updated to the stable base standard or any successor standard.
 </p>
 </div>
 </div>
@@ -223,7 +222,8 @@ The Unicode Standard, Version 10.0 or later
 </p>
 
 <p>
-The Unicode Consortium. The Unicode Standard, Version 10.0.0, (Mountain View, CA: The Unicode Consortium, 2017. ISBN 978-1-936213-16-0)
+The Unicode Consortium. The Unicode Standard, Version 10.0.0, (Mountain 
+View, CA: The Unicode Consortium, 2017. ISBN 978-1-936213-16-0)
 <a href="http://www.unicode.org/versions/Unicode10.0.0/">http://www.unicode.org/versions/Unicode10.0.0/</a>
 </p>
 
@@ -234,27 +234,42 @@ The Unicode Consortium. The Unicode Standard.
 </blockquote>
 
 <p>
-The reason for not referring to the equivalent ISO Standard, 10646, is that the ISO standard is incomplete with respect to the Unicode Standard. From  <a href="http://unicode.org/faq/unicode_iso.html">the Unicode and ISO 10646 FAQ</a>
+The reason for not referring to the equivalent ISO Standard, 10646, is 
+that the ISO standard is incomplete with respect to the Unicode 
+Standard. From  <a href="http://unicode.org/faq/unicode_iso.html">the Unicode and ISO 10646 FAQ</a>
 </p>
 <blockquote>
 <p>
-Although the character codes and encoding forms are synchronized between Unicode and ISO/IEC 10646, the Unicode Standard imposes additional constraints on implementations to ensure that they treat characters uniformly across platforms and applications. To this end, it supplies an extensive set of functional character specifications, character data, algorithms and substantial background material that is not in ISO/IEC 10646.
+Although the character codes and encoding forms are synchronized between
+ Unicode and ISO/IEC 10646, the Unicode Standard imposes additional 
+constraints on implementations to ensure that they treat characters 
+uniformly across platforms and applications. To this end, it supplies an
+ extensive set of functional character specifications, character data, 
+algorithms and substantial background material that is not in ISO/IEC 
+10646.
 </p>
 </blockquote>
 <p>
-For existing purposes, the C++ Standard is only concerned with character codes and encoding forms. However, to standardise any Unicode text processing, the algorithms and character data will need to be referenced. Therefore, we might as well update the reference now.
+For existing purposes, the C++ Standard is only concerned with character
+ codes and encoding forms. However, to standardise any Unicode text 
+processing, the algorithms and character data will need to be 
+referenced. Therefore, we might as well update the reference now.
 </p>
 
 <p>
-Referring to 10.0 or later sets a baseline, but allows implementors to move to later standards, including new emoji, at their discretion.
+Referring to 10.0 or later sets a baseline, but allows implementors to 
+move to later standards, including new emoji, at their discretion.
 </p>
 
 <p>
-The equivalent to the 10.0 standard is ISO/IEC 10646:2017 with some additions from the first amendment to 10646. If there are strong reasons not to refer to the Unicode Standard itself, the reference for character sets and encoding should be changed to:
+The equivalent to the 10.0 standard is ISO/IEC 10646:2017 with some 
+additions from the first amendment to 10646. If there are strong reasons
+ not to refer to the Unicode Standard itself, the reference for 
+character sets and encoding should be changed to:
 </p>
 <blockquote>
 <p>
-ISO/IEC 10646:2017 Information technology &#x2013; Universal Coded Character Set (UCS) plus 10646:2017/DAmd 1, or successor
+ISO/IEC 10646:2017 Information technology – Universal Coded Character Set (UCS) plus 10646:2017/DAmd 1, or successor
 </p>
 </blockquote>
 
@@ -263,12 +278,21 @@ The 'or successor' wording is borrowed from the current ECMAScript standard, <a 
 </p>
 
 <p>
-The Unicode Consortium has made a number of stability guarantees based on the referenced standard, promising that any currently conforming Unicode text will continue to be interpreted the same way in the future for purposes of encoding, collation, registration, and locales. They are documented as part of their <a href="https://www.unicode.org/policies/policies.html">policies</a>.
+The Unicode Consortium has made a number of stability guarantees based 
+on the referenced standard, promising that any currently conforming 
+Unicode text will continue to be interpreted the same way in the future 
+for purposes of encoding, collation, registration, and locales. They are
+ documented as part of their <a href="https://www.unicode.org/policies/policies.html">policies</a>.
 </p>
 
 
 <p>
-This means that it is safe to allow implementations to adopt newer Unicode standards without affecting the interpretation of existing conforming text. Since in practice, due to customer demand, everyone ships the latest Unicode data and algorithms available, this allows conformance to existing practice, particularly as new, advanced, unicode libraries are incorporated into the standard.
+This means that it is safe to allow implementations to adopt newer 
+Unicode standards without affecting the interpretation of existing 
+conforming text. Since in practice, due to customer demand, everyone 
+ships the latest Unicode data and algorithms available, this allows 
+conformance to existing practice, particularly as new, advanced, unicode
+ libraries are incorporated into the standard.
 </p>
 </div>
 </div>
@@ -277,11 +301,22 @@ This means that it is safe to allow implementations to adopt newer Unicode stand
 <h2 id="orgf0f4a92">Immediate Effects</h2>
 <div class="outline-text-2" id="text-orgf0f4a92">
 <p>
-The Unicode standard that the C++ Standard refers to predates UTF-16 and UTF-32, instead defining UCS2 and UCS4. Moving to a newer standard would make the former terms well defined in the C++ Standard. It has been argued that the ECMAScript standard referred to uses a newer Unicode standard, in which those terms are defined, so those terms are defined for the C++ Standard by transitive reference. If that argument is accepted, then moving to the newer version makes the intent explicit.
+The Unicode standard that the C++ Standard refers to predates UTF-16 and
+ UTF-32, instead defining UCS2 and UCS4. Moving to a newer standard 
+would make the former terms well defined in the C++ Standard. It has 
+been argued that the ECMAScript standard referred to uses a newer 
+Unicode standard, in which those terms are defined, so those terms are 
+defined for the C++ Standard by transitive reference. If that argument 
+is accepted, then moving to the newer version makes the intent explicit.
 </p>
 
 <p>
-In addition, in 1996, as part of amendments 5, 6 and 7, the original set of Hangul characters were removed and added at a new location, as well as Tibetan characters added again. This places the current citation in the standard of "ISO/IEC 10646-1:1993" in conflict with the version imported by way of the ECMAScript standard. In practice, all implementors adopt the later version for conversion operations.
+In addition, in 1996, as part of amendments 5, 6 and 7, the original set
+ of Hangul characters were removed and added at a new location, as well 
+as Tibetan characters added again. This places the current citation in 
+the standard of "ISO/IEC 10646-1:1993" in conflict with the version 
+imported by way of the ECMAScript standard. In practice, all 
+implementors adopt the later version for conversion operations.
 </p>
 
 <p>
@@ -294,7 +329,18 @@ The <a href="https://en.wikipedia.org/wiki/Unicode#Versions">Wikipidia article o
 <h2 id="orgb6fc959">UCS2 and UCS4 in <code>codecvt</code> facets</h2>
 <div class="outline-text-2" id="text-orgb6fc959">
 <p>
-The last proposal to update the Unicode Standard reference, P0417R1, was entangled with deprecation of UCS2 and UCS4. The remaining references are in the now deprecated codecvt facets [depr.locale.stdcvt.req]. There is resistance to changing those to UTF-16 and UTF-32, since, particularly for UCS2, there are real changes in behavior. UTF-32 can be viewed as UCS4. UTF-16 can not be similarly viewed as UCS2. Since there may be users of the facility depending on the behavior as it was when standardized this paper does not propose changing them, but instead leaving them in place, as deprecated features, with no formal definition, as there is none to refer to anymore. This should not be interpreted as requiring any onus on implememtors to change the existing, deprecated, facets.
+The last proposal to update the Unicode Standard reference, P0417R1, was
+ entangled with deprecation of UCS2 and UCS4. The remaining references 
+are in the now deprecated codecvt facets [depr.locale.stdcvt.req]. There
+ is resistance to changing those to UTF-16 and UTF-32, since, 
+particularly for UCS2, there are real changes in behavior. UTF-32 can be
+ viewed as UCS4. UTF-16 can not be similarly viewed as UCS2. Since there
+ may be users of the facility depending on the behavior as it was when 
+standardized this paper does not propose changing them, but instead 
+leaving them in place, as deprecated features, with no formal 
+definition, as there is none to refer to anymore. This should not be 
+interpreted as requiring any onus on implememtors to change the 
+existing, deprecated, facets.
 </p>
 </div>
 </div>
@@ -303,7 +349,9 @@ The last proposal to update the Unicode Standard reference, P0417R1, was entangl
 <h2 id="org150f361"><code>__STDC_ISO_10646__</code> macro</h2>
 <div class="outline-text-2" id="text-org150f361">
 <p>
-The macro <code>__STDC_ISO_10646__</code> in [cpp.predefined] can be left unchanged. The ISO/IEC 10646 version will be the version that corresponds to the Unicode Standard in effect.
+The macro <code>__STDC_ISO_10646__</code> in [cpp.predefined] can be 
+left unchanged. The ISO/IEC 10646 version will be the version that 
+corresponds to the Unicode Standard in effect.
 </p>
 </div>
 </div>
@@ -340,7 +388,7 @@ The 2017 standard is ISO/IEC 10646:2017 so as a fall-back position, the standard
 </p>
 <blockquote>
 <p>
-ISO/IEC 10646:2017 Information technology &#x2013; Universal Coded Character Set (UCS) plus 10646:2017/DAmd 1
+ISO/IEC 10646:2017 Information technology – Universal Coded Character Set (UCS) plus 10646:2017/DAmd 1
 </p>
 </blockquote>
 
@@ -361,12 +409,16 @@ green</ins>.</i></p>
 </p>
 
 <p>
-<del>— ISO/IEC 10646-1:1993, Information technology — Universal Multiple-Octet Coded Character Set (UCS) — Part 1: Architecture and Basic Multilingual Plane</del>
+<del>— ISO/IEC 10646-1:1993, Information technology — Universal 
+Multiple-Octet Coded Character Set (UCS) — Part 1: Architecture and 
+Basic Multilingual Plane</del>
 </p>
 
 <p>
   <ins>
-— The Unicode Consortium. The Unicode Standard, Version 10.0.0, (Mountain View, CA: The Unicode Consortium, 2017. ISBN 978-1-936213-16-0) <a href="http://www.unicode.org/versions/Unicode10.0.0/">http://www.unicode.org/versions/Unicode10.0.0/</a></ins>
+— The Unicode Consortium. The Unicode Standard, Version 10.0.0, 
+(Mountain View, CA: The Unicode Consortium, 2017. ISBN 
+978-1-936213-16-0) <a href="http://www.unicode.org/versions/Unicode10.0.0/">http://www.unicode.org/versions/Unicode10.0.0/</a></ins>
 </p>
 
 <p>
@@ -383,7 +435,9 @@ Add:
 </p>
 
 <p>
-<ins>5 The ISO/IEC 10646 version is the corresponding version to the Unicode Standard, as documented by the Unicode Standard. For version 10.0 this is ISO/IEC 10646:2017 plus 10646:2017/DAmd 1.</ins>
+<ins>5 The ISO/IEC 10646 version is the corresponding version to the 
+Unicode Standard, as documented by the Unicode Standard. For version 
+10.0 this is ISO/IEC 10646:2017 plus 10646:2017/DAmd 1.</ins>
 </p>
 </blockquote>
 </div>
@@ -410,5 +464,6 @@ Add:
 </div>
 </div>
 </div>
-</body>
-</html>
+
+
+</body></html>
