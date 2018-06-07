@@ -198,7 +198,7 @@
  <dl>
   <dt>r1 - 2018-06-07</dt><dd>Do not remove the reference to ISO/IEC 10646-1:1993, 
   as it should remain for D.18 to make sense. Remove Fallback Reference section, 
-  as it no longer applies. Add Core discussion of removing Unicode Reference 
+  as it no longer applies. Add Core discussion of not using Unicode Reference 
   until such an algorithm outside of 10646 is proposed.</dd><dd>
 </dd></dl>
 </div>
@@ -209,7 +209,7 @@
 <h2 id="org404aba5">Abstract</h2>
 <div class="outline-text-2" id="text-org404aba5">
 <p>
-The reference to the Unicode Standard in the C++ Standard should be 
+The reference to ISO/IEC 10646 in the C++ Standard should be 
 updated to the stable base standard or any successor standard.
 </p>
 </div>
@@ -235,37 +235,6 @@ The Unicode Consortium, the entity responsible for the Unicode standard, documen
 The Unicode Standard, Version 11.0 or later
 </blockquote>
 
-<p>The citation for version 11.0 is:</p>
-
-<blockquote>
-The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain 
-View, CA: The Unicode Consortium, 2017. ISBN 978-1-936213-19-1)
-<a href="http://www.unicode.org/versions/Unicode11.0.0/">http://www.unicode.org/versions/Unicode11.0.0/</a>
-</blockquote>
-
-<p>The citation for the latest version is always:</p>
-
-<blockquote>
-The Unicode Consortium. The Unicode Standard.
-<a href="http://www.unicode.org/versions/latest/">http://www.unicode.org/versions/latest/</a>
-</blockquote>
-
-<p>
-The initial reason for not referring to the equivalent ISO Standard, 10646, is 
-that the ISO standard is incomplete with respect to the Unicode 
-Standard. From  <a href="http://unicode.org/faq/unicode_iso.html">the Unicode and ISO 10646 FAQ</a>
-</p>
-<blockquote>
-<p>
-Although the character codes and encoding forms are synchronized between
- Unicode and ISO/IEC 10646, the Unicode Standard imposes additional 
-constraints on implementations to ensure that they treat characters 
-uniformly across platforms and applications. To this end, it supplies an
- extensive set of functional character specifications, character data, 
-algorithms and substantial background material that is not in ISO/IEC 
-10646.
-</p>
-</blockquote>
 <p>
 For existing purposes, the C++ Standard is only concerned with character
  codes and encoding forms. However, to standardise any Unicode text 
@@ -274,27 +243,6 @@ referenced. We initially believed that we might as well update the
 reference now. However, we have decided to only focus on updating
 the ISO/IEC 10646 reference.
 </p>
-
-<p>
-Referring to 11.0 or later sets a baseline, but allows implementors to move to later standards, at their discretion.
-</p>
-
-<p>
-The Unicode Consortium has made a number of stability guarantees based 
-on the referenced standard, promising that any currently conforming 
-Unicode text will continue to be interpreted the same way in the future 
-for purposes of encoding, collation, registration, and locales. They are
- documented as part of their <a href="https://www.unicode.org/policies/policies.html">policies</a>.
-</p>
-
-<p>
-This means that it is safe to allow implementations to adopt newer 
-Unicode standards without affecting the interpretation of existing 
-conforming text. Since in practice, due to customer demand, everyone 
-ships the latest Unicode data and algorithms available, this allows 
-conformance to existing practice, particularly as new, advanced, unicode
- libraries are incorporated into the standard.
-</p>
 </div>
 </div>
 
@@ -302,7 +250,7 @@ conformance to existing practice, particularly as new, advanced, unicode
 <h2 id="orgf0f4a92">Immediate Effects</h2>
 <div class="outline-text-2" id="text-orgf0f4a92">
 <p>
-The Unicode standard that the C++ Standard refers to predates UTF-16 and
+The ISO/IEC 10646 Unicode Standard that the C++ Standard refers to predates UTF-16 and
  UTF-32, instead defining UCS2 and UCS4. Moving to a newer standard 
 would make the former terms well defined in the C++ Standard. It has 
 been argued that the ECMAScript standard referred to uses a newer 
@@ -367,8 +315,7 @@ being semantically and observably different from UTF-16.
 <div class="outline-text-2" id="text-org150f361">
 <p>
 The macro <code>__STDC_ISO_10646__</code> in [cpp.predefined] can be 
-left unchanged. The ISO/IEC 10646 version will be the version that 
-corresponds to the Unicode Standard in effect.
+left unchanged. The ISO/IEC 10646 version will be the latest version.
 </p>
 </div>
 </div>
