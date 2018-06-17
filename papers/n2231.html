@@ -1,0 +1,997 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+
+<title>char8_t: A type for UTF-8 characters and strings</title>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<style type="text/css">
+pre {
+    display: inline;
+}
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+table#references th,
+table#references td
+{
+    vertical-align: top;
+}
+
+ins, ins * { text-decoration:none; font-weight:bold; background-color:#A0FFA0 }
+del, del * { text-decoration:line-through; background-color:#FFA0A0 }
+#hidedel:checked ~ * del, #hidedel:checked ~ * del * { display:none; visibility:hidden }
+
+blockquote
+{
+    color: #000000;
+    background-color: #F1F1F1;
+    border: 1px solid #D1D1D1;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+blockquote.stdins
+{
+    text-decoration: underline;
+    color: #000000;
+    background-color: #C8FFC8;
+    border: 1px solid #B3EBB3;
+    padding: 0.5em;
+}
+blockquote.stddel
+{
+    text-decoration: line-through;
+    color: #000000;
+    background-color: #FFEBFF;
+    border: 1px solid #ECD7EC;
+    padding-left: 0.5empadding-right: 0.5em;
+}
+
+div.compare {
+  padding-left: 40px;
+  display: table; /* undo float:left effect */
+}
+div.compare_item {
+  float: left;
+  margin: 2px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Proposal for C2x</th>
+  </tr>
+  <tr>
+    <th>WG14 N2231</th>
+  </tr>
+  <tr>
+    <th/>
+  </tr>
+  <tr>
+    <th>Title:</th>
+    <td>char8_t: A type for UTF-8 characters and strings</td>
+  </tr>
+  <tr>
+    <th>Author:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2018-03-25</td>
+  </tr>
+  <tr>
+    <th>Proposal category:</th>
+    <td>New features, change to existing features</td>
+  </tr>
+  <tr>
+    <th>Target audience:</th>
+    <td>Developers working on combined C and C++ code bases</td>
+  </tr>
+</table>
+
+
+<p>
+<strong>Abstract:</strong> A
+<a title="[WG21 P0482R1]: char8_t: A type for UTF-8 characters and strings (Revision 1)"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r1.html">
+proposal</a>
+<sup><a title="[WG21 P0482R1]: char8_t: A type for UTF-8 characters and strings (Revision 1)"
+        href="#ref_wg21_p0482r1">
+[WG21 P0482R1]</a></sup>
+currently under consideration for C++ adds a new <tt>char8_t</tt> fundamental
+type to be used as the code unit type of <tt>u8</tt> string and character
+literals.  This paper proposes a corresponding <tt>char8_t</tt> typedef and
+related library functions to enable conversions between the execution
+character encoding and UTF-8.  These facilities are intended to improve
+support for UTF-8 and to retain source code compatibility across the C
+and C++ languages.
+</p>
+
+
+<ul>
+  <li><a href="#introduction">
+      Introduction</a></li>
+  <li><a href="#motivation">
+      Motivation</a></li>
+  <li><a href="#proposal">
+      Proposal</a></li>
+  <li><a href="#backward_compat">
+      Backward Compatibility</a></li>
+  <li><a href="#implementation_exp">
+      Implementation Experience</a></li>
+  <li><a href="#wording">
+      Formal Wording</a>
+  </li>
+  <li><a href="#acknowledgements">
+      Acknowledgements</a></li>
+  <li><a href="#references">
+      References</a></li>
+</ul>
+
+
+<h1 id="introduction">Introduction</h1>
+
+<p>C11 introduced support for UTF-8, 16-bit, and 32-bit encoded string
+literals.  New <tt>char16_t</tt> and <tt>char32_t</tt> typedefs were added to
+hold values of code units for the 16-bit and 32-bit variants, but a new type
+was not added for the UTF-8 variant.  Instead, UTF-8 string literals were
+defined in terms of the <tt>char</tt> type used for the code unit type of
+ordinary string literals.  UTF-8 is the only text encoding mandated to be
+supported by the C standard for which there is no distinctly named code unit
+type.
+</p>
+
+<p>Whether <tt>char</tt> is a signed or unsigned type is implementation
+defined and implementations that use an 8-bit signed char are at a
+disadvantage with respect to working with UTF-8 encoded text due to the
+necessity of having to rely on conversions to unsigned types in order to
+correctly process leading and continuation code units of multi-byte encoded
+code points.
+</p>
+
+<p>The lack of a distinct type and the use of a code unit type with a range
+that does not portably include the full unsigned range of UTF-8 code units
+presents challenges for working with UTF-8 encoded text that are not present
+when working with UTF-16 or UTF-32 encoded text.  Enclosed is a proposal for
+a new <tt>char8_t</tt> typedef and related library enhancements intended to
+remove barriers to working with UTF-8 encoded text and to enable working with
+all five of the standard mandated text encodings in a consistent manner.
+</p>
+
+
+<h1 id="motivation">Motivation</h1>
+
+<p>As of November 2017,
+<a title="Usage of UTF-8 for websites"
+   href="https://w3techs.com/technologies/details/en-utf8/all/all">
+UTF-8 is now used by more than 90% of all websites</a>
+<sup><a title="Usage of UTF-8 for websites"
+        href="#ref_w3techs">
+[W3Techs]</a></sup>.
+While UTF-8 now dominates websites, it has not attained similar usage success
+as the execution character encoding of C and C++ compilers.  Important
+compilers, such as Microsoft's Visual Studio, do not support use of UTF-8 as
+the execution character encoding<sup>[*]</sup>.  Programs that must consume
+and produce text in the execution character encoding and manipulate UTF-8
+text must choose one of two approaches to managing text in these distinct
+encodings:
+<ol>
+  <li>Use <tt>char</tt> for both encodings while being careful to transcode
+      between the encodings when necessary.</li>
+  <li>Use <tt>char</tt> for the execution character encoding, and another
+      type, generally <tt>unsigned char</tt>, for UTF-8.</li>
+</ol>
+</p>
+
+<p>The challenge with the first approach is ensuring that text is
+appropriately transcoded and is in the correct encoding when passed to
+other functions.  Since the same type, <tt>char</tt>, is used as the code unit
+type for both encodings, the programmer is unable to rely on the type system
+to help identify mistakes.
+</p>
+
+<p>The challenge with the second approach is that UTF-8 string literals have
+type array of <tt>char</tt>.  Direct comparisons with UTF-8 string literals
+are subject to sign mismatch (depending on the sign of <tt>char</tt>), and
+attempts to assign pointers to the desired code unit type directly to UTF-8
+string literals results in assignment from incompatible pointer types
+(regardless of the sign of <tt>char</tt>).
+</p>
+
+<p>The following example demonstrates a potential consequence of failure to
+manage character encodings correctly.  The <tt>mb_utf8.c</tt> example
+incorrectly passes UTF-8 string literals to the "ANSI" version of the Windows
+<tt>MessageBox()</tt> function.  This function requires strings to be provided
+in the system encoding (Windows-1252 on the Windows 10 sytem used to produce
+the output below).  As shown, when run, mojibake is produced.  The
+<tt>mb_utf16.c</tt> example is a correct program intended to demonstrate that
+Windows supports the example Unicode characters and is able to display them
+correctly.  This example is intended to demonstrate that, though the
+<tt>mb_utf8.c</tt> code is incorrect, the compiler is unable to assist in
+diagnosing what is wrong.
+</p>
+
+<p>
+<div class="compare">
+<div class="compare_item">
+<fieldset><legend>mb_utf8.c</legend>
+<pre><code class="c">
+#include &lt;windows.h&gt;
+
+int main() {
+  const char *caption =
+    u8"\U0001F631";  // U+1F631 FACE SCREAMING IN FEAR
+  const char *message =
+    u8"\U0001F648"   // U+1F648 SEE-NO-EVIL MONKEY
+    u8"\U0001F649"   // U+1F649 HEAR-NO-EVIL MONKEY
+    u8"\U0001F64A";  // U+1F64A SPEAK-NO-EVIL MONKEY
+  MessageBoxA(NULL, message, caption, MB_OK);
+}
+</code></pre></fieldset>
+<fieldset><legend>Compile</legend>
+<pre><code class="Bash">
+&gt; cl mb_utf8.c /Femb_utf8.exe user32.lib
+Microsoft (R) C/C++ Optimizing Compiler Version 19.13.26128 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+mb_utf8.c
+Microsoft (R) Incremental Linker Version 14.13.26128.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:mb_utf8.exe
+mb_utf8.obj
+user32.lib
+</code></pre></fieldset>
+<fieldset><legend>Run</legend>
+<pre><code class="Bash">
+&gt; mb_utf8.exe
+</code></pre>
+<img src="data:image/png;base64,
+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
+n9ruGcTJAAAAAElFTkSuQmCC
+"/>
+</fieldset>
+</div>
+
+<div class="compare_item">
+<fieldset><legend>mb_utf16.c</legend>
+<pre><code class="c">
+#include &lt;windows.h&gt;
+
+int main() {
+  const wchar_t *caption =
+    L"\U0001F631";  // U+1F631 FACE SCREAMING IN FEAR
+  const wchar_t *message =
+    L"\U0001F648"   // U+1F648 SEE-NO-EVIL MONKEY
+    L"\U0001F649"   // U+1F649 HEAR-NO-EVIL MONKEY
+    L"\U0001F64A";  // U+1F64A SPEAK-NO-EVIL MONKEY
+  MessageBoxW(NULL, message, caption, MB_OK);
+}
+</code></pre></fieldset>
+<fieldset><legend>Compile</legend>
+<pre><code class="Bash">
+&gt; cl mb_utf16.c /Femb_utf16.exe user32.lib
+Microsoft (R) C/C++ Optimizing Compiler Version 19.13.26128 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+mb_utf16.c
+Microsoft (R) Incremental Linker Version 14.13.26128.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:mb_utf16.exe
+mb_utf16.obj
+user32.lib
+</code></pre></fieldset>
+<fieldset><legend>Run</legend>
+<pre><code class="Bash">
+&gt; mb_utf16.exe
+</code></pre>
+<img src="data:image/png;base64,
+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
+"/>
+</fieldset>
+</div>
+</div>
+</p>
+
+<p>Difficulty in managing multiple encodings with the same code unit type is
+not the only challenge posed by use of <tt>char</tt> as the UTF-8 code unit
+type.  The following code exhibits implementation defined behavior. 
+<blockquote><pre><code class="c">
+_Bool is_utf8_multibyte_code_unit(char c) {
+  return c &gt;= 0x80;
+}
+</code></pre></blockquote>
+</p>
+
+<p>UTF-8 leading and continuation code units have values in the range 128
+(0x80) to 255 (0xFF).  In the common case where <tt>char</tt> is implemented
+as a signed 8-bit type with a two's complement representation and a range of
+-128 (-0x80) to 127 (0x7F), these values exceed the unsigned range of the
+<tt>char</tt> type.  Such implementations typically encode such code units as
+unsigned values which are then reinterpreted as signed values when read.  In
+the code above, integral promotion rules result in <tt>c</tt> being promoted to
+type <tt>int</tt> for comparison to the <tt>0x80</tt> operand.  if <tt>c</tt>
+holds a value corresponding to a leading or continuation code unit value, then
+its value will be interpreted as negative and the promoted value of type
+<tt>int</tt> will likewise be negative.  The result is that the comparison
+is always false for these implementations.</p>
+
+<p>To correct the code above, explicit conversions are required.  For example:
+<blockquote><pre><code class="c">
+_Bool is_utf8_multibyte_code_unit(char c) {
+  return ((unsigned char)c) &gt;= 0x80;
+}
+</code></pre></blockquote>
+</p>
+
+<p>Finally, no facilities are currently provided for transcoding between the
+execution character encoding and UTF-8.
+</p>
+
+<p>The issues described above present significant challenges to working with
+UTF-8 encoded text.  As the use of UTF-8 continues to rise, the ability to
+work well with UTF-8 text will only grow more important.  The changes proposed
+in this paper are intended to address the above issues while retaining the
+ability to write source code that is compatible across C and C++.
+</p>
+
+<p><em>[*]: Microsoft Visual Studio 2015 added <tt>/utf-8</tt>,
+<tt>/source-charset:utf-8</tt>, and <tt>/execution-charset:utf-8</tt> options
+that enable use of UTF-8 as the execution character encoding, but in practice,
+these options are of limited use since the Windows platform SDK does not, in
+general, support UTF-8.</em>
+</p>
+
+
+<h1 id="proposal">Proposal</h1>
+
+<p>The proposed changes include:
+
+<ul>
+  <li>A new typedef of <tt>unsigned char</tt> named <tt>char8_t</tt> defined
+      in the <tt>&lt;uchar.h&gt;</tt> header.</li>
+  <li>The type of UTF-8 string literals is changed from array of
+      <tt>const char</tt> to array of <tt>const char8_t</tt>.</li>
+  <li>The type of UTF-8 character literals (assuming
+      <a title="[WG14 N2198]: Adding the u8 character prefix"
+         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
+      WG14 N2198</a>
+      <sup><a title="[WG14 N2198]: Adding the u8 character prefix"
+              href="#ref_wg14_n2198">
+      [WG14 N2198]</a></sup> is adopted) is changed from <tt>char</tt> to
+      <tt>char8_t</tt>.</li>
+  <li>New <tt>mbrtoc8</tt> and <tt>c8rtomb</tt> functions declared in
+      <tt>&lt;uchar.h&gt;</tt> enable converting between the implementation
+      defined execution character encoding and UTF-8.</li>
+  <li>A new <tt>__STDC_UTF_8__</tt> macro used to indicate when <tt>u8</tt>
+      literals are encoded in UTF-8.</li>
+  <li>New <tt>char8_t</tt> related atomic macros and types.</li>
+</ul>
+</p>
+
+<p>The addition of the <tt>char8_t</tt> typedef is intended to support source
+code compatibility between C and C++ assuming the adoption of
+<a title="[WG21 P0482R1]: char8_t: A type for UTF-8 characters and strings (Revision 1)"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r1.html">
+WG21 P0482R1</a>
+<sup><a title="[WG21 P0482R1]: char8_t: A type for UTF-8 characters and strings (Revision 1)"
+        href="#ref_wg21_p0482r1">
+[WG21 P0482R1]</a></sup>
+by the C++ committee.  Mutual adoption would enable the following code to be
+well-formed and portable for both languages while providing additional type
+safety and protection from implementation defined sign issues.
+<blockquote><pre><code class="c">
+#include &lt;uchar.h&gt;
+
+void use_utf8(const char8_t *p) {
+  if (p &amp;&amp; p[0] &gt;= 0x80) {
+    /* Handle UTF-8 lead or continuation code unit... */
+  }
+}
+
+int main() {
+  use_utf8(u8"text");
+}
+</code></pre></blockquote>
+</p>
+
+
+<h1 id="backward_compat">Backward Compatibility</h1>
+
+<p>The changes proposed in this paper impact backward compatibility as a
+result of changing the type of UTF-8 string literals.  There are two primary
+consequences:
+<ol>
+  <li>Code that directly accesses the code unit values of UTF-8 string literals
+      without an intervening cast to an unsigned type may experience silent
+      behavioral changes for implementations with a signed 8-bit <tt>char</tt>
+      type.  In general, such accesses are likely indicative of latent defects
+      in the code, and are defects likely fixed by the proposed changes.</li>
+  <li>Initialization or assignment of <tt>const char</tt> pointers (including
+      parameters) from UTF-8 string literals will now result in incompatible
+      pointer conversions.  This is an intentional change intended to allow
+      the use of compiler diagnostics to identify cases where incorrectly
+      encoded text is used.</li>
+</ol>
+</p>
+
+<p>These changes are a primary objective of this proposal.  Implementations
+are encouraged to add options to disable <tt>char8_t</tt> support entirely
+when necessary to preserve compatibility with prior C language standards.
+</p>
+
+
+<h1 id="implementation_exp">Implementation Experience</h1>
+
+<p>The proposed changes in the corresponding C++
+<a title="[WG21 P0482R1]: char8_t: A type for UTF-8 characters and strings (Revision 1)"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r1.html">
+WG21 P0482R1</a>
+<sup><a title="[WG21 P0482R1]: char8_t: A type for UTF-8 characters and strings (Revision 1)"
+        href="#ref_wg21_p0482r1">
+[WG21 P0482R1]</a></sup>
+proposal have been implemented in a fork of gcc and are available on
+GitHub in the <tt>char8_t</tt> branch of the following repository:
+<ul>
+  <li>gcc: <a href="https://github.com/tahonermann/gcc/tree/char8_t">
+      https://github.com/tahonermann/gcc/tree/char8_t</a></li>
+</ul>
+</p>
+
+<p>The proposed changes in this paper are being implemented in forks of gcc
+and glibc, but are not yet complete.  Once completed, they will be available
+in the <tt>char8_t</tt> branches of the following repositories:
+<ul>
+  <li>gcc: <a href="https://github.com/tahonermann/gcc/tree/char8_t">
+      https://github.com/tahonermann/gcc/tree/char8_t</a></li>
+  <li>glibc: <a href="https://github.com/tahonermann/glibc/tree/char8_t">
+      https://github.com/tahonermann/glibc/tree/char8_t</a></li>
+</ul>
+</p>
+
+<p>
+The new gcc <tt>-fchar8_t</tt> and <tt>-fno-char8_t</tt> compiler options
+support enabling and disabling the new features.  No backward compatibility
+features are currently implemented.
+</p>
+
+
+<h1 id="wording">Formal Wording</h1>
+
+<input type="checkbox" id="hidedel">Hide deleted text</input>
+
+<p>These changes are relative to the ISO/IEC 9899:2017 committee draft as of
+2018-03-17.</p>
+
+<p>Additional updates will be necessary if
+<a title="[WG14 N2198]: Adding the u8 character prefix"
+   href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
+WG14 N2198</a>
+<sup><a title="[WG14 N2198]: Adding the u8 character prefix"
+        href="#ref_wg14_n2198">
+[WG14 N2198]</a></sup>
+is adopted.</p>
+
+<p>Change in 6.4.5 (String Literals) paragraph 6:
+<blockquote>
+[&hellip;] For UTF-8 string literals, the array elements have type
+<del><tt>char</tt></del><ins><tt>char8_t</tt></ins>, and are initialized with
+the characters of the multibyte character sequence, as encoded in UTF–8. 
+[&hellip;]
+</blockquote>
+</p>
+
+<p>Change in 6.7.9 (Initialization) paragraph 14:
+<blockquote>
+An array of character type may be initialized by a character string
+literal<del> or UTF-8 string literal</del>, optionally enclosed in braces. Successive
+bytes of the string literal (including the terminating null character if there
+is room or if the array is of unknown size) initialize the elements of the
+array.
+</blockquote>
+</p>
+
+<p><em>Drafting note: The changes to 6.7.9p14 affect backward compatibility
+by removing the ability to initialize an array of character type with a UTF-8
+string literal.  This is an intentional change made to align with the changes
+to C++ proposed in
+<a title="[WG21 P0482R1]: char8_t: A type for UTF-8 characters and strings (Revision 1)"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r1.html">
+WG21 P0482R1</a>
+<sup><a title="[WG21 P0482R1]: char8_t: A type for UTF-8 characters and strings (Revision 1)"
+        href="#ref_wg21_p0482r1">
+[WG21 P0482R1]</a></sup>.
+</em></p>
+
+<p>Insert a new paragraph after 6.7.9 (Initialization) paragraph 14:
+<blockquote class=stdins>
+An array with element type compatible with a qualified or unqualified version
+of <tt>char8_t</tt> may be initialized by a UTF-8 string literal, optionally
+enclosed in braces.  Successive bytes of the string literal (including the
+terminating null character if there is room or if the array is of unknown size)
+initialize the elements of the array.
+</blockquote>
+</p>
+
+<p>Change in 6.10.8.2 (Environment macros) paragraph 1:
+<blockquote>
+The following macro names are conditionally defined by the implementation:<br/>
+<br/>
+[&hellip;]<br/>
+<br/>
+<ins><tt>__STDC_UTF_8__</tt> The integer constant 1, intended to indicate that
+values of type <tt>char8_t</tt> are UTF-8 encoded. If some other encoding is
+used, the macro shall not be defined and the actual encoding used is
+implementation-defined.</ins><br/>
+<br/>
+<tt>__STDC_UTF_16__</tt> The integer constant 1, intended to indicate that
+values of type <tt>char16_t</tt> are UTF-16 encoded. If some other encoding is
+used, the macro shall not be defined and the actual encoding used is
+implementation-defined.<br/>
+<br/>
+<tt>__STDC_UTF_32__</tt> The integer constant 1, intended to indicate that
+values of type <tt>char32_t</tt> are UTF-32 encoded. If some other encoding is
+used, the macro shall not be defined and the actual encoding used is
+implementation-defined.<br/>
+<br/>
+[&hellip;]<br/>
+</blockquote>
+</p>
+
+<p>Change in 7.17.1 (Introduction) paragraph 3:
+<blockquote>
+The macros defined are the <em>atomic lock-free macros</em>
+<blockquote>
+ATOMIC_BOOL_LOCK_FREE<br/>
+ATOMIC_CHAR_LOCK_FREE<br/>
+<ins>ATOMIC_CHAR8_T_LOCK_FREE</ins><br/>
+ATOMIC_CHAR16_T_LOCK_FREE<br/>
+ATOMIC_CHAR32_T_LOCK_FREE<br/>
+ATOMIC_WCHAR_T_LOCK_FREE<br/>
+ATOMIC_SHORT_LOCK_FREE<br/>
+ATOMIC_INT_LOCK_FREE<br/>
+ATOMIC_LONG_LOCK_FREE<br/>
+ATOMIC_LLONG_LOCK_FREE<br/>
+ATOMIC_POINTER_LOCK_FREE<br/>
+</blockquote>
+[&hellip;]<br/>
+</blockquote>
+</p>
+
+<p>Change in 7.17.6 (Atomic integer types) paragraph 1:
+<blockquote>
+For each line in the following table,<sup>261)</sup> the atomic type name is
+declared as a type that has the same representation and alignment requirements
+as the corresponding direct type.<sup>262)</sup>
+<div style="margin-left: 1em;">
+<table>
+  <tr>
+    <td>Atomic type name</td>
+    <td>Direct type</td>
+  </tr>
+  <tr>
+    <td>[&hellip;]</td>
+    <td>[&hellip;]</td>
+  </tr>
+  <tr>
+    <td><tt>atomic_ullong</tt></td>
+    <td><tt>_Atomic unsigned long long</tt></td>
+  </tr>
+  <tr>
+    <td><tt><ins>atomic_char8_t</ins></tt></td>
+    <td><tt><ins>_Atomic char8_t</ins></tt></td>
+  </tr>
+  <tr>
+    <td><tt>atomic_char16_t</tt></td>
+    <td><tt>_Atomic char16_t</tt></td>
+  </tr>
+  <tr>
+    <td><tt>atomic_char32_t</tt></td>
+    <td><tt>_Atomic char32_t</tt></td>
+  </tr>
+  <tr>
+    <td><tt>atomic_wchar_t</tt></td>
+    <td><tt>_Atomic wchar_t</tt></td>
+  </tr>
+  <tr>
+    <td>[&hellip;]</td>
+    <td>[&hellip;]</td>
+  </tr>
+</table>
+</div>
+</blockquote>
+</p>
+
+<p>Change in 7.28 (Unicode utilities &lt;uchar.h&gt;) paragraph 2:
+<blockquote>
+The types declared are <tt>mbstate_t</tt> (described in 7.29.1) and
+<tt>size_t</tt> (described in 7.19);
+<ins>
+<blockquote>
+<tt>char8_t</tt>
+</blockquote>
+which is an unsigned integer type used for 8-bit characters and is the same
+type as <tt>unsigned char</tt>; and</ins>
+</ins>
+<blockquote>
+<tt>char16_t</tt>
+</blockquote>
+which is an unsigned integer type used for 16-bit characters and is the same
+type as <tt>uint_least16_t</tt> (described in 7.20.1.12); and</ins>
+<blockquote>
+<tt>char32_t</tt>
+</blockquote>
+which is an unsigned integer type used for 32-bit characters and is the same
+type as <tt>uint_least32_t</tt> (described in 7.20.1.12).</ins>
+</blockquote>
+</p>
+
+<p>Insert a new subclause before 7.28.1.1 (The mbrtoc16 function):
+<blockquote class="stdins">
+7.28.1.1  <strong>The mbrtoc8 function</strong>
+</blockquote>
+</p>
+
+<p>Add a new paragraph 1:
+<blockquote class="stdins">
+<strong>Synopsis</strong><br/>
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>#include</tt> &lt;uchar.h&gt;<br/>
+<tt>size_t</tt> mbrtoc8(<tt>char8_t</tt> * <tt>restrict</tt> pc8,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>const</tt> <tt>char</tt> * <tt>restrict</tt> s, <tt>size_t</tt> n,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>mbstate_t</tt> * <tt>restrict</tt> ps);
+</div>
+</blockquote>
+</blockquote>
+</p>
+
+<p>Add a new paragraph 2:
+<blockquote class="stdins">
+<strong>Description</strong><br/>
+If <tt>s</tt> is a null pointer, the <tt>mbrtoc8</tt> function is equivalent
+to the call:
+<blockquote>
+<div style="margin-left: 2em;">
+mbrtoc8(NULL, "", 1, ps)
+</div>
+</blockquote>
+In this case, the values of the parameters <tt>pc8</tt> and <tt>n</tt> are
+ignored.
+</blockquote>
+</p>
+
+<p>Add a new paragraph 3:
+<blockquote class="stdins">
+If <tt>s</tt> is not a null pointer, the <tt>mbrtoc8</tt> function inspects at
+most <tt>n</tt> bytes beginning with the byte pointed to by <tt>s</tt> to
+determine the number of bytes needed to complete the next multibyte character
+(including any shift sequences). If the function determines that the next
+multibyte character is complete and valid, it determines the values of the
+corresponding characters and then, if <tt>pc8</tt> is not a null pointer,
+stores the value of the first (or only) such character in the object pointed to
+by <tt>pc8</tt>. Subsequent calls will store successive characters without
+consuming any additional input until all the characters have been stored. If
+the corresponding character is the null character, the resulting
+state described is the initial conversion state.
+</blockquote>
+</p>
+
+<p>Add a new paragraph 4:
+<blockquote class="stdins">
+<strong>Returns</strong><br/>
+The <tt>mbrtoc8</tt> function returns the first of the following that applies
+(given the current conversion state):
+<table>
+  <tr>
+    <td>0</td>
+    <td>if the next <tt>n</tt> or fewer bytes complete the multibyte character
+        that corresponds to the null character (which is the value stored).
+    </td>
+  </tr>
+  <tr>
+    <td><em>between 1 and <tt>n</tt> inclusive</em></td>
+    <td>if the next <tt>n</tt> or fewer bytes complete a valid multibyte
+        character (which is the value stored); the value returned is the number
+        of bytes that complete the multibyte character.
+    </td>
+  </tr>
+  <tr>
+    <td><tt>(size_t)</tt> (−3)</td>
+    <td>if the next character resulting from a previous call has been stored
+        (no bytes from the input have been consumed by this call).
+    </td>
+  </tr>
+  <tr>
+    <td><tt>(size_t)</tt> (−2)</td>
+    <td>if the next <tt>n</tt> bytes contribute to an incomplete (but
+        potentially valid) multibyte character, and all <tt>n</tt> bytes have
+        been processed (no value is stored).<sup><em>Footnote</em>)</sup>
+    </td>
+  </tr>
+  <tr>
+    <td><tt>(size_t)</tt> (−1)</td>
+    <td>if an encoding error occurs, in which case the next <tt>n</tt> or
+        fewer bytes do not contribute to a complete and valid multibyte
+        character (no value is stored); the value of the macro <tt>EILSEQ</tt>
+        is stored in <tt>errno</tt>, and the conversion state is unspecified.
+    </td>
+  </tr>
+</table>
+</blockquote>
+</p>
+
+<p>Add a new footnote for the reference in paragraph 4 above:
+<blockquote class="stdins">
+<sup><em>Footnote</em>)</sup>When <tt>n</tt> has at least the value of the
+<tt>MB_CUR_MAX</tt> macro, this case can only occur if <tt>s</tt> points at a
+sequence of redundant shift sequences (for implementations with state-dependent
+encodings).
+</blockquote>
+</p>
+
+<p>Insert another new subclause before 7.28.1.1 (The mbrtoc16 function):
+<blockquote class="stdins">
+7.28.1.2  <strong>The c8rtomb function</strong>
+</blockquote>
+</p>
+
+<p>Add a new paragraph 1:
+<blockquote class="stdins">
+<strong>Synopsis</strong><br/>
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>#include</tt> &lt;uchar.h&gt;<br/>
+<tt>size_t</tt> c8rtomb(<tt>char</tt> * <tt>restrict</tt> s, <tt>char8_t</tt> c8,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>mbstate_t</tt> * <tt>restrict</tt> ps);
+</div>
+</blockquote>
+</blockquote>
+</p>
+
+<p>Add a new paragraph 2:
+<blockquote class="stdins">
+<strong>Description</strong><br/>
+If <tt>s</tt> is a null pointer, the c8rtomb function is equivalent to the call
+<blockquote>
+<div style="margin-left: 2em;">
+c8rtomb(buf, '\0', ps)
+</div>
+</blockquote>
+where <tt>buf</tt> is an internal buffer.
+</blockquote>
+</p>
+
+<p><em>Drafting note: If 
+<a title="[WG14 N2198]: Adding the u8 character prefix"
+   href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
+WG14 N2198</a>
+<sup><a title="[WG14 N2198]: Adding the u8 character prefix"
+        href="#ref_wg14_n2198">
+[WG14 N2198]</a></sup>
+is adopted, the character literal in paragraph 2 above should be changed from
+'\0' to u8'\0'.
+</em></p>
+
+<p>Add a new paragraph 3:
+<blockquote class="stdins">
+If <tt>s</tt> is not a null pointer, the <tt>c8rtomb</tt> function determines
+the number of bytes needed to represent the multibyte character that corresponds
+to the character given or completed by <tt>c8</tt> (including any shift
+sequences), and stores the multibyte character representation in the array whose
+first element is pointed to by <tt>s</tt>, or stores nothing if <tt>c8</tt> does
+not represent a complete character.  At most <tt>MB_CUR_MAX</tt> bytes are
+stored. If <tt>c8</tt> is a null character, a null byte is stored, preceded
+by any shift sequence needed to restore the initial shift state; the resulting
+state described is the initial conversion state.
+</blockquote>
+</p>
+
+<p><em>Drafting note: The wording in paragraph 3 above includes the proposed
+wording updates from
+<a title="[WG14 DR 488]: c16rtomb() on wide characters encoded as multiple char16_t"
+   href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
+WG14 DR 488</a>
+<sup><a title="[WG14 DR 488]: c16rtomb() on wide characters encoded as multiple char16_t"
+        href="#ref_wg14_dr488">
+[WG14 DR 488]</a></sup>.
+</em></p>
+
+<p>Add a new paragraph 4:
+<blockquote class="stdins">
+<strong>Returns</strong><br/>
+The <tt>c8rtomb</tt> function returns the number of bytes stored in the array
+object (including any shift sequences). When <tt>c8</tt> is not a valid
+character, an encoding error occurs: the function stores the value of the macro
+<tt>EILSEQ</tt> in <tt>errno</tt> and returns <tt>(size_t)</tt> (−1); the
+conversion state is unspecified.
+</blockquote>
+</p>
+
+<p>Change in B.16 (Atomics &lt;stdatomic.h&gt;)
+<blockquote>
+[&hellip;]<br/>
+<tt>ATOMIC_CHAR_LOCK_FREE</tt><br/>
+<ins><tt>ATOMIC_CHAR8_T_LOCK_FREE</tt></ins><br/>
+<tt>ATOMIC_CHAR16_T_LOCK_FREE</tt><br/>
+<tt>ATOMIC_CHAR32_T_LOCK_FREE</tt><br/>
+<tt>ATOMIC_WCHAR_T_LOCK_FREE</tt><br/>
+[&hellip;]<br/>
+<tt>atomic_ullong</tt><br/>
+<ins><tt>atomic_char8_t</tt></ins><br/>
+<tt>atomic_char16_t</tt><br/>
+<tt>atomic_char32_t</tt><br/>
+<tt>atomic_wchar_t</tt><br/>
+[&hellip;]<br/>
+</blockquote>
+</p>
+
+<p>Change in B.27 (Unicode utilities &lt;uchar.h&gt;)
+<blockquote>
+<table>
+  <tr>
+    <td><tt>mbstate_t</tt></td>
+    <td><tt>size_t</tt></td>
+    <td><tt><ins>char8_t</ins></tt></td>
+    <td><tt>char16_t</tt></td>
+    <td><tt>char32_t</tt></td>
+  </tr>
+</table>
+<blockquote>
+<div style="margin-left: 1em;">
+<ins>
+<tt>size_t</tt> mbrtoc8(<tt>char8_t</tt> * <tt>restrict</tt> pc8,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>const</tt> <tt>char</tt> * <tt>restrict</tt> s, <tt>size_t</tt> n,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>mbstate_t</tt> * <tt>restrict</tt> ps);<br/>
+<tt>size_t</tt> c8rtomb(<tt>char</tt> * <tt>restrict</tt> s, <tt>char8_t</tt> c8,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>mbstate_t</tt> * <tt>restrict</tt> ps);<br/>
+</ins>
+<tt>size_t</tt> mbrtoc16(<tt>char16_t</tt> * <tt>restrict</tt> pc16,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>const</tt> <tt>char</tt> * <tt>restrict</tt> s, <tt>size_t</tt> n,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>mbstate_t</tt> * <tt>restrict</tt> ps);<br/>
+<tt>size_t</tt> c16rtomb(<tt>char</tt> * <tt>restrict</tt> s, <tt>char16_t</tt> c16,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>mbstate_t</tt> * <tt>restrict</tt> ps);<br/>
+<tt>size_t</tt> mbrtoc32(<tt>char32_t</tt> * <tt>restrict</tt> pc32,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>const</tt> <tt>char</tt> * <tt>restrict</tt> s, <tt>size_t</tt> n,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>mbstate_t</tt> * <tt>restrict</tt> ps);<br/>
+<tt>size_t</tt> c32rtomb(<tt>char</tt> * <tt>restrict</tt> s, <tt>char32_t</tt> c32,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>mbstate_t</tt> * <tt>restrict</tt> ps);
+</div>
+</blockquote>
+</blockquote>
+</p>
+
+<p>Change in J.3.4 (Characters):
+<blockquote>
+[&hellip;]<br/>
+&mdash; The encoding of any of <tt>wchar_t</tt><ins><tt>, char8_t</tt></ins>,
+<tt>char16_t</tt>, and <tt>char32_t</tt> where the corresponding standard
+encoding macro (<tt>__STDC_ISO_10646__</tt><ins>, <tt>__STDC_UTF_8__</tt></ins>,
+<tt>__STDC_UTF_16__</tt>, or
+<tt>__STDC_UTF_32__</tt>) is not defined (6.10.8.2).
+</blockquote>
+</p>
+
+
+<h1 id="acknowledgements">Acknowledgements</h1>
+
+<p>Thank you to Aaron Ballman for his kind assistance facilitating interaction
+with WG14.</p>
+
+
+<h1 id="references">References</h1>
+
+<table id="references">
+  <tr>
+    <td id="ref_w3techs"><sup>[W3Techs]</sup></td>
+    <td>
+      "Usage of UTF-8 for websites", W3Techs, 2017.<br/>
+      <a href="https://w3techs.com/technologies/details/en-utf8/all/all">
+      https://w3techs.com/technologies/details/en-utf8/all/all</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg21_p0482r1"><sup>[WG21 P0482R1]</sup></td>
+    <td>
+      Tom Honermann,
+      "char8_t: A type for UTF-8 characters and strings (Revision 1)", P0482R1, 2018.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r1.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r1.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_n2198"><sup>[WG14 N2198]</sup></td>
+    <td>
+      Aaron Ballman,
+      "Adding the u8 character prefix", N2198, 2017.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_dr488"><sup>[WG14 DR 488]</sup></td>
+    <td>
+      "c16rtomb() on wide characters encoded as multiple char16_t", DR 488, 2016.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
+      http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488</a></td>
+  </tr>
+</table>
+
+</body>
