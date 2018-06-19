@@ -17,14 +17,14 @@ WG14 Number     | Title
 --------------- | -----
 [N2231][]       | char8_t: A type for UTF-8 characters and strings
 
-[N2231]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/n2231.html
-[P0482R0]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p0482r0.html
-[P0482R1]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p0482r1.html
-[P0482R2]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p0482r2.html
-[P0482R3]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p0482r3.html
-[P0482R4]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p0482r4.html
-[P1025R0]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p1025r0.html
-[P1025R1]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p1025r1.html
-[P1041R0]: https://github.com/sg16-unicode/sg16/blob/master/papers/p1041r0.md
-[P1041R1]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p1041r1.html
-[P1080R0]: http://htmlpreview.github.io/?https://github.com/sg16-unicode/sg16/blob/master/papers/p1080r0.html
+[N2231]: https://rawgit.com/sg16-unicode/sg16/master/papers/n2231.html
+[P0482R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r0.html
+[P0482R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r1.html
+[P0482R2]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r2.html
+[P0482R3]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r3.html
+[P0482R4]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r4.html
+[P1025R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1025r0.html
+[P1025R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1025r1.html
+[P1041R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r0.md
+[P1041R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r1.html
+[P1080R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1080r0.html
