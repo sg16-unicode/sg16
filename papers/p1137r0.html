@@ -1,0 +1,709 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20</title>
+</head>
+
+<style type="text/css">
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+</style>
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>P1137R0</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2018-06-24</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2018_05_16">
+      May 16th, 2018</a></li>
+  <li><a href="#2018_05_30">
+      May 30th, 2018</a></li>
+  <li><a href="#2018_06_20">
+      June 20th, 2018</a></li>
+</ul>
+
+
+<h1 id="2018_05_16">May 16th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Review and discuss papers in the Rapperswil pre-meeting mailing.</li>
+  <li>Discuss plans and goals for those attending Rapperswil.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Bob Steagal</li>
+  <li>Corentin Jabot</li>
+  <li>Dalton Woodward</li>
+  <li>Florin Trofin</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Martinho Fernandes</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>It was reported on Slack that Martinho's properly formatted UTF-8
+      <a href="http://wg21.link/p1041r0">P1041R0</a> paper was served up by
+      open-std.org either without a <tt>CharSet</tt> header or with a Latin1
+      setting.  Tom contacted Hal and Keld.  Further discussion yielded a plan
+      to update
+      <a href="https://isocpp.org/std/standing-documents/sd-7-mailing-procedures-and-how-to-write-papers">
+      SD-7</a> to require UTF-8 for <tt>.md</tt> files and to configure the
+      open-std.org web server to serve them with a <tt>CharSet=UTF-8</tt> header.</li>
+  <li>Zach, Bob, and JeanHeyd shared some of their experience at C++Now.</li>
+  <li>We then went on to review papers from the pre-Rapperswil mailing.</li>
+  <li><a href="http://wg21.link/p1041R0">P1041R0</a> - Make char16_t/char32_t string literals be UTF-16/32
+    <ul>
+      <li>Tom noted a typo in the proposed wording changes for
+          <tt>lex.ccon/4</tt>; a use of <tt>UTF-8</tt> where <tt>UTF-16</tt> was
+          intended.</li>
+      <li>Given the encoding issues and lack of Markdown rendering support built
+          into browsers, it was suggested that future papers, at least for now,
+          be submitted in a pre-rendered format.</li>
+      <li>Martinho asked about getting the paper scheduled for discussion in
+          Rapperswil.  Tom said he would forward SG16 polls on papers we
+          discussed to WG chairs to communicate our position and request time
+          in Rapperswil.  Tom will copy paper authors and expected presenters on
+          this communication.</li>
+      <li>It was asked if there was any library impact.  Martinho responded no.
+          Tom noted having previously audited occurrences of <tt>char16_t</tt>,
+          <tt>char32_t</tt>, <tt>UTF-16</tt>, and <tt>UTF-32</tt> and could not
+          think of a case.</li>
+      <li>Zach suggested that, when presenting, it be emphasized that no
+          implementation will need to make changes; that this is just standarizing
+          existing practice.  Emphasize that there are no known implementations
+          where the encoding used is not already UTF-16/UTF-32 and that a member
+          of the C committee was consulted.</li>
+      <li>Poll: Those in favor of P1041R0?
+        <ul>
+          <li>Unanimous consent.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p1072r0">P1072R0</a> - Default Initialization for basic_string
+    <ul>
+      <li>Mark noted that <a href="http://wg21.link/p1072">P1072</a> is dependent
+          on <a href="http://wg21.link/p1010">P1010</a> which is dependent on
+          Richard Smith's <a href="http://wg21.link/p0593">P0593</a>.  This
+          raised the question of prioritization and a request for SG16 to request
+          that <a href="http://wg21.link/p0593">P0593</a> and
+          <a href="http://wg21.link/p1010">P1010</a> get time in Rapperswil so
+          that progress can be made on <a href="http://wg21.link/p1072">P1072</a>
+          in San Diego.  Tom agreed to make such a request; specifically to
+          request that EWG entertain <a href="http://wg21.link/p0593">P0593</a>
+          and that LEWG look at <a href="http://wg21.link/p1010">P1010</a> (and
+          <a href="http://wg21.link/p1072">P1072</a> time permitting).</li>
+      <li>Mark went on to discuss applicability of
+          <a href="http://wg21.link/p1072">P1072</a> to SG16.  Of particular
+          concern are the issues caused by requiring null termination.  This is
+          not a problem for <tt>vector</tt>, and hence not a concern expressed in
+          <a href="http://wg21.link/p1010">P1010</a>.</li>
+      <li>Mark pointed out that the design is used in real world code today.</li>
+      <li>Zach asked why <tt>reserve()</tt> doesn't suffice.  Mark explained the
+          examples in the paper; that we currently either have to repeatedly
+          update the size of the container with each addition, or eagerly resize
+          the container and pay for an unused initialization.  The goal of the
+          paper is to avoid both costs by enabling writing to excess capacity
+          independently of updates to the container size.</li>
+      <li>Tom asked if option A is viable.  The concern is that const member
+          functions must be thread safe.  A call to <tt>resize_uninitialized()</tt>
+          makes uninitialized data available to const member functions.  Further,
+          there is no event to indicate when the uninitialized data has been
+          read and therefore no memory barier to function as a synchronization
+          point.</li>
+      <li>Mark acknowledged that a two-phase commit approach is necessary to
+          avoid UB.</li>
+      <li>Martinho observed that two-phase commit is not sufficient by itself
+          because <tt>basic_string</tt> uses excess capacity to store a null
+          terminator for the string; this is what allows the <tt>data()</tt> and
+          <tt>c_str()</tt> member functions to be <tt>const</tt> qualified.
+          Overwriting the null terminator will cause UB for concurrently
+          executing threads.</li>
+      <li>Mark advised SG16 to consider the consequences of providing implicit
+          null-termination for string-like containers in the future.  An
+          alternative approach would use string builders that append a
+          null-terminator when they are collapsed.</li>
+      <li>Mark noted that the two-phase commit approach does at least allow the
+          implementation to re-establish invariants (such as ensuring a
+          null-terminator is present at the start of excess capacity following
+          <tt>insert_from_capacity()</tt>.</li>
+      <li>Tom suggested an emplace-like solution might be preferred to enable
+          preserving invariants.</li>
+      <li>Mark acknowledged a call-back/functor based solution would work (though
+          it still doesn't address the over-written null-terminator issue).</li>
+      <li>Dalton asked whether making vector/string node-based containers such
+          that data could be written to a new buffer and then swapped in.  This
+          has the disadvantage of requiring that the current buffer be copied
+          prior to performing the append.</li>
+      <li>Tom asked if any performance numbers were available.  What is the
+          expected gain?</li>
+      <li>Mark responded that numbers are not available, but that Google has
+          measured and claims the improvements make this feature worthwhile.
+          Estimate is a few percent improvement.</li>
+      <li>Corentin asked why not to use <tt>vector</tt> instead of <tt>string</tt>.</li>
+      <li>Mark responded that <tt>string</tt> is a vocabulary type.</li>
+      <li>Poll: Do we agree P1072R0 addresses a problem worth solving?
+        <ul>
+          <li>Unanimous consent.</li>
+        </ul>
+      </li>
+      <li>Poll: Do we prefer option A, option B, or some option C?
+        <ul>
+          <li>A: 0</li>
+          <li>B: 2</li>
+          <li>C: 5</li>
+        </ul>
+      </li>
+      <li>Mark clarified that option C, as discussed today, would be one of:
+        <ul>
+          <li>An emplace-like call with a call-back/functor.</li>
+          <li>A node-based swap.</li>
+        </ul>
+      </li>
+      <li>Discussion moved into allocator interaction with node types.</li>
+      <li>Zach stated that swap is broken for PMR allocators.</li>
+      <li>Steve agreed and provided an elaboration; that the swap of the
+          allocators doesn't swap the actual buffers.</li>
+      <li>Mark noted that moving a buffer between <tt>vector</tt> and
+          <tt>string</tt> encounters complexities due to null-termination
+          requirements.</li>
+      <li>Martinho asked how a small buffer optimized string is moved into a
+          node type.</li>
+      <li>Dalton responded that you allocate.</li>
+      <li>Tom added, or the node type implements the SBO itself.</li>
+      <li>Mark expressed concern that an emplace-like call-back/functor approach
+          may not work for the network use case of wanting to read data off the
+          network directly into the buffer.</li>
+      <li>Zach suggested that, in a string builder approach, <tt>vector</tt> is
+          the string builder.</li>
+      <li>Corentin expressed a preference for a specific string builder type
+          rather than <tt>vector</tt>.  Essentially a vocabulary type suited to
+          the purpose.</li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p1025r0">P1025R0</a> - Update The Reference To The Unicode Standard
+    <ul>
+      <li>Steve briefly introduced the change as similar to what had been
+          proposed, but not completed, for C++17.</li>
+      <li>Tom asked, why update the normative reference to specify each of
+          Unicode 10, Unicode without a version indicator, and ISO 10646?</li>
+      <li>Steve answered, we need ISO 10646 for existing references; for
+          example, the <tt>__STDC_ISO_10646__</tt> macro.  We want to reference
+          the Unicode standard (in addition to ISO 10646) for stability
+          guarantees and additional features.  We want to reference Unicode 10
+          to establish a minimum requirement, and the unversioned Unicode
+          standard to enable implementors to adopt a newer version.</li>
+      <li>Tom suggested adding a non-normative note that implementors are
+          allowed to use Unicode 10 or newer; though they must use a
+          corresponding version of ISO 10646.</li>
+      <li>Martinho stated that we need to make it clear that implementors must
+          choose a specific Unicode release.</li>
+      <li>Tom asked if we should require a predefined macro that indicates the
+          Unicode version.</li>
+      <li>Steve and Martinho both answered, maybe, but not yet as we don't
+          actually depend on anything Unicode version dependent yet.</li>
+      <li>Poll: Those in favor of P1025R0:
+        <ul>
+          <li>Unanimous consent.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Our next meeting will be May 30th; the week before Rapperswil.</li>
+  <li>There is a WG21 administrative teleconference May 25th.
+    <ul>
+      <li>Tom will dial-in to give an update on SG16.  Martinho and JeanHeyd
+          are encouraged to attend as well since they have papers to present.</li>
+    </ul>
+  </li>
+  <li>Those planning to attend Rapperswil: Martinho, Corentin, Peter, JeanHeyd.</li>
+  <li>Following the meeting, Martinho volunteered to present
+      <a href="http://wg21.link/p1025r0">P1025R0</a> at Rapperswil since Steve
+      will not be present.  Steve agreed.</li>
+</ul>
+
+
+<h1 id="2018_05_30">May 30th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss plans and goals for those attending Rapperswil.</li>
+  <li>Review and discuss the following papers from the Rapperswil pre-meeting mailing:
+    <ul>
+      <li>P1030R0: std::filesystem::path_view</li>
+      <li>P0540R1: A Proposal to Add split/join of string/string_view to the Standard Library</li>
+      <li>P0645R2: Text Formatting</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Martinho Fernandes</li>
+  <li>Peter Bindels</li>
+  <li>Sergey Zubkov</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Administrative updates:
+    <ul>
+      <li>Tom reported that WG chairs were contacted regarding SG16 requests
+          for paper reviews in Rapperswil.  WG chairs are predictably swamped
+          and prioritizing as best they know how, but we may not get to present
+          any of our papers.</li>
+      <li>Zach observed that Titus is concerned about the amount of time that
+          LEWG will need for ranges, but that LWG should be more concerned.</li>
+      <li>Tom relayed that JF Bastien volunteered to arrange introductions with
+          Swift and WebKit developers working on Unicode.  Tom reached out to
+          arrange meetings, but hasn't heard back.  Apple developers are busy
+          preparing for WWDC; Tom will reach out again soon.</li>
+      <li>Tom brought up the recent news that Microsoft has added beta support
+          for UTF-8 as a system code page as of the Windows 10 April update.
+          Tom made some new contacts within Microsoft, but has not yet gotten
+          any further information about Microsoft's goals or plans with this
+          change.</li>
+    </ul>
+  </li>
+  <li>Rapperswil planning:
+    <ul>
+      <li>Tom asked for volunteers to standup for SG16 at the Saturday plenary
+          in Rapperswil and give a brief update.  Martinho and JeanHeyd agreed
+          to do so.</li>
+      <li>Tom asked for those who have attended meetings before to offer any
+          advice they have for first time attendees.</li>
+      <li>Zach recommended spending some time in each of the WGs.  Each WG has
+          its own personality.</li>
+      <li>It was noted that hanging around in WGs where one has a short paper
+          in the queue creates opportunities to present earlier than the paper
+          might otherwise be scheduled.  The
+          <a href="http://wg21.link/p1025">P1025</a> (normative Unicode reference)
+          and <a href="http://wg21.link/p1041">P1041</a> (char16_t/char32_t are
+          UTF-16/UTF-32) papers are good candidates.</li>
+      <li>Zach also mentioned not to be afraid to ask questions and to try to
+          read papers ahead of time.</li>
+      <li>Tom noted that anyone present in the room is allowed to vote in straw
+          polls, but that polls in plenary are generally restricted to ISO
+          members.  It was noted that Herb will make it clear when ISO membership
+          is required to vote.</li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p1030r0">P1030R0</a> - std::filesystem::path_view
+    <ul>
+      <li>Martinho liked it, especially section 4.1 (Assume UTF-8 for char based
+          interfaces).</li>
+      <li>Tom liked it with the exception of section 4.1.</li>
+      <li>Tom expressed a belief that the discussion in section 4.1 of how
+          existing char based interfaces on Windows handle conversion to
+          <tt>wchar_t</tt> for invocation of native filesystem interfaces is
+          incorrect.  Tom's understanding is that char based strings are transcoded
+          to <tt>wchar_t</tt> strings using the system code page.</li>
+      <li>Zach asked what is meant by ANSI encoding.</li>
+      <li>Tom explained that Microsoft has long referred to char based encodings
+          collectively as ANSI encodings despite these encodings not reflecting
+          an ANSI standard.</li>
+      <li><em>[Editor's note: Microsoft's glossary of terms on MSDN describes
+          the origin of the ANSI reference here.  It comes from a draft ANSI
+          specification that was eventually standardized as the ISO-8859 family
+          of encodings.  See the definition of "ANSI" at
+          <a href="https://msdn.microsoft.com/en-us/goglobal/bb964658.aspx#a">
+          https://msdn.microsoft.com/en-us/goglobal/bb964658.aspx#a</a>.
+          Microsoft now officially refers to these encodings as "Windows code
+          pages".]</em></li>
+      <li>Zach initiated a discussion on compile-time vs run-time encodings.
+          Section 4.1 describes a scenario in which file paths are pasted into
+          source code as string literals, but the existing interpretation of
+          such strings, when used as paths at run-time, depends on run-time
+          locale settings.</li>
+      <li>Peter mentioned that the Microsoft compiler now supports a
+          <tt>/utf-8</tt> option that purports to define the source and execution
+          character encodings.  However, that option really only affects how
+          literals from the source code are translated to the execution character
+          encoding (UTF-8 at compile time, but never UTF-8 at run-time (at least,
+          not until the newly introduced beta support in Windows 10 that requires
+          the user to opt in)).</li>
+      <li>Tom stated that we can't fix the compile-time vs run-time aspects of
+          the execution character encoding.</li>
+      <li>Martinho countered that <tt>char8_t</tt> offers a solution for this -
+          we know the compile-time and run-time encoding of <tt>char8_t</tt>
+          characters and strings.</li>
+      <li>Tom suggested a response to the author: maintain consistency with
+          existing code; <tt>char</tt> means "ANSI" encoding.  Use
+          <tt>char8_t</tt> for UTF-8 (follow the changes to <tt>path</tt>
+          proposed in the <tt>char8_t</tt> proposal.</li>
+      <li>Tom, Zach, and JeanHeyd all noted the presence of <tt>#ifdef</tt>s
+          surrounding the <tt>wchar_t</tt> based interfaces in the proposed
+          design.  We don't use <tt>#ifdef</tt> as specification for implementation
+          defined features.</li>
+      <li>JeanHeyd noted that that <tt>path_view</tt> should not fight with the
+          platform; don't propagate implementation defined behavior through
+          interfaces to the programmer.</li>
+      <li>Martinho observed that there is no rationale for providing
+          <tt>wchar_t</tt> based interfaces only for Windows; they are perfectly
+          applicable to other platforms as well.</li>
+      <li>Zach stated that <tt>path_view</tt> should work the same as
+          <tt>path</tt>; just as <tt>string_view</tt> does for <tt>string</tt>.
+          <tt>path_view</tt> should support the same set of constructors that
+          <tt>path</tt> has and they should behave the same.  If there is a need
+          for new constructors, they should be added to both <tt>path</tt> and
+          <tt>path_view</tt>.</li>
+      <li>Zack noted that <tt>path_view</tt> should be explicitly constructible
+          from <tt>path</tt>, not the other way around.  <em>[Editor's note: as
+          currently specified, <tt>path_view</tt> is constructible from
+          <tt>path</tt>, though the constructor isn't explicit.  Note that
+          <tt>string_view</tt>'s corresponding constructor is also not
+          explicit.]</em></li>
+      <li>Further discussion regarding memory allocation and the behavior of the
+          proposed <tt>c_str</tt> class ensued.  <em>[Editor's note: few details
+          of this discussion were recorded.  From what I recall, consensus was
+          that the memory allocation behavior should be implementation
+          defined.]</em></li>
+      <li>JeanHeyd asked how we should communicate our feedback to the author.</li>
+      <li>Zach replied with a preference for a direct person-to-person
+          response.</li>
+      <li>JeanHeyd volunteered to deliver feedback.</li>
+      <li>Poll: Use execution character encoding for <tt>char</tt> interfaces,
+          <tt>char8_t</tt> for UTF-8?
+        <ul>
+          <li>Unanimous consent.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p0882r0">P0882R0</a> - User-defined Literals for std::filesystem::path
+    <ul>
+      <li>Tom stated that SG16 concerns are limited to encoding issues; LEWG
+          should address any other concerns; e.g., naming.</li>
+      <li>Peter noted that the paper punts on UTF-8 support pending a solution
+          from the comittee for differentiating ordinary and UTF-8 string
+          literals.  Fortunately, we have a solution for that in the works!</li>
+      <li>It was asked why the UDLs are not <tt>constexpr</tt>; the answer is
+          because they produce <tt>path</tt> objects and the <tt>path</tt>
+          constructor allocates.</li>
+      <li>Mark asked if the UDLs should produce <tt>path_view</tt> objects ala
+          <a href="http://wg21.link/p1030">P1030</a> above and was rewarded
+          with a round of yeses.</li>
+      <li>Peter observed that the UDL names are very generic (ha ha) and that
+          the literal namespace proposed for them differs unnecessarily from
+          existing precedent (e.g., <tt>std::filesystem::literals</tt> vs
+          <tt>std::literals::filesystem</tt>.  <em>[Editor's note: This design
+          also results in the UDL declarations being visible following
+          <tt>using namespace std::filesystem</tt>; this may be
+          intentional.]</em></li>
+       <li>Poll: Contingent upon adoption of `char8_t`, add `char8_t` based overloads?
+         <ul>
+           <li>Unanimous consent.</li>
+         </ul>
+       </li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p0540r1">P0540R1</a> - A Proposal to Add split/join of string/string_view to the Standard Library 
+    <ul>
+      <li>Tom observed that the paper number and filename do not match.
+          <em>[Editor's note: Tom followed up with Hal and the author.]</em></li>
+      <li>Everyone in unison, "non-member functions please!"</li>
+      <li>Tom asked if there were any concerns about split/join functions
+          operating at the code unit level.</li>
+      <li>Martinho replied, no, those are useful operations for
+          splitting/constructing grapheme clusters.</li>
+      <li>Zach expressed concern about increasing the surface area of string
+          based interfaces.</li>
+      <li>Poll: Does adding these additional functions complicate future
+          efforts due to increasing the set of functionality to replicate at
+          code point or higher levels?<br/>
+<pre>
+    [ SF F N A SA ]
+       5 1 1 0  0
+</pre>
+      </li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p0645r2">P0645R2</a> - Text Formatting
+    <ul>
+      <li>Zach requested <tt>char8_t</tt> overloads.  <em>[Editor's note:
+          Peter has been planning to work on adding <tt>char16_t</tt> and
+          <tt>char32_t</tt> support.  There is an existing issue tracking
+          support for <tt>char16_t</tt> at
+          <a href="https://github.com/fmtlib/fmt/issues/698">
+          https://github.com/fmtlib/fmt/issues/698</a>.  That issue notes
+          that support for <tt>std::numpunct&lt;char16_t&gt;</tt> is
+          missing; that would presumably be an issue for <tt>char8_t</tt>
+          support as well.]</em></li>
+      <li>Zach observed that formatting only works for trivial encodings
+          in which one code unit equals one code point; otherwise, field
+          alignments won't match up in displayed text.</li>
+      <li>Martinho responded that, if a font is missing a glyph for a
+          combining character, then the combining character will likely be
+          displayed as a separate glyph.  Text layout is required to display
+          aligned text (e.g., depends on console, curses, etc...).</li>
+      <li>Tom asked how such display concerns can be addressed; <tt>format</tt>
+          is not a text display tool.</li>
+      <li>Zach asked how field size is specified.  Code units?  Code points?
+          "Characters"?</li>
+      <li>Peter provided a link to an existing github issue concerning field
+          size and UTF-8: <a href="https://github.com/fmtlib/fmt/issues/628">
+          https://github.com/fmtlib/fmt/issues/628</a>.</li>
+      <li>Tom noted that we were out of time; we'll continue discussion next
+          time and will invite Victor to join us.</li>
+    </ul>
+  </li>
+  <li>Tom stated our next meeting will be scheduled for three weeks from now
+      on June 20th.  The extra week is to give everyone a break following
+      Rapperswil.</li>
+</ul>
+
+
+<h1 id="2018_06_20">June 20th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Rapperswil recap.  Progress!</li>
+  <li>Continue review of P0645R2 (Text Formatting), hopefully with Victor
+      present if he can attend.</li>
+  <li>Review the draft D1097R0 proposal:
+    <ul>
+      <li>https://github.com/rmartinho/sg16/blob/master/papers/d1097r0.md</li>
+    </ul>
+  </li>
+  <li>Discuss what we want to learn from the Swift and WebKit developers.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Keld Simonsen</li>
+  <li>Mark Zeren</li>
+  <li>Martinho Fernandes</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>First order of business was to ensure that papers requiring updates
+      following the Rapperswil meeting are submitted in time for the
+      post-Rapperswil mailing.  Tom confirmed that P0482R4 had been submitted
+      and correspondence with Hal confirmed that P1025R1 (adopted at Rapperswil)
+      will be included in the mailing.  Though not discussed in Rapperswil,
+      Martinho plans to submit a revision of P1041 for the mailing.</li>
+  <li><a href="http://wg21.link/p0645r2">P0645R2</a> - Text Formatting
+    <ul>
+      <li>Victor started us off with a brief introduction of recent changes and
+          review in Rapperswil.</li>
+      <li>Victor reported having read the summary of our previous meeting and
+          discussion of P0645.</li>
+      <li>Discussion resumed regarding what field widths mean for multibyte
+          encodings and combining characters.</li>
+      <li>Victor asked if basing field widths on grapheme clusters would be
+          appropriate.</li>
+      <li>Zach provided an example of family emojis.  Consider 4 person code
+          points separated by zero width joiners.  Each person code point
+          combined with a ZWJ is a distinct grapheme cluster, but a single
+          glyph may be used to display all four clusters.  So, grapheme clusters
+          are not the right abstraction for field width.</li>
+      <li>Tom claimed that <tt>format</tt> should be used to format code
+          units.</li>
+      <li>Peter suggested assuming one column per code point.</li>
+      <li>Keld asked about other libraries; are there any that use abstractions
+          above code points for field formatting?</li>
+      <li>Tom stated that the competition is <tt>printf</tt> and iostreams.</li>
+      <li>Keld asked what ICU does.</li>
+      <li>Zach responded that he wasn't sure, but that Python uses code points
+          for field formatting.</li>
+      <li>Discussion then moved on to other topics briefly.</li>
+      <li>Zach expressed enthusiasm for <tt>format_to_n</tt>.</li>
+      <li>Tom asked if mixed character encodings are supported.  For example:
+        <ul><li>
+          <code>format("{}", u"text"); // execution character encoding for format string with UTF-16 argument.</code>
+        </li></ul>
+      </li>
+      <li>Victor stated that mixed encodings are not supported and result in
+          compilation failure.</li>
+      <li>Zach observed that, if <tt>char8_t</tt> overloads were added, that,
+          internally, <tt>format</tt> must consume code points.</li>
+      <li>Tom responded that this is true for any multibyte encoding, and
+          therefore true in general for the execution and wide character
+          encodings.</li>
+      <li>Victor agreed, but noted that operations other than fill and field
+          formatting could be optimized to avoid looking at code points.</li>
+      <li>Peter asked if any multibyte encodings allow a NUL byte in trailing
+          code unit sequences.  No such encodings were named.</li>
+      <li>Peter observed that, if an encoding library is used, <tt>format</tt>
+          can always just read code points.</li>
+      <li>Zach offered to provide Victor code using code point iterators from
+          <tt>Boost.Text</tt> that could be used to prototype code point based
+          approaches.</li>
+      <li>Discussion briefly turned to portability of <tt>wchar_t</tt> and
+          Keld's work to increase the number of C interfaces that do not rely
+          on global program state; e.g., locale data.  Keld wants to improve
+          support for working with multiple encodings in a single process.</li>
+      <li>Tom noted that such improvements are useful for our ideas around use
+          of compile-time known internal encodings with transcoding to run-time
+          determined encodings at program borders.</li>
+      <li>Tom asked how <tt>format</tt> handles signed and unsigned char; are
+          they treated as integral/arithmetic or character types?</li>
+      <li>Victor replied that he didn't recall and would have to check.</li>
+      <li>Keld asked about reentrancy.</li>
+      <li>Victor responded that the only global state references are for locale
+          data.</li>
+      <li>Keld recommended allowing strings to be tagged with encoding data.</li>
+      <li>Tom tried to bring discussion back to fill operations and field widths;
+          are we agreed on use of code points for field fill/alignment?</li>
+      <li>Martinho asked how a code point approach works when writing to a fixed
+          width buffer (of code units).</li>
+      <li>Victor mentioned that <tt>format_to_n</tt> takes a code unit count
+          constraint.</li>
+      <li>Peter observed that a code unit count constraint can result in
+          truncated code unit sequences.</li>
+      <li>Victor suggested that <tt>format_to</tt> could produce code points
+          instead.</li>
+      <li>Steve asked how to avoid writing broken code; code points produced are
+          likely going to be written to a code unit buffer anyway.</li>
+      <li>Keld stated that programmers like to write both code unit and code point
+          code; perhaps both should be supported.</li>
+      <li>Martinho claimed that truncated code unit sequences are probably not a
+          large concern; buffers are generally larger than required anyway.</li>
+      <li>Discussion again drifted towards encodings that are known at
+          compile-time vs run-time.</li>
+      <li>Keld asked what types are generally used for double byte character
+          sets; Japanese, Chinese, ...</li>
+      <li>Martinho responded that those tend to be variable length encodings
+          that switch between single byte and multibyte.</li>
+      <li>Tom agreed and mentioned ISO-2022 and escape sequences.</li>
+      <li>Discussion drifted back to code units vs code points.</li>
+      <li>Zach suggested that programmers will expect the output encoding to
+          match the format string, but that code points are more consistent and
+          natural.  If the <tt>n</tt> in <tt>format_to_n</tt> means something
+          different than for field widths, that will be a problem.</li>
+      <li>Victor agreed that programmers will expect to be filling a code unit
+          based buffer.</li>
+      <li>Tom observed that more discussion would be useful, but that we need
+          to move on.</li>
+      <li>Zach recommended trying to support both code unit and code point
+          based approaches and observe feedback and usage.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/rmartinho/sg16/blob/master/papers/d1097r0.md">D1097R0</a> - Named character escapes
+    <ul>
+      <li>Martinho started by requesting feeback on:
+        <ul>
+          <li>name matching (currently more limited than described by
+              <a href="https://www.unicode.org/reports/tr44/#UAX44-LM2">UAX44-LM2</a>)</li>
+          <li>lack of support for named character sequences.</li>
+        </ul>
+      </li>
+      <li>Tom recommended adding a small section that summarizes what is
+          actually proposed.  At present, the paper presents a number of options,
+          but one must read the proposed wording to determine which options are
+          actually proposed.</li>
+      <li>Tom expressed a preference for following the <tt>UAX44-LM2</tt> rule
+          for name matching.</li>
+      <li>Martinho responded with a dislike for the
+          <tt>U+1180 HANGUL JUNGSEONG O-E</tt> exception and noted that none of
+          the other languages he surveyed use <tt>UAX44-LM2</tt> for matching.</li>
+      <li>Keld noted existing APIs that allow specifying precision for matching.</li>
+      <li>Martinho clarified that general collation APIs don't apply here
+          (because of the <tt>U+1180 HANGUL JUNGSEONG O-E</tt> exception).</li>
+      <li>Tom asked if we should propose this for C and everyone responded yes.</li>
+      <li>Tom mentioned the paper should address the potential for code breakage.
+          <tt>"\N"</tt> has a meaning now (it means <tt>"N"</tt>).</li>
+      <li>Tom asked if it is permissible to construct these escapes using macro
+          concatentation.</li>
+      <li>Tom observed that <tt>'_'</tt> seemed to be missing in the definition of
+          <tt>c-char</tt>.</li>
+      <li>Martinho stated that is intentional; <tt>'_'</tt> would be needed for
+          <tt>UAX44-LM2</tt> matching, but that actual character names never use
+          <tt>'_'</tt>.</li>
+      <li>Zach suggested adding a Tony Table to compare use of <tt>\U</tt> and
+          <tt>\N{}</tt> escapes.</li>
+      <li>Tom suggested clarifying that <tt>\N{}</tt> escapes would not be
+          permitted in identifiers.</li>
+      <li>Tom asked about interaction with raw string literals;
+          <tt>r-char-sequence</tt> doesn't seem to include
+          <tt>universal-character-name</tt>.</li>
+      <li>Martinho responded that <tt>universal-character-name</tt> escapes are
+          not recognized in raw string literals; following existing precedent.</li>
+    </ul>
+  </li>
+  <li>Rapperswil recap:
+    <ul>
+      <li>Tom asked if Rapperswil attendees were able to connect with authors
+          of previously discussed papers in order to deliver our feedback.</li>
+      <li>JeanHeyd reported that connections did not happen.  However:
+        <ul>
+          <li>P1030 was not discussed in Rapperswil.</li>
+          <li>P0882 was discussed in LEWG but not well received.  No need for
+              follow up.</li>
+          <li>P0540 was discussed but LEWG feedback matched ours.  No need to
+              follow up.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>We ran out of time to discuss what we want to learn from the Swift and
+      WebKit developers.</li>
+  <li>Tom asked about renaming the SG16 mailing list from <tt>unicode</tt> to
+      <tt>sg16-unicode</tt>.  Both Tom and Martinho had been annoyed by the
+      similarity to the <tt>unicode.org</tt> mailing list by the same name.  No
+      objections were raised; Tom will follow up with Keld.</li>
+  <li>Tom noted that our next regularly scheduled meeting would fall on July
+      4th, a US holiday.  The next meeting will be scheduled for July 11th.</li>
+</ul>
+
+
+</body>
