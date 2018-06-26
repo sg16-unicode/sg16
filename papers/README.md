@@ -26,5 +26,5 @@ WG14 Number     | Title
 [P1025R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1025r0.html
 [P1025R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1025r1.html
 [P1041R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r0.md
-[P1041R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r1.md
+[P1041R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r1.html
 [P1080R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1080r0.html
