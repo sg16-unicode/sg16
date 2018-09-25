@@ -1,0 +1,799 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2018/07/11 - 2018/08/29</title>
+</head>
+
+<style type="text/css">
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+</style>
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>DXXXXR0 <em>Draft</em></td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2018-09-24</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2018/07/11 - 2018/08/29</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2018_07_11">
+      July 11th, 2018</a></li>
+  <li><a href="#2018_07_25">
+      July 25th, 2018</a></li>
+  <li><a href="#2018_08_29">
+      August 29th, 2018</a></li>
+</ul>
+
+
+<h1 id="2018_07_11">July 11th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss what we want to learn from Swift and WebKit developers.</li>
+  <li>Potentially review papers from the Rapperswil post-meeting mailing.</li>
+  <li>Review issues list and start identifying goals for San Diego.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Artem Tokmakov</li>
+  <li>Mark Zeren</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Apologies to JeanHeyd Meneide and Steve Downey; It seems technical issues
+      with BlueJeans prevented them (and others?) from joining the meeting.
+      This issue and conflict with the World Cup semi-finals reduced
+      attendance.</li>
+  <li>Tom reconfirmed intent to rename our mailing list, but has not yet made
+      progress on doing so.</li>
+  <li>We then started reviewing some papers from the Rapperswil post-meeting
+      mailing.</li>
+  <li><a href="http://wg21.link/p0732r2">P0732R2: Class Types in Non-Type Template Parameters</a>
+    <ul>
+      <li>Tom asked if <tt>std::text</tt> and/or <tt>std::text_view</tt>
+          should be literal types?</li>
+      <li>Tom noted this would require defining <tt>operator&lt;=&gt;</tt>.
+      <li>Mark suggested adding a <tt>std::text_literal</tt>, but then asked
+          about motivation:
+        <ul>
+          <li><tt>char8_t</tt> allows differentiating encoding for standard
+              mandated encodings.  Is there a need to track encoding through
+              non-type template parameters?</li>
+          <li><a href="http://wg21.link/p0784">P0784</a> would enable dynamic
+              allocation for literal types, so a separate (non-allocating) type
+              may not be required.</li>
+        </ul>
+      </li>
+      <li>Victor asked why <tt>operator&lt;=&gt;</tt> is relevant.</li>
+      <li>Tom explained that <tt>operator&lt;=&gt;</tt> is required for non-type
+          template parameters, but defining it for text is problematic because
+          it would be either expensive, or wrong for many use cases (e.g.,
+          because it would be code unit or code point based).</li>
+      <li>Tom suggested that <tt>std::fixed_string</tt> may suffice since
+          <tt>std::text_view</tt> could be layered on top.</li>
+      <li>Mark observed a solution would still be needed for encoding tagging
+          then.</li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p1030r1">P1030R1: std::filesystem::path_view</a>
+    <ul>
+      <li>Tom mentioned that we had reviewed the earlier P0 revision during our
+          May 30th meeting.</li>
+      <li>Tom noted that this revision addresses the concern we had with the
+          <tt>char</tt> based interfaces requiring UTF-8 encoding.  However,
+          it addresses this by replacing the <tt>char</tt> based interfaces
+          with <tt>std::byte</tt> based ones.  This doesn't match existing
+          practice for file name interfaces.</li>
+      <li>Tom mentioned that he would have liked to poll on this change, but
+          since we didn't have a quorum, we would not do so.  The poll would
+          have been to restore the <tt>char</tt> based interfaces, but to match
+          the encoding requirements for <tt>std::filesystem::path</tt>.</li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p1100r0">P1100R0: Efficient composition with DynamicBuffer</a>
+    <ul>
+      <li>Tom wondered if Mark wanted to look at this as potentially related to
+          <a href="http://wg21.link/p1010">P1010</a>.</li>
+      <li>Mark responded that he felt it isn't strongly related.</li>
+    </ul>
+  </li>
+  <li>We then discussed Victor's recent
+      <a href="http://www.open-std.org/pipermail/unicode/2018-July/000103.html">follow up email</a>
+      regarding
+      <a href="http://wg21.link/p0645">P0645</a> and interpretation of field widths.
+    <ul>
+      <li>Mark stated that this is fundamentally a console problem, but that
+          field widths are needed to implement programs like Eric Niebler's
+          range based calendar example.</li>
+      <li>Mark also asked if we can specify that fill characters only consume
+          one column of output.</li>
+      <li>Tom asked if we can rule out grapheme clusters as the unit of field
+          width on the basis that the library must support non-Unicode
+          encodings.</li>
+      <li>Victor suggested we could define a encoding agnostic concept of
+          grapheme clusters.  For Unicode, the concept is a 1x1 match with
+          grapheme clusters.  For other encodings, that concept might map to
+          code points with no higher abstraction.</li>
+      <li>Tom replied that doing so is viable and that <tt>text_view</tt> would
+          have to do so if its <tt>Character</tt> concept were to be redefined
+          in terms of grapheme clusters.</li>
+      <li>Victor reiterated that he wants to implement both code point and
+          grapheme cluster based approaches and explore use cases.</li>
+      <li>Tom observed that the concerns are effectively equivalent for consoles
+          and text editors; assuming use of a monospaced font.</li>
+      <li>Tom asked if <tt>format</tt> is intended as a <tt>printf</tt>
+          replacement.</li>
+      <li>Victor responded, yes, but that doesn't mean that we have to replicate
+          prior mistakes.</li>
+      <li>Tom suggested an experiment: Take Eric's calendar program and modify
+          it to display emojis for holidays; e.g., U+1F384 Christmas Tree on
+          December 25th.</li>
+    </ul>
+  </li>
+  <li>Discussion then turned to questions we'd like to discuss with the Swift
+      and WebKit teams.
+    <ul>
+      <li>JeanHeyd (absent due to technical problems), provided the following
+          five questions via Slack:
+        <ul>
+          <li>JM1: How many bug reports are related to users incorrectly
+              choosing which layer of abstraction to work with for Strings
+              (code units / code points / grapheme clusters)?
+            <ul>
+              <li>Tom attempted a clarification; since Swift strings are
+                  graphme cluster based, I think this question means, are users
+                  trying to do things at the grapheme cluster layer when they
+                  would be better served working at the code unit or code point
+                  level?</li>
+              <li>Mark posed the correlated question, how often do users try to
+                  work at code unit or code point level when they should just
+                  work at the grapheme cluster level?</li>
+            </ul>
+          </li>
+          <li>JM2: Has the decision to use Extended Grapheme Clusters presented
+              a problem (minor or major) in the usage?
+            <ul>
+              <li>Mark stated this should be the first question we ask.</li>
+              <li>Mark presented a different way of asking this question: What
+                  have been the best and worst results of this choice?</li>
+            </ul>
+          </li>
+          <li>JM3: Has anyone ever wanted to pry underneath the string
+              abstraction and perform their own set of text processing that
+              wasn't supported by the language (e.g., retrieve code units / code
+              points so they can do something that Swift did not let them do)?
+              If so, does it happen often?
+            <ul>
+              <li>Tom stated the answer to the first question is clearly yes.
+                  The second question is more about how often this happens and
+                  what the use cases are that motivate doing so.</li>
+              <li><em>[Editor's note: a use case may be to work around differences
+                  in grapheme cluster boundaries in different Unicode versions
+                  depending on the version of Swift or the underlying version
+                  of ICU.]</em></li>
+              <li>Mark expressed an interest in string builder use cases.  How
+                  are custom string builders created?</li>
+            </ul>
+          </li>
+          <li>JM4: Has Swift ever considered exposing lower-level unicode
+              database code point / script properties? CharacterSet seems to
+              have some of that functionality, but has more ever been requested
+              / asked for?
+            <ul>
+              <li>Tom expressed enthusiasm for this question.</li>
+            </ul>
+          </li>
+          <li>JM5: There's some indication that putting the normalization form
+              and such in the type system may prove beneficial. Has there been
+              any progress on that front?  We are looking to answer a similar
+              question for C++ up-front, and picking one normalization form that
+              might have the most up-front processing and performance benefits
+              for typical users.
+            <ul>
+              <li>Mark rephrased as, what was the rationale for choosing the
+                  current design?</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Tom then went over a list of questions he had come up with:
+        <ul>
+          <li>TH1: The Swift string manifesto is about 1 1/2 years old.  What
+              have you learned since?</li>
+          <li>TH2: If you were starting over, what would you change?
+            <ul>
+              <li>Tom stated that this isn't a very useful question; it's too
+                  open ended.</li>
+              <li>Mark stated that bug reports are more intersting; What have
+                  you had to change?</li>
+            </ul>
+          </li>
+          <li>TH3: How tied is the Swift string implementation to ICU?
+            <ul>
+              <li>Tom stated the intent of this question is to identify how
+                  much of ICU is needed to create a useful Unicode string
+                  class.</li>
+              <li>Tom added a second goal: to determine if the Swift developers
+                  would potentially be interested in replacing uses of ICU with
+                  standard C++ library features, if they existed.</li>
+            </ul>
+          </li>
+          <li>TH4: Swift's string is locale insensitive (yay!).  Was a locale
+              sensitive one considered?  Perhaps as a distinct type?
+            <ul>
+              <li>Tom stated the intent is to explore if a distinct type for
+                  localized strings might be useful (since locale is a run-time
+                  property not available at compile-time).</li>
+            </ul>
+          </li>
+          <li>TH5: How often does string interpolation suffice vs using string
+              formatting?
+            <ul>
+              <li>Tom asked Victor if he had considered string interpolation
+                  support when designing his <tt>format</tt> library.</li>
+              <li>Victor responded, yes, but with uncertainty regarding how to
+                  do it in C++ today.  Python started with a formatter and
+                  added interpolation later.  We could do likewise.</li>
+            </ul>
+          </li>
+          <li>TH6: Has canonical string equality been...
+            <ul>
+              <li>A performance issue?</li>
+              <li>A surprise to users?</li>
+            </ul>
+          </li>
+          <li>TH7: Have substrings turned out to work as well as hoped?
+            <ul>
+              <li>Tom noted that Swift substrings seem superficially similar to
+                  <tt>std::string_view</tt>, but with dynamic lifetime
+                  management of the underlying storage.</li>
+            </ul>
+          </li>
+          <li>TH8: Are the results of string interpolation always dynamic?
+              Does Swift have a constexpr equivalent and, if so, do they work
+              there?</li>
+          <li>TH9: Would you remove <tt>string.count()</tt> (returns "character"
+              count) if you could?
+            <ul>
+              <li>Tom posed an additional question: How often do people use
+                  <tt>string.count()</tt> incorrectly?</li>
+            </ul>
+          </li>
+          <li>TH10: Are the unicodeScalars, utf8, and utf16 views allocating?
+              Or are they lazy transformations?</li>
+          <li>TH11: There are a variety of "unsafe" methods.  Have they been
+              problematic?</li>
+        </ul>
+      </li>
+      <li>Mark suggested an additional question:
+        <ul>
+          <li>MZ1: Swift comparisons are provided.  Do users use them
+              incorrectly?  Have they been a performance problem?</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom stated that our next meeting will be scheduled for July 25th.</li>
+</ul>
+
+
+<h1 id="2018_07_25">July 25th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss the Unicode support experience with Swift and WebKit
+      representatives (tentative pending their availability).</li>
+  <li>Review our issues list and start identifying goals for San Diego.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Artem Tokmakov</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom announced that meeting with Swift developers was postponed due to
+      scheduling conflicts and that, in the meantime, we'll focus on interaction
+      with them over email.  <em>[Editor's note: Michael Ilseman and Dave
+      Abrahams responded to the initial set of questions.  Their responses
+      are available in the SG16 mailing list archive at
+      <a href="http://www.open-std.org/pipermail/unicode/2018-August/000113.html">
+      http://www.open-std.org/pipermail/unicode/2018-August/000113.html
+      ]</a></em></li>
+  <li>Discussion then proceeded with review of the
+      <a href="https://github.com/sg16-unicode/sg16/issues">SG16 issues
+      list</a>.</li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/2">
+      Issue #2: Deprecate <tt>std::ctype</tt>, <tt>std::ctype_byname</tt>,
+      <tt>std::isupper()</tt>, and <tt>std::toupper()</tt></a>
+    <ul>
+      <li>Zach suggested writing a direction paper regarding deprecation
+          policies.</li>
+      <li>Artem, observing that the indicated functions are used by iostreams
+          (e.g., by <tt>std::uppercase</tt>), suggested we just go the extra
+          mile and deprecate iostreams to a mixture of approval and
+          laughter.</li>
+      <li>Mark suggested that the issue scope be limited to previously
+          identified functions.</li>
+      <li>Tom agreed and renamed the issue (previously "Deprecate
+          text/string/character interfaces that are too broken to fix").</li>
+      <li>Zach mentioned that <tt>isupper</tt>, <tt>isnum</tt>, and
+          <tt>isalpha</tt> are definitely broken for Unicode and expressed a
+          preference that, if we're going to deprecate them, we should do so
+          early in order to encourage replacement.</li>
+      <li>Zach went on to explain that replacements that properly handle
+          Unicode must take locale into account in order to do title casing
+          and case mapping correctly.</li>
+      <li>Tom asked for clarification - a code point based <tt>toupper()</tt>
+          doesn't make sense?</li>
+      <li>Zach responded, no; more information is needed.</li>
+      <li>Tom asked, what about <tt>isupper()</tt>?</li>
+      <li>Zach answered, Unicode properties can answer that question, but are
+          insufficient for doing case conversions.</li>
+      <li>Tom summarized, the take away is that interfaces in
+          <tt>&lt;ctype&gt;</tt> and <tt>&lt;locale&gt;</tt> are definitely
+          broken.</li>
+      <li>Mark added, yup, especially considering that <tt>int</tt> is
+          signed.</li>
+      <li>Artem asked about support for UTF-8, UTF-16, and UTF-32.</li>
+      <li>Mark replied, yup, those are problematic.  Even for <tt>char32_t</tt>
+          due to combining code points.</li>
+      <li>Tom stated this is not a high priority for C++20; no objections.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/3">
+      Issue #3: Uninitialized append for contiguous containers</a>
+    <ul>
+      <li>Mark noted that <a href="http://wg21.link/p1010">P1010</a> was not
+          presented in Rapperswil; hopefully it will be in San Diego.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/4">
+      Issue #4: basic_string specification cleanup</a>
+    <ul>
+      <li>Mark mentioned that Tim Song recently proposed some cleanup, but those
+          changes don't address Mark's iterator invalidation concerns.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/5">
+      Issue #5: char8_t (WG21 P0482, WG14 N2231)</a>
+    <ul>
+      <li>Tom stated that this is on target for C++20.  Tom has some minor
+          wording changes to make per request from early LWG review.</li>
+      <li>Mark asked about the WG14 proposal.</li>
+      <li>Tom replied that WG14 is meeting again in October and that he hopes
+          to have a revision ready to present.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/6">
+      Issue #6: Specify that char16_t and char32_t literals are UTF-16 and UTF-32 respectively</a>
+    <ul>
+      <li>Tom indicated that the paper for this issue,
+          <a href="http://wg21.link/p1041r1">P1041R1</a>, is ready for
+          presentation in San Diego.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/7">
+      Issue #7: Modern terminology updates</a>
+    <ul>
+      <li>Zach observed that this is something that could be done for C++20
+          since the changes won't impact implementors.</li>
+      <li>Tom agreed but lamented a lack of time for working on it now.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/8">
+      Issue #8: Explicitly disallow unnamed Unicode codepoints in
+      <a href="http://eel.is/c++draft/lex.charset#2">
+      http://eel.is/c++draft/lex.charset#2</a></a>
+    <ul>
+      <li>Tom expressed a belief that this issue is complete.  Martinho
+          discussed it with CWG members in Rapperswil and submitted a
+          <a href="https://github.com/cplusplus/draft/pull/2201">
+          pull request</a> that was accepted as an editorial issue.</li>
+      <li><em>[Editor's note: Tom was mistaken.  The accepted pull request
+          addressed a terminology issue ("short name" vs "short identifier");
+          the concern tracked by this issue remains, though Martinho has a
+          draft paper
+          <a href="https://github.com/sg16-unicode/sg16/blob/master/papers/d1139r0.md">
+          D1139</a> that addresses it.]</em></li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/9">
+      Issue #9: Requiring wchar_t to represent all members of the execution
+      wide character set does not match existing practice</a>
+    <ul>
+      <li>Artem summarized: the standard requires that all members of the
+          execution wide character set be representable in a single
+          <tt>wchar_t</tt> value.</li>
+      <li>Zach stated a preference for treating this as low priority.  Mark
+          agreed.</li>
+      <li>Zach added that <tt>wchar_t</tt> is already a portability nightmare
+          and there is therefore little incentive to try and fix it.  Mark
+          agreed.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/15">
+      Issue #15: Add support for named Unicode character escapes</a>
+    <ul>
+      <li>Tom indicated that the paper for this issue,
+          <a href="http://wg21.link/p1097r1">P1097R1</a>, is ready for
+          presentation in San Diego.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/16">
+      Issue #16: code_point_sequence[_view]</a>
+    <ul>
+      <li>Tom mentioned that Lyberta, the individual that filed this issue,
+          had also discussed it on the mailing list.</li>
+      <li>Zack asked for clarification regarding what this issue is about.</li>
+      <li>Mark summarized: this is the question of whether a <tt>text</tt> type
+          should have <tt>begin()</tt> and <tt>end()</tt> members that iterate
+          over grapheme clusters or code points or whether the type should
+          not be a range, but provide explicit access to EGC and code point
+          ranges.</li>
+      <li>Tom added that Lyberta had also wanted to expose differences between
+          encoding schemes and encoding forms, though it seems this was driven
+          by purity of design goals rather than use cases.  Lyberta appeared to
+          want to be able to, effectively, reinterpret cast a sequence of
+          UTF16-BE code units (bytes) to a sequence of UTF-16 code units
+          (<tt>char16_t</tt>).  But that doesn't work (portably) because bytes
+          and <tt>char16_t</tt> might be the same size.</li>
+      <li>Mark commented, well that is fine, but don't put that in the standard
+          then.  That's why we like C++; it lets you break the rules.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/30">
+      Issue #30: Unclear behavior for octal and hex escape sequences in Unicode
+      character and string literals</a>
+    <ul>
+      <li>Tom expressed a preference for making character literals like
+          <tt>u8'\x80'</tt> well-formed; this matches existing practice.</li>
+      <li>Zach disagreed and presented the perspective that <tt>u8</tt>,
+          <tt>u</tt>, and <tt>U</tt> literals should always produce well-formed
+          UTF sequences.</li>
+      <li>Tom objected with the observation that <tt>u8'\x80'</tt> can't produce
+          well-formed UTF-8 since it only produces a single code unit.</li>
+      <li>Zach suggested that perhaps <tt>u8'\x80'</tt> should be allowed, but
+          <tt>u8"\x80"</tt> should not be.</li>
+      <li>Mark stated that both should be allowed because the programmer
+          explicitly used a hex (or octal) escape sequence.</li>
+      <li>Zach objected saying that if he were to use an escape sequence that he
+          wants the compiler to validate it.</li>
+      <li>Mark admitted seeing Zach's point.</li>
+      <li>Zach stated that, if a programmer wants to create an ill-formed
+          sequence for some reason, then they should use <tt>bit_cast</tt> from
+          a <tt>char</tt> sequence after creating the data.  The intent of
+          adding a <tt>u8</tt> prefix to a string is to request well-formed
+          UTF-8.</li>
+      <li>Tom disagreed and stated the intent of adding a <tt>u8</tt> prefix is
+          to enable transcoding from the source character set to UTF-8.</li>
+      <li>Mark noted that this distinction is important due to planned changes
+          for <tt>char8_t</tt>.</li>
+      <li>Tom disagreed and stated this is orthogonal since it is independent
+          of the type system.</li>
+      <li>Tom noted that we can address this as a core issue or by writing a
+          paper.</li>
+      <li>Mark said we should write a paper since there are different options
+          for what the behavior should be.  Zach agreed.</li>
+      <li>Tom suggested that a core issue be filed to address the difference in
+          what the standard states and in what current implementations actually
+          do.  A separate paper can then address what the desired behavior
+          is.</li>
+      <li>Zach stated that he doesn't think a defect report suffices to address
+          this.</li>
+      <li>Tom stated that he'll file a core issue; Zach and Mark can follow up
+          with a paper.</li>
+      <li>Mark mentioned that Martinho has a stake in this; that he wanted hex
+          and octal escapes to be a back door.</li>
+      <li>JeanHeyd confirmed and agreed that hex and octal escapes should
+          function as back doors.  If a programmer wants to ensure well-formed
+          UTF, use <tt>\u</tt> or <tt>\U</tt> or (hopefully soon),
+          <tt>\N{}</tt>.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/31">
+      Issue #31: std::text and std::text_view</a>
+    <ul>
+      <li>Tom: On-going.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/32">
+      Issue #32: <tt>std::char_traits&lt;char16_t&gt;::eof()</tt> requires
+      <tt>uint_least16_t</tt> to be larger than 16 bits (LWG#2959)</a>
+    <ul>
+      <li>Tom summarized: All 16-bit values are valid UTF-16 code units.  This
+          doesn't leave any room for a 16-bit value to be used to indicate EOF.
+          Implementations often use <tt>0xFFFF</tt> to indicate EOF.  The
+          result is spurious mismatches with
+          <tt>std::char_traits&lt;char16_t&gt;::eof()</tt> when text encodes
+          (valid) UTF-16 <tt>0xFFFF</tt> code units.</li>
+      <li>Zach observed that this isn't solvable without switching to a larger
+          <tt>int_type</tt>.</li>
+      <li>Tom agreed but noted that it is an ABI break.</li>
+      <li>Tom added that libstdc++ made a change to minimize problems by
+          mapping <tt>0xFFFF</tt> code units to <tt>0xFFFD</tt> when comparing
+          against <tt>eof()</tt>, but this doesn't solve the problem.</li>
+    </ul>
+  </li>
+  <li>Tom asked what should be on the list for C++20.  Our <tt>char8_t</tt>,
+      <tt>char16_t</tt> and <tt>char32_t</tt> literals are UTF-16/UTF-32, named
+      escape sequences, and uninitialized string append proposals are underway.
+      We could make progress on other issues or work towards C++23 goals like
+      <tt>std::text</tt> and <tt>std::text_view</tt>.</li>
+  <li>Zach observed that the direction group would likely prioritize feature
+      work over existing issues.</li>
+  <li>Tom agreed and summarized, it sounds like prioritize features, resolve
+      issues opportunistically.</li>
+  <li>Zach then provided an update on Boost.Text.  He expects to have it ready
+      for submission for Boost review soon; David Sankel has agreed to
+      assist.</li>
+  <li>Zach added that he got collation based text searching working and that
+      it was fun because he could use Boyer-Moore searching for it.  He asked
+      if any of us had used full collation based searching before.</li>
+  <li>Artem responded that most people want linguistic searching; for example,
+      searches for "frog" return "toad".</li>
+  <li>Mark observed that linguistic searching goes a bit beyond Unicode.</li>
+  <li>JeanHeyd asked if we should be considering exposing the Unicode character
+      database.  Python and Java do <em>[Editor's note: and the next version
+      of Swift will]</em>.</li>
+  <li>Tom was unsure and noted that programmers need for properties like
+      "is number" and "is space" often have more strict constraints than
+      Unicode; e.g., when parsing some mini-language.</li>
+  <li>Zach added that, for full text processing, you're generally not looking
+      at those properties either.</li>
+  <li>Mark observed that adding the timezone database nearly made some
+      committee members oppose the feature due to the extra 1MB or so of
+      size.</li>
+</ul>
+
+
+<h1 id="2018_08_29">August 29th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>SG16 direction. Where are we heading? Big picture.</li>
+  <li>Code points, EGCs, or explicit ranges for text views/containers?</li>
+    <ul>
+      <li>How to decide? Pick a direction now? Write a pros/cons paper for the committee?</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Artem Tokmakov</li>
+  <li>JF Bastien</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>With apologies from the editor, this summary writeup was very much
+      delayed.</li>
+  <li>Zach started off with an update on Boost.Text.  He noted that
+      implementing the Uncode bidirectional algorithm was challenging.  Noone
+      was surprised.</li>
+  <li>Tom provided a brief summary for the agenda.  Basically to review our
+      direction and confirm common goals and scope.</li>
+  <li>JF asked what we have planned for C++20 to which Tom replied that we have
+      a few small features in the queue and might otherwise take on some
+      wording cleanup.</li>
+  <li>Steve asked about timing for a potential TS and discussion ensued
+      regarding how to get usage experience vs the benefits of going straight
+      into the standard.</li>
+  <li>Tom proposed a few statements to be considered as axioms, guidelines,
+      questions, or possible directives for our work.</li>
+  <li>(Axiom) 1: C++ has a long history of supporting non-Unicode encodings; we
+      can't abandon legacy encodings.
+    <ul>
+      <li>JF brought up the concept of bridging with a comparison to
+          <tt>std::thread</tt> and <tt>native_handle</tt>.  E.g., an interface
+          could provide a Unicode centric interface that abstracts support for
+          legacy encodings.
+    </ul>
+  </li>
+  <li>(Axiom) 2: execution and wide execution character encoding will remain
+      run-time properties, <tt>char8_t</tt>, <tt>char16_t</tt>, and
+      <tt>char32_t</tt> encodings will remain compile-time properties.
+    <ul>
+      <li>Tom asserted that legacy compatibility prevents mandating that the
+          execution and wide execution encodings be fully known at compile
+          time and noted that they can be changed dynamically by calling
+          <tt>setlocale</tt>.</li>
+      <li>Tom also noted that WG14 is considering allowing a program's locale
+          to be dynamically changed on a per-thread basis.  See
+          <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm">
+          WG14 N2226</a>.</li>
+      <li>Artem asked how much we've been looking at existing locale
+          support.</li>
+      <li>Zach responded that the existing locale support is insufficient to
+          implement some parts of Unicode, in particular, support for
+          tailoring.</li>
+      <li>JF mentioned that Javascript internationalization may be a good
+          resource with regard to how to map locale information to Unicode.</li>
+    </ul>
+  </li>
+  <li>(Guideline) 3: Encourage the internal vs external encoding model with
+      UTF-8 as the preferred internal encoding.
+    <ul>
+      <li>Tom asked if it is reasonable to encourage use of a particular
+          encoding as the internal encoding.</li>
+      <li>Zach replied that he feels we must in order to avoid having to
+          perform internal conversion rather than (only) conversions at
+          component boundaries.</li>
+      <li>Mark suggested that extensions could enable support for other
+          encodings.</li>
+      <li>Peter emphasized existing advocacy and trends with regard to UTF-8:
+        <ul>
+          <li><a href="https://utf8everywhere.org">
+              https://utf8everywhere.org</a></li>
+          <li><a href="https://w3techs.com/technologies/overview/character_encoding/all">
+              https://w3techs.com/technologies/overview/character_encoding/all</a></li>
+        </ul>
+      </li>
+      <li>Tom asked JF if he could comment regarding how UTF-8 fits into the
+          Apple ecosystem.</li>
+      <li>JF responded that, as long as convenient transcoding interfaces are
+          available, that it wouldn't be an issue.</li>
+      <li>Tom asked if restricting access to code units in <tt>std::text</tt>
+          (in order to allow the internal encoding to be implementation detail)
+          would break use cases.</li>
+      <li>Zach responded yes, that prevents passing the underlying code unit
+          sequence to C APIs.  <em>[Editor's note: this response presumes that
+          the underlying code unit sequence contains a null terminator]</em></li>
+    </ul>
+  </li>
+  <li>(Directive) 4: Improve support for transcoding at program borders
+      (command line, env vars, stdin, stdout, text files, network).
+    <ul>
+      <li>Zach suggested not focusing on improving this now; let <tt>fmt</tt>
+          deal with I/O; don't enhance iostreams.</li>
+      <li>Mark stated that we don't have to fix all of the problems with the
+          standard library.</li>
+    </ul>
+  </li>
+  <li>(Question) 5: Do <tt>std::text</tt> and <tt>std::text_view</tt> replace
+      <tt>std::string</tt> in new programs?
+    <ul>
+      <li>Mark stated no, not as a drop in replacement.</li>
+      <li>Zach noted that we want to continue using <tt>std::string</tt> for
+          simple cases.</li>
+      <li>Tom asked, for new code, do we advocate a preference for
+          <tt>std::text</tt> and <tt>std::string</tt> only when needed?</li>
+      <li>Zach stated no, for performance reasons.</li>
+      <li>Tom clarified: that indicates a specific reason to prefer
+          <tt>std::string</tt> in some context, but in general, can we advocate
+          use <tt>std::text</tt> unless there is a reason not to?</li>
+      <li>Zach responded that an AAT (Almost Always Text) rule would make
+          sense.</li>
+      <li>Peter asked if it would ever be wrong to use <tt>std::text</tt>
+          instead of <tt>std::string</tt>.</li>
+      <li>Zach replied, no.</li>
+      <li>Peter provided an example by way of <tt>set&lt;text&gt;</tt>.
+          If <tt>std::text</tt> comparisons are expensive (e.g., canonical
+          equivalence vs lexicographical), use as a container element may not
+          be desirable.</li>
+      <li>Zach noted that might be a reason to specialize
+          <tt>std::less</tt>.</li>
+      <li>Zach observed that comparison cost is only an issue for relational
+          comparison, equivalence is inexpensive if the text is already
+          normalized.</li>
+      <li>Mark summarized, <tt>std::text</tt> provides storage, comparisons
+          need specialized support.</li>
+    </ul>
+  </li>
+  <li>(Question) 6: How do we manage <tt>std::text</tt> and <tt>std::string</tt>
+      conversions?
+    <ul>
+      <li>Tom asked if we need the ability to transfer buffer ownership between
+          <tt>std::string</tt> and <tt>std::text</tt></li>
+      <li>Mark replied, yes, and that it needs to handle short buffer
+          optimizations, but that this is lower priority than making the
+          Unicode algorithms available.</li>
+      <li>Artem observed that <tt>std::string_view</tt> helps here.</li>
+    </ul>
+  </li>
+  <li>(Question) 7: Where do null terminated strings fit in?
+    <ul>
+      <li>Tom asked, can we try to reduce demand for them?  Perhaps propose
+          a string/text type to WG14?</li>
+      <li>Everyone replied, not quickly :)</li>
+      <li>Mark asked if <tt>std::text</tt> needs null termination.</li>
+      <li>Zach replied that it can be provided at the code unit level for C
+          compatibility, but doesn't make sense to provide null termination
+          for code point or grapheme cluster sequences.</li>
+    </ul>
+  </li>
+  <li>(Question) 8: Where do Unicode algorithms fit into the library and are
+      they independent of <tt>std::text</tt>?
+    <ul>
+      <li>Tom stated a preference that Unicode algorithms are usable with
+          arbitrary string types.</li>
+      <li>Zach agreed stating that we should have code point range/iterator
+          based interfaces as well as grapheme cluster range based
+          interfaces.</li>
+    </ul>
+  </li>
+  <li>(Directive) 9: Adopt useful features from other languages.
+    <ul>
+      <li>Tom clarified, for example, named escapes as proposed in
+          <a href="http://wg21.link/p1097">P1097</a>.</li>
+      <li>No disagreement.</li>
+    </ul>
+  </li>
+  <li>(Directive) 10: Fix existing issues as needed.
+    <ul>
+      <li>No disagreement.</li>
+    </ul>
+  </li>
+  <li>(Question) 11: What role do we take with WG14?
+    <ul>
+      <li>Tom asked, the question is really how much time to spend here.</li>
+      <li>Zach stated that engaging with WG14 over <tt>char8_t</tt> and
+          terminology updates makes sense.</li>
+      <li>Mark observed that making Unicode data available via a C API could
+          be useful.</li>
+    </ul>
+  </li>
+  <li>(Question) 12: What is our target schedule?
+    <ul>
+      <li>Steve suggested mostly targeting C++23, not a TS.</li>
+      <li>Zach noted that we need to ensure usage experience and that we have
+          bandwidth limitations.</li>
+    </ul>
+  </li>
+</ul>
+
+
+</body>
