@@ -350,10 +350,24 @@ within their scope are encouraged.
 <h2>Directive 1: Standardize new encoding aware text container and view types</h2>
 
 <p>This is the topic that SG16 participants have so far spent the most time
-discussing.  We have consensus on the desire for new <tt>std::text</tt> and
-<tt>std::text_view</tt> types/templates, but do not yet have papers that
-explore or propose particular designs.  Our discussions have focused on
-questions such as:
+discussing, but we do not yet have papers that explore or propose particular
+designs.
+</p>
+
+<p>We have general consensus on the following design directions:
+<ul>
+  <li>A new <tt>std::text</tt> type that is an owning string type with a
+      statically known character encoding.</li>
+  <li>A new <tt>std::text_view</tt> type that is a non-owning string type
+      with a statically known character encoding.</li>
+  <li>These types will not have the large interface exposed by
+      <tt>std::string</tt>.</li>
+  <li>These types will encourage processing of code points and grapheme
+      clusters while permitting efficient access to code units.</li>
+</ul>
+</p>
+
+<p>Discussion continues for questions such as:
 <ul>
   <li>Should these types be ranges and, if so, should their <tt>value_type</tt>
       reflect code points or extended grapheme clusters?  Or, should these
@@ -361,6 +375,11 @@ questions such as:
       <tt>as_code_points()</tt> and <tt>as_graphemes()</tt> member functions)
       that require the programmer to explicitly choose a level of abstraction
       to work at?</li>
+  <li>Can these types satsify the complexity requirements for ranges?  (Ranges
+      require O(1) for calls to <tt>begin()</tt> and <tt>end()</tt>, but
+      iteration by code point or grapheme cluster may consume an arbitrary
+      number of code units due to ill-formed code unit sequences or arbitrary
+      numbers of combining code points)</li>
   <li>Should these types be comparable via standard operators?  If so, should
       comparison be Lexicographical (fast, but surprising if text is not
       normalized) or be based on canonical equivalence (slower, but consistent
@@ -372,6 +391,7 @@ questions such as:
   <li>Should these types support a single fixed encoding (UTF-8)?  Or should
       multiple encodings be supported as proposed in P0244?</li>
   <li>Should these types enforce a normalization form on UTF encoded text?</li>
+  <li>Should these types include allocator support?</li>
   <li>Should these types replace use of <tt>std::string</tt> and
       <tt>std::string_view</tt> in most text/string processing code?</li>
 </ul>
