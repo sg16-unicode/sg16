@@ -22,7 +22,7 @@ table#header td
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2018-10-03</td>
+    <td>2018-10-06</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -47,11 +47,26 @@ Summaries of these meetings are available at
 https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md</a>.
 </p>
 
+<p>Our proposals so far have focused on relatively small or foundational
+features that have a realistic chance of being adopted for C++20.  These
+include:
+<ul>
+  <li>P0482: char8_t: A type for UTF-8 characters and strings</li>
+  <li>P1025: Update The Reference To The Unicode Standard</li>
+  <li>P1041: Make char16_t/char32_t string literals be UTF-16/32</li>
+  <li>P1072: Default Initialization for basic_string</li>
+  <li>P1097: Named character escapes</li>
+</ul>
+All other work that we are pursuing is targeting C++23 or later.
+</p>
+
 <p>This paper discusses a set of constraints, guidelines, directives, and
-non-directives intended to guide our efforts as we pursue improvements to
-Unicode support in C++.  Paper authors proposing Unicode or text processing
-features are encouraged to consider the perspectives and guidelines discussed
-here in their designs, or to submit papers arguing against them.</p>
+non-directives intended to guide our continuing efforts to improve Unicode
+and text processing support in C++.  Paper authors intending to propose Unicode
+or text processing related features are encouraged to consider the perspectives
+and guidelines discussed here in their designs, or to submit papers arguing
+against them.
+</p>
 
 
 <h1>Constraints: Accepting the things we cannot change</h1>
@@ -71,13 +86,33 @@ short term.
 the execution and wide execution character encodings.  Popular and commercially
 significant platforms such as Windows and z/OS continue to support a wide array
 of ASCII and EBCDIC based encodings for the execution character encoding as
-required for compatibility by their long time customers.  Microsoft does not
-yet offer full support for UTF-8 as the execution encoding for its compiler
-(the recently introduced <tt>/utf-8</tt> option does not affect the behavior of
-their standard library implementation, nor is UTF-8 selectable as the execution
-encoding at run-time via environment settings or by calling
-<tt>setlocale()</tt>).  Standarizing UTF-8 as the execution character encoding
-is simply not an option for the foreseeable future.
+required for compatibility by their long time customers.
+</p>
+
+<p>Might these platforms eventually move to UTF-8 or possibly cease to be
+relevant for new C++ standards?
+</p>
+
+<p>Microsoft does not yet offer full support for UTF-8 as the execution
+encoding for its compiler.  Support for a <tt>/utf-8</tt> compiler option was
+added recently, but it does not affect the behavior of their standard library
+implementation, nor is UTF-8 selectable as the execution encoding at run-time
+via environment settings or by calling <tt>setlocale()</tt>.  Recent Windows
+10 releases now support a beta option that allows setting the Windows system
+code page to UTF-8 and this does affect the standard library (as well as all
+other programs running on the system).  These additions indicate that it will
+likely be <em>possible</em> to write native UTF-8 programs for Windows using
+the Microsoft compiler in the not too distant future.  However, there will be
+existing software written for Windows that will need to be migrated to new
+C++ standards without incurring the cost of transition to UTF-8 for a long time
+to come.
+</p>
+
+<p>IBM has not publicly released a C++11 compliant version of their xlC compiler
+for z/OS.  However, they have publicly released support for Swift on z/OS and
+Swift is built on top of LLVM and Clang.  Though IBM has not publicly released
+a port of Clang to z/OS, this indicates that such a port exists and posts to a
+few mailing lists confirm it.
 </p>
 
 <p>The <tt>char16_t</tt> and <tt>char32_t</tt> encodings are currently
@@ -105,11 +140,12 @@ ensues.
 the execution encoding is determined at program startup based on the current
 active code page.  On POSIX platforms, the run-time encoding is determined
 by the <tt>LANG</tt>, <tt>LC_ALL</tt>, or <tt>LC_CTYPE</tt> environment
-variables.  A recent proposal to WG14 (N2226) proposes allowing the current
-locale settings to vary by thread.  Existing programs depend on the
-ability to dynamically change the execution encoding (within reason) in order
-for a server process to concurrently serve multiple clients with different
-locale settings.  Attempting to restrict the ability to dynamically change
+variables.  Some existing programs depend on the ability to dynamically change
+(via POSIX <tt>uselocale()</tt> or Microsoft's <tt>_configthreadlocale()</tt>)
+the execution encoding (within reason) in order for a server process to
+concurrently serve multiple clients with different locale settings.  A recent
+proposal to WG14 (N2226) proposes allowing the current locale settings to
+vary by thread.  Attempting to restrict the ability to dynamically change
 the execution encoding would break existing code.
 </p>
 
@@ -125,12 +161,12 @@ are known at comple-time.
 
 <p>On POSIX derived systems, the primary interface to the operating system is
 via the ordinary character encoding.  This contrasts with Windows where the
-primary interface is via the wide encoding and interfaces defined in terms of
-<tt>char</tt> are implemented as wrappers around their wide counterparts.
-Unfortunately, such wrappers are often poor substitutes for use of their wide
-cousins due to transcoding limitations; it is common that the ordinary
-execution encoding is unable to represent all of the characters supported by
-the wide execution encoding.
+primary interface is via the wide execution encoding and interfaces defined in
+terms of <tt>char</tt> are implemented as wrappers around their wide
+counterparts.  Unfortunately, such wrappers are often poor substitutes for use
+of their wide cousins due to transcoding limitations; it is common that the
+ordinary execution encoding is unable to represent all of the characters
+supported by the wide execution encoding.
 </p>
 
 <p>The designers of the C++17 filesystem library had to wrestle with this
@@ -207,7 +243,7 @@ it (e.g., to enable better type safety and overloading).  However, gratuitous
 departure creates unnecessary interoperability and software composition
 challenges.  Where it makes sense, proposing features that are applicable for
 C to WG14 will help to keep the common subset of the languages as large as it
-can reasonably be.  P1097 is again a great example of a feature that would be
+can reasonably be.  P1041 and P1097 are great examples of features that would be
 appropriate to propose for inclusion in C.
 </p>
 
@@ -229,9 +265,9 @@ abide by the encodings indicated by locale settings.  But internally, it is
 desirable to work with a limited number of encodings (preferably only one)
 that are known at compile time, and optimized for accordingly.  This suggests
 a design in which transcoding is performed from dynamically determined external
-encodings to an internal encoding at program boundaries; when reading files,
-standard input/output streams, command line options, environment variables,
-etc...  This is standard practice today.
+encodings to a statically known internal encoding at program boundaries; when
+reading files, standard input/output streams, command line options, environment
+variables, etc...  This is standard practice today.
 </p>
 
 <p>There are two primary candidates for use as internal encodings today:
@@ -240,7 +276,7 @@ the latter remains the primary system encoding on Windows.  There is no
 encoding that is the best internal encoding for all programs.  We face a
 choice here: do we design for a single well known (though possibly
 implementation defined) internal encoding?  Or do we continue the current
-practice of each program choosing its own internal encoding?  Active SG16
+practice of each program choosing its own internal encoding(s)?  Active SG16
 participants have not yet reached consensus on these questions.
 </p>
 
@@ -336,6 +372,8 @@ questions such as:
   <li>Should these types support a single fixed encoding (UTF-8)?  Or should
       multiple encodings be supported as proposed in P0244?</li>
   <li>Should these types enforce a normalization form on UTF encoded text?</li>
+  <li>Should these types replace use of <tt>std::string</tt> and
+      <tt>std::string_view</tt> in most text/string processing code?</li>
 </ul>
 </p>
 
@@ -360,6 +398,11 @@ requirements would be helpful here.  Some questions to explore:
       to achieve acceptable performance?</li>
   <li>Can these interfaces accommodate segmented data structures such as
       ropes?</li>
+  <li>Many Unicode algorithms require additional context such as the language
+      of the text (Russian, German, etc...).  How should this information
+      be supplied?  The existing facilities exposed via <tt>std::locale</tt>
+      are more oriented towards abstracting operations than providing this
+      type of information.</li>
 </ul>
 </p>
 
@@ -417,9 +460,20 @@ user input and graphical rendering of text will remain out of scope for SG16.
 <h2>Non-directive 2: Fonts, graphical text rendering</h2>
 
 
+<h1>Acknowledgements</h1>
+
+<p>FIXME
+</p>
+
+
 <h1>References</h1>
 
 <ul>
   <li>FIXME</li>
+  <li>https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os/</li>
+  <li>http://lists.llvm.org/pipermail/cfe-dev/2018-January/056721.html</li>
+  <li>https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html</li>
 </ul>
+
+
 </body>
