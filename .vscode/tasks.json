@@ -1,0 +1,43 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "d1238r0",
+			"type": "shell",
+			"command": "bikeshed",
+			"args": [
+				"--print=plain",
+				"spec",
+				"${workspaceFolder}/papers/d1238r0.bs",
+				"${workspaceFolder}/papers/d1238r0.html"
+			],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "dedicated"
+			}
+		},
+		{
+			"label": "d1238r0 Auto",
+			"type": "shell",
+			"command": "bikeshed",
+			"args": [
+				"--print=plain",
+				"watch",
+				"${workspaceFolder}/papers/d1238r0.bs",
+				"${workspaceFolder}/papers/d1238r0.html"
+			],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "dedicated"
+			}
+		},
+	]
+}
