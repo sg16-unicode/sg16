@@ -1,0 +1,2857 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+
+<title>char8_t: A type for UTF-8 characters and strings (Revision 5)</title>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<style type="text/css">
+pre {
+    display: inline;
+}
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+table#references th,
+table#references td
+{
+    vertical-align: top;
+}
+
+ins, ins * { text-decoration:none; font-weight:bold; background-color:#A0FFA0 }
+del, del * { text-decoration:line-through; background-color:#FFA0A0 }
+#hidedel:checked ~ * del, #hidedel:checked ~ * del * { display:none; visibility:hidden }
+
+blockquote
+{
+    color: #000000;
+    background-color: #F1F1F1;
+    border: 1px solid #D1D1D1;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+blockquote.stdins
+{
+    text-decoration: underline;
+    color: #000000;
+    background-color: #C8FFC8;
+    border: 1px solid #B3EBB3;
+    padding: 0.5em;
+}
+blockquote.stddel
+{
+    text-decoration: line-through;
+    color: #000000;
+    background-color: #FFEBFF;
+    border: 1px solid #ECD7EC;
+    padding-left: 0.5empadding-right: 0.5em;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>P0482R5</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2018-10-06</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>Core Working Group<br/>
+        Library Working Group</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+<h1>char8_t: A type for UTF-8 characters and strings (Revision 5)</h1>
+
+<ul>
+  <li><a href="#changes_since_P0482R4">
+      Changes since P0482R4</a></li>
+  <li><a href="#introduction">
+      Introduction</a></li>
+  <li><a href="#motivation">
+      Motivation</a></li>
+  <li><a href="#proposal">
+      Proposal</a></li>
+  <li><a href="#design">
+      Design Considerations</a>
+    <ul>
+      <li><a href="#design_compat">
+          Backward compatibility
+          </a>
+        <ul>
+          <li><a href="#design_compat_core">
+              Core language backward compatibility
+              </a>
+            <ul>
+              <li><a href="#design_compat_core_init">
+                  Initialization
+                  </a></li>
+              <li><a href="#design_compat_core_implicit_conversion">
+                  Implicit conversions
+                  </a></li>
+              <li><a href="#design_compat_core_type_deduction">
+                  Type deduction
+                  </a></li>
+              <li><a href="#design_compat_core_overload_resolution">
+                  Overload resolution
+                  </a></li>
+              <li><a href="#design_compat_core_template_specialization">
+                  Template specialization
+                  </a></li>
+            </ul>
+          </li>
+          <li><a href="#design_compat_library">
+              Library backward compatibility
+              </a>
+            <ul>
+              <li><a href="#design_compat_library_u8string">
+                  Return type of <tt>path::u8string</tt> and <tt>path::generic_u8string</tt>
+                  </a></li>
+              <li><a href="#design_compat_library_literal_operators">
+                  Return type of <tt>operator ""s</tt> and <tt>operator ""sv</tt>
+                  </a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#design_narrow_utf8">
+          Should UTF-8 literals continue to be referred to as narrow literals?
+          </a></li>
+      <li><a href="#design_char8_t_underlying_type">
+          What should be the underlying type of char8_t?
+          </a></li>
+    </ul>
+  </li>
+  <li><a href="#implementation_exp">
+      Implementation Experience</a></li>
+  <li><a href="#wording">
+      Formal Wording</a>
+    <ul>
+      <li><a href="#core_wording">
+          Core wording</a></li>
+      <li><a href="#library_wording">
+          Library wording</a></li>
+      <li><a href="#annex_a_wording">
+          Annex A Grammar summary wording</a></li>
+      <li><a href="#annex_c_wording">
+          Annex C Compatibility wording</a></li>
+      <li><a href="#annex_d_wording">
+          Annex D Compatibility features wording</a></li>
+    </ul>
+  </li>
+  <li><a href="#acknowledgements">
+      Acknowledgements</a></li>
+  <li><a href="#references">
+      References</a></li>
+</ul>
+
+<h1 id="changes_since_P0482R4">Changes since <a href="http://wg21.link/p0482r4">P0482R4</a></h1>
+
+<ul>
+  <li>Rebased to
+<a title="Working Draft, Standard for Programming Language C++"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4762.pdf">
+N4762</a>
+<sup><a title="Working Draft, Standard for Programming Language C++"
+        href="#ref_n4762">
+[N4762]</a></sup>.</li>
+  <li>Updated [stable.name] references to link to the current working draft.</li>
+  <li>Incorporated the changes to feature test macros into core [cpp.predefined]
+      (14.8) and library [support.limits.general] (16.3.1) wording.</li>
+  <li>Modified library wording for the <tt>cuchar</tt> [cuchar.syn] (20.5.5)
+      header changes to avoid dependencies on ISO C adoption of
+<a title="char8_t: A type for UTF-8 characters and strings"
+   href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm">
+N2231</a>
+<sup><a title="char8_t: A type for UTF-8 characters and strings"
+        href="#ref_wg14_n2231">
+[WG14 N2231]</a></sup>.</li>
+  <li>Added wording for an additional <tt>hash&lt;pmr::u8string&gt;</tt>
+      specialization in [string.syn] (20.3.1) and [basic.string.hash]
+      (20.3.5).</li>
+  <li>Added wording for an additional <tt>char8_t</tt> specialization of
+      <tt>atomic_ref</tt> in [atomics.ref.int] (29.6.2).</li>
+  <li>Adjusted wording for [char.traits.specializations.char8_t] to align with
+      Tim Song's proposed &lt;string&gt; wording cleanup.</li>
+  <li>Added a missing definition for <tt>u8streampos</tt> to the
+      <tt>&lt;iosfwd&gt;</tt> synopsis.</li>
+  <li>Removed the <tt>basic_ostream&lt;char&gt;::operator&lt;&lt;()</tt> and
+      <tt>basic_istream&lt;char&gt;::operator&gt;&gt;()</tt> stream insertion
+      and extraction overloads for <tt>char8_t</tt>.  These were added in
+      P0482R2, but without any supporting motivation, rationale, or behavioral
+      specification.  While there are legitimate use cases for these overloads,
+      support for <tt>char16_t</tt> and <tt>char32_t</tt> overloads is
+      currently absent.  The addition of such overloads deserves additional
+      motivation and analysis not present in this proposal.</li>
+  <li>Added missing specifications for <tt>mbrtoc8</tt> and
+      <tt>c8rtomb</tt> to [c.mb.wcs] (20.5.6).</li>
+  <li>Updated [depr.locale.category] and [depr.fs.path.factory] with changes
+      suggested by Tim Song to ensure behavior remains unchanged.</li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>C++11 introduced support for UTF-8, UTF-16, and UTF-32 encoded string
+literals via
+<a title="N2249: New Character Types in C++"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2249.html">
+N2249</a>
+<sup><a title="N2249: New Character Types in C++"
+        href="#ref_n2249">
+[N2249]</a></sup>.
+New <tt>char16_t</tt> and <tt>char32_t</tt> types were added to hold values of
+code units for the UTF-16 and UTF-32 variants, but a new type was not added for
+the UTF-8 variants.  Instead, UTF-8 character literals (added in C++17 via
+<a title="N4197: Adding u8 character literals"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4197.html">
+N4197</a>
+<sup><a title="N4197: Adding u8 character literals"
+        href="#ref_n4197">
+[N4197]</a></sup>)
+and UTF-8 string literals were defined in terms of the <tt>char</tt> type used
+for the code unit type of ordinary character and string literals.  UTF-8 is the
+only text encoding mandated to be supported by the C++ standard for which there
+is no distinct code unit type.  Lack of a distinct type for UTF-8 encoded
+character and string literals prevents the use of overloading and template
+specialization in interfaces designed for interoperability with encoded text.
+The inability to infer an encoding for narrow characters and strings limits
+design possibilities and hinders the production of elegant interfaces that work
+seemlessly in generic code.  Library authors must choose to limit encoding
+support, design interfaces that require users to explicitly specify encodings,
+or provide distinct interfaces for, at least, the implementation defined
+execution and UTF-8 encodings.</p>
+
+<p>Whether <tt>char</tt> is a signed or unsigned type is implementation defined
+and implementations that use an 8-bit signed char are at a disadvantage with
+respect to working with UTF-8 encoded text due to the necessity of having to
+rely on conversions to unsigned types in order to correctly process leading and
+continuation code units of multi-byte encoded code points.</p>
+
+<p>The lack of a distinct type and the use of a code unit type with a range that
+does not portably include the full unsigned range of UTF-8 code units presents
+challenges for working with UTF-8 encoded text that are not present when working
+with UTF-16 or UTF-32 encoded text.  Enclosed is a proposal for a new
+<tt>char8_t</tt> fundamental type and related library enhancements intended to
+remove barriers to working with UTF-8 encoded text and to enable generic
+interfaces that work with all five of the standard mandated text encodings in a
+consistent manner.</p>
+
+<h1 id="motivation">Motivation</h1>
+
+<p>Consider the following string literal expressions, all of which encode
+<tt>U+0123</tt>, <tt>LATIN SMALL LETTER G WITH CEDILLA</tt>:
+
+<fieldset>
+<pre><code class="c++">u8"\u0123" // UTF-8:  const char[]:     0xC4 0xA3 0x00
+ u"\u0123" // UTF-16: const char16_t[]: 0x0123 0x0000
+ U"\u0123" // UTF-32: const char32_t[]: 0x00000123 0x00000000
+  "\u0123" // ???:    const char[]:     ???
+ L"\u0123" // ???:    const wchar_t[]:  ???
+</code></pre>
+</fieldset>
+</p>
+
+<p>The UTF-8, UTF-16, and UTF-32 string literals have well-defined and portable
+sequences of code unit values.  The ordinary and wide string literal code unit
+sequences depend on the implementation defined execution and execution wide
+encodings respectively.  Code that is designed to work with text encodings must
+be able to differentiate these strings.  This is straight forward for wide,
+UTF-16, and UTF-32 string literals since they each have a distinct code unit
+type suitable for differentiation via function overloading or template
+specialization.  But for ordinary and UTF-8 string literals, differentiating
+between them requires additional information since they have the same code unit
+type.  That additional information might be provided implicitly via differently
+named functions, or explicitly via additional function or template
+arguments.  For example:
+
+<fieldset>
+<pre><code class="c++">// Differentiation by function name:
+void do_x(const char *);
+void do_x_utf8(const char *);
+void do_x(const wchar_t *);
+void do_x(const char16_t *);
+void do_x(const char32_t *);
+
+// Differentiation by suffix for user-defined literals:
+int operator ""_udl(const char *s, std::size_t);
+int operator ""_udl_utf8(const char *s, std::size_t);
+int operator ""_udl(const wchar_t *s, std::size_t);
+int operator ""_udl(const char16_t *s, std::size_t);
+int operator ""_udl(const char32_t *s, std::size_t);
+
+// Differentiation by function parameter:
+void do_x2(const char *, bool is_utf8);
+void do_x2(const wchar_t *);
+void do_x2(const char16_t *);
+void do_x2(const char32_t *);
+
+// Differentiation by template parameter:
+template&lt;bool IsUTF8&gt;
+void do_x3(const char *);
+</code></pre>
+</fieldset>
+</p>
+
+<p>The requirement to, in some way, specify the text encoding, other than
+through the type of the string, limits the ability to provide elegant encoding
+sensitive interfaces.  Consider the following invocations of the
+<tt>make_text_view</tt> function proposed in
+<a title="P0244R2: Text_view: A C++ concepts and range based character encoding
+         and code point enumeration library"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html">
+P0244R2</a>
+<sup><a title="P0244R2: Text_view: A C++ concepts and range based character
+               encoding and code point enumeration library"
+        href="#ref_p0244r2">
+[P0244R2]</a></sup>:
+
+<fieldset>
+<pre><code class="c++">make_text_view&lt;execution_character_encoding&gt;("text")
+make_text_view&lt;execution_wide_character_encoding&gt;(L"text")
+make_text_view&lt;utf8_encoding&gt;(u8"text")
+make_text_view&lt;utf16_encoding&gt;(u"text")
+make_text_view&lt;utf32_encoding&gt;(U"text")
+</code></pre>
+</fieldset>
+</p>
+
+<p>For each invocation, the encoding of the string literal is known at compile
+time, so having to explicitly specify the encoding tag is redundant.  If
+UTF-8 string literals had a distinct type, then the encoding type could be
+inferred, while still allowing an overriding tag to be supplied:
+
+<fieldset>
+<pre><code class="c++">make_text_view("text")   // defaults to execution_character_encoding.
+make_text_view(L"text")  // defaults to execution_wide_character_encoding.
+make_text_view(u8"text") // defaults to utf8_encoding.
+make_text_view(u"text")  // defaults to utf16_encoding.
+make_text_view(U"text")  // defaults to utf32_encoding.
+make_text_view&lt;utf16be_encoding&gt;("\0t\0e\0x\0t\0")  // Default overridden to select UTF-16BE.
+</code></pre>
+</fieldset>
+</p>
+
+<p>The inability to infer an encoding for narrow strings doesn't just limit the
+interfaces of new features under consideration.  Compromised interfaces are
+already present in the standard library.</p>
+
+<p>Consider the design of the <tt>codecvt</tt> class template.  The standard
+specifies the following specializations of <tt>codecvt</tt> be provided to
+enable transcoding text from one encoding to another.
+
+<fieldset>
+<pre><code class="c++">codecvt&lt;char, char, mbstate_t&gt;     <em>// #1</em>
+codecvt&lt;wchar_t, char, mbstate_t&gt;  <em>// #2</em>
+codecvt&lt;char16_t, char, mbstate_t&gt; <em>// #3</em>
+codecvt&lt;char32_t, char, mbstate_t&gt; <em>// #4</em>
+</code></pre>
+</fieldset>
+</p>
+
+<p>#1 performs no conversions.  #2 converts between strings encoded in the
+implementation defined wide and narrow encodings.  #3 and #4 convert between
+either the UTF-16 or UTF-32 encoding and the UTF-8 encoding.  Specializations
+are not currently specified for conversion between the implementation defined
+narrow and wide encodings and any of the UTF-8, UTF-16, or UTF-32 encodings.
+However, if support for such conversions were to be added, the desired
+interfaces are already taken by #1, #3 and #4.</p>
+
+<p>The file system interface adopted for C++17 via
+<a title="P0218R1: Adopt the File System TS for C++17"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0372r0.html">
+P0218R1</a>
+<sup><a title="P0218R1: Adopt the File System TS for C++17"
+        href="#ref_p0218r1">
+[P0218R1]</a></sup>
+provides an example of a feature that supports all five of the standard mandated
+encodings, but does so with an asymetric interface due to the inability to
+overload functions for UTF-8 encoded strings.  Class
+<tt>std::filesystem::path</tt> provides the following constructors to initialize
+a <tt>path</tt> object based on a range of code unit values where the encoding
+is inferred based on the value type of the range.
+
+<fieldset>
+<pre><code class="c++">template &lt;class Source&gt;
+path(const Source&amp; source);
+template &lt;class InputIterator&gt;
+path(InputIterator first, InputIterator last);
+</code></pre>
+</fieldset>
+
+<p>§ 30.11.7.2.2 [fs.path.type.cvt] describes how the source encoding is
+determined based on whether the source range value type is <tt>char</tt>,
+<tt>wchar_t</tt>, <tt>char16_t</tt>, or <tt>char32_t</tt>.  A range with value
+type <tt>char</tt> is interpreted using the implementation defined execution
+encoding.  It is not possible to construct a path object from UTF-8
+encoded text using these constructors.
+
+<p>To accommodate UTF-8 encoded text, the file system library specifies the
+following factory functions.  Matching factory functions are not provided for
+other encodings.
+
+<fieldset>
+<pre><code class="c++">template &lt;class Source&gt;
+path u8path(const Source&amp; source);
+template &lt;class InputIterator&gt;
+path u8path(InputIterator first, InputIterator last);
+</code></pre>
+</fieldset>
+
+<p>The requirement to construct <tt>path</tt> objects using one interface for
+UTF-8 strings vs another interface for all other supported encodings creates
+unnecessary difficulties for portable code.  Consider an application that uses
+UTF-8 as its internal encoding on POSIX systems, but uses UTF-16 on Windows.
+Conditional compilation or other abstractions must be implemented and used
+in otherwise platform neutral code to construct <tt>path</tt> objects.</p>
+
+<p>The inability to infer an encoding based on string type is not the only
+challenge posed by use of <tt>char</tt> as the UTF-8 code unit type.  The
+following code exhibits implementation defined behavior.
+
+<fieldset>
+<pre><code class="c++">bool is_utf8_multibyte_code_unit(char c) {
+  return c &gt;= 0x80;
+}
+</code></pre>
+</fieldset>
+</p>
+
+<p>UTF-8 leading and continuation code units have values in the range 128
+(0x80) to 255 (0xFF).  In the common case where <tt>char</tt> is implemented
+as a signed 8-bit type with a two's complement representation and a range of
+-128 (-0x80) to 127 (0x7F), these values exceed the unsigned range of the
+<tt>char</tt> type.  Such implementations typically encode such code units as
+unsigned values which are then reinterpreted as signed values when read.  In
+the code above, integral promotion rules result in <tt>c</tt> being promoted to
+type <tt>int</tt> for comparison to the <tt>0x80</tt> operand.  if <tt>c</tt>
+holds a value corresponding to a leading or continuation code unit value, then
+its value will be interpreted as negative and the promoted value of type
+<tt>int</tt> will likewise be negative.  The result is that the comparison
+is always false for these implementations.</p>
+
+<p>To correct the code above, explicit conversions are required.  For example:
+
+<fieldset>
+<pre><code class="c++">bool is_utf8_multibyte_code_unit(char c) {
+  return static_cast&lt;unsigned char&gt;(c) &gt;= 0x80;
+}
+</code></pre>
+</fieldset>
+</p>
+
+<p>Finally, processing of UTF-8 strings is currently subject to an optimization
+pessimization due to glvalue expressions of type <tt>char</tt> potentially
+aliasing objects of other types.  Use of a distinct type that does not share
+this aliasing behavior may allow for further compiler optimizations.</p>
+
+<p>As of November 2017,
+<a title="Usage of UTF-8 for websites"
+   href="https://w3techs.com/technologies/details/en-utf8/all/all">
+UTF-8 is now used by more than 90% of all websites</a>
+<sup><a title="Usage of UTF-8 for websites"
+        href="#ref_w3techs">
+[W3Techs]</a></sup>.
+The C++ standard must improve support for UTF-8 by removing the existing
+barriers that result in redundant tagging of character encodings, non-generic
+UTF-8 specific workarounds like <tt>u8path</tt>, and the need for static
+casts to examine UTF-8 code unit values.
+</p>
+
+<h1 id="proposal">Proposal</h1>
+
+<p>The proposed changes are intended to bring the standard to the state the
+author believes it would likely be in had <tt>char8_t</tt> been added at the
+same time that <tt>char16_t</tt> and <tt>char32_t</tt> were added.  This
+includes the ability to differentiate ordinary and UTF-8 literals in function
+overloading, template specializations, and user-defined literal operator
+signatures.  The following core language changes are proposed in order to
+facilitate these capabilities:
+<ul>
+  <li>A new fundamental type named <tt>char8_t</tt>.  This integral type has
+      the same signedness, size, alignment, and integer conversion rank as
+      <tt>unsigned char</tt>, but does not alias with any other type
+      (e.g., this proposal does not add <tt>char8_t</tt> to the list of
+      aliasing types in § 8.2.1 [basic.lval] paragraph 11 (11.8)).</li>
+  <li>The type of UTF-8 string literals is changed from array of
+      <tt>const char</tt> to array of <tt>const char8_t</tt>.</li>
+  <li>The type of UTF-8 character literals is changed from <tt>char</tt>
+      to <tt>char8_t</tt>.</li>
+  <li>New <tt>char8_t</tt> based signatures for user-defined literal
+      operators.</li>
+</ul></p>
+
+<p>The following library changes are proposed to address concerns like those
+   raised in the motivation section above, and to take advantage of the new
+   core features:
+<ul>
+  <li>New <tt>char8_t</tt> based specializations of <tt>atomic</tt>,
+      <tt>numeric_limits</tt>, <tt>hash</tt>, <tt>char_traits</tt>,
+      <tt>basic_string</tt>, and <tt>basic_string_view</tt>.</li>
+  <li>New <tt>u8streampos</tt>, <tt>u8string</tt>, <tt>u8string_view</tt>
+      type aliases.</li>
+  <li>New <tt>operator ""s</tt> and <tt>operator ""sv</tt> <tt>char8_t</tt>
+      based overloads for UTF-8 literals.</li>
+  <li>New <tt>char8_t</tt> based specializations of <tt>codecvt</tt> and
+      <tt>codecvt_byname</tt> for converting between UTF-16, UTF-32, and
+      UTF-8.  The existing <tt>char</tt> based specializations are deprecated.
+      The new specializations are functionally identical to the deprecated
+      ones.</li>
+  <li>The return type of the <tt>u8string</tt> and <tt>generic_u8string</tt>
+      member functions of the filesystem <tt>path</tt> class are changed
+      from <tt>string</tt> to <tt>u8string</tt>.</li>
+  <li>Filesystem <tt>path</tt> objects may now be constructed with UTF-8
+      strings using the existing <tt>path</tt> constructors used for
+      construction with other encodings.  The existing <tt>u8path</tt>
+      factory functions are deprecated.</li>
+</ul></p>
+
+<p>These changes necessarily impact backward compatibility as described in
+the <a href="#design_compat">Backward compatibility</a> section.</p>
+
+<h1 id="design">Design Considerations</h1>
+
+<h2 id="design_compat">Backward compatibility</h2>
+
+<p>This proposal does not specify any backward compatibility features other than
+to retain interfaces that it deprecates.  The author believes such features are
+necessary, but that a single set of such features would unnecessarily compromise
+the goals of this proposal.  Rather, the expectation is that implementations
+will provide options to enable more fine grained compatibility features.</p>
+
+<p>The following sections discuss backward compatibility impact.</p>
+
+<h3 id="design_compat_core">Core language backward compatibility</h3>
+
+<h4 id="design_compat_core_init">Initialization</h4>
+
+<p>Declarations of arrays of <tt>char</tt> may currently be initialized with
+UTF-8 string literals.  Under this proposal, such initializations would
+become ill-formed.  This is intended to maintain consistency with
+initialization of arrays of <tt>wchar_t</tt>, <tt>char16_t</tt>, and
+<tt>char32_t</tt>, all of which require the initializing string literal to
+have a matching element type as specified in § 11.6.2 [dcl.init.string].
+
+<fieldset>
+<pre><code class="c++">char ca[] = u8"text";   // C++17: Ok.
+                        // This proposal: Ill-formed.
+
+char8_t c8a[] = "text"; // C++17: N/A (char8_t is not a type specifier).
+                        // This proposal: Ill-formed.
+</code></pre>
+</fieldset>
+</p>
+
+<p>Implementations are encouraged to add options to allow the above
+initializations (with a warning) to assist users in migrating their code.</p>
+
+<p>Declarations of variables of type <tt>char</tt> initialized with a UTF-8
+character literal remain well-formed and are initialized following the
+standard conversion rules.
+
+<fieldset>
+<pre><code class="c++">char c = u8'c';         // C++17: Ok.
+                        // This proposal: Ok (no change from C++17).
+
+char8_t c8 = 'c';       // C++17: N/A (char8_t is not a type specifier).
+                        // This proposal: Ok; c8 is assigned the value of the 'c'
+                        //                character in the execution character set.
+</code></pre>
+</fieldset>
+</p>
+
+<h4 id="design_compat_core_implicit_conversion">Implicit conversions</h4>
+
+<p>Under this proposal, UTF-8 string literals no longer bind to references
+to array of type <tt>const char</tt> nor do they implicitly convert to pointer
+to <tt>const char</tt>.  The following code is currently well-formed, but would
+become ill-formed under this proposal:
+
+<fieldset>
+<pre><code class="c++">const char (&amp;u8r)[] = u8"text"; // C++17: Ok.
+                                // This proposal: Ill-formed.
+
+const char *u8p = u8"text";     // C++17: Ok.
+                                // This proposal: Ill-formed.
+</code></pre>
+</fieldset>
+</p>
+
+<p>Implementations are encouraged to add options to allow the above
+conversions (with a warning) to assist users in migrating their code.
+Such options would require allowing aliasing of <tt>char</tt> and
+<tt>char8_t</tt>.  Note that it may be useful to permit these conversions
+only for UTF-8 string literals and not for general expressions of array
+of <tt>char8_t</tt> type.</p>
+
+<h4 id="design_compat_core_type_deduction">Type deduction</h4>
+
+<p>Under this proposal, UTF-8 string and character literals have type array of
+<tt>const char8_t</tt> and <tt>char8_t</tt> respectively.  This affects the
+types deduced for placeholder types and template parameter types.
+
+<fieldset>
+<pre><code class="c++">template&lt;typename T1, typename T2&gt;
+void ft(T1, T2);
+
+ft(u8"text", u8'c'); // C++17: T1 deduced to const char*, T2 deduced to char.
+                     // This proposal: T1 deduced to const char8_t*, T2 deduced to char8_t.
+
+auto u8p = u8"text"; // C++17: Type deduced to const char*.
+                     // This proposal: Type deduced to const char8_t*.
+
+auto u8c = u8'c';    // C++17: Type deduced to char.
+                     // This proposal: Type deduced to char8_t.
+</code></pre>
+</fieldset>
+</p>
+
+<p>This change in behavior is a primary objective of this proposal.
+Implementations are encouraged to add options to disable <tt>char8_t</tt>
+support entirely when necessary to preserve compatibility with C++17.</p>
+
+<h4 id="design_compat_core_overload_resolution">Overload resolution</h4>
+
+<p>The following code is currently well-formed, and would remain well-formed
+under this proposal, but would behave differently:
+
+<fieldset>
+<pre><code class="c++">template&lt;typename T&gt; void f(const T*);
+void f(const char*);
+f(u8"text");                    // C++17: Calls f(const char*).
+                                // This proposal: Calls f&lt;char8_t&gt;(const char8_t*).
+</code></pre>
+</fieldset>
+</p>
+
+<p>The following code is currently well-formed, but would become ill-formed
+under this proposal:
+
+<fieldset>
+<pre><code class="c++">void f(const char*);
+f(u8"text");                    // C++17: Ok.
+                                // This proposal: Ill-formed; no matching function found.
+
+int operator ""_udl(const char*, size_t);
+auto x = u8"text"_udl;          // C++17: Ok
+                                // This proposal: Ill-formed; no matching literal operator found.
+</code></pre>
+</fieldset>
+</p>
+
+<p>These changes in behavior are a primary objective of this proposal.
+Implementations are encouraged to add options to disable <tt>char8_t</tt>
+support entirely when necessary to preserve compatibility with C++17.</p>
+
+<h4 id="design_compat_core_template_specialization">Template specialization</h4>
+
+<p>The following code is currently well-formed, and would remain well-formed
+under this proposal, but would behave differently:
+
+<fieldset>
+<pre><code class="c++">template&lt;typename T&gt; struct ct { static constexpr bool value = false; };
+template&lt;&gt; struct ct&lt;char&gt; { static constexpr bool value = true; };
+template&lt;typename T&gt; bool ft(const T*) { return ct&lt;T&gt;::value; }
+ft(u8"text");                   // C++17: returns true.
+                                // This proposal: returns false.
+</code></pre>
+</fieldset>
+</p>
+
+<p>This change in behavior is a primary objective of this proposal.
+Implementations are encouraged to add options to disable <tt>char8_t</tt>
+support entirely when necessary to preserve compatibility with C++17.</p>
+
+<h3 id="design_compat_library">Library backward compatibility</h3>
+
+<h4 id="design_compat_library_u8string">
+    Return type of <tt>path::u8string</tt> and <tt>path::generic_u8string</tt></h4>
+
+<p>This proposal includes a new specialization of <tt>std::basic_string</tt>
+for the new <tt>char8_t</tt> type, a new <tt>std::u8string</tt> type alias,
+and changes to the <tt>u8string</tt> and <tt>generic_u8string</tt> member
+functions of <tt>filesystem::path</tt> to return <tt>std::u8string</tt>
+instead of <tt>std::string</tt>.  This change renders ill-formed the following
+code that is currently well-formed.
+
+<fieldset>
+<pre><code class="c++">void f(std::filesystem::path p) {
+  std::string s;
+
+  s = p.u8string(); // C++17: Ok.
+                    // This proposal: ill-formed.
+}
+</code></pre>
+</fieldset>
+</p>
+
+<p>Implementations are encouraged to add an option that allows implicit
+conversion of <tt>std::u8string</tt> to <tt>std::string</tt> to assist in
+a gradual migration of code that calls these functions.</p>
+
+<h4 id="design_compat_library_literal_operators">
+    Return type of <tt>operator ""s</tt> and <tt>operator ""sv</tt></h4>
+
+<p>This proposal includes new overloads of <tt>operator ""s</tt> and
+<tt>operator ""sv</tt> that return <tt>char8_t</tt> specializations of
+<tt>std::basic_string</tt> and <tt>std::basic_string_view</tt> respectively.
+This change renders ill-formed the following code that is currently well-formed.
+
+<fieldset>
+<pre><code class="c++">std::string s;
+
+s = u8"text"s;    // C++17: Ok.
+                  // This proposal: ill-formed.
+
+s = u8"text"sv;   // C++17: Ok.
+                  // This proposal: ill-formed.
+</code></pre>
+</fieldset>
+</p>
+
+<p>Implementations are encouraged to add an option that allows implicit
+conversion of <tt>std::u8string</tt> to <tt>std::string</tt> to assist in
+a gradual migration of code that calls these functions.</p>
+
+<h2 id="design_narrow_utf8">
+    Should UTF-8 literals continue to be referred to as narrow literals?</h2>
+
+<p>UTF-8 literals are maintained as narrow literals in this proposal.</p>
+
+<h2 id="design_char8_t_underlying_type">
+    What should be the underlying type of char8_t?</h2>
+
+<p>There are several choices for the underlying type of <tt>char8_t</tt>.
+Use of <tt>unsigned char</tt> closely aligns with historical use.  Use of
+<tt>uint_least8_t</tt> would maintain consistency with how the underlying
+types of <tt>char16_t</tt> and <tt>char32_t</tt> are specified.</p>
+
+<p>This proposal specifies <tt>unsigned char</tt> as the underlying type as
+noted in the changes to § 6.7.1 <tt>[basic.fundamental]</tt> paragraph 5.</p>
+
+<h1 id="implementation_exp">Implementation Experience</h1>
+
+<p>An implementation is available in the <tt>char8_t</tt> branch of a gcc
+fork hosted on GitHub at
+<a href="https://github.com/tahonermann/gcc/tree/char8_t">
+https://github.com/tahonermann/gcc/tree/char8_t</a>.  This implementation is
+believed to be complete for both the proposed core language and library
+features with the exception of the proposed <tt>mbrtoc8</tt> and
+<tt>c8rtomb</tt> transcoding functions (the author expects to complete these
+shortly).  New <tt>-fchar8_t</tt> and <tt>-fno-char8_t</tt> compiler options
+support enabling and disabling the new features.  No backward compatibility
+features are currently implemented.</p>
+
+<p>Richard Smith implemented support for the proposed core wording changes
+and they are present in the release of Clang 7.  The changes are guarded by new
+<tt>-fchar8_t</tt> and <tt>-fno-char8_t</tt> options matching the gcc
+implementation.  No backward compatibility features are currently implemented.
+Support for the proposed library features has not yet been implemented in
+libc++.  Richard's changes can be found at
+<a href="http://llvm.org/viewvc/llvm-project?view=revision&revision=331244">
+http://llvm.org/viewvc/llvm-project?view=revision&revision=331244</a>
+</p>
+
+<h1 id="wording">Formal Wording</h1>
+
+<input type="checkbox" id="hidedel">Hide deleted text</input>
+
+<p>These changes are relative to
+<a title="Working Draft, Standard for Programming Language C++"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4762.pdf">
+N4762</a>
+<sup><a title="Working Draft, Standard for Programming Language C++"
+        href="#ref_n4762">
+[N4762]</a></sup></p>
+
+
+<h2 id="core_wording">Core wording</h2>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.key#1">
+table 5 of 5.11 [lex.key] paragraph 1</a>:
+<blockquote>
+[&hellip;]<br/>
+<div style="margin-left: 1em;">
+<table>
+  <tr>
+    <td align="center">
+      Table 5 &mdash; Keywords
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <table border="1">
+        <tr><td>[&hellip;]</td></tr>
+        <tr><td>char</td></tr>
+        <tr><td><ins>char8_t</ins></td></tr>
+        <tr><td>char16_t</td></tr>
+        <tr><td>char32_t</td></tr>
+        <tr><td>[&hellip;]</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+[&hellip;]<br/>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.literal#lex.ccon-3">
+5.13.3 [lex.ccon] paragraph 3</a>:
+<blockquote>
+A character literal that begins with <tt>u8</tt>, such as <tt>u8'w'</tt>, is a
+character literal of type <del><tt>char</tt></del><ins><tt>char8_t</tt></ins>,
+known as a <em>UTF-8 character literal</em>.[&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.literal#lex.string-6">
+5.13.5 [lex.string] paragraph 6</a>:
+<blockquote>
+After translation phase 6, a <em>string-literal</em> that does not begin with
+an <em>encoding-prefix</em> is an <em>ordinary string literal</em><ins>.  An
+ordinary string literal has type "<em>array</em> of <em>n</em>
+<tt>const char</tt>" where <em>n</em> is the size of the string as defined
+below, has static storage duration
+<a href="http://eel.is/c++draft/basic.stc">(6.6.4)</a></ins>, and is initialized
+with the given characters.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.literal#lex.string-7">
+5.13.5 [lex.string] paragraph 7</a>:
+<blockquote>
+A <em>string-literal</em> that begins with <tt>u8</tt>, such as
+<tt>u8"asdf"</tt>, is a <em>UTF-8 string literal</em><ins>, also referred to as
+a <tt>char8_t</tt> string literal.  A <tt>char8_t</tt> string literal has type
+"<em>array</em> of <em>n</em> <tt>const char8_t</tt>", where <em>n</em> is
+the size of the string as defined below; each successive element of the object
+representation
+<a href="http://eel.is/c++draft/basic.types">(6.7)</a> has the value of the
+corresponding code unit of the UTF-8 encoding of the string.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.literal#lex.string-8">
+5.13.5 [lex.string] paragraph 8</a>:
+<blockquote>
+Ordinary string literals and UTF-8 string literals are also referred to as
+narrow string literals. <del>A narrow string literal has type "<em>array</em>
+of <em>n</em> <tt>const char</tt>", where <em>n</em> is the size of the string
+as defined below, and has static storage duration
+<a href="http://eel.is/c++draft/basic.stc">(6.6.4)</a>.</del>
+</blockquote>
+</p>
+
+<p><em>Drafting note: The deleted paragraph 8 content was incorporated in the
+changes to paragraphs 6 and 7.</em></p>
+
+<p>Remove
+<a href="http://eel.is/c++draft/lex.literal#lex.string-9">
+5.13.5 [lex.string] paragraph 9</a>:
+<blockquote class=stddel>
+For a UTF-8 string literal, each successive element of the object
+representation
+<a href="http://eel.is/c++draft/basic.types">(6.7)</a>
+has the value of the corresponding code unit of the UTF-8
+encoding of the string.
+</blockquote>
+</p>
+
+<p><em>Drafting note: The paragraph 9 content was incorporated in the changes
+to paragraph 7.</em></p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.literal#lex.string-15">
+5.13.5 [lex.string] paragraph 15</a>:
+<blockquote>
+[&hellip;] In a narrow string literal, a <em>universal-character-name</em>
+may map to more than one <tt>char</tt> <ins>or <tt>char8_t</tt></ins> element
+due to <em>multibyte encoding</em>. [&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/basic.align#6">
+6.6.5 [basic.align] paragraph 6</a>:
+<blockquote>
+The alignment requirement of a complete type can be queried using an
+<tt>alignof</tt> expression
+<a href="http://eel.is/c++draft/expr.alignof">(7.6.2.6)</a>.
+Furthermore, the narrow character types
+<a href="http://eel.is/c++draft/basic.fundamental">(6.7.1)</a>
+shall
+have the weakest alignment requirement.  [ <em>Note</em>: This enables the
+<del>narrow</del><ins>ordinary</ins> character types to be used as the
+underlying type for an aligned memory area
+<a href="http://eel.is/c++draft/dcl.align">(9.11.2)</a>.  &mdash;
+<em>end note</em> ]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/basic.fundamental#1">
+6.7.1 [basic.fundamental] paragraph 1</a>:
+<blockquote>
+Objects declared <del>as characters</del><ins>with type </ins>
+<del>(</del><tt>char</tt><del>)</del> shall be large enough to store any member
+of the implementation’s basic character set.  If a character from this set is
+stored in a character object, the integral value of that character object is
+equal to the value of the single character literal form of that character. It is
+implementation-defined whether a <tt>char</tt> object can hold negative values.
+Characters <ins>declared with type <tt>char</tt> </ins>can be explicitly
+declared <tt>unsigned</tt> or <tt>signed</tt>.  Plain <tt>char</tt>,
+<tt>signed char</tt>, and <tt>unsigned char</tt> are three distinct types,
+collectively called <em><del>narrow</del><ins>ordinary</ins> character
+types</em>.  <ins>The ordinary character types and <tt>char8_t</tt> are
+collectively called <em>narrow character types</em>.</ins>  A <tt>char</tt>, a
+<tt>signed char</tt>, <del>and </del>an <tt>unsigned char</tt><ins>, and a
+<tt>char8_t</tt></ins> occupy the same amount of storage and have the same
+alignment requirements
+<a href="http://eel.is/c++draft/basic.align">(6.6.5)</a>; that is, they have
+the same object representation. For narrow character types, all bits of the
+object representation participate in the value representation. [ <em>Note</em>:
+A bit-field of narrow character type whose length is larger than the number of
+bits in the object representation of that type has padding bits; see
+<a href="http://eel.is/c++draft/basic.types">6.7</a>.
+&mdash; <em>end note</em> ] For unsigned narrow character types,
+each possible bit pattern of the value representation
+represents a distinct number. These requirements do not hold for other types.
+In any particular implementation, a plain <tt>char</tt> object can
+take on either the same values as a <tt>signed char</tt> or an
+<tt>unsigned char</tt>; which one is implementation-defined. For each value
+<em>i</em> <del>of type <tt>unsigned char</tt> </del>in the range 0 to 255
+inclusive<ins> of type <tt>unsigned char</tt> or <tt>char8_t</tt></ins>, there
+exists a value <em>j</em> of type <tt>char</tt>
+such that the result of an integral conversion
+<a href="http://eel.is/c++draft/conv.integral">(7.3.8)</a>
+from <em>i</em> to
+<tt>char</tt> is <em>j</em>, and the result of an integral conversion from
+<em>j</em> to <tt>unsigned char</tt><ins> or <tt>char8_t</tt></ins> is
+<em>i</em>.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/basic.fundamental#5">
+6.7.1 [basic.fundamental] paragraph 5</a>:
+<blockquote>
+[&hellip;] Type <tt>wchar_t</tt> shall have the same size, signedness, and
+alignment requirements
+<a href="http://eel.is/c++draft/basic.align">(6.6.5)</a>
+as one of the other integral types, called its
+underlying type.  <ins>Type <tt>char8_t</tt> denotes a distinct type with the
+same size, signedness, and alignment as <tt>unsigned char</tt>, called its
+underlying type.</ins>  Types <tt>char16_t</tt> and <tt>char32_t</tt> denote
+distinct types with the same size, signedness, and alignment as
+<tt>uint_least16_t</tt> and <tt>uint_least32_t</tt>, respectively, in
+<tt>&lt;cstdint&gt;</tt>, called the underlying types.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/basic.fundamental#7">
+6.7.1 [basic.fundamental] paragraph 7</a>:
+<blockquote>
+Types <tt>bool</tt>, <tt>char</tt>, <ins><tt>char8_t</tt>, </ins>
+<tt>char16_t</tt>, <tt>char32_t</tt>, <tt>wchar_t</tt>, and the signed and
+unsigned integer types are collectively called integral types. [&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/conv.rank#1.8">
+6.7.4 [conv.rank] subparagraph (1.8)</a>:
+<blockquote>
+[&hellip;]<br/>
+(1.8) &mdash; The ranks of <ins><tt>char8_t</tt>, </ins><tt>char16_t</tt>,
+<tt>char32_t</tt>, and <tt>wchar_t</tt> shall equal the ranks of their
+underlying types <a href="http://eel.is/c++draft/basic.fundamental">(6.7.1)</a>.
+<br/>[&hellip;]
+</blockquote>
+</p>
+
+<p>Change to
+<a href="http://eel.is/c++draft/expr.arith.conv#footnote-65">
+footnote 65 associated with 7.4 [expr.arith.conv] subparagraph (1.5)</a>:
+<blockquote>
+As a consequence, operands of type <tt>bool</tt>, <ins><tt>char8_t</tt>, </ins>
+<tt>char16_t</tt>, <tt>char32_t</tt>, <tt>wchar_t</tt>, or an enumerated type
+are converted to some integral type.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/expr.sizeof#1">
+7.6.2.3 [expr.sizeof] paragraph 1</a>:
+<blockquote>
+[&hellip;] <del><tt>sizeof(char)</tt>, <tt>sizeof(signed char)</tt>
+and <tt>sizeof(unsigned char)</tt> are 1</del><ins>The result of <tt>sizeof</tt>
+applied to any of the narrow character types is 1</ins>.  The result of
+<tt>sizeof</tt> applied to any other fundamental type
+<a href="http://eel.is/c++draft/basic.fundamental">(6.7.1)</a> is
+implementation-defined.
+[&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/dcl.type.simple#1">
+9.1.7.2 [dcl.type.simple] paragraph 1</a>:
+<blockquote>
+The simple type specifiers are<br/>
+<div style="margin-left: 1em;">
+  <em>simple-type-specifier</em>:<br/>
+  <div style="margin-left: 1em;">
+    [&hellip;]<br/>
+    <tt>char</tt><br/>
+    <ins><tt>char8_t</tt></ins><br/>
+    <tt>char16_t</tt><br/>
+    <tt>char32_t</tt><br/>
+    [&hellip;]<br/>
+  </div>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/dcl.type.simple#2">
+table 11 of 9.1.7.2 [dcl.type.simple] paragraph 2</a>:
+<blockquote>
+[&hellip;]<br/>
+<div style="margin-left: 1em;">
+<table>
+  <tr>
+    <td align="center">
+      Table 11 &mdash; <em>simple-type-specifiers</em> and the types they specify
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <table border="1">
+        <tr>
+          <th>Specifier(s)</th>
+          <th>Type</th>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+        <tr>
+          <td><tt>char</tt></td>
+          <td><tt>“char”</tt></td>
+        </tr>
+        <tr>
+          <td><tt>unsigned char</tt></td>
+          <td><tt>“unsigned char”</tt></td>
+        </tr>
+        <tr>
+          <td><tt>signed char</tt></td>
+          <td><tt>“signed char”</tt></td>
+        </tr>
+        <tr>
+          <td><ins><tt>char8_t</tt></ins></td>
+          <td><ins><tt>“char8_t”</tt></ins></td>
+        </tr>
+        <tr>
+          <td><tt>char16_t</tt></td>
+          <td><tt>“char16_t”</tt></td>
+        </tr>
+        <tr>
+          <td><tt>char32_t</tt></td>
+          <td><tt>“char32_t”</tt></td>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+<br/>[&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/dcl.init#12.1">
+9.3 [dcl.init] subparagraph (12.1)</a>:
+<blockquote>
+(12.1) &mdash; If an indeterminate value of unsigned
+<del>narrow</del><ins>ordinary</ins> character type
+<a href="http://eel.is/c++draft/basic.fundamental">(6.7.1)</a>
+or <tt>std::byte</tt> type
+<a href="http://eel.is/c++draft/support.types#cstddef.syn">(16.2.1)</a>
+is produced by the evaluation of:
+<br/>[&hellip;]<br/>
+<div style="margin-left: 1em;">
+(12.1.3) &mdash; the operand of a cast or conversion
+(<a href="http://eel.is/c++draft/conv.integral">7.3.8</a>,
+<a href="http://eel.is/c++draft/expr.type.conv">7.6.1.3</a>,
+<a href="http://eel.is/c++draft/expr.static.cast">7.6.1.9</a>,
+<a href="http://eel.is/c++draft/expr.cast">7.6.3</a>)
+to an unsigned
+<del>narrow</del><ins>ordinary</ins> character type or <tt>std::byte</tt> type
+<a href="http://eel.is/c++draft/support.types#cstddef.syn">(16.2.1)</a>, or
+</div>
+[&hellip;]<br/>
+then the result of the operation is an indeterminate value.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/dcl.init#12.2">
+9.3 [dcl.init] subparagraph (12.2)</a>:
+<blockquote>
+(12.2) If an indeterminate value of unsigned <del>narrow</del><ins>ordinary</ins>
+character type or <tt>std::byte</tt> type is produced by the evaluation of the
+right operand of a simple assignment operator
+<a href="http://eel.is/c++draft/expr.ass">(7.6.18)</a>
+whose first operand is an lvalue
+of unsigned <del>narrow</del><ins>ordinary</ins> character type or
+<tt>std::byte</tt> type, an indeterminate value replaces the value of the object
+referred to by the left operand.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/dcl.init#12.3">
+9.3 [dcl.init] subparagraph (12.3)</a>:
+<blockquote>
+(12.3) If an indeterminate value of unsigned <del>narrow</del><ins>ordinary</ins>
+character type is produced by the evaluation of the initialization expression
+when initializing an object of unsigned <del>narrow</del><ins>ordinary</ins>
+character type, that object is initialized to an indeterminate value.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/dcl.init#12.4">
+9.3 [dcl.init] subparagraph (12.4)</a>:
+<blockquote>
+(12.4) If an indeterminate value of unsigned <del>narrow</del><ins>ordinary</ins>
+character type or <tt>std::byte</tt> type is produced by the evaluation of the
+initialization expression when initializing an object of <tt>std::byte</tt> type,
+that object is initialized to an indeterminate value.
+<br/>[&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/dcl.init#17.3">
+9.3 [dcl.init] subparagraph (17.3)</a>:
+<blockquote>
+[&hellip;]<br/>
+(17.3) &mdash; If the destination type is an array of characters, <ins>an
+array of <tt>char8_t</tt>, </ins>an array of <tt>char16_t</tt>, an array of
+<tt>char32_t</tt>, or an array of <tt>wchar_t</tt>, and the initializer is a
+string literal, see
+<a href="http://eel.is/c++draft/dcl.init.string">9.3.2</a>.
+<br/>[&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/dcl.init.string#1">
+9.3.2 [dcl.init.string] paragraph 1</a>:
+<blockquote>
+An array of <del>narrow</del><ins>ordinary</ins> character type
+<a href="http://eel.is/c++draft/basic.fundamental">(6.7.1)</a>,
+<ins><tt>char8_t</tt> array, </ins><tt>char16_t</tt> array, <tt>char32_t</tt>
+array, or <tt>wchar_t</tt> array can be initialized by
+<del>a narrow</del><ins>an ordinary</ins> string literal, <ins><tt>char8_t</tt>
+string literal, </ins><tt>char16_t</tt> string literal, <tt>char32_t</tt>
+string literal, or wide string literal, respectively, [&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/over.literal#3">
+11.5.8 [over.literal] paragraph 3</a>:
+<blockquote>
+The declaration of a literal operator shall have a
+<em>parameter-declaration-clause</em> equivalent to one of the following:
+<div style="margin-left: 1em;">
+[&hellip;]<br/>
+<tt>char</tt><br/>
+<tt>wchar_t</tt><br/>
+<ins><tt>char8_t</tt></ins><br/>
+<tt>char16_t</tt><br/>
+<tt>char32_t</tt><br/>
+<tt>const char*</tt>, <tt>std::size_t</tt><br/>
+<tt>const wchar_t*</tt>, <tt>std::size_t</tt><br/>
+<ins><tt>const char8_t*</tt>, <tt>std::size_t</tt></ins><br/>
+<tt>const char16_t*</tt>, <tt>std::size_t</tt><br/>
+<tt>const char32_t*</tt>, <tt>std::size_t</tt><br/>
+[&hellip;]<br/>
+</div>
+</blockquote>
+</p>
+
+<p>Change in table 16 of
+<a href="http://eel.is/c++draft/cpp.predefined#1.8">
+14.8 [cpp.predefined] paragraph 1</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<table>
+  <tr>
+    <td align="center">
+      Table 16 &mdash; Feature-test macros
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <table border="1">
+        <tr>
+          <th align="center">Macro name</th>
+          <th align="center">Value</th>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+        <tr>
+          <td>__cpp_capture_star_this</td>
+          <td>201603L</td>
+        </tr>
+        <tr>
+          <td><ins>__cpp_char8_t</ins></td>
+          <td><ins>201803L</ins></td>
+        </tr>
+        <tr>
+          <td>__cpp_constexpr</td>
+          <td>201603L</td>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+</blockquote>
+</p>
+
+<h2 id="library_wording">Library wording</h2>
+
+<p>Change in
+<a href="http://eel.is/c++draft/library.general#8">
+15.1 [library.general] paragraph 8</a>:
+<blockquote>
+The strings library
+<a href="http://eel.is/c++draft/#strings">(Clause 20)</a>
+provides support for manipulating text
+represented as sequences of type <tt>char</tt>,
+<ins>sequences of type <tt>char8_t</tt>, </ins>
+sequences of type <tt>char16_t</tt>,
+sequences of type <tt>char32_t</tt>,
+sequences of type <tt>wchar_t</tt>,
+and sequences of any other character-like type.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/definitions#defns.character">
+15.3.2 [defns.character]</a>:
+<blockquote>
+[&hellip;]<br/>
+[ <em>Note:</em> The term does not mean only <tt>char</tt>,
+<ins><tt>char8_t</tt>, </ins><tt>char16_t</tt>, <tt>char32_t</tt>, and
+<tt>wchar_t</tt> objects, but any value that can be represented by a type
+that provides the definitions specified in these Clauses.  &mdash;
+<em>end note</em> ]
+</blockquote>
+</p>
+
+<p>Change in table 35 of
+<a href="http://eel.is/c++draft/support.limits.general#3">
+16.3.1 [support.limits.general] paragraph 3</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<table>
+  <tr>
+    <td align="center">
+      Table 35 &mdash; Standard library feature-test macros
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <table border="1">
+        <tr>
+          <th align="center">Macro name</th>
+          <th align="center">Value</th>
+          <th align="center">Header(s)</th>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+        <tr>
+          <td>__cpp_lib_byte</td>
+          <td>201603L</td>
+          <td>&lt;cstddef&gt;</td>
+        </tr>
+        <tr>
+          <td><ins>__cpp_lib_char8_t</ins></td>
+          <td><ins>201803L</ins></td>
+          <td><ins>&lt;atomic&gt;
+                   &lt;filesystem&gt;
+                   &lt;istream&gt;
+                   &lt;limits&gt;
+                   &lt;locale&gt;
+                   &lt;ostream&gt;
+                   &lt;string&gt;
+                   &lt;string_view&gt;</ins></td>
+        </tr>
+        <tr>
+          <td>__cpp_lib_chrono</td>
+          <td>201611L</td>
+          <td>&lt;chrono&gt;</td>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/limits.syn">
+16.3.2 [limits.syn]</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+[&hellip;]<br/>
+&nbsp;&nbsp;template&lt;&gt; class numeric_limits&lt;char&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; class numeric_limits&lt;signed char&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; class numeric_limits&lt;unsigned char&gt;;<br/>
+&nbsp;&nbsp;<ins>template&lt;&gt; class numeric_limits&lt;char8_t&gt;;</ins><br/>
+&nbsp;&nbsp;template&lt;&gt; class numeric_limits&lt;char16_t&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; class numeric_limits&lt;char32_t&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; class numeric_limits&lt;wchar_t&gt;;<br/>
+[&hellip;]<br/>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/char.traits#1">
+20.2 [char.traits] paragraph 1</a>:
+<blockquote>
+This subclause defines requirements on classes representing <em>character
+traits</em>, and defines a class template <tt>char_traits&lt;charT&gt;</tt>,
+along with <del>four</del><ins>five</ins> specializations,
+<tt>char_traits&lt;char&gt;</tt>,
+<ins><tt>char_traits&lt;char8_t&gt;</tt>,</ins>
+<tt>char_traits&lt;char16_t&gt;</tt>,
+<tt>char_traits&lt;char32_t&gt;</tt>,
+and <tt>char_traits&lt;wchar_t&gt;</tt>,
+that satisfy those requirements.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/char.traits#4">
+20.2 [char.traits] paragraph 4</a>:
+<blockquote>
+This subclause specifies a class template, <tt>char_traits&lt;charT&gt;</tt>,
+and <del>four</del><ins>five</ins> explicit specializations of it,
+<tt>char_traits&lt;char&gt;</tt>,
+<ins><tt>char_traits&lt;char8_t&gt;</tt>,</ins>
+<tt>char_traits&lt;char16_t&gt;</tt>,
+<tt>char_traits&lt;char32_t&gt;</tt>, and
+<tt>char_traits&lt;wchar_t&gt;</tt>, all of which appear in the header
+<tt>&lt;string&gt;</tt> and satisfy the requirements below.
+</blockquote>
+</p>
+
+<p><em>Drafting note: <a href="http://eel.is/c++draft/char.traits#4">20.2p4</a>
+appears to unnecessarily duplicate information previously presented in
+<a href="http://eel.is/c++draft/char.traits#1">20.2p1</a>.</em></p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/char.traits.specializations">
+20.2.3 [char.traits.specializations]</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>namespace std {</tt><br/>
+&nbsp;&nbsp;<tt>template&lt;&gt; struct char_traits&lt;char&gt;;</tt><br/>
+&nbsp;&nbsp;<ins><tt>template&lt;&gt; struct char_traits&lt;char8_t&gt;;</tt></ins><br/>
+&nbsp;&nbsp;<tt>template&lt;&gt; struct char_traits&lt;char16_t&gt;;</tt><br/>
+&nbsp;&nbsp;<tt>template&lt;&gt; struct char_traits&lt;char16_t&gt;;</tt><br/>
+&nbsp;&nbsp;<tt>template&lt;&gt; struct char_traits&lt;char32_t&gt;;</tt><br/>
+&nbsp;&nbsp;<tt>template&lt;&gt; struct char_traits&lt;wchar_t&gt;;</tt><br/>
+<tt>}</tt><br/>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/char.traits.specializations#1">
+20.2.3 [char.traits.specializations] paragraph 1</a>:
+<blockquote>
+The header <tt>&lt;string&gt;</tt> shall define <del>four</del><ins>five</ins>
+specializations of the class template <tt>char_traits</tt>:
+<tt>char_traits&lt;char&gt;</tt>,
+<ins><tt>char_traits&lt;char8_t&gt;</tt>,</ins>
+<tt>char_traits&lt;char16_t&gt;</tt>,
+<tt>char_traits&lt;char32_t&gt;</tt>, and
+<tt>char_traits&lt;wchar_t&gt;</tt>.
+</blockquote>
+</p>
+
+<p>Add a new subclause after
+<a href="http://eel.is/c++draft/char.traits.specializations#char">
+20.2.3.1 [char.traits.specializations.char]</a>:
+<blockquote class=stdins>
+<table>
+  <tr>
+    <td>20.2.3.?</td>
+    <td><tt>struct char_traits&lt;char8_t&gt;</tt></td>
+    <td>[char.traits.specializations.char8_t]</td>
+  </tr>
+</table>
+<tt>
+namespace std {<br/>
+&nbsp;&nbsp;template&lt;&gt; struct char_traits&lt;char8_t&gt; {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using char_type  = char8_t;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using int_type   = unsigned int;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using off_type   = streamoff;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using pos_type   = u8streampos;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using state_type = mbstate_t;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr void assign(char_type&amp; c1, const char_type&amp; c2) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr bool eq(char_type c1, char_type c2) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr bool lt(char_type c1, char_type c2) noexcept;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr int compare(const char_type* s1, const char_type* s2, size_t n);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr size_t length(const char_type* s);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr const char_type* find(const char_type* s, size_t n,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char_type&amp; a);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static char_type* move(char_type* s1, const char_type* s2, size_t n);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static char_type* copy(char_type* s1, const char_type* s2, size_t n);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static char_type* assign(char_type* s, size_t n, char_type a);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr int_type not_eof(int_type c) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr char_type to_char_type(int_type c) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr int_type to_int_type(char_type c) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr bool eq_int_type(int_type c1, int_type c2) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;static constexpr int_type eof() noexcept;<br/>
+&nbsp;&nbsp;};<br/>
+}<br/>
+</tt>
+</blockquote>
+</p>
+
+<p><em>Drafting note: The <tt>char_traits&lt;char8_t&gt;</tt>
+specification above was copied from the <tt>char_traits&lt;char16_t&gt;</tt>
+specification in
+<a href="http://eel.is/c++draft/char.traits.specializations.char16_t">
+[char.traits.specializations.char16_t]</a> and then modified to update the
+targets of the type aliases.</em></p>
+
+<p>Add paragraph 1:
+<blockquote class=stdins>
+The two-argument members <tt>assign</tt>, <tt>eq</tt>, and <tt>lt</tt> are
+defined identically to the built-in operators <tt>=</tt>, <tt>==</tt>, and
+<tt>&lt;</tt> respectively.
+</blockquote>
+</p>
+
+<p>Add paragraph 2:
+<blockquote class=stdins>
+The member <tt>eof()</tt> returns an implementation-defined constant that
+cannot appear as a valid UTF-8 code unit.
+</blockquote>
+</p>
+
+<p><em>Drafting note: Paragraphs 1-2 above are lightly edited copies from the
+<tt>char_traits&lt;char16_t&gt;</tt> specification in
+<a href="http://eel.is/c++draft/char.traits.specializations.char16_t">
+[char.traits.specializations.char16_t]</a> that were then modified to match
+wording changes in Tim Song's proposed cleanup of the &lt;string&gt; library.
+</em></p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/string.classes#1">
+20.3 [string.classes] paragraph 1</a>:
+<blockquote>
+The header <tt>&lt;string&gt;</tt> defines the <tt>basic_string</tt> class
+template for manipulating varying-length sequences of char-like objects and
+<del>four</del><ins>five</ins> <em>typedef-name</em>s, <tt>string</tt>,
+<ins><tt>u8string</tt>, </ins><tt>u16string</tt>, <tt>u32string</tt>, and
+<tt>wstring</tt>, that name the specializations
+<tt>basic_string&lt;char&gt;</tt>,
+<ins><tt>basic_string&lt;char8_t&gt;</tt>,</ins>
+<tt>basic_string&lt;char16_t&gt;</tt>,
+<tt>basic_string&lt;char32_t&gt;</tt>, and
+<tt>basic_string&lt;wchar_t&gt;</tt>, respectively.<br/>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/string.classes#string.syn">
+20.3.1 [string.syn]</a>:
+<blockquote>
+<h4>Header <tt>&lt;string&gt;</tt> synopsis</h4>
+<div style="margin-left: 1em;">
+<tt>
+#include &lt;initializer_list&gt;<br/>
+<br/>
+namespace std {<br/>
+&nbsp;&nbsp;// [char.traits], <em>character traits</em>:<br/>
+&nbsp;&nbsp;template&lt;class charT&gt; struct char_traits;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct char_traits&lt;char&gt;;<br/>
+&nbsp;&nbsp;<ins>template&lt;&gt; struct char_traits&lt;char8_t&gt;;</ins><br/>
+&nbsp;&nbsp;template&lt;&gt; struct char_traits&lt;char16_t&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct char_traits&lt;char32_t&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct char_traits&lt;wchar_t&gt;;<br/>
+[&hellip;]<br/>
+&nbsp;&nbsp;// basic_string <em>typedef names</em><br/>
+&nbsp;&nbsp;using string    = basic_string&lt;char&gt;;<br/>
+&nbsp;&nbsp;<ins>using u8string = basic_string&lt;char8_t&gt;;</ins><br/>
+&nbsp;&nbsp;using u16string = basic_string&lt;char16_t&gt;;<br/>
+&nbsp;&nbsp;using u32string = basic_string&lt;char32_t&gt;;<br/>
+&nbsp;&nbsp;using wstring   = basic_string&lt;wchar_t&gt;;<br/>
+[&hellip;]<br/>
+&nbsp;&nbsp;namespace pmr {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;template &lt;class charT, class traits = char_traits&lt;charT&gt;&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using basic_string = std::basic_string&lt;charT, traits, polymorphic_allocator&lt;charT&gt;&gt;;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using string    = basic_string&lt;char&gt;;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<ins>using u8string = basic_string&lt;char8_t&gt;;</ins><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using u16string = basic_string&lt;char16_t&gt;;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using u32string = basic_string&lt;char32_t&gt;;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;using wstring   = basic_string&lt;wchar_t&gt;;<br/>
+&nbsp;&nbsp;}<br/>
+[&hellip;]<br/>
+&nbsp;&nbsp;// [basic.string.hash], <em>hash support</em>:<br/>
+&nbsp;&nbsp;template&lt;class T&gt; struct hash;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;string&gt;;<br/>
+&nbsp;&nbsp;<ins>template&lt;&gt; struct hash&lt;u8string&gt;;</ins><br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;u16string&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;u32string&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;wstring&gt;;<br/>
+<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;pmr::string&gt;;<br/>
+&nbsp;&nbsp;<ins>template&lt;&gt; struct hash&lt;pmr::u8string&gt;;</ins><br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;pmr::u16string&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;pmr::u32string&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;pmr::wstring&gt;;<br/>
+<br/>
+&nbsp;&nbsp;inline namespace literals {<br/>
+&nbsp;&nbsp;inline namespace string_literals {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;// [basic.string.literals], suffix for basic_string literals:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;string    operator "" s(const char* str, size_t len);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<ins>u8string operator "" s(const char8_t* str, size_t len);</ins><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;u16string operator "" s(const char16_t* str, size_t len);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;u32string operator "" s(const char32_t* str, size_t len);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;wstring   operator "" s(const wchar_t* str, size_t len);<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;}<br/>
+}<br/>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/basic.string.hash">
+20.3.5 [basic.string.hash]</a>:
+<blockquote>
+<tt>
+template&lt;&gt; struct hash&lt;string&gt;;<br/>
+<ins>template&lt;&gt; struct hash&lt;u8string&gt;;</ins><br/>
+template&lt;&gt; struct hash&lt;u16string&gt;;<br/>
+template&lt;&gt; struct hash&lt;u32string&gt;;<br/>
+template&lt;&gt; struct hash&lt;wstring&gt;;<br/>
+template&lt;&gt; struct hash&lt;pmr::string&gt;;<br/>
+<ins>template&lt;&gt; struct hash&lt;pmr::u8string&gt;;</ins><br/>
+template&lt;&gt; struct hash&lt;pmr::u16string&gt;;<br/>
+template&lt;&gt; struct hash&lt;pmr::u32string&gt;;<br/>
+template&lt;&gt; struct hash&lt;pmr::wstring&gt;;<br/>
+</tt>
+</blockquote>
+</p>
+
+<p>Add a new paragraph after
+<a href="http://eel.is/c++draft/basic.string.literals#1">
+20.3.6 [basic.string.literals] paragraph 1</a>:
+<blockquote class="stdins">
+<tt>
+u8string operator""s(const char8_t* str, size_t len);
+</tt>
+<div style="margin-left: 1em;">
+ <em>Returns</em>: <tt>u8string{str, len}</tt>.
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/string.view.synop">
+20.4.1 [string.view.synop]</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+[&hellip;]<br/>
+&nbsp;&nbsp;// basic_string_view <em>typedef names</em><br/>
+&nbsp;&nbsp;using string_view = basic_string_view&lt;char&gt;;<br/>
+&nbsp;&nbsp;<ins>using u8string_view = basic_string_view&lt;char8_t&gt;;</ins><br/>
+&nbsp;&nbsp;using u16string_view = basic_string_view&lt;char16_t&gt;;<br/>
+&nbsp;&nbsp;using u32string_view = basic_string_view&lt;char32_t&gt;;<br/>
+&nbsp;&nbsp;using wstring_view = basic_string_view&lt;wchar_t&gt;;<br/>
+<br/>
+&nbsp;&nbsp;// [string.view.hash], hash support<br/>
+&nbsp;&nbsp;template&lt;class T&gt; struct hash;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;string_view&gt;;<br/>
+&nbsp;&nbsp;<ins>template&lt;&gt; struct hash&lt;u8string_view&gt;;</ins><br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;u16string_view&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;u32string_view&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; struct hash&lt;wstring_view&gt;;<br/>
+<br/>
+&nbsp;&nbsp;inline namespace literals {<br/>
+&nbsp;&nbsp;inline namespace string_view_literals {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;// [string.view.literals], suffix for basic_string_view literals<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;constexpr string_view    operator""sv(const char* str, size_t len) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<ins>constexpr u8string_view operator""sv(const char8_t* str, size_t len) noexcept;</ins><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;constexpr u16string_view operator""sv(const char16_t* str, size_t len) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;constexpr u32string_view operator""sv(const char32_t* str, size_t len) noexcept;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;constexpr wstring_view   operator""sv(const wchar_t* str, size_t len) noexcept;<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;}<br/>
+[&hellip;]<br/>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/string.view.hash">
+20.4.5 [string.view.hash]</a>:
+<blockquote>
+<tt>
+template&lt;&gt; struct hash&lt;string_view&gt;;<br/>
+<ins>template&lt;&gt; struct hash&lt;u8string_view&gt;;</ins><br/>
+template&lt;&gt; struct hash&lt;u16string_view&gt;;<br/>
+template&lt;&gt; struct hash&lt;u32string_view&gt;;<br/>
+template&lt;&gt; struct hash&lt;wstring_view&gt;;<br/>
+</tt>
+</blockquote>
+</p>
+
+<p>Add a new paragraph after
+<a href="http://eel.is/c++draft/string.view.literals#1">
+20.4.6 [string.view.literals] paragraph 1</a>:
+<blockquote class="stdins">
+<tt>
+constexpr u8string_view operator""sv(const char8_t* str, size_t len) noexcept;
+</tt>
+<div style="margin-left: 1em;">
+ <em>Returns</em>: <tt>u8string_view{str, len}</tt>.
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/cuchar.syn">
+20.5.5 [cuchar.syn]</a>:
+<blockquote>
+<tt>
+namespace std {<br/>
+&nbsp;&nbsp;using mbstate_t = <em>see below</em>;<br/>
+&nbsp;&nbsp;using size_t = <em>see <a href="http://eel.is/c++draft/support.types.layout">16.2.4</a></em>;<br/>
+<br/>
+<ins>&nbsp;&nbsp;size_t mbrtoc8(char8_t* pc8, const char* s, size_t n, mbstate_t* ps);<br/></ins>
+<ins>&nbsp;&nbsp;size_t c8rtomb(char* s, char8_t c8, mbstate_t* ps);<br/></ins>
+&nbsp;&nbsp;size_t mbrtoc16(char16_t* pc16, const char* s, size_t n, mbstate_t* ps);<br/>
+&nbsp;&nbsp;size_t c16rtomb(char* s, char16_t c16, mbstate_t* ps);<br/>
+&nbsp;&nbsp;size_t mbrtoc32(char32_t* pc32, const char* s, size_t n, mbstate_t* ps);<br/>
+&nbsp;&nbsp;size_t c32rtomb(char* s, char32_t c32, mbstate_t* ps);<br/>
+}
+</tt>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/cuchar.syn#1">
+20.5.5 [cuchar.syn] paragraph 1</a>:
+<blockquote>
+The contents and meaning of the header <tt>&lt;cuchar&gt;</tt> are the same as
+the C standard library header <tt>&lt;uchar.h&gt;</tt>, except that it
+<ins>declares the additional <tt>mbrtoc8</tt> and <tt>c8rtomb</tt> functions,
+and </ins>does not declare types <tt>char16_t</tt> nor <tt>char32_t</tt>.<br/>
+<br/>
+<em>See also:</em> ISO C 7.28
+</blockquote>
+</p>
+
+<p><em>Drafting note: If WG14 were to adopt
+<a title="char8_t: A type for UTF-8 characters and strings"
+   href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm">
+N2231</a>
+<sup><a title="char8_t: A type for UTF-8 characters and strings"
+        href="#ref_wg14_n2231">
+[WG14 N2231]</a></sup> in a future revision of ISO C, and if WG21 were
+to update its normative reference to ISO C to a later revision containing
+those changes, then the updates to
+<a href="http://eel.is/c++draft/cuchar.syn#1">20.5.5 paragraph 1</a> above will
+require modification to exclude a declaration of the <tt>char8_t</tt> typedef
+and to remove mention of the additional <tt>mbrtoc8</tt> and <tt>c8rtomb</tt>
+functions.</em></p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/c.mb.wcs#1">
+20.5.6 [c.mb.wcs] paragraph 1</a>:
+<blockquote>
+<em>[Note: The headers &lt;cstdlib&gt; (16.2.2)<ins>, &lt;cuchar&gt;
+(20.5.5),</ins> and &lt;cwchar&gt; (20.5.4) declare the functions described
+in this subclause.  &mdash; end note]</em>
+</blockquote>
+</p>
+
+<p>Add the following paragraphs at the end of
+<a href="http://eel.is/c++draft/c.mb.wcs">
+20.5.6 [c.mb.wcs]</a>:
+<blockquote class="stdins">
+<tt>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t mbrtoc8(char8_t* pc8, const char* s, size_t n, mbstate_t* ps);<br/>
+<br/>
+</tt>
+<table>
+  <tr>
+    <td style="vertical-align:top">7</td>
+    <td>
+<em>Effects:</em> if <tt>s</tt> is a null pointer, equivalent to<br/>
+<div style="margin-left: 1em;">
+<tt>mbrtoc8(nullptr, "", 1, ps)</tt>
+</div>
+Otherwise, the function inspects at most <tt>n</tt> bytes beginning with the
+byte pointed to by <tt>s</tt> to determine the number of bytes needed to
+complete the next multibyte character (including any shift sequences).  If
+the function determines that the next multibyte character is complete and
+valid, it determines the values of the corresponding UTF-8 code units and
+then, if <tt>pc8</tt> is not a null pointer, stores the value of the first
+(or only) such code unit in the object pointed to by <tt>pc8</tt>. Subsequent
+calls will store successive UTF-8 code units without consuming any additional
+input until all the code units have been stored.  If the corresponding Unicode
+character is <tt>U+0000</tt>, the resulting state described is the initial
+conversion state.
+<br/>
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td style="vertical-align:top">8</td>
+    <td>
+<em>Returns:</em> the first of the following that applies (given the current
+conversion state):
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td style="vertical-align:top">(8.1)</td>
+    <td><tt>0</tt></td>
+    <td>
+if the next <tt>n</tt> or fewer bytes complete the multibyte character that
+corresponds to the <tt>U+0000</tt> Unicode character (which is the value
+stored).
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(8.2)</td>
+    <td>between 1 and <tt>n</tt> inclusive</td>
+    <td>
+if the next <tt>n</tt> or fewer bytes complete a valid multibyte character
+(which is the value stored); the value returned is the number of bytes that
+complete the multibyte character.
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(8.3)</td>
+    <td><tt>(size_t)(-3)</tt></td>
+    <td>
+if the next character resulting from a previous call has been stored (no bytes from
+the input have been consumed by this call).
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(8.4)</td>
+    <td><tt>(size_t)(-2)</tt></td>
+    <td>
+if the next <tt>n</tt> bytes contribute to an incomplete (but potentially
+valid) multibyte character, and all <tt>n</tt> bytes have been processed
+(no value is stored).
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(8.5)</td>
+    <td><tt>(size_t)(-1)</tt></td>
+    <td>
+if an encoding error occurs, in which case the next <tt>n</tt> or fewer bytes
+do not contribute to a complete and valid multibyte character (no value is
+stored); the value of the macro <tt>EILSEQ</tt> is stored in <tt>errno</tt>,
+and the conversion state is unspecified.
+    </td>
+  </tr>
+</table>
+<tt>
+&nbsp;&nbsp;&nbsp;&nbsp;size_t c8rtomb(char* s, char8_t c8, mbstate_t* ps);<br/>
+<br/>
+</tt>
+<table>
+  <tr>
+    <td style="vertical-align:top">9</td>
+    <td>
+<em>Effects:</em> if <tt>s</tt> is a null pointer, equivalent to<br/>
+<div style="margin-left: 1em;">
+<tt>c8rtomb(buf, u8'\0', ps)</tt>
+</div>
+where <tt>buf</tt> is an internal buffer.  Otherwise, if <tt>c8</tt> completes
+a sequence of valid UTF-8 code units, determines the number of bytes needed to
+represent the multibyte character (including any shift sequences), and stores
+the multibyte character representation in the array whose first element
+is pointed to by <tt>s</tt>.  At most <tt>MB_CUR_MAX</tt> bytes are stored.  If
+the multibyte character is a null character, a null byte is stored, preceded by
+any shift sequence needed to restore the initial shift state; the resulting state
+described is the initial conversion state.
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td style="vertical-align:top">10</td>
+    <td>
+<em>Returns:</em> the number of bytes stored in the array object (including
+any shift sequences).  If <tt>c8</tt> does not contribute to a sequence of
+<tt>char8_t</tt> corresponding to a valid multibyte character, the value of
+the macro <tt>EILSEQ</tt> is stored in <tt>errno</tt>, <tt>(size_t) (−1)</tt>
+is returned, and the conversion state is unspecified.
+    </td>
+  </tr>
+</table>
+</blockquote>
+</p>
+
+<p><em>Drafting note: The wording for <tt>mbrtoc8</tt> and <tt>c8rtomb</tt> is
+derived from wording for <tt>mbrtoc16</tt> and <tt>c16rtomb</tt> in C18
+(<a href="http://www.open-std.org/jtc1/sc22/wg14/www/abq/c17_updated_proposed_fdis.pdf">WG14 N2176</a>),
+augmented by changes suggested in
+<a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2040.htm">WG14 N2040</a>
+for
+<a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2059.htm#dr_488">WG14 DR488</a>
+to properly account for UTF-8 being a variable length encoding, and lightly
+edited for formatting style.  The author was reluctant to stray from the
+existing C wording for related functions despite a belief that considerable
+improvements to the wording would be possible.
+</em></p>
+
+<p>Change in table 91 of
+<a href="http://eel.is/c++draft/locale.category#2">
+26.3.1.1.1 [locale.category] paragraph 2</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<table>
+  <tr>
+    <td align="center">
+      Table 91 &mdash; Locale category facets
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <table border="1">
+        <tr>
+          <th>Category</th>
+          <th align="center">Includes facets</th>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+        <tr>
+          <td valign="top">ctype</td>
+          <td><tt>
+            ctype&lt;char&gt;, ctype&lt;wchar_t&gt;<br/>
+            codecvt&lt;char,char,mbstate_t&gt;<br/>
+            <del>codecvt&lt;char16_t,char,mbstate_t&gt;</del><br/>
+            <del>codecvt&lt;char32_t,char,mbstate_t&gt;</del><br/>
+            <ins>codecvt&lt;char16_t,char8_t,mbstate_t&gt;</ins><br/>
+            <ins>codecvt&lt;char32_t,char8_t,mbstate_t&gt;</ins><br/>
+            codecvt&lt;wchar_t,char,mbstate_t&gt;<br/>
+          </tt></td>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+</blockquote>
+</p>
+
+<p><em>Drafting note: The deleted <tt>char</tt> based <tt>codecvt</tt>
+specializations have been deprecated and moved to annex D,
+[depr.locale.category].</em></p>
+
+<p>Change in table 92 of
+<a href="http://eel.is/c++draft/locale.category#4">
+26.3.1.1.1 [locale.category] paragraph 4</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<table>
+  <tr>
+    <td align="center">
+      Table 92 &mdash; Required specializations
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <table border="1">
+        <tr>
+          <th>Category</th>
+          <th align="center">Includes facets</th>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+        <tr>
+          <td valign="top">ctype</td>
+          <td><tt>
+            ctype_byname&lt;char&gt;, ctype_byname&lt;wchar_t&gt;<br/>
+            codecvt_byname&lt;char,char,mbstate_t&gt;<br/>
+            <del>codecvt_byname&lt;char16_t,char,mbstate_t&gt;</del><br/>
+            <del>codecvt_byname&lt;char32_t,char,mbstate_t&gt;</del><br/>
+            <ins>codecvt_byname&lt;char16_t,char8_t,mbstate_t&gt;</ins><br/>
+            <ins>codecvt_byname&lt;char32_t,char8_t,mbstate_t&gt;</ins><br/>
+            codecvt_byname&lt;wchar_t,char,mbstate_t&gt;<br/>
+          </tt></td>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+</blockquote>
+</p>
+
+<p><em>Drafting note: The deleted <tt>char</tt> based <tt>codecvt_byname</tt>
+specializations have been deprecated and moved to annex D,
+[depr.locale.category].</em></p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/locale.codecvt#3">
+26.4.1.4 [locale.codecvt] paragraph 3</a>:
+<blockquote>
+The specializations required in Table 91
+<a href="http://eel.is/c++draft/locale.category">(26.3.1.1.1)</a> convert the
+implementation-defined native character set.
+<tt>codecvt&lt;char, char, mbstate_t&gt;</tt> implements a degenerate
+conversion; it does not convert at all. The specialization
+<tt>codecvt&lt;char16_t, <del>char</del><ins>char8_t</ins>, mbstate_t&gt;</tt>
+converts between the UTF-16 and UTF-8 encoding
+forms, and the specialization
+<tt>codecvt&lt;char32_t, <del>char</del><ins>char8_t</ins>, mbstate_t&gt;</tt>
+converts between the UTF-32 and UTF-8 encoding forms.
+<tt>codecvt&lt;wchar_t,char,mbstate_t&gt;</tt> converts between the native
+character sets for <del>narrow</del><ins>ordinary</ins> and wide characters.
+Specializations on <tt>mbstate_t</tt> perform conversion between encodings
+known to the library implementer. Other encodings can be converted by
+specializing on a user-defined <tt>stateT</tt> type. Objects of type
+<tt>stateT</tt> can contain any state that is useful to communicate to or
+from the specialized <tt>do_in</tt> or <tt>do_out</tt> members.
+</blockquote>
+</p>
+
+
+<p>Change in
+<a href="http://eel.is/c++draft/iosfwd.syn">
+27.3.1 [iosfwd.syn]</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+[&hellip;]<br/>
+&nbsp;&nbsp;template&lt;class charT&gt; class char_traits;<br/>
+&nbsp;&nbsp;template&lt;&gt; class char_traits&lt;char&gt;;<br/>
+&nbsp;&nbsp;<ins>template&lt;&gt; class char_traits&lt;char8_t&gt;;</ins><br/>
+&nbsp;&nbsp;template&lt;&gt; class char_traits&lt;char16_t&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; class char_traits&lt;char32_t&gt;;<br/>
+&nbsp;&nbsp;template&lt;&gt; class char_traits&lt;wchar_t&gt;;<br/>
+[&hellip;]<br/>
+&nbsp;&nbsp;template&lt;class state&gt; class fpos;<br/>
+&nbsp;&nbsp;using streampos = fpos&lt;char_traits&lt;char&gt;::state_type&gt;;<br/>
+&nbsp;&nbsp;using wstreampos = fpos&lt;char_traits&lt;wchar_t&gt;::state_type&gt;;<br/>
+&nbsp;&nbsp;<ins>using u8streampos = fpos&lt;char_traits&lt;char8_t&gt;::state_type&gt;;</ins><br/>
+[&hellip;]<br/>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.req#1">
+27.11.4 [fs.req] paragraph 1</a>:
+<blockquote>
+Throughout this subclause, <tt>char</tt>, <tt>wchar_t</tt>,
+<ins><tt>char8_t</tt>, </ins><tt>char16_t</tt>, and <tt>char32_t</tt> are collectively
+called <em>encoded character types</em>.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.filesystem.syn">
+27.11.5 [fs.filesystem.syn]</a>:
+<blockquote class=stddel>
+<div style="margin-left: 1em;">
+<tt>
+&nbsp;&nbsp;<em>// 27.11.7.7.1, <tt>path</tt> factory functions</em><br/>
+&nbsp;&nbsp;template &lt;class Source&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;path u8path(const Source&amp; source);<br/>
+&nbsp;&nbsp;template &lt;class InputIterator&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;path u8path(InputIterator first, InputIterator last);<br/>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p><em>Drafting note: The deleted <tt>u8path</tt> factory functions
+have been deprecated and moved to annex D, [depr.fs.path.factory].</em></p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.class.path#6">
+27.11.7 [fs.class.path] paragraph 6</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+[&hellip;]<br/>
+&nbsp;&nbsp;std::string string() const;<br/>
+&nbsp;&nbsp;std::wstring wstring() const;<br/>
+&nbsp;&nbsp;std::<del>string</del><ins>u8string</ins> u8string() const;<br/>
+&nbsp;&nbsp;std::u16string u16string() const;<br/>
+&nbsp;&nbsp;std::u32string u32string() const;<br/>
+[&hellip;]<br/>
+&nbsp;&nbsp;std::string generic_string() const;<br/>
+&nbsp;&nbsp;std::wstring generic_wstring() const;<br/>
+&nbsp;&nbsp;std::<del>string</del><ins>u8string</ins> generic_u8string() const;<br/>
+&nbsp;&nbsp;std::u16string generic_u16string() const;<br/>
+&nbsp;&nbsp;std::u32string generic_u32string() const;<br/>
+[&hellip;]<br/>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.path.type.cvt#1">
+27.11.7.2.2 [fs.path.type.cvt] paragraph 1</a>:
+<blockquote>
+The <em>native encoding</em> of <del>a narrow</del><ins>an ordinary</ins>
+character string is the operating system dependent current encoding for
+pathnames
+<a href="http://eel.is/c++draft/fs.class.path">(27.11.7)</a>.
+The <em>native encoding</em> for wide character strings
+is the implementation-defined execution wide-character set encoding
+<a href="http://eel.is/c++draft/lex.charset">(5.3)</a>.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.path.type.cvt#2.1">
+27.11.7.2.2 [fs.path.type.cvt] subparagraph (2.1)</a>:
+<blockquote>
+(2.1) &mdash; <tt>char</tt>: The encoding is the native
+<del>narrow</del><ins>ordinary</ins> encoding. The method of conversion, if
+any, is operating system dependent. [ <em>Note</em>: For POSIX-based
+operating systems <tt>path::value_type</tt> is <tt>char</tt> so no conversion
+from <tt>char</tt> value type arguments or to <tt>char</tt> value type return
+values is performed. For Windows-based operating systems, the native
+<del>narrow</del><ins>ordinary</ins> encoding is determined by calling a
+Windows API function. &mdash; <em>end note</em> ] [ <em>Note</em>: This results
+in behavior identical to other C and C++ standard library functions that
+perform file operations using <del>narrow</del><ins>ordinary</ins> character
+strings to identify paths. Changing this behavior would be surprising and error
+prone. &mdash; <em>end note</em> ]
+</blockquote>
+</p>
+
+<p>Add a new subparagraph after
+<a href="http://eel.is/c++draft/fs.path.type.cvt#2.2">
+27.11.7.2.2 [fs.path.type.cvt] subparagraph (2.2)</a>:
+<blockquote class="stdins">
+(2.?) &mdash; <tt>char8_t</tt>: The encoding is UTF-8. The method of conversion is
+unspecified.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.path.construct#7.2">
+27.11.7.4.1 [fs.path.construct] subparagraph (7.2)</a>:
+<blockquote>
+&mdash; Otherwise a conversion is performed using the
+<tt>codecvt&lt;wchar_t, char, mbstate_t&gt;</tt> facet of <tt>loc</tt>, and
+then a second conversion to the current <del>narrow</del><ins>ordinary</ins>
+encoding.
+</blockquote>
+</p>
+
+<p><em>Drafting note: Is the requirement for a second conversion stated above
+correct?  <tt>codecvt&lt;wchar_t, char, mbstate_t&gt;</tt> already converts to
+the ordinary character encoding.</em></p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.path.construct#8">
+27.11.7.4.1 [fs.path.construct] paragraph 8</a>:
+<blockquote>
+[&hellip;]<br/>
+For POSIX-based operating systems, the path is constructed by first using
+<tt>latin1_facet</tt> to convert ISO/IEC 8859-1 encoded <tt>latin1_string</tt>
+to a wide character string in the native wide encoding
+<a href="http://eel.is/c++draft/fs.path.type.cvt">(27.11.7.2.2)</a>. The
+resulting wide string is then converted to
+<del>a narrow</del><ins>an ordinary</ins> character pathname string in the
+current native <del>narrow</del><ins>ordinary</ins> encoding. If the native
+wide encoding is UTF-16 or UTF-32, and the current native
+<del>narrow</del><ins>ordinary</ins> encoding is UTF-8, all of the characters
+in the ISO/IEC 8859-1 character set will be converted to their Unicode
+representation, but for other native <del>narrow</del><ins>ordinary</ins>
+encodings some characters may have no representation.
+[&hellip;]<br/>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.path.native.obs#8">
+27.11.7.4.6 [fs.path.native.obs] paragraph 8</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+std::string string() const;<br/>
+std::wstring wstring() const;<br/>
+std::<del>string</del><ins>u8string</ins> u8string() const;<br/>
+std::u16string u16string() const;<br/>
+std::u32string u32string() const;<br/>
+</tt>
+</div>
+<br/>
+<em>Returns</em>: <tt>native()</tt>.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.path.native.obs#9">
+27.11.7.4.6 [fs.path.native.obs] paragraph 9</a>:
+<blockquote>
+<em>Remarks</em>: Conversion, if any, is performed as specified by
+<a href="http://eel.is/c++draft/fs.path.cvt">27.11.7.2</a>.
+<del>The encoding of the string returned by <tt>u8string()</tt> is always
+UTF-8.</del>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.path.generic.obs#5">
+27.11.7.4.7 [fs.path.generic.obs] paragraph 5</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+std::string generic_string() const;<br/>
+std::wstring generic_wstring() const;<br/>
+std::<del>string</del><ins>u8string</ins> generic_u8string() const;<br/>
+std::u16string generic_u16string() const;<br/>
+std::u32string generic_u32string() const;<br/>
+</tt>
+</div>
+<br/>
+<em>Returns</em>: The pathname in the generic format.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/fs.path.generic.obs#6">
+27.11.7.4.7 [fs.path.generic.obs] paragraph 6</a>:
+<blockquote>
+<em>Remarks</em>: Conversion, if any, is specified by
+<a href="http://eel.is/c++draft/fs.path.cvt">27.11.7.2</a>.
+<del>The encoding of the string returned by <tt>generic_u8string()</tt> is always UTF-8.
+</blockquote>
+</p>
+
+<p>Remove subclause
+<a href="http://eel.is/c++draft/fs.path.factory">
+27.11.7.7.1 [fs.path.factory]</a>.</p>
+
+<blockquote class="stddel">
+<p>
+<tt>
+<pre>template&lt;class Source&gt;
+  path u8path(const Source&amp; source);
+template&lt;class InputIterator&gt;
+  path u8path(InputIterator first, InputIterator last);
+</pre>
+</tt>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>1</td>
+    <td>
+<em>Requires:</em> The source and <tt>[first, last)</tt> sequences are UTF-8
+encoded.  The value type of <tt>Source</tt> and <tt>InputIterator</tt> is
+<tt>char</tt>.
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>2</td>
+    <td>
+<em>Returns:</em>
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>(2.1)</td>
+    <td>&mdash;</td>
+    <td>
+If <tt>value_type</tt> is <tt>char</tt> and the current native narrow encoding
+<a href="http://eel.is/c++draft/fs.path.type.cvt">(27.11.7.2.2)</a>
+is UTF-8, return <tt>path(source)</tt> or
+<tt>path(first, last)</tt>; otherwise,
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>(2.2)</td>
+    <td>&mdash;</td>
+    <td>
+if <tt>value_type</tt> is <tt>wchar_t</tt> and the native wide encoding is
+UTF-16, or if <tt>value_type</tt> is <tt>char16_t</tt> or <tt>char32_t</tt>,
+convert <tt>source</tt> or <tt>[first, last)</tt> to a temporary, <tt>tmp</tt>,
+of type <tt>string_type</tt> and return <tt>path(tmp)</tt>; otherwise,
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>(2.3)</td>
+    <td>&mdash;</td>
+    <td>
+convert <tt>source</tt> or <tt>[first, last)</tt> to a temporary, <tt>tmp</tt>,
+of type <tt>u32string</tt> and return <tt>path(tmp)</tt>.
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>3</td>
+    <td>
+<em>Remarks:</em> Argument format conversion
+<a href="http://eel.is/c++draft/fs.path.fmt.cvt">(27.11.7.2.1)</a> applies to the
+arguments for these functions. How Unicode encoding conversions are performed
+is unspecified.
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>4</td>
+    <td>
+[ <em>Example:</em> A string is to be read from a database that is encoded in
+UTF-8, and used to create a directory using the native encoding for filenames:
+<div style="margin-left: 1em;">
+<tt>
+<pre>namespace fs = std::filesystem;
+std::string utf8_string = read_utf8_data();
+fs::create_directory(fs::u8path(utf8_string));
+</pre>
+</tt>
+</div>
+For POSIX-based operating systems with the native narrow encoding set to UTF-8,
+no encoding or type conversion occurs.<br/>
+For POSIX-based operating systems with the native narrow encoding not set to
+UTF-8, a conversion to UTF-32 occurs, followed by a conversion to the current
+native narrow encoding.  Some Unicode characters may have no native character
+set representation.<br/>
+For Windows-based operating systems a conversion from UTF-8 to UTF-16 occurs.
+&mdash; <em>end example</em> ]
+    </td>
+  </tr>
+</table>
+</p>
+</blockquote>
+
+<p><em>Drafting note: The <tt>u8path</tt> factory function templates have been
+deprecated and moved to annex D, [depr.fs.path.factory].</em></p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/atomics.syn">
+29.2 [atomics.syn]</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+[&hellip;]<br/>
+&nbsp;&nbsp;<em>// [atomics.lockfree], lock-free property</em><br/>
+&nbsp;&nbsp;#define ATOMIC_BOOL_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;#define ATOMIC_CHAR_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;<ins>#define ATOMIC_CHAR8_T_LOCK_FREE <em>unspecified</em></ins><br/>
+&nbsp;&nbsp;#define ATOMIC_CHAR16_T_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;#define ATOMIC_CHAR32_T_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;#define ATOMIC_WCHAR_T_LOCK_FREE <em>unspecified</em><br/>
+[&hellip;]<br/>
+&nbsp;&nbsp;using atomic_ullong&nbsp;&nbsp;&nbsp;= atomic&lt;unsigned long long&gt;;<br/>
+&nbsp;&nbsp;<ins>using atomic_char8_t&nbsp;&nbsp;= atomic&lt;char8_t&gt;;</ins><br/>
+&nbsp;&nbsp;using atomic_char16_t&nbsp;= atomic&lt;char16_t&gt;;<br/>
+&nbsp;&nbsp;using atomic_char32_t&nbsp;= atomic&lt;char32_t&gt;;<br/>
+&nbsp;&nbsp;using atomic_wchar_t&nbsp;&nbsp;= atomic&lt;wchar_t&gt;;<br/>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/atomics.lockfree">
+29.5 [atomics.lockfree]</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+&nbsp;&nbsp;#define ATOMIC_BOOL_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;#define ATOMIC_CHAR_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;<ins>#define ATOMIC_CHAR8_T_LOCK_FREE <em>unspecified</em></ins><br/>
+&nbsp;&nbsp;#define ATOMIC_CHAR16_T_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;#define ATOMIC_CHAR32_T_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;#define ATOMIC_WCHAR_T_LOCK_FREE <em>unspecified</em><br/>
+&nbsp;&nbsp;[&hellip;]<br/>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/atomics.ref.int#1">
+29.6.2 [atomics.ref.int] paragraph 1</a>:
+<blockquote>
+There are specializations of the <tt>atomic_ref</tt> class template for the
+integral types <tt>char</tt>, <tt>signed char</tt>, <tt>unsigned char</tt>,
+<tt>short</tt>, <tt>unsigned short</tt>, <tt>int</tt>, <tt>unsigned int</tt>,
+<tt>long</tt>, <tt>unsigned long</tt>, <tt>long long</tt>,
+<tt>unsigned long long</tt>, <ins><tt>char8_t</tt>, </ins><tt>char16_t</tt>,
+<tt>char32_t</tt>, <tt>wchar_t</tt>, and any other types needed by the typedefs
+in the header &lt;cstdint&gt;. [&hellip;]<br/>
+[&hellip;]
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/atomics.types.int#1">
+29.7.2 [atomics.types.int] paragraph 1</a>:
+<blockquote>
+There are specializations of the <tt>atomic</tt> class template for the
+integral types <tt>char</tt>, <tt>signed char</tt>, <tt>unsigned char</tt>,
+<tt>short</tt>, <tt>unsigned short</tt>, <tt>int</tt>, <tt>unsigned int</tt>,
+<tt>long</tt>, <tt>unsigned long</tt>, <tt>long long</tt>,
+<tt>unsigned long long</tt>, <ins><tt>char8_t</tt>, </ins><tt>char16_t</tt>,
+<tt>char32_t</tt>, <tt>wchar_t</tt>, and any other types needed by the typedefs
+in the header &lt;cstdint&gt;. [&hellip;]<br/>
+[&hellip;]
+</blockquote>
+</p>
+
+
+<h2 id="annex_a_wording">Annex A Grammar summary wording</h2>
+
+<p>Change in
+<a href="http://eel.is/c++draft/gram.dcl">
+A.6 [gram.dcl]</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<tt>
+[&hellip;]</br>
+<em>simple-type-specifier</em>:
+&nbsp;&nbsp;&nbsp;[&hellip;]</br>
+&nbsp;&nbsp;&nbsp;<tt>char</tt><br/>
+&nbsp;&nbsp;&nbsp;<ins><tt>char8_t</tt></ins><br/>
+&nbsp;&nbsp;&nbsp;<tt>char16_t</tt><br/>
+&nbsp;&nbsp;&nbsp;<tt>char32_t</tt><br/>
+&nbsp;&nbsp;&nbsp;<tt>wchar_t</tt><br/>
+&nbsp;&nbsp;&nbsp;[&hellip;]</br>
+[&hellip;]</br>
+</tt>
+</div>
+</blockquote>
+</p>
+
+
+<h2 id="annex_c_wording">Annex C Compatibility wording</h2>
+
+<p>Change in
+<a href="http://eel.is/c++draft/diff.lex#3">
+C.1.1 [diff.lex] paragraph 3</a>:
+<blockquote>
+[&hellip;]</br>
+<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/lex.string">5.13.5</a><br/>
+<strong>Change</strong>: String literals made const.<br/>
+The type of a string literal is changed from "array of <tt>char</tt>" to
+"array of <tt>const char</tt>". <ins>The type of a <tt>char8_t</tt> string
+literal is changed from "array of <tt>char</tt>" to "array of
+<tt>const char8_t</tt>". </ins>The type of a <tt>char16_t</tt> string literal
+is changed from "array of <em>some-integer-type</em>" to "array of
+<tt>const char16_t</tt>". The type of a <tt>char32_t</tt> string literal is
+changed from "array of <em>some-integer-type</em>" to "array of
+<tt>const char32_t</tt>". The type of a wide string literal is changed from
+"array of <tt>wchar_t</tt>" to "array of <tt>const wchar_t</tt>".<br/>
+[&hellip;]</br>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/diff.cpp17.lex#1">
+C.5.1 [diff.cpp17.lex] paragraph 1</a>:
+<blockquote>
+<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/lex.key">5.11</a><br/>
+<strong>Change</strong>: New keywords<br/>
+<strong>Rationale</strong>: Required for new features. The <tt>requires</tt>
+keyword is added to introduce constraints through a <em>requires-clause</em>
+or a <em>requires-expression</em>. The <tt>concept</tt> keyword is added to
+enable the definition of <em>concepts</em>
+<a href="http://eel.is/c++draft/temp.concept">(12.6.8)</a>.
+<ins>The <tt>char8_t</tt>
+keyword is added to differentiate the types of ordinary and UTF-8
+literals
+<a href="http://eel.is/c++draft/lex.string">(5.13.5)</a>.</ins><br/>
+<strong>Effect on original feature</strong>: Valid ISO C++ 2017 code using
+<tt>concept</tt><ins>,</ins><del> or</del> <tt>requires</tt><ins>, or
+<tt>char8_t</tt></ins> as an identifier is not valid in this International
+Standard.<br/>
+</blockquote>
+</p>
+
+<p>Add a new paragraph to
+<a href="http://eel.is/c++draft/diff.cpp17.lex#1">
+C.5.1 [diff.cpp17.lex]</a>:
+<blockquote class=stdins>
+<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/lex.literal">5.13</a><br/>
+<strong>Change</strong>: Type of UTF-8 string and character literals.<br/>
+<strong>Rationale</strong>: Required for new features.  The changed types
+enable function overloading, template specialization, and type deduction
+to distinguish ordinary and UTF-8 string and character literals.<br/>
+<strong>Effect on original feature</strong>: Valid ISO C++ 2017 code that
+depends on UTF-8 string literals having type "array of <tt>const char</tt>"
+and UTF-8 character literals having type "<tt>char</tt>" is not valid in
+this International Standard.<br/>
+<br/>
+<div style="margin-left: 1em;">
+<tt>
+<pre>const auto *u8s = u8"text";   <em>// <tt>u8s</tt> previously deduced as <tt>const char *</tt>; now deduced as <tt>const char8_t *</tt>.</em>
+const char *ps = u8s;         <em>// ill-formed; previously well-formed.</em>
+
+auto u8c = u8'c';             <em>// <tt>u8c</tt> previously deduced as <tt>char</tt>; now deduced as <tt>char8_t</tt>.</em>
+char *pc = &amp;u8c;              <em>// ill-formed; previously well-formed.</em>
+
+std::string s = u8"text";     <em>// ill-formed; previously well-formed.</em>
+
+void f(const char *s);
+f(u8"text");                  <em>// ill-formed; previously well-formed.</em>
+
+template&lt;typename&gt; struct ct;
+template&lt;&gt; struct ct&lt;char&gt; {
+  using type = char;
+};
+ct&lt;decltype(u8'c')&gt;::type x;  <em>// ill-formed; previously well-formed.</em>
+</pre>
+</tt>
+</div>
+</blockquote>
+</p>
+
+<p>Add a new subclause after
+<a href="http://eel.is/c++draft/diff.cpp17#containers">
+C.5.8 [diff.cpp17.containers]</a>:
+<blockquote class=stdins>
+C.5.? [input.output]: Input/output library [diff.cpp17.input.output]<br/>
+<br/>
+<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/fs.class.path">27.11.7</a><br/>
+<strong>Change</strong>: Return type of filesystem path format
+observer member functions.<br/>
+<strong>Rationale</strong>: Required for new features.<br/>
+<strong>Effect on original feature</strong>: Valid ISO C++ 2017 code that
+depends on the <tt>u8string()</tt> and <tt>generic_u8string()</tt> member
+functions of <tt>std::filesystem::path</tt> returning <tt>std::string</tt>
+is not valid in this International Standard.<br/>
+<br/>
+<div style="margin-left: 1em;">
+<tt>
+<pre>std::filesystem::path p;
+std::string s1 = p.u8string();          <em>// ill-formed; previously well-formed.</em>
+std::string s2 = p.generic_u8string();  <em>// ill-formed; previously well-formed.</em>
+</pre>
+</tt>
+</div>
+</blockquote>
+</p>
+
+
+<h2 id="annex_d_wording">Annex D Compatibility features wording</h2>
+
+<p>Add a new subclause after
+<a href="http://eel.is/c++draft/depr.conversions">
+D.14 [depr.conversions]</a>:</p>
+<blockquote class="stdins">
+<p>
+D.?? Deprecated locale category facets [depr.locale.category]<br/>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>1</td>
+    <td>
+The <tt>ctype</tt> locale category includes the following facets as if they
+were specified in table 91 of
+<a href="http://eel.is/c++draft/locale.category">26.3.1.1.1</a>.
+<div style="margin-left: 1em;">
+<tt>
+<pre>codecvt&lt;char16_t, char, mbstate_t&gt;
+codecvt&lt;char32_t, char, mbstate_t&gt;
+</pre>
+</tt>
+</div>
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>2</td>
+    <td>
+The <tt>ctype</tt> locale category includes the following facets as if they
+were specified in table 92 of
+<a href="http://eel.is/c++draft/locale.category">26.3.1.1.1</a>.
+<div style="margin-left: 1em;">
+<tt>
+<pre>codecvt_byname&lt;char16_t, char, mbstate_t&gt;
+codecvt_byname&lt;char32_t, char, mbstate_t&gt;
+</pre>
+</tt>
+</div>
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>3</td>
+    <td>
+The following class template specializations are required in addition to those
+specified in [locale.codecvt].  The specialization
+<tt>codecvt&lt;char16_t, char, mbstate_t&gt;</tt> converts between the UTF-16
+and UTF-8 encoding forms, and the specialization
+<tt>codecvt&lt;char32_t, char, mbstate_t&gt;</tt> converts between the UTF-32
+and UTF-8 encoding forms.
+    </td>
+  </tr>
+</table>
+</p>
+
+</blockquote>
+
+<p>Add another new subclause after
+<a href="http://eel.is/c++draft/depr.conversions">
+D.14 [depr.conversions]</a>:</p>
+<blockquote class="stdins">
+<p>
+D.?? Deprecated filesystem path factory functions [depr.fs.path.factory]<br/>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>1</td>
+    <td>
+The header <tt>&lt;filesystem&gt;</tt> has the following additions:
+<div style="margin-left: 1em;">
+<tt>
+<pre>namespace std::filesystem {
+  template &lt;class Source&gt;
+    path u8path(const Source&amp; source);
+  template &lt;class InputIterator&gt;
+    path u8path(InputIterator first, InputIterator last);
+}
+</pre>
+</tt>
+</div>
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>2</td>
+    <td>
+<em>Requires:</em> The source and <tt>[first, last)</tt> sequences are UTF-8
+encoded.  The value type of <tt>Source</tt> and <tt>InputIterator</tt> is
+<tt>char</tt>.  <tt>Source</tt> meets the requirements specified in
+<a href="http://eel.is/c++draft/fs.path.req">27.11.7.3</a>.
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>3</td>
+    <td>
+<em>Returns:</em>
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>(3.1)</td>
+    <td>&mdash;</td>
+    <td>
+If <tt>path::value_type</tt> is <tt>char</tt> and the current native narrow
+encoding
+<a href="http://eel.is/c++draft/fs.path.type.cvt">(27.11.7.2.2)</a>
+is UTF-8, return <tt>path(source)</tt> or
+<tt>path(first, last)</tt>; otherwise,
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>(3.2)</td>
+    <td>&mdash;</td>
+    <td>
+if <tt>path::value_type</tt> is <tt>wchar_t</tt> and the native wide encoding is
+UTF-16, or if <tt>path::value_type</tt> is <tt>char16_t</tt> or
+<tt>char32_t</tt>, convert <tt>source</tt> or <tt>[first, last)</tt> to a
+temporary, <tt>tmp</tt>, of type <tt>path::string_type</tt> and return
+<tt>path(tmp)</tt>; otherwise,
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>(3.3)</td>
+    <td>&mdash;</td>
+    <td>
+convert <tt>source</tt> or <tt>[first, last)</tt> to a temporary, <tt>tmp</tt>,
+of type <tt>u32string</tt> and return <tt>path(tmp)</tt>.
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>4</td>
+    <td>
+<em>Remarks:</em> Argument format conversion applies to the
+arguments for these functions. How Unicode encoding conversions are performed
+is unspecified.
+    </td>
+  </tr>
+</table>
+</p>
+
+<p>
+<table>
+  <tr>
+    <td>5</td>
+    <td>
+[ <em>Example:</em> A string is to be read from a database that is encoded in
+UTF-8, and used to create a directory using the native encoding for filenames:
+<div style="margin-left: 1em;">
+<tt>
+<pre>namespace fs = std::filesystem;
+std::string utf8_string = read_utf8_data();
+fs::create_directory(fs::u8path(utf8_string));
+</pre>
+</tt>
+</div>
+For POSIX-based operating systems with the native narrow encoding set to UTF-8,
+no encoding or type conversion occurs.<br/>
+For POSIX-based operating systems with the native narrow encoding not set to
+UTF-8, a conversion to UTF-32 occurs, followed by a conversion to the current
+native narrow encoding.  Some Unicode characters may have no native character
+set representation.<br/>
+For Windows-based operating systems a conversion from UTF-8 to UTF-16 occurs.
+&mdash; <em>end example</em> ]
+    </td>
+  </tr>
+</table>
+</p>
+
+</blockquote>
+
+<p><em>Drafting note: The contents of paragraph 1 correspond to the text removed
+from [fs.filesystem.syn].  The contents of paragraphs 2-5 correspond to
+the text removed from [fs.path.factory]</em></p>
+
+
+<h1 id="acknowledgements">Acknowledgements</h1>
+
+<p>Michael Spencer and Davide C. C. Italiano first proposed adding a new
+<tt>char8_t</tt> fundamental type in
+<a title="P0372R0: A type for utf-8 data"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0372r0.html">
+P0372R0</a>
+<sup><a title="P0372R0: A type for utf-8 data"
+        href="#ref_p0372r0">
+[P0372R0]</a></sup>.
+</p>
+
+<p>Thanks to Alisdair Meredith for reviewing wording and providing feedback in
+advance of the Rapperswil meeting.  Thanks to Tim Song and Casey Carter for
+further "paper of the week" wording review prior to San Diego.
+</p>
+
+<h1 id="references">References</h1>
+
+<table id="references">
+  <tr>
+    <td id="ref_w3techs"><sup>[W3Techs]</sup></td>
+    <td>
+      "Usage of UTF-8 for websites", W3Techs, 2017.<br/>
+      <a href="https://w3techs.com/technologies/details/en-utf8/all/all">
+      https://w3techs.com/technologies/details/en-utf8/all/all</a></td>
+  </tr>
+  <tr>
+    <td id="ref_n2249"><sup>[N2249]</sup></td>
+    <td>
+      Lawrence Crowl,
+      "New Character Types in C++", N2249, 2007.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2249.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2249.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_n4197"><sup>[N4197]</sup></td>
+    <td>
+      Richard Smith,
+      "Adding u8 character literals", N4197, 2014.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4197.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4197.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_n4762"><sup>[N4762]</sup></td>
+    <td>
+      "Working Draft, Standard for Programming Language C++", N4762, 2018.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4762.pdf">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4762.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_p0372r0"><sup>[P0372R0]</sup></td>
+    <td>
+      Michael Spencer and Davide C. C. Italiano,
+      "A type for utf-8 data", P0372R0, 2016.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0372r0.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0372r0.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_p0244r2"><sup>[P0244R2]</sup></td>
+    <td>
+      Tom Honermann,
+      "Text_view: A C++ concepts and range based character encoding and code
+       point enumeration library", P0244R2, 2017.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_p0218r1"><sup>[P0218R1]</sup></td>
+    <td>
+      Beman Dawes,
+      "Adopt the File System TS for C++17", P0218R1, 2016.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0372r0.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0372r0.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_n2231"><sup>[WG14 N2231]</sup></td>
+    <td>
+      Tom Honermann,
+      "char8_t: A type for UTF-8 characters and strings", WG14 N2231, 2018.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm</a></td>
+  </tr>
+</table>
+
+</body>
