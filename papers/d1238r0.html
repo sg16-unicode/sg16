@@ -30,7 +30,12 @@ table#header td
   </tr>
   <tr>
     <th>Reply-to:</th>
-    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;<br/>
+        Corentin Jabot&lt;corentin.jabot@gmail.com&gt;<br/>
+        Mark Zeren &lt;mzeren@vmware.com&gt;<br/>
+        Steve Downey &lt;sdowney@gmail.com&gt;<br/>
+        Zach Laine &lt;whatwasthataddress@gmail.com&gt;<br/>
+    </td>
   </tr>
 </table>
 
@@ -51,11 +56,46 @@ https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md</a>.
 features that have a realistic chance of being adopted for C++20.  These
 include:
 <ul>
-  <li>P0482: char8_t: A type for UTF-8 characters and strings</li>
-  <li>P1025: Update The Reference To The Unicode Standard</li>
-  <li>P1041: Make char16_t/char32_t string literals be UTF-16/32</li>
-  <li>P1072: Default Initialization for basic_string</li>
-  <li>P1097: Named character escapes</li>
+  <li>
+    <a title="char8_t: A type for UTF-8 characters and strings"
+       href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html">
+    P0482R5: char8_t: A type for UTF-8 characters and strings</a>
+    <sup><a title="char8_t: A type for UTF-8 characters and strings"
+            href="#ref_p0482r5">
+    [P0482R5]</a></sup>
+  </li>
+  <li>
+    <a title="Update The Reference To The Unicode Standard"
+       href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1025r1.html">
+    P1025R1: Update The Reference To The Unicode Standard</a>
+    <sup><a title="Update The Reference To The Unicode Standard"
+            href="#ref_p1025r1">
+    [P1025R1]</a></sup>
+  </li>
+  <li>
+    <a title="Make char16_t/char32_t string literals be UTF-16/32"
+       href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">
+    P1041R1: Make char16_t/char32_t string literals be UTF-16/32</a>
+    <sup><a title="Make char16_t/char32_t string literals be UTF-16/32"
+            href="#ref_p1041r1">
+    [P1041R1]</a></sup>
+  </li>
+  <li>
+    <a title="Default Initialization for basic_string"
+       href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html">
+    P1072R0: Default Initialization for basic_string</a>
+    <sup><a title="Default Initialization for basic_string"
+            href="#ref_p1072r0">
+    [P1072R0]</a></sup>
+  </li>
+  <li>
+    <a title="Named character escapes"
+       href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">
+    P1097R1: Named character escapes</a>
+    <sup><a title="Named character escapes"
+            href="#ref_p1097r1">
+    [P1097R1]</a></sup>
+  </li>
 </ul>
 All other work that we are pursuing is targeting C++23 or later.
 </p>
@@ -82,7 +122,14 @@ short term.
 
 <h2>Constraint 1: The ordinary and wide execution encodings are implementation defined</h2>
 
-<p>UTF-8 has conquered the web, but no such convergence has yet occurred for
+<p>
+<a title="Usage of UTF-8 for websites"
+   href="https://w3techs.com/technologies/details/en-utf8/all/all">
+UTF-8 has conquered the web</a>
+<sup><a title="Usage of UTF-8 for websites"
+        href="#ref_w3techs">
+[W3Techs]</a></sup>,
+but no such convergence has yet occurred for
 the execution and wide execution character encodings.  Popular and commercially
 significant platforms such as Windows and z/OS continue to support a wide array
 of ASCII and EBCDIC based encodings for the execution character encoding as
@@ -109,17 +156,34 @@ to come.
 </p>
 
 <p>IBM has not publicly released a C++11 compliant version of their xlC compiler
-for z/OS.  However, they have publicly released support for Swift on z/OS and
+for z/OS.  However, they have publicly released support for
+<a title="IBM Toolkit for Swift on z/OS"
+   href="https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os/">
+Swift on z/OS</a>
+<sup><a title="IBM Toolkit for Swift on z/OS"
+        href="#ref_swift_on_z">
+[SwiftOnZ]</a></sup>, and
 Swift is built on top of LLVM and Clang.  Though IBM has not publicly released
-a port of Clang to z/OS, this indicates that such a port exists and posts to a
-few mailing lists confirm it.
+a port of Clang to z/OS, this indicates that such a port exists and
+<a title="[swift-dev] z/OS, Swift, and encodings"
+   href="https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html">
+a post to the Swift developers mailing lists confirms it.</a>
+<sup><a title="[swift-dev] z/OS, Swift, and encodings"
+        href="#ref_clang_on_z">
+[ClangOnZ]</a></sup>.
 </p>
 
 <p>The <tt>char16_t</tt> and <tt>char32_t</tt> encodings are currently
 implementation defined as well.  However, all existing implementations use
 UTF-16 and UTF-32 respectively for these encodings, thus their implementation
-definedness is not a constraint.  P1041 proposes officially standardizing
-UTF-16 and UTF-32 for these encodings.
+definedness is not a constraint.
+<a title="Make char16_t/char32_t string literals be UTF-16/32"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">
+P1041R1</a>
+<sup><a title="Make char16_t/char32_t string literals be UTF-16/32"
+        href="#ref_p1041r1">
+[P1041R1]</a></sup>
+proposes officially standardizing UTF-16 and UTF-32 for these encodings.
 </p>
 
 
@@ -152,8 +216,15 @@ the execution encoding would break existing code.
 <p>Since the <tt>char16_t</tt> and <tt>char32_t</tt> encodings are currently
 implementation defined, they too could vary at run-time.  However, as noted
 earlier, all implementations currently use UTF-16 and UTF-32 and do not support
-such variance.  P1041 will solidify current practice and ensure these encodings
-are known at comple-time.
+such variance.
+<a title="Make char16_t/char32_t string literals be UTF-16/32"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">
+P1041R1</a>
+<sup><a title="Make char16_t/char32_t string literals be UTF-16/32"
+        href="#ref_p1041r1">
+[P1041R1]</a></sup>
+will solidify current practice and ensure these encodings are known at
+comple-time.
 </p>
 
 
@@ -190,7 +261,8 @@ the character set, and its encoding were all left as implementation defined
 properties resulting in significant implementation variance.  The present
 situation is that the wide execution encoding is only widely used on
 Windows where its implementation is actually non-conforming
-(https://github.com/sg16-unicode/sg16/issues/9).
+<a href="https://github.com/sg16-unicode/sg16/issues/9">
+(https://github.com/sg16-unicode/sg16/issues/9)</a>.
 </p>
 
 
@@ -232,7 +304,13 @@ or text processing, but represent areas where mistakes would be easy to make.
 <p>C++ has some catching up to do when it comes to Unicode support.  This means
 that there is ample opportunity to investigate and learn from features added to
 other languages.  A great example of following this guideline is found in the
-P1097 proposal to add named character escapes to character and string literals.
+<a title="Named character escapes"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">
+P1097R1</a>
+<sup><a title="Named character escapes"
+        href="#ref_p1097r1">
+[P1097R1]</a></sup>
+proposal to add named character escapes to character and string literals.
 </p>
 
 
@@ -243,8 +321,22 @@ it (e.g., to enable better type safety and overloading).  However, gratuitous
 departure creates unnecessary interoperability and software composition
 challenges.  Where it makes sense, proposing features that are applicable for
 C to WG14 will help to keep the common subset of the languages as large as it
-can reasonably be.  P1041 and P1097 are great examples of features that would be
-appropriate to propose for inclusion in C.
+can reasonably be.
+<a title="Make char16_t/char32_t string literals be UTF-16/32"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">
+P1041R1</a>
+<sup><a title="Make char16_t/char32_t string literals be UTF-16/32"
+        href="#ref_p1041r1">
+[P1041R1]</a></sup>
+and
+<a title="Named character escapes"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">
+P1097R1</a>
+<sup><a title="Named character escapes"
+        href="#ref_p1097r1">
+[P1097R1]</a></sup>
+are great examples of features that would be appropriate to propose for
+inclusion in C.
 </p>
 
 
@@ -254,7 +346,7 @@ appropriate to propose for inclusion in C.
 following time honored traditions of C++ design including the zero overhead
 principle, ensuring a transition path, and enabling software composition?  How
 do we ensure a design that programmers will want to use?  The following
-explores design choices that SG16 participants have been discussing.
+explores design considerations that SG16 participants have been discussing.
 </p>
 
 <p>The ordinary and wide execution encodings are not going away; they will
@@ -273,11 +365,12 @@ variables, etc...  This is standard practice today.
 <p>There are two primary candidates for use as internal encodings today:
 UTF-8 and UTF-16.  The former is commonly used on POSIX based platforms while
 the latter remains the primary system encoding on Windows.  There is no
-encoding that is the best internal encoding for all programs.  We face a
-choice here: do we design for a single well known (though possibly
-implementation defined) internal encoding?  Or do we continue the current
-practice of each program choosing its own internal encoding(s)?  Active SG16
-participants have not yet reached consensus on these questions.
+encoding that is the best internal encoding for all programs, nor necessarily
+even for the same program on different platforms.  We face a choice here: do we
+design for a single well known (though possibly implementation defined) internal
+encoding?  Or do we continue the current practice of each program choosing its
+own internal encoding(s)?  Active SG16 participants have not yet reached
+consensus on these questions.
 </p>
 
 <p>Use of the type system to ensure that transcoding is properly performed
@@ -288,7 +381,14 @@ correctly transcode input from ISO-8859-1 to UTF-8 only results in negative
 symptoms when the input contains characters outside the ASCII range.
 </p>
 
-<p>This is where the <tt>char8_t</tt> proposal (P0482) comes in to play.
+<p>This is where the <tt>char8_t</tt> proposal
+(<a title="char8_t: A type for UTF-8 characters and strings"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html">
+P0482R5</a>
+<sup><a title="char8_t: A type for UTF-8 characters and strings"
+        href="#ref_p0482r5">
+[P0482R5]</a></sup>)
+comes in to play.
 Having a distinct type for UTF-8 text, like we do for UTF-16 and UTF-32,
 enables use of any of UTF-8, UTF-16, or UTF-32 as a statically known
 internal encoding, without the implementation defined signedness and aliasing
@@ -298,16 +398,42 @@ transcoding having been performed first.  Solid support in the type system,
 combined with statically known encodings, provides the flexibility needed to
 design safe and generic text handling interfaces, including ones that can
 support constexpr evaluation.  Why might constexpr evaluation be interesting?
-Consider the <tt>std::embed</tt> proposal (P1040) and the ability to process
-a file loaded at compile time.
+Consider the <tt>std::embed</tt> proposal
+(<a title="std::embed"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html">
+P1040R1</a>
+<sup><a title="std::embed"
+        href="#ref_p1040r1">
+[P1040R1]</a></sup>)
+and the ability to process a text file loaded at compile time.
 </p>
 
 <p>Distinct code unit types (<tt>char8_t</tt>, <tt>char16_t</tt>,
-<tt>char32_t</tt>, etc...) usable for the internal encoding is a good start,
-but <tt>std::basic_string</tt> isn't a great foundation for working with
-Unicode text since no support is provided for code point or grapheme cluster
-based enumeration.  The <tt>text_view</tt> proposal (P0244) provides a method
-for layering encoding aware code point support on top of
+<tt>char32_t</tt>) enable statically known internal encodings, but not without
+some cost.  Existing code that works with UTF-8 today is written using
+<tt>char</tt>, <tt>unsigned char</tt>, or <tt>uint8_t</tt>.  Likewise, existing
+code that works with UTF-16 today is written using <tt>char16_t</tt>,
+<tt>wchar_t</tt>, <tt>unsigned short</tt>, or <tt>uint16_t</tt>.  ICU supports
+customization of its internal code unit type, but <tt>char16_t</tt> is used
+by default, following ICU's adoption of C++11.  Prior to the switch to C++11,
+the default varied by platform.  The switch to <tt>char16_t</tt> created
+friction with existing code by, for example, requiring that ICU data passed to
+Windows <tt>wchar_t</tt> interfaces be copied or reinterpret cast.  Similar
+friction will occur with <tt>char8_t</tt>.  ICU dealt with this by providing
+interfaces that, for at least some cases, encapsulate uses of
+<tt>reinterpret_cast</tt> and handling of the resulting aliasing issues.
+</p>
+
+<p><tt>std::basic_string</tt> isn't a great foundation for working with Unicode
+text due to its operations all working at the code unit level as opposed to
+code point or grapheme cluster levels.  The <tt>text_view</tt> proposal
+(<a title="Text_view: A C++ concepts and range based character encoding and code point enumeration library"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html">
+P0244R2</a>
+<sup><a title="Text_view: A C++ concepts and range based character encoding and code point enumeration library"
+        href="#ref_p0244r2">
+[P0244R2]</a></sup>)
+provides a method for layering encoding aware code point support on top of
 <tt>std::basic_string</tt> or any other string like type that provides a range
 of code units.  SG16 has been discussing the addition of a <tt>std::text</tt>
 family of types that provide similar capabilities, but that also own the
@@ -389,7 +515,14 @@ designs.
   <li>Should these types enforce well-formed encoded text?  Should validation
       be performed on each mutation?  How should errors be handled?</li>
   <li>Should these types support a single fixed encoding (UTF-8)?  Or should
-      multiple encodings be supported as proposed in P0244?</li>
+      multiple encodings be supported as proposed in
+      <a title="Text_view: A C++ concepts and range based character encoding and code point enumeration library"
+         href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html">
+      P0244R2</a>
+      <sup><a title="Text_view: A C++ concepts and range based character encoding and code point enumeration library"
+              href="#ref_p0244r2">
+      [P0244R2]</a></sup>?
+  </li>
   <li>Should these types enforce a normalization form on UTF encoded text?</li>
   <li>Should these types include allocator support?</li>
   <li>Should these types replace use of <tt>std::string</tt> and
@@ -429,9 +562,15 @@ requirements would be helpful here.  Some questions to explore:
 
 <h2>Directive 3: Standarize useful features from other languages</h2>
 
-<p>We've got a start on this with P1097, but there are no doubt many text
-handling features in other languages that would be desirable in C++.  Papers
-welcome.
+<p>We've got a start on this with
+<a title="Named character escapes"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">
+P1097R1</a>
+<sup><a title="Named character escapes"
+        href="#ref_p1097r1">
+[P1097R1]</a></sup>,
+but there are no doubt many text handling features in other languages that
+would be desirable in C++.  Papers welcome.
 </p>
 
 
@@ -469,8 +608,9 @@ pertain to SG16 are currently tracked in our github repo at
 <h1>Non-directives: Thanks, but no thanks</h1>
 
 <p>The C++ standard currently lacks the necessary foundations for obtaining
-or displaying Unicode text to computer users.  Until that changes, addressing
-user input and graphical rendering of text will remain out of scope for SG16.
+or displaying Unicode text through human interface devices.  Until that
+changes, addressing user input and graphical rendering of text will remain
+out of scope for SG16.
 </p>
 
 
@@ -482,18 +622,107 @@ user input and graphical rendering of text will remain out of scope for SG16.
 
 <h1>Acknowledgements</h1>
 
-<p>FIXME
+<p>SG16 would not exist if not for early and kind encouragement by Beman Dawes.
+</p>
+
+<p>Thank you to all 18 individuals who have attended at least one SG16
+teleconference and have thereby contributed to the discussions shaping our
+future direction.
 </p>
 
 
 <h1>References</h1>
 
-<ul>
-  <li>FIXME</li>
-  <li>https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os/</li>
-  <li>http://lists.llvm.org/pipermail/cfe-dev/2018-January/056721.html</li>
-  <li>https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html</li>
-</ul>
+<table id="references">
+  <tr>
+    <td id="ref_w3techs"><sup>[W3Techs]</sup></td>
+    <td>
+      "Usage of UTF-8 for websites", W3Techs, 2017.<br/>
+      <a href="https://w3techs.com/technologies/details/en-utf8/all/all">
+      https://w3techs.com/technologies/details/en-utf8/all/all</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_p0244r2"><sup>[P0244R2]</sup></td>
+    <td>
+      Tom Honermann,
+      "Text_view: A C++ concepts and range based character encoding and code point enumeration library", P0244R2, 2017<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_p0482r5"><sup>[P0482R5]</sup></td>
+    <td>
+      Tom Honermann,
+      "char8_t: A type for UTF-8 characters and strings (Revision 5)", P0482R5, 2018<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_p1025r1"><sup>[P1025R1]</sup></td>
+    <td>
+      Steve Downey, et al., 
+      "Update The Reference To The Unicode Standard", P1025R1, 2018<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1025r1.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1025r1.html</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_p1040r1"><sup>[P1040R1]</sup></td>
+    <td>
+      JeanHeyd Meneide,
+      "std::embed", P1040R1, 2018<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_p1041r1"><sup>[P1041R1]</sup></td>
+    <td>
+      Martinho Fernandes,
+      "Make char16_t/char32_t string literals be UTF-16/32", P1041R1, 2018<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_p1072r0"><sup>[P1072R0]</sup></td>
+    <td>
+      Chris Kennelly and Mark Zeren,
+      "Default Initialization for basic_string", P1072R0, 2018<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_p1097r1"><sup>[P1097R1]</sup></td>
+    <td>
+      Martinho Fernandes,
+      "Named character escapes", P1097R1, 2018<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_swift_on_z"><sup>[SwiftOnZ]</sup></td>
+    <td>
+      IBM Toolkit for Swift on z/OS,<br/>
+      <a href="https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os">
+      https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_clang_on_z"><sup>[ClangOnZ]</sup></td>
+    <td>
+      Geoff Wozniak,
+      "[swift-dev] z/OS, Swift, and encodings", 2017<br/>
+      <a href="https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html">
+      https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html</a>
+    </td>
+  </tr>
+</table>
 
 
 </body>
