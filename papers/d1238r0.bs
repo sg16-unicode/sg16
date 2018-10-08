@@ -200,7 +200,7 @@ What Unicode provides and what fonts and graphical text rendering facilities nee
 
 SG16 would not exist if not for early and kind encouragement by Beman Dawes.
 
-Thank you to all 18 individuals who have attended at least one SG16 teleconference and have thereby contributed to the discussions shaping our future direction. 
+Thank you to all 18 individuals who have attended at least one SG16 teleconference and have thereby contributed to the discussions shaping our future direction.
 
 <pre class=biblio>
 {
@@ -220,7 +220,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm",
 		"date": "2018"
 	},
-	"P0244R2" : { 
+	"P0244R2" : {
 		"authors": [
 			"Tom Honermann"	
 		],
@@ -228,7 +228,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html",
 		"date": "2017"
 	},
-	"P0482R5" : { 
+	"P0482R5" : {
 		"authors": [
 			"Tom Honermann"
 		],
@@ -236,7 +236,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html",
 		"date": "2018"
 	},
-	"P1025R1" : { 
+	"P1025R1" : {
 		"authors": [
 			"Steve Downey, et al."
 		],
@@ -244,7 +244,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1025r1.html",
 		"date": "2018"
 	},
-	"P1040R1" : { 
+	"P1040R1" : {
 		"authors": [
 			"JeanHeyd Meneide"
 		],
@@ -252,7 +252,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html",
 		"date": "2018"
 	},
-	"P1041R1": { 
+	"P1041R1": {
 		"authors": [
 			"Martinho Fernandes"
 		],
@@ -260,7 +260,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html",
 		"date": "2018"
 	},
-	"P1072R0": { 
+	"P1072R0": {
 		"authors": [
 			"Chris Kennelly",
 			"Mark Zeren"
@@ -269,7 +269,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html",
 		"date": "2018"
 	},
-	"P1097R1": { 
+	"P1097R1": {
 		"authors": [
 			"Martinho Fernandes"
 		],
@@ -277,7 +277,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html",
 		"date": "2018"
 	},
-	"SwiftOnZ": { 
+	"SwiftOnZ": {
 		"authors": [
 			"IBM"
 		],
@@ -285,7 +285,7 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 		"href": "https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os",
 		"date": "2017"
 	},
-	"ClangOnZ": { 
+	"ClangOnZ": {
 		"authors": [
 			"Geoff Wozniak"
 		],
