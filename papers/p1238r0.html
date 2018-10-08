@@ -1227,9 +1227,9 @@ Possible extra rowspan handling
       text-align: center;
     }
   </style>
-  <meta content="Bikeshed version e9290f0f6bc01459c8b7bdfa2bb91f6985fc5c67" name="generator">
+  <meta content="Bikeshed version 47cb5324cd11789aef12f220cf86d1780f94ab9c" name="generator">
   <link href="https://isocpp.org/favicon.ico" rel="icon">
-  <meta content="c0ebf232f34b47f8127ac2442796c38921cd9cc0" name="document-revision">
+  <meta content="3190fb5f8622bb0566a198a4db30fdb98ce18862" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1452,6 +1452,10 @@ pre .property::before, pre .property::after {
      <dd>
       <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:mzeren@vmware.com">Mark Zeren</a>
      <dd>
+      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:rmf@rmf.io">Martinho Fernandes</a>
+     <dd>
+      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:dascandy@gmail.com">Peter Bindels</a>
+     <dd>
       <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:sdowney@gmail.com">Steve Downey</a>
      <dd>
       <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:whatwasthataddress@gmail.com">Zach Laine</a>
@@ -1557,7 +1561,7 @@ pre .property::before, pre .property::after {
    <p>C and C++ continue to diverge and that is ok when there is good reason for it (e.g., to enable better type safety and overloading). However, gratuitous departure creates unnecessary interoperability and software composition challenges. Where it makes sense, proposing features that are applicable for C to WG14 will help to keep the common subset of the languages as large as it can reasonably be. <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">P1041R1</a> <sup><a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a></sup> and <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">P1097R1</a> <sup><a data-link-type="biblio" href="#biblio-p1097r1">[P1097R1]</a></sup> are great examples of features that would be appropriate to propose for inclusion in C.</p>
    <h2 class="heading settled" data-level="3" id="direction"><span class="secno">3. </span><span class="content">Direction: Designing for where we want to be and how to get there</span><a class="self-link" href="#direction"></a></h2>
    <p>Given the constraints above, how can we best integrate support for Unicode following time honored traditions of C++ design including the zero overhead principle, ensuring a transition path, and enabling software composition? How do we ensure a design that programmers will want to use? The following explores design considerations that SG16 participants have been discussing.</p>
-   <p>The ordinary and wide execution encodings are not going away; they will remain the bridge that text must cross when interfacing with the operating system and with users. Unless otherwise specified, I/O performed using <code class="highlight"><c- b>char</c-></code> and <code class="highlight"><c- b>wchar_t</c-></code> based interfaces in portable programs must abide by the encodings indicated by locale settings. But internally, it is desirable to work with a limited number of encodings (preferably only one) that are known at compile time, and optimized for accordingly. This suggests a design in which transcoding is performed from dynamically determined external encodings to a statically known internal encoding at program boundaries; when reading files, standard input/output streams, command line options, environment variables, etc... This is standard practice today.</p>
+   <p>The ordinary and wide execution encodings are not going away; they will remain the bridge that text must cross when interfacing with the operating system and with users. Unless otherwise specified, I/O performed using <code class="highlight"><c- b>char</c-></code> and <code class="highlight"><c- b>wchar_t</c-></code> based interfaces in portable programs must abide by the encodings indicated by locale settings. But internally, it is desirable to work with a limited number of encodings (preferably only one) that are known at compile time, and optimized for accordingly. This suggests a design in which transcoding is performed from dynamically determined external encodings to a statically known internal encoding at program boundaries; when reading files, standard input/output streams, command line options, environment variables, etc... This is standard practice today.  When the internal encoding is a Unicode encoding, this external/internal design is sometimes referred to as the <a href="https://nedbatchelder.com/text/unipain/unipain.html#35">Unicode sandwich</a>.</p>
    <p>There are two primary candidates for use as internal encodings today: UTF-8 and UTF-16. The former is commonly used on POSIX based platforms while the latter remains the primary system encoding on Windows. There is no encoding that is the best internal encoding for all programs, nor necessarily even for the same program on different platforms. We face a choice here: do we design for a single well known (though possibly implementation defined) internal encoding? Or do we continue the current practice of each program choosing its own internal encoding(s)? Active SG16 participants have not yet reached consensus on these questions.</p>
    <p>Use of the type system to ensure that transcoding is properly performed at program boundaries helps to prevent errors that lead to mojibake. Such errors can be subtle and only manifest in relatively rare situations, making them difficult to discover in testing. For example, failure to correctly transcode input from ISO-8859-1 to UTF-8 only results in negative symptoms when the input contains characters outside the ASCII range.</p>
    <p>This is where <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html">the char8_t proposal</a> <sup><a data-link-type="biblio" href="#biblio-p0482r5">[P0482R5]</a></sup> comes in to play. Having a distinct type for UTF-8 text, like we do for UTF-16 and UTF-32, enables use of any of UTF-8, UTF-16, or UTF-32 as a statically known internal encoding, without the implementation defined signedness and aliasing concerns of <code class="highlight"><c- b>char</c-></code>, and with protection against accidental interchange with <code class="highlight"><c- b>char</c-></code> or <code class="highlight"><c- b>wchar_t</c-></code> based interfaces without proper transcoding having been performed first. Solid support in the type system, combined with statically known encodings, provides the flexibility needed to design safe and generic text handling interfaces, including ones that can support constexpr evaluation. Why might constexpr evaluation be interesting? Consider <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html">the std::embed proposal</a> <sup><a data-link-type="biblio" href="#biblio-p1040r1">[P1040R1]</a></sup> and the ability to process a text file loaded at compile time.</p>
@@ -1578,7 +1582,7 @@ pre .property::before, pre .property::after {
    <p>We have general consensus on the following design directions:</p>
    <ul>
     <li data-md>
-     <p>A new <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text</c-> <c- n>type</c-></code> that is an owning string type with a statically known character encoding.</p>
+     <p>A new <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text</c-></code> type that is an owning string type with a statically known character encoding.</p>
     <li data-md>
      <p>A new <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text_view</c-></code> type that is a non-owning string type with a statically known character encoding.</p>
     <li data-md>

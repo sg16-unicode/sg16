@@ -9,6 +9,8 @@ Editor: Tom Honermann, tom@honermann.net
 Editor: Corentin Jabot, corentin.jabot@gmail.com
 Editor: JeanHeyd Meneide, phdofthehouse@gmail.com
 Editor: Mark Zeren, mzeren@vmware.com
+Editor: Martinho Fernandes, rmf@rmf.io
+Editor: Peter Bindels, dascandy@gmail.com
 Editor: Steve Downey, sdowney@gmail.com
 Editor: Zach Laine, whatwasthataddress@gmail.com
 ED:
@@ -101,7 +103,7 @@ C and C++ continue to diverge and that is ok when there is good reason for it (e
 
 Given the constraints above, how can we best integrate support for Unicode following time honored traditions of C++ design including the zero overhead principle, ensuring a transition path, and enabling software composition? How do we ensure a design that programmers will want to use? The following explores design considerations that SG16 participants have been discussing.
 
-The ordinary and wide execution encodings are not going away; they will remain the bridge that text must cross when interfacing with the operating system and with users. Unless otherwise specified, I/O performed using `char` and `wchar_t` based interfaces in portable programs must abide by the encodings indicated by locale settings. But internally, it is desirable to work with a limited number of encodings (preferably only one) that are known at compile time, and optimized for accordingly. This suggests a design in which transcoding is performed from dynamically determined external encodings to a statically known internal encoding at program boundaries; when reading files, standard input/output streams, command line options, environment variables, etc... This is standard practice today.
+The ordinary and wide execution encodings are not going away; they will remain the bridge that text must cross when interfacing with the operating system and with users. Unless otherwise specified, I/O performed using `char` and `wchar_t` based interfaces in portable programs must abide by the encodings indicated by locale settings. But internally, it is desirable to work with a limited number of encodings (preferably only one) that are known at compile time, and optimized for accordingly. This suggests a design in which transcoding is performed from dynamically determined external encodings to a statically known internal encoding at program boundaries; when reading files, standard input/output streams, command line options, environment variables, etc... This is standard practice today.  When the internal encoding is a Unicode encoding, this external/internal design is sometimes referred to as the [Unicode sandwich](https://nedbatchelder.com/text/unipain/unipain.html#35).
 
 There are two primary candidates for use as internal encodings today: UTF-8 and UTF-16. The former is commonly used on POSIX based platforms while the latter remains the primary system encoding on Windows. There is no encoding that is the best internal encoding for all programs, nor necessarily even for the same program on different platforms. We face a choice here: do we design for a single well known (though possibly implementation defined) internal encoding? Or do we continue the current practice of each program choosing its own internal encoding(s)? Active SG16 participants have not yet reached consensus on these questions.
 
@@ -133,7 +135,7 @@ This is the topic that SG16 participants have so far spent the most time discuss
 
 We have general consensus on the following design directions:
 
-- A new `std::text type` that is an owning string type with a statically known character encoding.
+- A new `std::text` type that is an owning string type with a statically known character encoding.
 - A new `std::text_view` type that is a non-owning string type with a statically known character encoding.
 - These types will not have the large interface exposed by std::string.
 - These types will encourage processing of code points and grapheme clusters while permitting efficient access to code units.
