@@ -204,94 +204,94 @@ Thank you to all 18 individuals who have attended at least one SG16 teleconferen
 
 <pre class=biblio>
 {
-	"W3Techs": {
-		"authors": [
-			"W3Techs"
-		],
-		"title": "Usage of UTF-8 for websites",
-		"href": "https://w3techs.com/technologies/details/en-utf8/all/all",
-		"date": "2017"
-	},
-	"WG14-N2226": {
-		"authors": [
-			"Florian Weimer"
-		],
-		"title": "Optional thread storage duration for the program's locale",
-		"href": "http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm",
-		"date": "2018"
-	},
-	"P0244R2" : {
-		"authors": [
-			"Tom Honermann"	
-		],
-		"title": "text_view: A C++ Concepts and Range based Character Encoding and Code Point Enumeration Library",
-		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html",
-		"date": "2017"
-	},
-	"P0482R5" : {
-		"authors": [
-			"Tom Honermann"
-		],
-		"title": "char8_t: A type for UTF-8 characters and strings (Revision 5)",
-		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html",
-		"date": "2018"
-	},
-	"P1025R1" : {
-		"authors": [
-			"Steve Downey, et al."
-		],
-		"title": "Update The Reference To The Unicode Standard",
-		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1025r1.html",
-		"date": "2018"
-	},
-	"P1040R1" : {
-		"authors": [
-			"JeanHeyd Meneide"
-		],
-		"title": "std::embed",
-		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html",
-		"date": "2018"
-	},
-	"P1041R1": {
-		"authors": [
-			"Martinho Fernandes"
-		],
-		"title": "Make char16_t/char32_t String Literals be UTF-16/32",
-		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html",
-		"date": "2018"
-	},
-	"P1072R0": {
-		"authors": [
-			"Chris Kennelly",
-			"Mark Zeren"
-		],
-		"title": "Default Initialization for basic_string",
-		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html",
-		"date": "2018"
-	},
-	"P1097R1": {
-		"authors": [
-			"Martinho Fernandes"
-		],
-		"title": "Named Character Escapes",
-		"href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html",
-		"date": "2018"
-	},
-	"SwiftOnZ": {
-		"authors": [
-			"IBM"
-		],
-		"title": "IBM Toolkit for Swift on z/OS",
-		"href": "https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os",
-		"date": "2017"
-	},
-	"ClangOnZ": {
-		"authors": [
-			"Geoff Wozniak"
-		],
-		"title": "[swift-dev] z/OS, Swift, and encodings",
-		"href": "https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html",
-		"date": "2017"
-	}
+    "W3Techs": {
+        "authors": [
+            "W3Techs"
+        ],
+        "title": "Usage of UTF-8 for websites",
+        "href": "https://w3techs.com/technologies/details/en-utf8/all/all",
+        "date": "2017"
+    },
+    "WG14-N2226": {
+        "authors": [
+            "Florian Weimer"
+        ],
+        "title": "Optional thread storage duration for the program's locale",
+        "href": "http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm",
+        "date": "2018"
+    },
+    "P0244R2" : {
+        "authors": [
+            "Tom Honermann"
+        ],
+        "title": "text_view: A C++ Concepts and Range based Character Encoding and Code Point Enumeration Library",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html",
+        "date": "2017"
+    },
+    "P0482R5" : {
+        "authors": [
+            "Tom Honermann"
+        ],
+        "title": "char8_t: A type for UTF-8 characters and strings (Revision 5)",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html",
+        "date": "2018"
+    },
+    "P1025R1" : {
+        "authors": [
+            "Steve Downey, et al."
+        ],
+        "title": "Update The Reference To The Unicode Standard",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1025r1.html",
+        "date": "2018"
+    },
+    "P1040R1" : {
+        "authors": [
+            "JeanHeyd Meneide"
+        ],
+        "title": "std::embed",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html",
+        "date": "2018"
+    },
+    "P1041R1": {
+        "authors": [
+            "Martinho Fernandes"
+        ],
+        "title": "Make char16_t/char32_t String Literals be UTF-16/32",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html",
+        "date": "2018"
+    },
+    "P1072R0": {
+        "authors": [
+            "Chris Kennelly",
+            "Mark Zeren"
+        ],
+        "title": "Default Initialization for basic_string",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html",
+        "date": "2018"
+    },
+    "P1097R1": {
+        "authors": [
+            "Martinho Fernandes"
+        ],
+        "title": "Named Character Escapes",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html",
+        "date": "2018"
+    },
+    "SwiftOnZ": {
+        "authors": [
+            "IBM"
+        ],
+        "title": "IBM Toolkit for Swift on z/OS",
+        "href": "https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os",
+        "date": "2017"
+    },
+    "ClangOnZ": {
+        "authors": [
+            "Geoff Wozniak"
+        ],
+        "title": "[swift-dev] z/OS, Swift, and encodings",
+        "href": "https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html",
+        "date": "2017"
+    }
 }
 </pre>
