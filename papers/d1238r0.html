@@ -2,7 +2,7 @@
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-  <title>p1238R0: SG16: Unicode Direction</title>
+  <title>P1238R0: SG16: Unicode Direction</title>
 <style data-fill-with="stylesheet">/******************************************************************************
  *                   Style sheet for the W3C specifications                   *
  *
@@ -1058,9 +1058,10 @@ Possible extra rowspan handling
 			   comprising the first items of each top-level section. */
 			margin-top: 1.1rem;
 		}
-		#toc .secno {
+		#toc#toc .secno { /* Ugh, need more specificity to override base.css */
 			grid-column: 1;
 			width: auto;
+			margin-left: 0;
 		}
 		#toc .content {
 			grid-column: 2;
@@ -1226,8 +1227,9 @@ Possible extra rowspan handling
       text-align: center;
     }
   </style>
-  <meta content="Bikeshed version 1a927b7d2ff9a70dcdc5dc9f892fd154b7b64097" name="generator">
-  <meta content="9df4cb6d7565d526ba0f6093d0830d85f04bba50" name="document-revision">
+  <meta content="Bikeshed version e9290f0f6bc01459c8b7bdfa2bb91f6985fc5c67" name="generator">
+  <link href="https://isocpp.org/favicon.ico" rel="icon">
+  <meta content="363aaec52beceb2e5388c69b76d5dc676348136a" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1272,58 +1274,58 @@ figcaption:not(.no-marker)::before {
 .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
 code.highlight { padding: .1em; border-radius: .3em; }
 pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
-.highlight .c { color: #708090 } /* Comment */
-.highlight .k { color: #990055 } /* Keyword */
-.highlight .l { color: #000000 } /* Literal */
-.highlight .n { color: #0077aa } /* Name */
-.highlight .o { color: #999999 } /* Operator */
-.highlight .p { color: #999999 } /* Punctuation */
-.highlight .cm { color: #708090 } /* Comment.Multiline */
-.highlight .cp { color: #708090 } /* Comment.Preproc */
-.highlight .c1 { color: #708090 } /* Comment.Single */
-.highlight .cs { color: #708090 } /* Comment.Special */
-.highlight .kc { color: #990055 } /* Keyword.Constant */
-.highlight .kd { color: #990055 } /* Keyword.Declaration */
-.highlight .kn { color: #990055 } /* Keyword.Namespace */
-.highlight .kp { color: #990055 } /* Keyword.Pseudo */
-.highlight .kr { color: #990055 } /* Keyword.Reserved */
-.highlight .kt { color: #990055 } /* Keyword.Type */
-.highlight .ld { color: #000000 } /* Literal.Date */
-.highlight .m { color: #000000 } /* Literal.Number */
-.highlight .s { color: #a67f59 } /* Literal.String */
-.highlight .na { color: #0077aa } /* Name.Attribute */
-.highlight .nc { color: #0077aa } /* Name.Class */
-.highlight .no { color: #0077aa } /* Name.Constant */
-.highlight .nd { color: #0077aa } /* Name.Decorator */
-.highlight .ni { color: #0077aa } /* Name.Entity */
-.highlight .ne { color: #0077aa } /* Name.Exception */
-.highlight .nf { color: #0077aa } /* Name.Function */
-.highlight .nl { color: #0077aa } /* Name.Label */
-.highlight .nn { color: #0077aa } /* Name.Namespace */
-.highlight .py { color: #0077aa } /* Name.Property */
-.highlight .nt { color: #669900 } /* Name.Tag */
-.highlight .nv { color: #222222 } /* Name.Variable */
-.highlight .ow { color: #999999 } /* Operator.Word */
-.highlight .mb { color: #000000 } /* Literal.Number.Bin */
-.highlight .mf { color: #000000 } /* Literal.Number.Float */
-.highlight .mh { color: #000000 } /* Literal.Number.Hex */
-.highlight .mi { color: #000000 } /* Literal.Number.Integer */
-.highlight .mo { color: #000000 } /* Literal.Number.Oct */
-.highlight .sb { color: #a67f59 } /* Literal.String.Backtick */
-.highlight .sc { color: #a67f59 } /* Literal.String.Char */
-.highlight .sd { color: #a67f59 } /* Literal.String.Doc */
-.highlight .s2 { color: #a67f59 } /* Literal.String.Double */
-.highlight .se { color: #a67f59 } /* Literal.String.Escape */
-.highlight .sh { color: #a67f59 } /* Literal.String.Heredoc */
-.highlight .si { color: #a67f59 } /* Literal.String.Interpol */
-.highlight .sx { color: #a67f59 } /* Literal.String.Other */
-.highlight .sr { color: #a67f59 } /* Literal.String.Regex */
-.highlight .s1 { color: #a67f59 } /* Literal.String.Single */
-.highlight .ss { color: #a67f59 } /* Literal.String.Symbol */
-.highlight .vc { color: #0077aa } /* Name.Variable.Class */
-.highlight .vg { color: #0077aa } /* Name.Variable.Global */
-.highlight .vi { color: #0077aa } /* Name.Variable.Instance */
-.highlight .il { color: #000000 } /* Literal.Number.Integer.Long */
+c-[a] { color: #990055 } /* Keyword.Declaration */
+c-[b] { color: #990055 } /* Keyword.Type */
+c-[c] { color: #708090 } /* Comment */
+c-[d] { color: #708090 } /* Comment.Multiline */
+c-[e] { color: #0077aa } /* Name.Attribute */
+c-[f] { color: #669900 } /* Name.Tag */
+c-[g] { color: #222222 } /* Name.Variable */
+c-[k] { color: #990055 } /* Keyword */
+c-[l] { color: #000000 } /* Literal */
+c-[m] { color: #000000 } /* Literal.Number */
+c-[n] { color: #0077aa } /* Name */
+c-[o] { color: #999999 } /* Operator */
+c-[p] { color: #999999 } /* Punctuation */
+c-[s] { color: #a67f59 } /* Literal.String */
+c-[t] { color: #a67f59 } /* Literal.String.Single */
+c-[u] { color: #a67f59 } /* Literal.String.Double */
+c-[cp] { color: #708090 } /* Comment.Preproc */
+c-[c1] { color: #708090 } /* Comment.Single */
+c-[cs] { color: #708090 } /* Comment.Special */
+c-[kc] { color: #990055 } /* Keyword.Constant */
+c-[kn] { color: #990055 } /* Keyword.Namespace */
+c-[kp] { color: #990055 } /* Keyword.Pseudo */
+c-[kr] { color: #990055 } /* Keyword.Reserved */
+c-[ld] { color: #000000 } /* Literal.Date */
+c-[nc] { color: #0077aa } /* Name.Class */
+c-[no] { color: #0077aa } /* Name.Constant */
+c-[nd] { color: #0077aa } /* Name.Decorator */
+c-[ni] { color: #0077aa } /* Name.Entity */
+c-[ne] { color: #0077aa } /* Name.Exception */
+c-[nf] { color: #0077aa } /* Name.Function */
+c-[nl] { color: #0077aa } /* Name.Label */
+c-[nn] { color: #0077aa } /* Name.Namespace */
+c-[py] { color: #0077aa } /* Name.Property */
+c-[ow] { color: #999999 } /* Operator.Word */
+c-[mb] { color: #000000 } /* Literal.Number.Bin */
+c-[mf] { color: #000000 } /* Literal.Number.Float */
+c-[mh] { color: #000000 } /* Literal.Number.Hex */
+c-[mi] { color: #000000 } /* Literal.Number.Integer */
+c-[mo] { color: #000000 } /* Literal.Number.Oct */
+c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
+c-[sc] { color: #a67f59 } /* Literal.String.Char */
+c-[sd] { color: #a67f59 } /* Literal.String.Doc */
+c-[se] { color: #a67f59 } /* Literal.String.Escape */
+c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
+c-[si] { color: #a67f59 } /* Literal.String.Interpol */
+c-[sx] { color: #a67f59 } /* Literal.String.Other */
+c-[sr] { color: #a67f59 } /* Literal.String.Regex */
+c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
+c-[vc] { color: #0077aa } /* Name.Variable.Class */
+c-[vg] { color: #0077aa } /* Name.Variable.Global */
+c-[vi] { color: #0077aa } /* Name.Variable.Instance */
+c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
 <style>/* style-selflinks */
 
@@ -1436,8 +1438,8 @@ pre .property::before, pre .property::after {
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"></p>
-   <h1 class="p-name no-ref" id="title">p1238R0<br>SG16: Unicode Direction</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Published Proposal, <time class="dt-updated" datetime="2018-10-08">8 October 2018</time></span></h2>
+   <h1 class="p-name no-ref" id="title">P1238R0<br>SG16: Unicode Direction</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Published Proposal, <time class="dt-updated" datetime="2018-10-08">2018-10-08</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Authors:
@@ -1446,17 +1448,17 @@ pre .property::before, pre .property::after {
      <dd>
       <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:corentin.jabot@gmail.com">Corentin Jabot</a>
      <dd>
+      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:phdofthehouse@gmail.com">JeanHeyd Meneide</a>
+     <dd>
       <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:mzeren@vmware.com">Mark Zeren</a>
      <dd>
       <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:sdowney@gmail.com">Steve Downey</a>
      <dd>
       <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:whatwasthataddress@gmail.com">Zach Laine</a>
-     <dd>
-      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:phdofthehouse@gmail.com">JeanHeyd Meneide</a>
      <dt>Audience:
-     <dd>SG16
+     <dd>DIRECTION, SG16
      <dt>Project:
-     <dd>ISO JTC1/SC22/WG21: Programming Language C++
+     <dd>ISO/IEC JTC1/SC22/WG21 14882: Programming Language — C++
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -1464,7 +1466,7 @@ pre .property::before, pre .property::after {
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>This proposal summarizes Study Group 16: Unicode’s direction and purpose for C++20 and C++2a.</p>
+   <p>SG16 initial Unicode direction and guidance for C++20 and beyond.</p>
   </div>
   <nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
@@ -1475,8 +1477,8 @@ pre .property::before, pre .property::after {
       <li><a href="#constraint-implementation"><span class="secno">1.1</span> <span class="content">Constraint: The ordinary and wide execution encodings are implementation defined</span></a>
       <li><a href="#constraint-runtime"><span class="secno">1.2</span> <span class="content">Constraint: The ordinary and wide execution encodings are run-time properties</span></a>
       <li><a href="#constraint-portability"><span class="secno">1.3</span> <span class="content">Constraint: There is no portable primary execution encoding</span></a>
-      <li><a href="#constraint-wchar_t"><span class="secno">1.4</span> <span class="content">Constraint: wchar_t is a portability deadend</span></a>
-      <li><a href="#constraint-char"><span class="secno">1.5</span> <span class="content">Constraint: char aliases everything</span></a>
+      <li><a href="#constraint-wchar_t"><span class="secno">1.4</span> <span class="content">Constraint: <code class="highlight"><c- b>wchar_t</c-></code> is a portability deadend</span></a>
+      <li><a href="#constraint-char"><span class="secno">1.5</span> <span class="content">Constraint: <code class="highlight"><c- b>char</c-></code> aliases everything</span></a>
       <li><a href="#constraint-nih_syndrome"><span class="secno">1.6</span> <span class="content">Constraint: Implementors cannot afford to rewrite ICU</span></a>
      </ol>
     <li>
@@ -1510,63 +1512,63 @@ pre .property::before, pre .property::after {
    </ol>
   </nav>
   <main>
-   <p>The SG16 Unicode study group was officially formed at the 2018 WG21 meeting in Jacksonville, Florida. We have not yet had our inaugural meeting (that is planned to be held during the upcoming meeting in San Diego), but we’ve had an active group of WG21 members meeting via video conference regularly since August of 2017, well before our formation as an official study group. Summaries of these meetings are available at <a href="https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md">the SG16 Meetings Repository</a>.</p>
+   <p>The SG16 Unicode study group was officially formed at the 2018 WG21 meeting in Jacksonville, Florida. We have not yet had our inaugural meeting (that is planned to be held during the upcoming meeting in San Diego), but we’ve had an active group of WG21 members meeting via video conference regularly since August of 2017, well before our formation as an official study group. Summaries of these meetings are available at <a href="https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md">the SG16 meetings repository</a>.</p>
    <p>Our proposals so far have focused on relatively small or foundational features that have a realistic chance of being adopted for C++20. These include:</p>
    <ul>
-    <li data-md="">
-     <p><a href="http://wg21.link/p0482">P0482R5: char8_t: A type for UTF-8 characters and strings</a> <sup><a data-link-type="biblio" href="#biblio-p0482r5">[P0482R5]</a></sup></p>
-    <li data-md="">
-     <p><a href="http://wg21.link/p1025">P1025R1: Update The Reference To The Unicode Standard</a> <sup><a data-link-type="biblio" href="#biblio-p1025r1">[P1025R1]</a></sup></p>
-    <li data-md="">
-     <p><a href="http://wg21.link/p1041">P1041R1: Make char16_t/char32_t string literals be UTF-16/32</a> <sup><a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a></sup></p>
-    <li data-md="">
-     <p><a href="http://wg21.link/p1072">P1072R0: Default Initialization for basic_string</a> <sup><a data-link-type="biblio" href="#biblio-p1072r0">[P1072R0]</a></sup></p>
-    <li data-md="">
-     <p><a href="http://wg21.link/p1097">P1097R1: Named character escapes</a> <sup><a data-link-type="biblio" href="#biblio-p1097r1">[P1097R1]</a></sup></p>
+    <li data-md>
+     <p><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html">P0482R5: char8_t: A type for UTF-8 characters and strings</a> <sup><a data-link-type="biblio" href="#biblio-p0482r5">[P0482R5]</a></sup></p>
+    <li data-md>
+     <p><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1025r1.html">P1025R1: Update The Reference To The Unicode Standard</a> <sup><a data-link-type="biblio" href="#biblio-p1025r1">[P1025R1]</a></sup></p>
+    <li data-md>
+     <p><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">P1041R1: Make char16_t/char32_t string literals be UTF-16/32</a> <sup><a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a></sup></p>
+    <li data-md>
+     <p><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html">P1072R0: Default Initialization for basic_string</a> <sup><a data-link-type="biblio" href="#biblio-p1072r0">[P1072R0]</a></sup></p>
+    <li data-md>
+     <p><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">P1097R1: Named character escapes</a> <sup><a data-link-type="biblio" href="#biblio-p1097r1">[P1097R1]</a></sup></p>
    </ul>
    <p>All other work that we are pursuing is targeting C++23 or later.</p>
    <p>This paper discusses a set of constraints, guidelines, directives, and non-directives intended to guide our continuing efforts to improve Unicode and text processing support in C++. Paper authors intending to propose Unicode or text processing related features are encouraged to consider the perspectives and guidelines discussed here in their designs, or to submit papers arguing against them.</p>
    <h2 class="heading settled" data-level="1" id="constraints"><span class="secno">1. </span><span class="content">Constraints: Accepting the things we cannot change</span><a class="self-link" href="#constraints"></a></h2>
    <p>C++ has a long history and, as unfortunate as it may be at times, the past remains stubbornly immutable. As we work to improve the future, we must remain cognizant of the many billions of lines of C++ code in use today and how we will enable past work to retain its value in the future. The following limitations reflect constraints on what we cannot affordably change, at least not in the short term.</p>
    <h3 class="heading settled" data-level="1.1" id="constraint-implementation"><span class="secno">1.1. </span><span class="content">Constraint: The ordinary and wide execution encodings are implementation defined</span><a class="self-link" href="#constraint-implementation"></a></h3>
-   <p><a data-link-type="biblio" href="#biblio-w3techs">UTF-8 has conquered the web</a>, but no such convergence has yet occurred for the execution and wide execution character encodings. Popular and commercially significant platforms such as Windows and z/OS continue to support a wide array of ASCII and EBCDIC based encodings for the execution character encoding as required for compatibility by their long time customers.</p>
+   <p><a href="https://w3techs.com/technologies/details/en-utf8/all/all">UTF-8 has conquered the web</a> <sup><a data-link-type="biblio" href="#biblio-w3techs">[W3Techs]</a></sup>, but no such convergence has yet occurred for the execution and wide execution character encodings. Popular and commercially significant platforms such as Windows and z/OS continue to support a wide array of ASCII and EBCDIC based encodings for the execution character encoding as required for compatibility by their long time customers.</p>
    <p>Might these platforms eventually move to UTF-8 or possibly cease to be relevant for new C++ standards?</p>
-   <p>Microsoft does not yet offer full support for UTF-8 as the execution encoding for its compiler. Support for a /utf-8 compiler option was added recently, but it does not affect the behavior of their standard library implementation, nor is UTF-8 selectable as the execution encoding at run-time via environment settings or by calling setlocale(). Recent Windows 10 releases now support a beta option that allows setting the Windows system code page to UTF-8 and this does affect the standard library (as well as all other programs running on the system). These additions indicate that it will likely be possible to write native UTF-8 programs for Windows using the Microsoft compiler in the not too distant future. However, there will be existing software written for Windows that will need to be migrated to new C++ standards without incurring the cost of transition to UTF-8 for a long time to come.</p>
-   <p>IBM has not publicly released a C++11 compliant version of their xlC compiler for z/OS. However, they have <a data-link-type="biblio" href="#biblio-swiftonz">publicly released support for Swift on z/OS</a>, and Swift is built on top of LLVM and Clang. Though IBM has not publicly released a port of Clang to z/OS, this indicates that such a port exists and a post to the Swift <a data-link-type="biblio" href="#biblio-clangonz">developers mailing lists confirms it</a>.</p>
-   <p>The <code class="highlight"><span class="kt">char16_t</span></code> and <code class="highlight"><span class="kt">char32_t</span></code> encodings are currently implementation defined as well. However, all existing implementations use UTF-16 and UTF-32 respectively for these encodings, thus their implementation definedness is not a constraint. <a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a> proposes officially standardizing UTF-16 and UTF-32 for these encodings.</p>
+   <p>Microsoft does not yet offer full support for UTF-8 as the execution encoding for its compiler. Support for a /utf-8 compiler option was added recently, but it does not affect the behavior of their standard library implementation, nor is UTF-8 selectable as the execution encoding at run-time via environment settings or by calling <code class="highlight"><c- n>setlocale</c-><c- p>()</c-></code>. Recent Windows 10 releases now support a beta option that allows setting the Windows system code page to UTF-8 and this does affect the standard library (as well as all other programs running on the system). These additions indicate that it will likely be possible to write native UTF-8 programs for Windows using the Microsoft compiler in the not too distant future. However, there will be existing software written for Windows that will need to be migrated to new C++ standards without incurring the cost of transition to UTF-8 for a long time to come.</p>
+   <p>IBM has not publicly released a C++11 compliant version of their xlC compiler for z/OS. However, they have <a href="https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os">publicly released support for Swift on z/OS</a> <sup><a data-link-type="biblio" href="#biblio-swiftonz">[SwiftOnZ]</a></sup>, and Swift is built on top of LLVM and Clang. Though IBM has not publicly released a port of Clang to z/OS, this indicates that such a port exists and a post to the Swift <a href="https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html">developers mailing lists confirms it</a> <sup><a data-link-type="biblio" href="#biblio-clangonz">[ClangOnZ]</a></sup>.</p>
+   <p>The <code class="highlight"><c- b>char16_t</c-></code> and <code class="highlight"><c- b>char32_t</c-></code> encodings are currently implementation defined as well. However, all existing implementations use UTF-16 and UTF-32 respectively for these encodings, thus their implementation definedness is not a constraint. <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">P1041R1</a> <sup><a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a></sup> proposes officially standardizing UTF-16 and UTF-32 for these encodings.</p>
    <h3 class="heading settled" data-level="1.2" id="constraint-runtime"><span class="secno">1.2. </span><span class="content">Constraint: The ordinary and wide execution encodings are run-time properties</span><a class="self-link" href="#constraint-runtime"></a></h3>
-   <p>The execution and wide execution encodings are not static properties of programs, and therefore not fully known at compile-time. These encodings are determined at run-time and may be dynamically changed by calls to setlocale(). At compile-time, character and string literals are transcoded (in translation phase 5) from the source encoding to an encoding that is expected to be compatible with whatever encoding is selected at run-time. If the compile-time selected encoding turns out not to be compatible with the run-time encoding, then encoding confusion (mojibake) ensues.</p>
-   <p>The dynamic nature of these encodings is not theoretical. On Windows, the execution encoding is determined at program startup based on the current active code page. On POSIX platforms, the run-time encoding is determined by the LANG, LC_ALL, or LC_CTYPE environment variables. Some existing programs depend on the ability to dynamically change (via POSIX <code class="highlight"><span class="n">uselocale</span><span class="p">()</span></code> or Microsoft’s <code class="highlight"><span class="n">_configthreadlocale</span><span class="p">()</span></code>) the execution encoding (within reason) in order for a server process to concurrently serve multiple clients with different locale settings. A recent proposal to WG14 (N2226) proposes allowing the current locale settings to vary by thread. Attempting to restrict the ability to dynamically change the execution encoding would break existing code.</p>
-   <p>Since the <code class="highlight"><span class="kt">char16_t</span></code> and <code class="highlight"><span class="kt">char32_t</span></code> encodings are currently implementation defined, they too could vary at run-time. However, as noted earlier, all implementations currently use UTF-16 and UTF-32 and do not support such variance. <a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a> will solidify current practice and ensure these encodings are known at comple-time.</p>
+   <p>The execution and wide execution encodings are not static properties of programs, and therefore not fully known at compile-time. These encodings are determined at run-time and may be dynamically changed by calls to <code class="highlight"><c- n>setlocale</c-><c- p>()</c-></code>. At compile-time, character and string literals are transcoded (in translation phase 5) from the source encoding to an encoding that is expected to be compatible with whatever encoding is selected at run-time. If the compile-time selected encoding turns out not to be compatible with the run-time encoding, then encoding confusion (mojibake) ensues.</p>
+   <p>The dynamic nature of these encodings is not theoretical. On Windows, the execution encoding is determined at program startup based on the current active code page. On POSIX platforms, the run-time encoding is determined by the LANG, LC_ALL, or LC_CTYPE environment variables. Some existing programs depend on the ability to dynamically change (via POSIX <code class="highlight"><c- n>uselocale</c-><c- p>()</c-></code> or Microsoft’s <code class="highlight"><c- n>_configthreadlocale</c-><c- p>()</c-></code>) the current locale (including the execution encoding) in order for a server process to concurrently serve multiple clients with different locale settings. A recent proposal to WG14 <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm">(N2226)</a> <sup><a data-link-type="biblio" href="#biblio-wg14-n2226">[WG14-N2226]</a></sup> proposes allowing the current locale settings to vary by thread. Attempting to restrict the ability to dynamically change the execution encoding would break existing code.</p>
+   <p>Since the <code class="highlight"><c- b>char16_t</c-></code> and <code class="highlight"><c- b>char32_t</c-></code> encodings are currently implementation defined, they too could vary at run-time. However, as noted earlier, all implementations currently use UTF-16 and UTF-32 and do not support such variance. <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">P1041R1</a> <sup><a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a></sup> will solidify current practice and ensure these encodings are known at comple-time.</p>
    <h3 class="heading settled" data-level="1.3" id="constraint-portability"><span class="secno">1.3. </span><span class="content">Constraint: There is no portable primary execution encoding</span><a class="self-link" href="#constraint-portability"></a></h3>
-   <p>On POSIX derived systems, the primary interface to the operating system is via the ordinary character encoding. This contrasts with Windows where the primary interface is via the wide execution encoding and interfaces defined in terms of char are implemented as wrappers around their wide counterparts. Unfortunately, such wrappers are often poor substitutes for use of their wide cousins due to transcoding limitations; it is common that the ordinary execution encoding is unable to represent all of the characters supported by the wide execution encoding.</p>
-   <p>The designers of the C++17 filesystem library had to wrestle with this issue and addressed it via abstraction; <code class="highlight"><span class="n">std</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span></code> has an implementation defined value_type that reflects the primary operating system encoding. Member functions provide access to paths transcoded to any one of the five standard mandated encodings (ordinary, wide, UTF-8, <code class="highlight"><span class="kt">char16_t</span></code>, and <code class="highlight"><span class="kt">char32_t</span></code>). This design serves as a useful precedent for future design.</p>
-   <h3 class="heading settled" data-level="1.4" id="constraint-wchar_t"><span class="secno">1.4. </span><span class="content">Constraint: wchar_t is a portability deadend</span><a class="self-link" href="#constraint-wchar_t"></a></h3>
-   <p>The wide execution encoding was introduced to provide relief from the constraints of the (typically 8-bit) char based ordinary execution encodings by enabling a single large character set and trivial encoding that avoided the need for multibyte encoding and ISO-2022 style character set switching escape sequences. Unfortunately, the size of <code class="highlight"><span class="kt">wchar_t</span></code>, the character set, and its encoding were all left as implementation defined properties resulting in significant implementation variance. The present situation is that the wide execution encoding is only widely used on Windows where its implementation is actually non-conforming (https://github.com/sg16-unicode/sg16/issues/9).</p>
-   <h3 class="heading settled" data-level="1.5" id="constraint-char"><span class="secno">1.5. </span><span class="content">Constraint: char aliases everything</span><a class="self-link" href="#constraint-char"></a></h3>
-   <p>Pointers to char may be used to inspect the underlying representation of objects of any type with the consequence that lvalues of type char alias with other types. This restricts the ability of the compiler to optimize code that uses char. std::byte was introduced in C++17 as an alternative type to use when char’s aliasing abilities are desired, but it will be a long time, if ever, before we can deprecate and remove char’s aliasing features.</p>
+   <p>On POSIX derived systems, the primary interface to the operating system is via the ordinary execution encoding. This contrasts with Windows where the primary interface is via the wide execution encoding and interfaces defined in terms of <code class="highlight"><c- b>char</c-></code> are implemented as wrappers around their wide counterparts. Unfortunately, such wrappers are often poor substitutes for use of their wide cousins due to transcoding limitations; it is common that the ordinary execution encoding is unable to represent all of the characters supported by the wide execution encoding.</p>
+   <p>The designers of the C++17 filesystem library had to wrestle with this issue and addressed it via abstraction; <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>filesystem</c-><c- o>::</c-><c- n>path</c-></code> has an implementation defined value_type that reflects the primary operating system encoding. Member functions provide access to paths transcoded to any one of the five standard mandated encodings (ordinary, wide, UTF-8, <code class="highlight"><c- b>char16_t</c-></code>, and <code class="highlight"><c- b>char32_t</c-></code>). This design serves as a useful precedent for future design.</p>
+   <h3 class="heading settled" data-level="1.4" id="constraint-wchar_t"><span class="secno">1.4. </span><span class="content">Constraint: <code class="highlight"><c- b>wchar_t</c-></code> is a portability deadend</span><a class="self-link" href="#constraint-wchar_t"></a></h3>
+   <p>The wide execution encoding was introduced to provide relief from the constraints of the (typically 8-bit) <code class="highlight"><c- b>char</c-></code> based ordinary execution encodings by enabling a single large character set and trivial encoding that avoided the need for multibyte encoding and ISO-2022 style character set switching escape sequences. Unfortunately, the size of <code class="highlight"><c- b>wchar_t</c-></code>, the character set, and its encoding were all left as implementation defined properties resulting in significant implementation variance. The present situation is that the wide execution encoding is only widely used on Windows where its implementation is actually non-conforming <a href="https://github.com/sg16-unicode/sg16/issues/9">(see https://github.com/sg16-unicode/sg16/issues/9)</a>.</p>
+   <h3 class="heading settled" data-level="1.5" id="constraint-char"><span class="secno">1.5. </span><span class="content">Constraint: <code class="highlight"><c- b>char</c-></code> aliases everything</span><a class="self-link" href="#constraint-char"></a></h3>
+   <p>Pointers to <code class="highlight"><c- b>char</c-></code> may be used to inspect the underlying representation of objects of any type with the consequence that lvalues of type <code class="highlight"><c- b>char</c-></code> alias with other types. This restricts the ability of the compiler to optimize code that uses <code class="highlight"><c- b>char</c-></code>. <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>byte</c-></code> was introduced in C++17 as an alternative type to use when <code class="highlight"><c- b>char</c-></code>'s aliasing abilities are desired, but it will be a long time, if ever, before we can deprecate and remove <code class="highlight"><c- b>char</c-></code>'s aliasing features.</p>
    <h3 class="heading settled" data-level="1.6" id="constraint-nih_syndrome"><span class="secno">1.6. </span><span class="content">Constraint: Implementors cannot afford to rewrite ICU</span><a class="self-link" href="#constraint-nih_syndrome"></a></h3>
    <p>ICU powers Unicode support in most portable C++ programs today due to its long history, impressive feature set, and friendly license. When considering standardizing Unicode related reatures, we must keep in mind that the Unicode standard is a large and complicated specification, and many C++ implementors simply cannot afford to reimplement what ICU provides. In practice this means that we’ll need to ensure that proposals for new Unicode features are implementable using ICU.</p>
    <h2 class="heading settled" data-level="2" id="guidelines"><span class="secno">2. </span><span class="content">Guidelines: Keep your eyes on the road, your hands upon the wheel</span><a class="self-link" href="#guidelines"></a></h2>
    <p>Mistakes happen and will continue to happen. Following a few common guidelines will help to ensure we don’t stray too far off course and help to minimize mistakes. The guidelines here are in no way specific to Unicode or text processing, but represent areas where mistakes would be easy to make.</p>
    <h3 class="heading settled" data-level="2.1" id="guideline-practices"><span class="secno">2.1. </span><span class="content">Guideline: Avoid excessive inventiveness; look for existing practice</span><a class="self-link" href="#guideline-practices"></a></h3>
-   <p>C++ has some catching up to do when it comes to Unicode support. This means that there is ample opportunity to investigate and learn from features added to other languages. A great example of following this guideline is found in the P1097R1 <a data-link-type="biblio" href="#biblio-p1097r1">[P1097R1]</a> proposal to add named character escapes to character and string literals.</p>
+   <p>C++ has some catching up to do when it comes to Unicode support. This means that there is ample opportunity to investigate and learn from features added to other languages. A great example of following this guideline is found in the <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">P1097R1</a> <sup><a data-link-type="biblio" href="#biblio-p1097r1">[P1097R1]</a></sup> proposal to add named character escapes to character and string literals.</p>
    <h3 class="heading settled" data-level="2.2" id="guideline-inline"><span class="secno">2.2. </span><span class="content">Guideline: Avoid gratuitous departure from C</span><a class="self-link" href="#guideline-inline"></a></h3>
-   <p>C and C++ continue to diverge and that is ok when there is good reason for it (e.g., to enable better type safety and overloading). However, gratuitous departure creates unnecessary interoperability and software composition challenges. Where it makes sense, proposing features that are applicable for C to WG14 will help to keep the common subset of the languages as large as it can reasonably be. <a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a> and <a data-link-type="biblio" href="#biblio-p1097r1">[P1097R1]</a> are great examples of features that would be appropriate to propose for inclusion in C.</p>
+   <p>C and C++ continue to diverge and that is ok when there is good reason for it (e.g., to enable better type safety and overloading). However, gratuitous departure creates unnecessary interoperability and software composition challenges. Where it makes sense, proposing features that are applicable for C to WG14 will help to keep the common subset of the languages as large as it can reasonably be. <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html">P1041R1</a> <sup><a data-link-type="biblio" href="#biblio-p1041r1">[P1041R1]</a></sup> and <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">P1097R1</a> <sup><a data-link-type="biblio" href="#biblio-p1097r1">[P1097R1]</a></sup> are great examples of features that would be appropriate to propose for inclusion in C.</p>
    <h2 class="heading settled" data-level="3" id="direction"><span class="secno">3. </span><span class="content">Direction: Designing for where we want to be and how to get there</span><a class="self-link" href="#direction"></a></h2>
    <p>Given the constraints above, how can we best integrate support for Unicode following time honored traditions of C++ design including the zero overhead principle, ensuring a transition path, and enabling software composition? How do we ensure a design that programmers will want to use? The following explores design considerations that SG16 participants have been discussing.</p>
-   <p>The ordinary and wide execution encodings are not going away; they will remain the bridge that text must cross when interfacing with the operating system and with users. Unless otherwise specified, I/O performed using char and wchar_t based interfaces in portable programs must abide by the encodings indicated by locale settings. But internally, it is desirable to work with a limited number of encodings (preferably only one) that are known at compile time, and optimized for accordingly. This suggests a design in which transcoding is performed from dynamically determined external encodings to a statically known internal encoding at program boundaries; when reading files, standard input/output streams, command line options, environment variables, etc... This is standard practice today.</p>
+   <p>The ordinary and wide execution encodings are not going away; they will remain the bridge that text must cross when interfacing with the operating system and with users. Unless otherwise specified, I/O performed using <code class="highlight"><c- b>char</c-></code> and <code class="highlight"><c- b>wchar_t</c-></code> based interfaces in portable programs must abide by the encodings indicated by locale settings. But internally, it is desirable to work with a limited number of encodings (preferably only one) that are known at compile time, and optimized for accordingly. This suggests a design in which transcoding is performed from dynamically determined external encodings to a statically known internal encoding at program boundaries; when reading files, standard input/output streams, command line options, environment variables, etc... This is standard practice today.</p>
    <p>There are two primary candidates for use as internal encodings today: UTF-8 and UTF-16. The former is commonly used on POSIX based platforms while the latter remains the primary system encoding on Windows. There is no encoding that is the best internal encoding for all programs, nor necessarily even for the same program on different platforms. We face a choice here: do we design for a single well known (though possibly implementation defined) internal encoding? Or do we continue the current practice of each program choosing its own internal encoding(s)? Active SG16 participants have not yet reached consensus on these questions.</p>
    <p>Use of the type system to ensure that transcoding is properly performed at program boundaries helps to prevent errors that lead to mojibake. Such errors can be subtle and only manifest in relatively rare situations, making them difficult to discover in testing. For example, failure to correctly transcode input from ISO-8859-1 to UTF-8 only results in negative symptoms when the input contains characters outside the ASCII range.</p>
-   <p>This is where <a data-link-type="biblio" href="#biblio-p0482r5">the char8_t proposal</a> comes in to play. Having a distinct type for UTF-8 text, like we do for UTF-16 and UTF-32, enables use of any of UTF-8, UTF-16, or UTF-32 as a statically known internal encoding, without the implementation defined signedness and aliasing concerns of <code class="highlight"><span class="kt">char</span></code>, and with protection against accidental interchange with <code class="highlight"><span class="kt">char</span></code> or <code class="highlight"><span class="kt">wchar_t</span></code> based interfaces without proper transcoding having been performed first. Solid support in the type system, combined with statically known encodings, provides the flexibility needed to design safe and generic text handling interfaces, including ones that can support constexpr evaluation. Why might constexpr evaluation be interesting? Consider <a data-link-type="biblio" href="#biblio-p1040r1">the std::embed proposal</a> and the ability to process a text file loaded at compile time.</p>
-   <p>Distinct code unit types (<code class="highlight"><span class="n">char8_t</span></code>, <code class="highlight"><span class="kt">char16_t</span></code>, <code class="highlight"><span class="kt">char32_t</span></code>) enable statically known internal encodings, but not without some cost. Existing code that works with UTF-8 today is written using char, unsigned char, or uint8_t. Likewise, existing code that works with UTF-16 today is written using <code class="highlight"><span class="kt">char16_t</span></code>, <code class="highlight"><span class="kt">wchar_t</span></code>, <code class="highlight"><span class="kt">unsigned</span> <span class="kt">short</span></code>, or <code class="highlight"><span class="kt">uint16_t</span></code>. ICU supports customization of its internal code unit type, but <code class="highlight"><span class="kt">char16_t</span></code> is used by default, following ICU’s adoption of C++11. Prior to the switch to C++11, the default varied by platform. The switch to <code class="highlight"><span class="kt">char16_t</span></code> created friction with existing code by, for example, requiring that ICU data passed to Windows <code class="highlight"><span class="kt">wchar_t</span></code> interfaces be copied or <code class="highlight"><span class="k">reinterpret_cast</span></code>. Similar friction will occur with <code class="highlight"><span class="n">char8_t</span></code>. ICU dealt with this by providing interfaces that, for at least some cases, encapsulate uses of reinterpret_cast and handling of the resulting aliasing issues.</p>
-   <p><code class="highlight"><span class="n">std</span><span class="o">::</span><span class="n">basic_string</span></code> isn’t a great foundation for working with Unicode text due to its operations all working at the code unit level as opposed to code point or grapheme cluster levels. <a data-link-type="biblio" href="#biblio-p0244r2">The text_view proposal</a> provides a method for layering encoding aware code point support on top of std::basic_string or any other string like type that provides a range of code units. SG16 has been discussing the addition of a std::text family of types that provide similar capabilities, but that also own the underlying data. Zach Laine has been prototyping such a type in his Boost.Text library.</p>
-   <p>Introducing new types that potentially compete with std::string and std::string_view creates a possible problem for software composition. How do components that traffic in std::string vs std::text interact? Discussions in SG16 have identified several strategies for dealing with this:</p>
+   <p>This is where <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html">the char8_t proposal</a> <sup><a data-link-type="biblio" href="#biblio-p0482r5">[P0482R5]</a></sup> comes in to play. Having a distinct type for UTF-8 text, like we do for UTF-16 and UTF-32, enables use of any of UTF-8, UTF-16, or UTF-32 as a statically known internal encoding, without the implementation defined signedness and aliasing concerns of <code class="highlight"><c- b>char</c-></code>, and with protection against accidental interchange with <code class="highlight"><c- b>char</c-></code> or <code class="highlight"><c- b>wchar_t</c-></code> based interfaces without proper transcoding having been performed first. Solid support in the type system, combined with statically known encodings, provides the flexibility needed to design safe and generic text handling interfaces, including ones that can support constexpr evaluation. Why might constexpr evaluation be interesting? Consider <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html">the std::embed proposal</a> <sup><a data-link-type="biblio" href="#biblio-p1040r1">[P1040R1]</a></sup> and the ability to process a text file loaded at compile time.</p>
+   <p>Distinct code unit types (<code class="highlight"><c- n>char8_t</c-></code>, <code class="highlight"><c- b>char16_t</c-></code>, <code class="highlight"><c- b>char32_t</c-></code>) enable statically known internal encodings, but not without some cost. Existing code that works with UTF-8 today is written using <code class="highlight"><c- b>char</c-></code>, <code class="highlight"><c- b>unsigned</c-> <c- b>char</c-></code>, or <code class="highlight"><c- b>uint8_t</c-></code>. Likewise, existing code that works with UTF-16 today is written using <code class="highlight"><c- b>char16_t</c-></code>, <code class="highlight"><c- b>wchar_t</c-></code>, <code class="highlight"><c- b>unsigned</c-> <c- b>short</c-></code>, or <code class="highlight"><c- b>uint16_t</c-></code>. ICU supports customization of its internal code unit type, but <code class="highlight"><c- b>char16_t</c-></code> is used by default, following ICU’s adoption of C++11. Prior to the switch to C++11, the default varied by platform. The switch to <code class="highlight"><c- b>char16_t</c-></code> created friction with existing code by, for example, requiring that ICU data passed to Windows <code class="highlight"><c- b>wchar_t</c-></code> interfaces be copied or <code class="highlight"><c- k>reinterpret_cast</c-></code>. Similar friction will occur with <code class="highlight"><c- n>char8_t</c-></code>. ICU dealt with this by providing interfaces that, for at least some cases, encapsulate uses of <code class="highlight"><c- k>reinterpret_cast</c-></code> and handling of the resulting aliasing issues.</p>
+   <p><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-></code> isn’t a great foundation for working with Unicode text due to its operations all working at the code unit level as opposed to code point or grapheme cluster levels. <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html">The text_view proposal</a> <sup><a data-link-type="biblio" href="#biblio-p0244r2">[P0244R2]</a></sup> provides a method for layering encoding aware code point support on top of <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-></code> or any other string like type that provides a range of code units. SG16 has been discussing the addition of a <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text</c-></code> family of types that provide similar capabilities, but that also own the underlying data. Zach Laine has been prototyping such a type in his <a href="https://tzlaine.github.io/text/doc/html/index.html">Boost.Text library</a>.</p>
+   <p>Introducing new types that potentially compete with <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> and <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string_view</c-></code> creates a possible problem for software composition. How do components that traffic in <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> vs <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text</c-></code> interact? Discussions in SG16 have identified several strategies for dealing with this:</p>
    <ol>
-    <li data-md="">
-     <p><code class="highlight"><span class="n">std</span><span class="o">::</span><span class="n">text</span></code> could be convertible to <code class="highlight"><span class="n">std</span><span class="o">::</span><span class="n">string_view</span></code> and, potentially, <code class="highlight"><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span></code> if it holds an actual std::string object, and</p>
-    <li data-md="">
-     <p><code class="highlight"><span class="n">std</span><span class="o">::</span><span class="n">text</span></code> and <code class="highlight"><span class="n">std</span><span class="o">::</span><span class="n">string</span></code> could allow their buffers to be transferred back and forth (and potentially to other string types).</p>
+    <li data-md>
+     <p><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text</c-></code> could be convertible to <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string_view</c-></code> and, potentially, <code class="highlight"><c- k>const</c-> <c- n>std</c-><c- o>::</c-><c- n>string</c-> <c- o>&amp;</c-></code> if it holds an actual <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> object, and</p>
+    <li data-md>
+     <p><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text</c-></code> and <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> could allow their buffers to be transferred back and forth (and potentially to other string types).</p>
    </ol>
    <p>New text containers and views help to address support for UTF encoding and decoding, but Unicode provides far more than a large character set and methods for encoding it. Unicode algorithms provide support for enumerating grapheme clusters, word breaks, line breaks, performing language sensitive collation, handling bidirectional text, case mapping, and more. Exposing interfaces for these algorithms is necessary to claim complete Unicode support. Exposing these in a generic form that allows their use with the large number of string types used in practice is necessary to enable their adoption. Enabling them to be used with segmented data types (e.g., ropes) is a desirable feature.</p>
    <h2 class="heading settled" data-level="4" id="directives"><span class="secno">4. </span><span class="content">Directives: Do or do not, there is no try</span><a class="self-link" href="#directives"></a></h2>
@@ -1575,59 +1577,59 @@ pre .property::before, pre .property::after {
    <p>This is the topic that SG16 participants have so far spent the most time discussing, but we do not yet have papers that explore or propose particular designs.</p>
    <p>We have general consensus on the following design directions:</p>
    <ul>
-    <li data-md="">
-     <p>A new std::text type that is an owning string type with a statically known character encoding.</p>
-    <li data-md="">
-     <p>A new std::text_view type that is a non-owning string type with a statically known character encoding.</p>
-    <li data-md="">
+    <li data-md>
+     <p>A new <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text</c-> <c- n>type</c-></code> that is an owning string type with a statically known character encoding.</p>
+    <li data-md>
+     <p>A new <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>text_view</c-></code> type that is a non-owning string type with a statically known character encoding.</p>
+    <li data-md>
      <p>These types will not have the large interface exposed by std::string.</p>
-    <li data-md="">
+    <li data-md>
      <p>These types will encourage processing of code points and grapheme clusters while permitting efficient access to code units.</p>
    </ul>
    <p>Discussion continues for questions such as:</p>
    <ul>
-    <li data-md="">
-     <p>Should these types be ranges and, if so, should their value_type reflect code points or extended grapheme clusters? Or, should these types provide access to distinct ranges (e.g., via as_code_points() and as_graphemes() member functions) that require the programmer to explicitly choose a level of abstraction to work at?</p>
-    <li data-md="">
-     <p>Can these types satsify the complexity requirements for ranges? (Ranges require O(1) for calls to begin() and end(), but iteration by code point or grapheme cluster may consume an arbitrary number of code units due to ill-formed code unit sequences or arbitrary numbers of combining code points)</p>
-    <li data-md="">
-     <p>Should these types be comparable via standard operators? If so, should comparison be Lexicographical (fast, but surprising if text is not normalized) or be based on canonical equivalence (slower, but consistent results regardless of normalization)? Should a specialization of std::less be provided that performs a fast comparison suitable for storing these types in containers?</p>
-    <li data-md="">
+    <li data-md>
+     <p>Should these types be ranges and, if so, should their value_type reflect code points or extended grapheme clusters? Or, should these types provide access to distinct ranges (e.g., via <code class="highlight"><c- n>as_code_points</c-><c- p>()</c-></code> and <code class="highlight"><c- n>as_graphemes</c-><c- p>()</c-></code> member functions) that require the programmer to explicitly choose a level of abstraction to work at?</p>
+    <li data-md>
+     <p>Can these types satsify the complexity requirements for ranges? Ranges require O(1) for calls to <code class="highlight"><c- n>begin</c-><c- p>()</c-></code> and <code class="highlight"><c- n>end</c-><c- p>()</c-></code>, but iteration by code point or grapheme cluster may consume an arbitrary number of code units due to ill-formed code unit sequences or arbitrary numbers of combining code points.</p>
+    <li data-md>
+     <p>Should these types be comparable via standard operators? If so, should comparison be lexicographical (fast, but surprising if text is not normalized) or be based on canonical equivalence (slower, but consistent results regardless of normalization)? Should a specialization of <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>less</c-></code> be provided that performs a fast comparison suitable for storing these types in containers?</p>
+    <li data-md>
      <p>Should these types enforce well-formed encoded text? Should validation be performed on each mutation? How should errors be handled?</p>
-    <li data-md="">
-     <p>Should these types support a single fixed encoding (UTF-8)? Or should multiple encodings be supported as proposed in <a data-link-type="biblio" href="#biblio-p0244r2">the text_view proposal</a>?</p>
-    <li data-md="">
+    <li data-md>
+     <p>Should these types support a single fixed encoding (UTF-8)? Or should multiple encodings be supported as proposed in <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html">the text_view proposal</a> <sup><a data-link-type="biblio" href="#biblio-p0244r2">[P0244R2]</a></sup>?</p>
+    <li data-md>
      <p>Should these types enforce a normalization form on UTF encoded text?</p>
-    <li data-md="">
+    <li data-md>
      <p>Should these types include allocator support?</p>
-    <li data-md="">
-     <p>Should these types replace use of std::string and std::string_view in most text/string processing code?</p>
+    <li data-md>
+     <p>Should these types replace use of <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> and <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string_view</c-></code> in most text/string processing code?</p>
    </ul>
-   <p>There is much existing practice to consider here. Historically, most string classes have either provided code unit access (like std::string or code point access (possibly with means for code unit access as well). Swift took the bold move of making extended grapheme clusters the basic element of Swift strings. There are many design options and tradeoffs to consider. Papers exploring the design options are strongly encouraged.</p>
+   <p>There is much existing practice to consider here. Historically, most string classes have either provided code unit access (like <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> or code point access (possibly with means for code unit access as well). Swift took the bold move of making extended grapheme clusters the basic element of Swift strings. There are many design options and tradeoffs to consider. Papers exploring the design options are strongly encouraged.</p>
    <h3 class="heading settled" data-level="4.2" id="directive-generic_algorithms"><span class="secno">4.2. </span><span class="content">Directive: Standardize generic interfaces for Unicode algorithms</span><a class="self-link" href="#directive-generic_algorithms"></a></h3>
-   <p>SG16 participants have not yet spent much time discussing interfaces to Unicode algorithms, though Zach Laine has blazed a trail by implementing support for all of them in his Boost.Text library. Papers exploring requirements would be helpful here. Some questions to explore:</p>
+   <p>SG16 participants have not yet spent much time discussing interfaces to Unicode algorithms, though Zach Laine has blazed a trail by implementing support for all of them in his <a href="https://tzlaine.github.io/text/doc/html/index.html">Boost.Text library</a>. Papers exploring requirements would be helpful here. Some questions to explore:</p>
    <ul>
-    <li data-md="">
+    <li data-md>
      <p>Is it reasonable for these interfaces to be range based over code points? Or are contiguous iterators and ranges over code units needed to achieve acceptable performance?</p>
-    <li data-md="">
+    <li data-md>
      <p>Can these interfaces accommodate segmented data structures such as ropes?</p>
-    <li data-md="">
-     <p>Many Unicode algorithms require additional context such as the language of the text (Russian, German, etc...). How should this information be supplied? The existing facilities exposed via std::locale are more oriented towards abstracting operations than providing this type of information.</p>
+    <li data-md>
+     <p>Many Unicode algorithms require additional context such as the language of the text (Russian, German, etc...). How should this information be supplied? The existing facilities exposed via <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>locale</c-></code> are more oriented towards abstracting operations than providing this type of information.</p>
    </ul>
    <h3 class="heading settled" data-level="4.3" id="directives-other_useful"><span class="secno">4.3. </span><span class="content">Directive: Standarize useful features from other languages</span><a class="self-link" href="#directives-other_useful"></a></h3>
-   <p>We’ve got a start on this with <a data-link-type="biblio" href="#biblio-p1097r1">Named Character Escapes</a>, but there are no doubt many text handling features in other languages that would be desirable in C++. Papers welcome.</p>
+   <p>We’ve got a start on this with <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html">Named Character Escapes</a> <sup><a data-link-type="biblio" href="#biblio-p1097r1">[P1097R1]</a></sup>, but there are no doubt many text handling features in other languages that would be desirable in C++. Papers welcome.</p>
    <h3 class="heading settled" data-level="4.4" id="directive-transcoding"><span class="secno">4.4. </span><span class="content">Directive: Improve support for transcoding at program boundaries</span><a class="self-link" href="#directive-transcoding"></a></h3>
    <p>C++ currently includes interfaces for transcoding between the ordinary and wide execution encodings and between the UTF-8, UTF-16, and UTF-32 encodings, but not between these two sets of encodings. This poses a challenge for support of the external/internal encoding model.</p>
-   <p>Portably handling command line arguments (that may include file names that are not well formed for the current locale encoding) and environment variables (likewise) accurately can be challenging. The design employed for std::filesystem::path to provide access to native data as well as access to that data transcoded to various encodings could be applied to solve portability issues with command line arguments and environment variables.</p>
+   <p>Portably handling command line arguments (that may include file names that are not well formed for the current locale encoding) and environment variables (likewise) accurately can be challenging. The design employed for <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>filesystem</c-><c- o>::</c-><c- n>path</c-></code> to provide access to native data as well as access to that data transcoded to various encodings could be applied to solve portability issues with command line arguments and environment variables.</p>
    <p>An open question is whether transcoding between external and internal encodings should be performed implicitly (convenient, but hidden costs) or explicitly (less convenient, but with apparent costs).</p>
    <h3 class="heading settled" data-level="4.5" id="directive-wording"><span class="secno">4.5. </span><span class="content">Directive: Propose resolutions for existing issues and wording improvements opportunistically</span><a class="self-link" href="#directive-wording"></a></h3>
-   <p>While not an SG16 priority, it will sometimes be necessary to resolve existing issues or improve wording to accommodate new features. Issues that pertain to SG16 are currently tracked in our github repo at https://github.com/sg16-unicode/sg16/issues.</p>
+   <p>While not an SG16 priority, it will sometimes be necessary to resolve existing issues or improve wording to accommodate new features. Issues that pertain to SG16 are currently tracked in our github repo at <a href="https://github.com/sg16-unicode/sg16/issues">https://github.com/sg16-unicode/sg16/issues</a>.</p>
    <h2 class="heading settled" data-level="5" id="non-directives"><span class="secno">5. </span><span class="content">Non-directives: Thanks, but No Thanks</span><a class="self-link" href="#non-directives"></a></h2>
    <p>The C++ standard currently lacks the necessary foundations for obtaining or displaying Unicode text through human interface devices. Until that changes, addressing user input and graphical rendering of text will remain out of scope for SG16.</p>
    <h3 class="heading settled" data-level="5.1" id="non-directive-ui"><span class="secno">5.1. </span><span class="content">Non-directive: User input</span><a class="self-link" href="#non-directive-ui"></a></h3>
-   <p>SG16 cannot cover user input or human interface devices.  C++ does not have a helpful or useful concepts for modeling these devices or their outputs: this is something much better left to another Study Group or another standard entirely. Our work can be the result someone converts to in order to perform text processing, but handling user input directly is not a goal for this Study Group.</p>
+   <p>Keyboard scan codes, key mapping, and methods of character composition entry are all fantastically interesting subjects, but require lower level device access than are currently provided by standard C++.  SG16’s scope begins at the point where text is presented in memory as an encoded sequence of "characters".</p>
    <h3 class="heading settled" data-level="5.2" id="non-directive-graphics"><span class="secno">5.2. </span><span class="content">Non-directive: Fonts, graphical text rendering</span><a class="self-link" href="#non-directive-graphics"></a></h3>
-   <p>What Unicode covers and what Fonts and typical graphical text rendering need are two related but separate and distinct problems.  Fonts and the rendering of such are out of scope for SG16, but the types and abstractions we produce can become the vocabulary types that help communicate text to these outside interfaces.</p>
+   <p>What Unicode provides and what fonts and graphical text rendering facilities need are two related but distinct problems.  SG16’s scope ends at the point where text is handed off to code capable of interacting with output devices like screens, speech readers, and brail terminals.</p>
    <h2 class="heading settled" data-level="6" id="acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>SG16 would not exist if not for early and kind encouragement by Beman Dawes.</p>
    <p>Thank you to all 18 individuals who have attended at least one SG16 teleconference and have thereby contributed to the discussions shaping our future direction.</p>
@@ -1784,4 +1786,6 @@ pre .property::before, pre .property::after {
    <dd>IBM. <a href="https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os">IBM Toolkit for Swift on z/OS</a>. 2017. URL: <a href="https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os">https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os</a>
    <dt id="biblio-w3techs">[W3Techs]
    <dd>W3Techs. <a href="https://w3techs.com/technologies/details/en-utf8/all/all">Usage of UTF-8 for websites</a>. 2017. URL: <a href="https://w3techs.com/technologies/details/en-utf8/all/all">https://w3techs.com/technologies/details/en-utf8/all/all</a>
+   <dt id="biblio-wg14-n2226">[WG14-N2226]
+   <dd>Florian Weimer. <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm">Optional thread storage duration for the program's locale</a>. 2018. URL: <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm</a>
   </dl>
