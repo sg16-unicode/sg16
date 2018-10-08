@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2018/07/11 - 2018/08/29</title>
+<title>SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03</title>
 </head>
 
 <style type="text/css">
@@ -18,11 +18,11 @@ table#header td
 <table id="header">
   <tr>
     <th>Document Number:</th>
-    <td>DXXXXR0 <em>Draft</em></td>
+    <td>D1237R0 <em>Draft</em></td>
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2018-09-24</td>
+    <td>2018-10-04</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -35,7 +35,7 @@ table#header td
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2018/07/11 - 2018/08/29</h1>
+<h1>SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -51,6 +51,8 @@ snapshot of select meeting summaries from that repository.
       July 25th, 2018</a></li>
   <li><a href="#2018_08_29">
       August 29th, 2018</a></li>
+  <li><a href="#2018_10_03">
+      October 3rd, 2018</a></li>
 </ul>
 
 
@@ -793,6 +795,159 @@ snapshot of select meeting summaries from that repository.
           bandwidth limitations.</li>
     </ul>
   </li>
+</ul>
+
+
+<h1 id="2018_10_03">October 3rd, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Last meeting before the San Diego pre-meeting mailing deadline on
+      October 8th.</li>
+  <li>Review the draft SG16 direction paper that Tom plans to have ready for
+      this meeting and the pre-meeting mailing.</li>
+  <li>Code points, EGCs, or explicit ranges for text views/containers?
+    <ul>
+      <li>How to decide? Pick a direction now? Write a pros/cons paper for the
+          committee?</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Artem Tokmakov</li>
+  <li>Corentin Jabot</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Markus Scherer</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>We started off with a round of introductions in honor of a new first
+      time attendee, Markus Scherer, chair of the ICU Technical Committee.</li>
+  <li>Tom provided a brief overview of the agenda; to review draft papers
+      discussing SG16 direction, to collect feedback, and submit a paper for
+      the San Diego pre-meeting mailing that represents the group's consensus
+      on our general direction.<br/>
+      <em>[Editor's note: these drafts later became
+          <a href="http://wg21.link/p1238r0">P1238R0</a>]</em></li>
+  <li>Zach raised a concern regarding support for generic interfaces.  The
+      draft paper asked whether generic interfaces for Unicode algorithms
+      could reasonably support segmented data structures like ropes.  Zack
+      felt segmented data structures are supported naturally as long as they
+      provide standard iterators.</li>
+  <li>Tom explained that the question was meant more to ask if generic
+      interfaces could provide performance that users would expect.  Or
+      whether interfaces specialized for contiguous memory would be necessary
+      and, if so, whether they could be used to service ropes.  Perhaps it
+      would make sense to have a low level C API wrapped in a generic
+      interface.  This would require the low level API to support tracking
+      state (e.g., code unit sequences split across segment boundaries).</li>
+  <li>Zach expressed concern about giving the impression that we want to
+      provide equivalent functionality in C and C++.</li>
+  <li>Corentin chimed in that contributing to C isn't something we've talked
+      much about.</li>
+  <li>Tom clarified, only when it makes sense.</li>
+  <li>Markus noted some experience; prior attempts to provide generic
+      interfaces in ICU resulted in performance complaints.  ICU could do more
+      of this, but users are able to do it themselves.</li>
+  <li>Zach responded that his own performance tests involving arrays of code
+      points vs code point iterators on top of code units indicated negligible
+      performance differences.  Table lookups dominated.</li>
+  <li>Markus commented that performance improvements come about largely due to
+      support for fast paths.</li>
+  <li>Mark observed that we heard similarly from Swift developers regarding the
+      need to support fast paths.</li>
+  <li>Markus then asked a fundamental question: why bother standardizing
+      Unicode support?  Why not just use ICU?</li>
+  <li>Mark responded that programmers continue to struggle with classes of bugs
+      that we could potentially minimize, handling of grapheme clusters for
+      example.</li>
+  <li>Steve also noted continued mishandling of strings in general.</li>
+  <li>Tom mentioned distribution and packaging issues.  Having something
+      provided with the standard library helps to sidestep legal obstacles and
+      package versioning problems.</li>
+  <li>Corentin commented that programmers need more easy to use functionality,
+      libraries that encourage correct use.</li>
+  <li>Tom agreed, noting that we want to bring down the learning curve for
+      working with Unicode.</li>
+  <li>JeanHeyd added that not all programmers need all of Unicode, some would
+      benefit just by having support for encodings built in.</li>
+  <li>Changing topics, Mark asked to add a reference to P1072 in the paper,
+      noting its relevance to text/string buffer transference.</li>
+  <li>Steve asked about some of the terminology in the paper.  Why the
+      inconsistent mention of UTF-8 vs <tt>char16_t</tt> and
+      <tt>char32_t</tt>?</li>
+  <li>Tom explained that this is consistent with the standard where <tt>u8</tt>
+      literals are explicitly UTF-8, but <tt>u</tt>, <tt>U</tt>, and other uses
+      of <tt>char16_t</tt> and <tt>char32_t</tt> currently have implementation
+      defined encodings.</li>
+  <li>Corentin observed that <tt>char16_t</tt> and <tt>char32_t</tt> are
+      explicitly used for UTF-16 and UTF-32 respectively in the filesystem
+      library.</li>
+  <li>Changing subjects again, Tom asked for thoughts regarding the first
+      constraint in the paper, that the ordinary and wide execution encodings
+      are implementation defined.  Can we lift that constraint?</li>
+  <li>Tom went on, Microsoft is working on adding better UTF-8 support to
+      Windows and their compiler.  IBM does not provide a publicly available
+      C++11 compliant compiler for z/OS, though they do provide Swift on z/OS
+      and that depends on Clang.  IBM doesn't publicly provide Clang on z/OS,
+      but it seems they have an internal port of it.</li>
+  <li>Markus noted that ICU dropped support for IBM's z/OS, i, and AIX
+      operating systems when upgrading to C++11 due to lack of C++11 support
+      in IBM's xlC compiler.</li>
+  <li>Corentin mentioned that we're targeting C++23 or C++26 for our work.
+      What will things look like then?</li>
+  <li>Changing topics again, Markus commented on ICU's switch to using
+      <tt>char16_t</tt> as the code unit type for its internal encoding.  This
+      was challenging due to interoperability issues with code that used, and
+      continues to use, <tt>wchar_t</tt> or <tt>uint16_t</tt> for UTF-16 data.
+      Overloads were added to make it eaiser to integrate with code using these
+      types.</li>
+  <li>Tom asked to confirm his historical understanding, that ICU used to use
+      a typedef for the code unit type that consumers could set to
+      <tt>wchar_t</tt> or <tt>uint16_t</tt> as required for their
+      application.</li>
+  <li>Markus confirmed that users can still do so, but that the default is now
+      <tt>char16_t</tt> when compiling as C++11.</li>
+  <li>Zach asked to talk about UTF-8 and type safety.  He was recently surprised
+      when, due to a mismatch between the encoding used for a source file
+      (UTF-8) and the encoding the compiler used to read that source file
+      (Windows 1252), <tt>u8</tt> string literals didn't have the expected
+      contents at run-time.  He concluded (accurately) that he can't depend on
+      <tt>u8</tt> string literals containing well-formed UTF-8 text.  This
+      caused him to question his perception of the type safety that
+      <tt>char8_t</tt> provides.</li>
+  <li>Markus expressed further concerns about <tt>char8_t</tt> leading to the
+      same type interoperability issues that were encountered with
+      <tt>char16_t</tt> in ICU.</li>
+  <li>Mark noted that we are still lacking deployment results with
+      <tt>char8_t</tt>.</li>
+  <li>JeanHeyd described prior experience using a <tt>char8_t</tt> like type to
+      help avoid encoding confusion and that it was useful.</li>
+  <li>Tom stated that he will add discussion of <tt>char8_t</tt> to the agenda
+      for the next meeting and update discussion in the direction paper.</li>
+  <li>Changing topics, Markus mentioned a wish list item, that <tt>char</tt>
+      be made unsigned everywhere.</li>
+  <li>Mark thought floating the idea would be worthwhile.</li>
+  <li>Tom asked Steve about merging the two draft papers.  Steve was favorable
+      to the idea.</li>
+  <li>Steve also mentioned that the paper needs to discuss concerns with
+      allocators.  Tom agreed.</li>
+  <li>Mark expressed a desire to discuss allocators in San Diego.</li>
+  <li>Steve also suggested that the paper address the expected delivery time
+      for features we're discussing.  In particular, to make it clear that
+      <tt>std::text</tt> is not targetting C++20.</li>
+  <li>Tom agreed.  Mark stated the paper should also address the intended
+      target for existing papers in flight.</li>
 </ul>
 
 
