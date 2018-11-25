@@ -1,0 +1,274 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2018/10/17 - 2018/10/17</title>
+</head>
+
+<style type="text/css">
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+</style>
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>PXXXXR0 <em>Draft</em></td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2018-11-24</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2018/10/17 - 2018/10/17</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2018_10_17">
+      October 17th, 2018</a></li>
+</ul>
+
+
+<h1 id="2018_10_17">October 17th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>char8_t: Markus' concerns, motivation, type safety, Unicode sandwich,
+      most C++ code is yet to be written, transition story.</li>
+  <li>Code points, EGCs, or explicit ranges for text views/containers?
+    <ul>
+      <li>How to decide? Pick a direction now? Write a pros/cons paper for the
+          committee?</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Artem Tokmakov</li>
+  <li>Cameron Gunnin</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Markus Scherer</li>
+  <li>Martinho Fernandes</li>
+  <li>Sergey Zubkov</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://github.com/sg16-unicode/sg16/issues/30">
+      Issue #30: Unclear behavior for octal and hex escape sequences in
+      Unicode character and string literals</a>
+    <ul>
+      <li>Tom explained the current situation;
+          <a href="http://wg21.link/cwg2333">CWG#2333</a> tracks this issue.
+          CWG discussed at their August 2017 teleconference and decided that
+          numeric escape sequences should be ill-formed in UTF-8 character
+          literals.  Mike Miller offered to reconsider the issue if requested
+          by SG16.</li>
+      <li>Markus mentioned the utility in using numeric escapes to create
+          ill-formed strings for testing purposes.</li>
+      <li>Markus also presented an alternative possibility, that numeric
+          escapes only be ill-formed if used to encode a code unit value that
+          is never valid in a UTF string, e.g., <tt>0xff</tt>.</li>
+      <li>Markus additionally noted that there is a distinction between Unicode
+          strings (may contain ill-formed contents) and UTF strings (must be
+          well-formed).</li>
+      <li>Zach asserted that the ability to use numeric escapes is more
+          important than preventing encoding of ill-formed UTF sequences.</li>
+      <li>Tom noted that the current CWG resolution seems evolutionary given
+          that it contradicts existing practice.</li>
+      <li>Markus noted a further benefit, maintaining consistency with
+          languages like Java. Additionally, he explained that some logging
+          libraries write strings with non-printable characters replaced with
+          escape sequences and that the ability to copy and paste those
+          strings verbatim into code is useful.</li>
+      <li>Tom noted an additional use case; strings encoded as Modified UTF-8.
+          Modified UTF-8 requires use of escapes to encode U+0000 as an
+          overlong two-byte sequence.</li>
+      <li>Markus added that the same use case applies to creation of CESU-8
+          strings; escape sequences are needed for the individual encoding of
+          UTF-16 surrogate pairs.</li>
+      <li>Tom stated that it is useful to embed a null terminator with
+          <tt>\0</tt>, though it would still be possible to do so using
+          <tt>\u0000</tt>.</li>
+      <li>Mark observed that implementations can warn if a literal that
+          contains numeric escape sequences produces an ill-formed UTF
+          string.</li>
+      <li>Poll: Continue to allow hex and octal escapes that indicate code unit
+          values, requiring only that they fit into the range of the code unit
+          type.
+          <table>
+            <tr>
+              <th style="text-align:right">SF</th>
+              <th style="text-align:right">F</th>
+              <th style="text-align:right">N</th>
+              <th style="text-align:right">A</th>
+              <th style="text-align:right">SA</th>
+            </tr>
+            <tr>
+              <td style="text-align:right">8</td>
+              <td style="text-align:right">1</td>
+              <td style="text-align:right">0</td>
+              <td style="text-align:right">0</td>
+              <td style="text-align:right">0</td>
+            </tr>
+          </table>
+      </li>
+    </ul>
+  </li>
+  <li>char8_t:
+    <ul>
+      <li>Zach started the discussion by noting that use of <tt>char8_t</tt>
+          does not help to enfore preconditions; ill-formed UTF-8 can appear
+          in sequences of <tt>char8_t</tt> just as it can in sequences of
+          <tt>char</tt>. How does <tt>char8_t</tt> help?</li>
+      <li>Mark acknowledged that preconditions can always be violated.</li>
+      <li>Tom offered <tt>make_text_view</tt> and UDLs as examples.
+          <tt>char8_t</tt> enables writing generic functions that work with
+          ordinary and UTF-8 string literals.</li>
+      <li>Zach summarized, I see, it allows authors of overload sets to
+          differentiate behavior.</li>
+      <li>Markus chimed in, starting to see the motivation for <tt>char8_t</tt>;
+          generic code can't distinguish encodings unless it is represented in
+          the type system.</li>
+      <li>Markus further noted that the standard library has a high percentage
+          of generic code relative to code outside the standard.</li>
+      <li>Tom agreed, but noted there is more focus on generic libraries now
+          than in the past and that the committee is working hard to improve
+          support for generic programming as exemplified by Concepts.</li>
+      <li>Tom mentioned that we have multiple encodings we have to support.</li>
+      <li>Markus acknowledged the dilemma; many other languages have settled on
+          a single internal encoding, but C++ supports multiple encodings and
+          there is no clear dominant one across the industry.</li>
+      <li>Mark added that there is considerable baggage with <tt>char</tt> and
+          the implementation definedness of the execution encoding.</li>
+      <li>Markus acknowledged the existence of many incompatible string types
+          in C++ that are all similar in intent.</li>
+      <li>Tom stated that Concepts helps to bring these different string types
+          together such that they can be supported by generic code.</li>
+      <li>Markus observed that the <tt>char8_t</tt> proposal changes existing
+          behavior.</li>
+      <li>Mark noted that <tt>u8</tt> literals aren't used much in C++.</li>
+      <li>Markus mentioned that Google uses <tt>unsigned char</tt> and ensures
+          use of UTF-8 internally.</li>
+      <li>Tom responded that there is a backward compatibility story that is
+          aided by C++20 support for class types as non-type template
+          parameters as proposed in
+          <a href="http://wg21.link/p0732">P0732</a>.</li>
+    </ul>
+  </li>
+  <li>Code points vs grapheme clusters:
+    <ul>
+      <li>Martinho lead the discussion by expressing concern that grapheme
+          cluster boundaries are not stable.  The situation with Swift today
+          is that behavior depends on the version of ICU installed on the
+          system.  Behavior is therefore non-portable.</li>
+      <li>Mark mentioned that we have a similar issue with the timezone
+          database and <tt>&lt;chrono&gt;</tt>. Behavior depends on which
+          version of the database is installed.</li>
+      <li>Tom acknowledged the concern; we won't have portable grapheme
+          breaking in C++ either.</li>
+      <li>Markus provided a link to a recent document authored by Mark Davis
+          and noted a limitation imposed by the instability of grapheme cluster
+          boundaries; stored EGC indexes are invalidated when changing Unicode
+          versions.
+        <ul>
+          <li><a href="ttps://docs.google.com/document/d/1wuzzMOvKOJw93SWZAqoim1VUl9mloUxE0W6Ki_G23tw/edit">
+              https://docs.google.com/document/d/1wuzzMOvKOJw93SWZAqoim1VUl9mloUxE0W6Ki_G23tw/edit</a></li>
+        </ul>
+      </li>
+      <li>Zach asked, as someone without a lot of end user experience, how
+          often do programmers make poor choices regarding handling of Unicode
+          text?</li>
+      <li>Steve responded that he sees bug reports frequently where programmers
+          inadvertently sliced grapheme clusters.</li>
+      <li>Martinho provided links to a couple of example defects:
+        <ul>
+          <li><a href="https://bugs.swift.org/browse/SR-3582">
+              https://bugs.swift.org/browse/SR-3582</a></li>
+          <li><a href="https://stackoverflow.com/questions/26862282/swift-countelements-return-incorrect-value-when-count-flag-emoji">
+              https://stackoverflow.com/questions/26862282/swift-countelements-return-incorrect-value-when-count-flag-emoji</a></li>
+        </ul>
+      </li>
+      <li>Tom asked, so how do we make a decision about how to proceed.</li>
+      <li>Martinho countered that we don't need to yet.</li>
+      <li>Steve chimed in with, how do we make them less scary?</li>
+      <li>Mark responded with a question, how are things going to look?  New
+          types on top of <tt>std::string_view</tt> and
+          <tt>std::string</tt>?</li>
+      <li>Zach provided a brief overview of how Boost.Text handles grapheme
+          clusters.</li>
+      <li>Markus asked, does Boost.Text enforce well-formed UTF-8?</li>
+      <li>Zach responded that it encourages, but does not require well-formed
+          UTF-8.</li>
+      <li>Markus mentioned that validation can be expensive.  If you know your
+          input is well-formed, then lookups can be optimized without having to
+          decode.</li>
+      <li>Tom described this as a design trade off; validate up front and reap
+          performance benefits later, or skip validation and lazily validate
+          later.</li>
+      <li>Markus noted that it is common for programmers to slam content into
+          strings and then validate them later.</li>
+      <li>Mark mentioned that <a href="http://wg21.link/p1072">P1072</a> helps
+          to support that use case.</li>
+      <li>Tom asked, assuming that we standardize a type that enforces
+          well-formedness, is there room for standardizing a non-validating
+          type as well?  Or does that become an expert level do-it-yourself
+          feature?</li>
+      <li>JeanHeyd advocated an adapter-over-range approach for
+          <tt>std::text</tt>; tags can suppress validation when it isn't
+          necessary.</li>
+      <li>Tom observed that it isn't possible to enforce well-formedness on
+          views without introducing validation costs.</li>
+      <li>Steve mentioned that adapters over containers make memory allocation
+          someone else's problem, for better or worse.</li>
+      <li>Martinho advocated that, if performing validation on container
+          construction, would prefer replacement character substitution since
+          throwing gives you nothing.  Invalid input can be used as an attack
+          vector; if UTF-8 input is all <tt>0x80</tt>, replacement will triple
+          the buffer size.</li>
+      <li>Zach expressed openness to an adapter approach for Boost.Text.</li>
+      <li>Mark expressed a preference for the adapter approach as it supports
+          underlying containers with reference counts or small buffer
+          optimizations.</li>
+      <li>Mark also mentioned that wrapping <tt>std::string</tt> provides a
+          nice transition story.</li>
+    </ul>
+  </li>
+  <li>Tom then summarized the plan for the San Diego meeting: discussion of the
+      <a href="http://wg21.link/p1238">Unicode Direction paper</a>,
+      <a href="http://wg21.link/p1072">P1072</a>, Isabella Muerte's
+      <a href="http://wg21.link/p1275">P1275</a>, and then small groups to
+      focus on further proposal incubation.</li>
+</ul>
+
+
+</body>
