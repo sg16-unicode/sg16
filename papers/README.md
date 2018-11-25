@@ -7,7 +7,7 @@ WG21 Number     | Title | Revisions
 --------------- | ----- | ----
 [DXXXXR0][]     | SG16: Unicode meeting summaries 2018/10/17 - 2018/10/17 | [R0][DXXXXR0]
 [P1238R0][]     | SG16: Unicode direction| [R0][P1238R0]
-[P1237R0][]     | SG16: Unicode meeting summaries 2018/07/11 - 2018/08/29 | [R0][P1237R0]
+[P1237R0][]     | SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03 | [R0][P1237R0]
 [P1137R0][]     | SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20 | [R0][P1137R0]
 [P1097R1][]     | Named character escapes | [R1][P1097R1] [R0][P1097R0]
 [P1080R0][]     | SG16: Unicode meeting summaries 2018/03/28 - 2018/04/25 | [R0][P1080R0]
