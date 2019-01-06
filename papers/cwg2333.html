@@ -1,0 +1,210 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+
+<title>Core Issue 2333: Escape sequences in UTF-8 character literals </title>
+
+<style type="text/css">
+
+ins, ins * { text-decoration:none; font-weight:bold; background-color:#A0FFA0 }
+del, del * { text-decoration:line-through; background-color:#FFA0A0 }
+#hideins:checked ~ * ins, #hideins:checked ~ * ins * { display:none; visibility:hidden }
+#hidedel:checked ~ * del, #hidedel:checked ~ * del * { display:none; visibility:hidden }
+
+blockquote
+{
+    color: #000000;
+    background-color: #F1F1F1;
+    border: 1px solid #D1D1D1;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+blockquote.stdins
+{
+    text-decoration: underline;
+    color: #000000;
+    background-color: #C8FFC8;
+    border: 1px solid #B3EBB3;
+    padding: 0.5em;
+}
+blockquote.stddel
+{
+    text-decoration: line-through;
+    color: #000000;
+    background-color: #FFEBFF;
+    border: 1px solid #ECD7EC;
+    padding-left: 0.5empadding-right: 0.5em;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<p>
+Tom Honermann &lt;tom@honermann.net&gt;<br/>
+2019-01-05
+</p>
+
+<h1>Core Issue 2333: Escape sequences in UTF-8 character literals</h1>
+
+<p>
+The notes for <a href="http://wg21.link/cwg2333">CWG 2333</a> in the current
+active issues list (revision 100) state that discussion at the
+<a href="http://wiki.edg.com/bin/view/Wg21albuquerque/IssuesTeleconference2017-08-14">
+August, 2017 CWG teleconference</a> resulted in a determination that numeric
+escape sequences in UTF-8 character literals should be ill-formed.  The issue
+has remained in drafting status since then.
+</p>
+
+<p>
+SG16 discussed this issue during its October 17th, 2018 teleconference.  Notes
+for this meeting are available at
+<a href="https://github.com/sg16-unicode/sg16-meetings#october-17th-2018">
+https://github.com/sg16-unicode/sg16-meetings#october-17th-2018</a>.  SG16
+consensus was for a different resolution than is currently described in the
+active issues list.  The SG16 consensus was based on the following observations:
+<ul>
+  <li>The current resolution in the active issues list contradicts existing
+      practice.  gcc, Clang, and MSVC all allow octal and hexadecimal escape
+      sequences in UTF-8 literals.</li>
+  <li>Octal and hexadecimal escape sequences in UTF-8 literals are useful for
+      a number of purposes:
+    <ul>
+      <li>Embedding null characters: <tt>u8"\0"</tt></li>
+      <li>Creating ill-formed code unit sequences for testing purposes.</li>
+      <li>Creating Modified UTF-8, CESU-8, and WTF-8 string literals.  This
+          entails two abilities:
+        <ul>
+          <li>Embedding <tt>U+0000</tt> as an overlong UTF-8 sequence:
+              <tt>u8"\xC0\x80"</tt></li>
+          <li>Embedding lone surrogate code points as individual UTF-8 code
+              unit sequences.  For example, encoding <tt>U+D800</tt> as
+              <tt>u8"\xED\xA0\x80"</tt>.  (Note that use of <tt>\u</tt> escapes
+              specifying surrogate code points is ill-formed).</li>
+        </ul>
+      </li>
+      <li>Compatibility with existing log/debug systems that output literals
+          with non-printable characters represented with escapes so as to
+          facilitate copy/paste of such output into code.</li>
+    </ul>
+  </li>
+</ul>
+SG16 conducted the following poll:
+<div style="margin-left: 1em;">
+Continue to allow hex and octal escapes that indicate code unit values,
+requiring only that they fit into the range of the code unit type?
+<table border="1">
+  <tr>
+    <th>SF</th>
+    <th>F</th>
+    <th>N</th>
+    <th>A</th>
+    <th>SA</th>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+In the polled question, "Continue" refers to existing implementation behavior;
+to maintain the current implementation status quo exhibited by gcc, Clang and
+MSVC.
+</div>
+</p>
+
+<p>
+The proposed resolution below reflects the SG16 consensus.
+</p>
+
+
+<h1>Proposed resolution</h1>
+
+<p>
+Clarify that hexadecimal and octal escape sequences in <tt>u8</tt>, <tt>u</tt>,
+and <tt>U</tt> character literals may specify values that need not correspond
+to code point values that are representable in the applicable encoding with a
+single code unit.
+</p>
+
+<input type="checkbox" id="hideins">Hide inserted text</input>
+<input type="checkbox" id="hidedel">Hide deleted text</input>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.ccon#3">
+5.13.3 [lex.ccon] paragraph 3</a>:
+<blockquote>
+A character literal that begins with <tt>u8</tt>, such as <tt>u8'w'</tt>, is a
+character literal of type <tt>char8_t</tt>, known as a
+<em>UTF-8 character literal</em>.  The value of a UTF-8 character literal
+<ins>that is not specified with a hexadecimal or octal escape sequence </ins>is
+equal to its ISO/IEC 10646 code point value, provided that the code point value
+is representable with a single UTF-8 code unit (that is, provided it is in the
+C0 Controls and Basic Latin Unicode block).  If the value is not representable
+with a single UTF-8 code unit, the program is ill-formed.  A UTF-8 character
+literal containing multiple
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-chars</a> is ill-formed.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.ccon#4">
+5.13.3 [lex.ccon] paragraph 4</a>:
+<blockquote>
+A character literal that begins with the letter <tt>u</tt>, such as
+<tt>u'x'</tt>, is a character literal of type <tt>char16_t</tt>t.  The value of
+a <tt>char16_t</tt> character literal <del>containing a single
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a></del><ins>that
+is not specified with a hexadecimal or octal escape sequence</ins> is equal to
+its ISO/IEC 10646 code point value, provided that the code point value is
+representable with a single 16-bit code unit (that is, provided it is in the
+basic multi-lingual plane).  If the value is not representable with a single
+16-bit code unit, the program is ill-formed.  A <tt>char16_t</tT> character
+literal containing multiple
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-chars</a> is ill-formed.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.ccon#5">
+5.13.3 [lex.ccon] paragraph 5</a>:
+<blockquote>
+A character literal that begins with the letter <tt>U</tt>, such as
+<tt>U'y'</tt>, is a character literal of type <tt>char32_t</tt>.  The value of
+a <tt>char32_t</tt> character literal <del>containing a single
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a></del><ins>that
+is not specified with a hexadecimal or octal escape sequence</ins> is equal
+to its ISO/IEC 10646 code point value.  A <tt>char32_t</tT> character literal
+containing multiple
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-chars</a> is ill-formed.
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.ccon#8">
+5.13.3 [lex.ccon] paragraph 8</a>:
+<blockquote>
+The escape <tt>\ooo</tt> consists of the backslash followed by one, two, or
+three octal digits that are taken to specify the value of the desired character.
+The escape <tt>\xhhh</tt> consists of the backslash followed by <tt>x</tt>
+followed by one or more hexadecimal digits that are taken to specify the value
+of the desired character.  There is no limit to the number of digits in a
+hexadecimal sequence.  A sequence of octal or hexadecimal digits is terminated
+by the first character that is not an octal digit or a hexadecimal digit,
+respectively.  The value of a character literal is implementation-defined if it
+falls outside of the implementation-defined range defined for <tt>char</tt>
+(for character literals with no prefix) or <tt>wchar_t</tt> (for character
+literals prefixed by <tt>L</tt>).  <del><em>[ Note:</em> </del>If the value of
+a character literal prefixed by <tt>u</tt>, <tt>u8</tt>, or <tt>U</tt> is
+outside the range defined for its type, the program is ill-formed.
+<del><em>&mdash; end note ]</em></del>
+</blockquote>
+</p>
+
+
+</body>
