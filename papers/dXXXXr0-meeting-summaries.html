@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2018/10/17 - 2018/10/17</title>
+<title>SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09</title>
 </head>
 
 <style type="text/css">
@@ -22,7 +22,7 @@ table#header td
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2018-11-24</td>
+    <td>2019-01-12</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -35,7 +35,7 @@ table#header td
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2018/10/17 - 2018/10/17</h1>
+<h1>SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -47,6 +47,12 @@ snapshot of select meeting summaries from that repository.
 <ul>
   <li><a href="#2018_10_17">
       October 17th, 2018</a></li>
+  <li><a href="#2018_12_05">
+      December 5th, 2018</a></li>
+  <li><a href="#2018_12_19">
+      December 19th, 2018</a></li>
+  <li><a href="#2019_01_09">
+      January 9th, 2019</a></li>
 </ul>
 
 
@@ -268,6 +274,637 @@ snapshot of select meeting summaries from that repository.
       <a href="http://wg21.link/p1072">P1072</a>, Isabella Muerte's
       <a href="http://wg21.link/p1275">P1275</a>, and then small groups to
       focus on further proposal incubation.</li>
+</ul>
+
+
+<h1 id="2018_12_05">December 5th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Draft guidelines for other WGs and SGs to request SG16 review.</li>
+  <li>char8_t remediation for backward compatibility impact.</li>
+  <li>Review P1072 following San Diego LEWGI feedback.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Bryce Adelstein Lelblach</li>
+  <li>Cameron Gunnin</li>
+  <li>Corentin Jabot</li>
+  <li>Florin Trofin</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Markus Sherer</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Draft guidelines for other WGs and SGs to request SG16 review.
+    <ul>
+      <li>Tom introduced the topic.  Bryce had suggested that SG16 produce a
+          rubric detailing guidance for when other WGs and SGs should consult
+          SG16.  SG7 recently produced such a document.  Tom felt this was an
+          excellent idea and is now bringing it before SG16 for discussion.</li>
+      <li>Tom first asked Bryce where SG7's rupric can be found.</li>
+      <li>Bryce replied that it will be in the San Diego post-meeting
+          mailing.</li>
+      <li>Tom then asked for suggested guidance.</li>
+      <li>Steve suggested a simple litmus test; "if it smells like
+          Unicode..."</li>
+      <li>Corentin mentioned having discussed this with Titus in San Diego and
+          suggested that anything having to do with text processing should be
+          sent our way.</li>
+      <li>Bryce asked about locales and it was agreed that Unicode has locale
+          dependencies.</li>
+      <li>Peter mentioned the {fmt} library; code units vs code points?</li>
+      <li>Tom replied that we discussed {fmt} with Victor in SG16 on several
+          occassions.</li>
+      <li>Bryce asked if {fmt} is in C++20 and whether SG16 has any concerns
+          about it.<br/>
+          <em>[Editor's note: not yet, but it passed LEWG review in San
+          Diego]</em>.</li>
+      <li>Zach replied that it is certainly no worse than what we have
+          now.</li>
+      <li>Mark commented, bird in hand... even if we had issues with the {fmt}
+          library, there is no competing proposal.</li>
+      <li>Corentin mentioned that {fmt} does not yet handle <tt>char16_t</tt>
+          and <tt>char32_t</tt>, but can be extended later.</li>
+      <li>JeanHeyd elaborated, template overloads are present, but formatting
+          strings must be <tt>char</tt> or <tt>wchar_t</tt> at the moment.</li>
+      <li>Zach suggested a requirement; that we need to reserve the right to
+          explicitly specialize standard library templates that might be
+          instantiated by users with <tt>char8_t</tt>.</li>
+      <li>Tom asked for a volunteer to identify such templates.</li>
+      <li>Zach volunteered.  Hooray for Zach!</li>
+      <li>Steve suggested that anything involving command lines, file names,
+          and environment variables should be sent our way.</li>
+      <li>Mark added, any kind of encoding.  Including source encoding.</li>
+      <li>Tom asked, do we want SG13 (HMI) members consulting us for text
+          input and presentation issues?</li>
+      <li>Steve replied, when they get to that point, yes.</li>
+      <li>Tom asked for a volunteer to draft the rubric paper.</li>
+      <li>Steve volunteered.  Hooray for Steve!</li>
+    </ul>
+  </li>
+  <li>char8_t remediation for backward compatibility impact.
+    <ul>
+      <li>Tom gave a brief introduction and pointed the group at a rough draft
+          paper posted to the mailing list
+          (<a href="http://www.open-std.org/pipermail/unicode/2018-December/000180.html">
+          http://www.open-std.org/pipermail/unicode/2018-December/000180.html</a>).</li>
+      <li>Time was given for those who had not yet seen it to quickly scan
+          it.</li>
+      <li>Steve commented on the proposed change to make ostream inserters for
+          <tt>char16_t</tt> and <tt>char32_t</tt> ill-formed; for anyone
+          actually relying on printing pointer values, a fix should be easy,
+          add a cast to <tt>void*</tt>.</li>
+      <li>Corentin wondered if anyone actually does
+          <tt>std::cout &lt;&lt; u8"text"</tt>.</li>
+      <li>Zach observed that someone could conceivably want to use the ostream
+          inserters to print <tt>char16_t</tt> values formatted as hex integers,
+          say when dumping UTF-16 code units for diagnostic purposes.</li>
+      <li>Steve asked if it would be problematic to allow <tt>std::string</tt>
+          to be constructed with <tt>char8_t</tt> based data.</li>
+      <li>Zach responded that he didn't see any harm.</li>
+      <li>Peter chimed in that <tt>std::string</tt> always holds UTF-8 in the
+          code base he works on.</li>
+      <li>Tom stated that supporting <tt>std::string</tt> interoperability with
+          <tt>u8</tt> literals would require a lot of overloads for the
+          <tt>char</tt> based specialization of <tt>std::basic_string</tt>.
+          Implementors would not like that.</li>
+      <li>Zach asserted that he wants, somehow, to be able to construct
+          <tt>std::string</tt> objects initialized with <tt>u8</tt>
+          literals.</li>
+      <li>Tom asked if using a factory function would suffice.</li>
+      <li>Zach responded that would require updates and therefore doesn't
+          address existing code.</li>
+      <li>Markus advised thinking of <tt>std::string_view</tt> in addition to
+          <tt>std::string</tt>.</li>
+      <li>JeanHeyd asked about allowing <tt>std::u8string</tt> to be
+          convertible to <tt>std::string</tt>.</li>
+      <li>Tom stated he thought that might allow most existing code to just
+          work.  But, would we really want that?  Implicit conversions are
+          often undesirable.</li>
+      <li>Peter responded that he thought so, yes.  Existing code mixes UTF-8
+          with <tt>char</tt>.</li>
+      <li>Corentin observed that implicit conversion from
+          <tt>std::u8string</tt> could lead to mojibake.</li>
+      <li>Zach acknowledged that <tt>std::string</tt> doesn't guarantee any
+          encoding.</li>
+      <li>Peter asked about the possibility of making it UB for
+          <tt>std::u8string</tt> to contain non-UTF-8 data.</li>
+      <li>Zach requested not adding encoding guarantees for strings.</li>
+      <li>Peter responded, it doesn't actually work anyway since you couldn't
+          update a string without introducing UB.</li>
+      <li>Tom asked if the UDL approach to providing UTF-8 data in <tt>char</tt>
+          via <tt>u8</tt> literals was realistic.</li>
+      <li>Zach stated we shouldn't be suggesting macros as solutions.<br/>
+          <em>[Editor's note, macros are not required to create a solution that
+          works for C++17 and C++20, but source code changes are
+          required]</em>.</li>
+      <li>Tom asked if use of <tt>-fno-char8_t</tt> is a valid option noting
+          that it forks the language.</li>
+      <li>Zach suggested, perhaps this is our first good opportunity to put
+          tooling to use as part of a C++20 migration story.</li>
+      <li>Corentin observed that it should be easy to use <tt>clang-tidy</tt>
+          to update code.</li>
+      <li>JeanHeyd asked if <tt>char8_t</tt> could implicitly convert to
+          <tt>char</tt>.</li>
+      <li>Corentin stated that he wants conversions to be explicit.</li>
+      <li>Tom mentioned that the draft paper is intended to tell a migration
+          story.</li>
+      <li>Markus explained that he felt the economics are not right.  The
+          current situation puts the burden of addressing breakage on many
+          programmers.</li>
+      <li>Zach suggested adding tooling automation to the paper.</li>
+      <li>Tom said he could add <tt>clang-tidy</tt>, what else should be
+          mentioned?</li>
+      <li>Zach stated he'd like to see compilers do fix-ups themselves.</li>
+      <li>Corentin observed that implementors are unlikely to have something
+          in place in the necessary time frame.</li>
+      <li>Tom asked about experimentation.</li>
+      <li>Peter stated his code base isn't using <tt>u8</tt> literals today
+          and won't be able to.</li>
+      <li>Markus observed that not all code is equally modifiable.  For
+          example, Google's code base has a lot of Google specific code, but
+          also uses a lot of third party code.  Updating the third party code
+          and potentially maintaining differences from upstream, is more
+          difficult than updating Google's own code.</li>
+      <li>Tom suggested a C++17 compatibility library could be made available
+          that implements some of the remediation approaches noted in the draft
+          paper.</li>
+      <li>Bryce asked about the possibility that the <tt>char8_t</tt> proposal
+          might be re-litigated due to backward compatibility concerns.</li>
+      <li>Tom replied, sure, anything is possible.</li>
+      <li>Bryce suggested adding data about expected breakage to the
+          remediation paper to avoid scaring people.</li>
+    </ul>
+  </li>
+  <li>Peter requested time in SG16 for presenting and collecting feedback
+      on a simple 2D graphics library he has been working on.</li>
+</ul>
+
+
+<h1 id="2018_12_19">December 19th, 2018</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Continue discussion of char8_t remediation for backward compatibility
+      impact.
+    <ul>
+      <li>Discuss pros/cons of keeping u8 literals char based and introducing
+          new char8_t based U8 literals.</li>
+    </ul>
+  </li>
+  <li>Review P1072 following San Diego LEWGI feedback.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Bryce Adelstein Lelblach</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Continued discussion of char8_t remediation for backward compatibility
+      impact.
+    <ul>
+      <li>Tom introduced the discussion topic.  One approach to minimizing
+          backward compatibility impact would be to restore <tt>u8</tt>
+          literals being <tt>char</tt>-based and to introduce a new <tt>U8</tt>
+          literal prefix for <tt>char8_t</tt> based UTF-8 literals.</li>
+      <li>Mark suggested following up with Google folks to determine if this
+          would address their concerns.</li>
+      <li>Tom stated he talked to Chandler following the San Diego vote.
+          Concerns expressed were that the potential backward compatibility
+          impact exceeded the benefits.</li>
+      <li>Tom asked for pros and cons for a new <tt>U8</tt> literal prefix.</li>
+      <li>JeanHeyd was first to note the obvious primary benefit, avoids
+          backward compatibilty issues.</li>
+      <li>Tom agreed, but added that P0482 does have other minor breakage; the
+          changes to the return types of the <tt>u8string</tt> member functions
+          of <tt>std::filesystem::path</tt>.</li>
+      <li>JeanHeyd pointed out that the visual difference between <tt>u8</tt>
+          (lowercase) and <tt>U8</tt> (uppercase) is subtle and bad for
+          readability.</li>
+      <li>Bryce agreed and pointed out that MISRA forbids identifiers that
+          look similar.</li>
+      <li>Bryce further stated that use of <tt>u</tt> and <tt>U</tt> for
+          <tt>char16_t</tt> and <tt>char32_t</tt> literals was a mistake for
+          the same reason.</li>
+      <li>Mark mentioned a pro, this approach preserves investment in any
+          increased use of <tt>u8</tt> literals in code over the next few
+          years before migration to C++20.</li>
+      <li>Bryce suggested that compiler warnings could be added to help educate
+          programmers about the change when compiling in pre-C++20 language
+          modes.  This still depends on compiler upgrades of course.</li>
+      <li>Tom agreed and noted that Clang trunk already issues such a warning
+          when invoked with <tt>-Wc++2a-compat</tt>.</li>
+      <li>Mark asked if a cast or similar approach for converting <tt>u8</tt>
+          literals to <tt>char</tt>-based types doesn't suffice.</li>
+      <li>Tom responded that Zach expressed a desire for existing code to
+          continue working at our last meeting.</li>
+      <li>Tom asked what adoping an additional literal prefix would mean for
+          messaging.  What would we be telling programmers going forward?  We
+          could deprecate <tt>u8</tt> literals and promote <tt>U8</tt> going
+          forward.</li>
+      <li>JeanHeyd responded that deprecation doesn't really help to move
+          programmers towards use of <tt>char8_t</tt>.  He'd prefer to break
+          things, get over the migration hump, and keep a cleaner design.</li>
+      <li>Mark asked why the <tt>as_char</tt> approach suggested in the draft
+          paper doesn't suffice.</li>
+      <li>JeanHeyd responded that it requires markup, so existing code requires
+          changes.</li>
+      <li>Mark pondered, a new prefix does kind of fix everything.  It doesn't
+          have to be <tt>U8</tt>, we could use <tt>utf8</tt> or similar.</li>
+      <li>JeanHeyd suggested we could introduce new prefixes for all of UTF-8,
+          UTF-16, and UTF-32 in order to maintain symmetry and to address the
+          subtle <tt>u</tt> vs <tt>U</tt> concerns.</li>
+      <li>Tom suggested another pro; a new prefix avoids potentially forking
+          the language by unintentionally encouraging use of a
+          <tt>-fno-char8_t</tt> option as has happened with <tt>-fno-rtti</tt>
+          and <tt>-fno-exceptions</tt>.</li>
+      <li>Mark asked where we're at with proposing <tt>char8_t</tt> to
+          WG14.</li>
+      <li>Tom responded that he would like to get a proposal in front of WG14
+          at their October 2019 meeting in Ithaca.  In addition, he'd like to
+          have proposals ready for our other proposals targeting core language
+          features:
+        <ul>
+          <li><a href="http://wg21.link/p1097">P1097</a> - "Named character
+              escapes"</li>
+          <li><a href="http://wg21.link/p1041">P1041</a> - "Make
+              char16_t/char32_t string literals be UTF-16/32"</li>
+          <li>Source file encoding tags (no proposal yet).</li>
+        </ul>
+      </li>
+      <li>Tom added another pro, or con, depending on perspective; a new prefix
+          maintains the ability to continue writing UTF-8 based applications
+          with <tt>char</tt>-based types.</li>
+      <li>Mark opined that moving away from <tt>char</tt> aliasing issues is
+          compelling.</li>
+      <li>Steve noted that UTF-8 in <tt>char</tt>-based types often seems to
+          work, but works for the wrong reasons.  For example, UTF-8 encoded
+          source files compiled as "8-bit ASCII" such that the UTF-8 code units
+          just get copied from the source file.</li>
+      <li>Tom asked about messaging again, what message are we sending to
+          library authors?  Do they write their UTF-8 based interfaces against
+          <tt>char</tt> or <tt>char8_t</tt>?  How do they choose?</li>
+      <li>Mark observed that this isn't a new problem.  Library authors code
+          against <tt>std::string</tt> today and it isn't a universal string
+          type or a great type for Unicode.  We'll have similar concerns
+          with the introduction of <tt>std::text</tt> vs
+          <tt>std::string</tt>.</li>
+      <li>Tom concluded, sounds like templates will be the way to go.</li>
+      <li>JeanHeyd commented that views help.  For example, <tt>text_view</tt>
+          can effectively type erase the code unit type.  But what does one
+          assume for encoding for <tt>char</tt>?</li>
+      <li>Tom responded that the execution encoding must be assumed per
+          existing precedent in the standard.</li>
+      <li>Mark concluded that he doesn't see a way out of the <tt>char</tt>
+          vs <tt>char8_t</tt> problem.  But, with <tt>char8_t</tt> being
+          available, we'll get experience using it that will inform future
+          library efforts.  In the short term, being able to use either
+          <tt>char</tt> or <tt>char8_t</tt> is advantageous.</li>
+      <li>Peter chimed in from chat (due to a non-functioning microphone):
+        <ul>
+          <li>"looks like my mic is completely broken. From what I can tell
+              this is like the uptake of <tt>uint8_t</tt>, it takes some time
+              but over time everybody learns that these types have a given
+              fixed meaning and others are a :shrug: type"</li>
+        </ul>
+      </li>
+      <li>Tom presented a few polls.
+        <ul>
+          <li>Poll 1: Add defined-as-deleted overloads for
+              <tt>operator&lt;&lt;</tt> for
+              <tt>basic_ostream&lt;char, ...&gt;</tt> specializations.
+              <table>
+                <tr>
+                  <th style="text-align:right">SF</th>
+                  <th style="text-align:right">F</th>
+                  <th style="text-align:right">N</th>
+                  <th style="text-align:right">A</th>
+                  <th style="text-align:right">SA</th>
+                </tr>
+                <tr>
+                  <td style="text-align:right">3</td>
+                  <td style="text-align:right">3</td>
+                  <td style="text-align:right">0</td>
+                  <td style="text-align:right">0</td>
+                  <td style="text-align:right">0</td>
+                </tr>
+              </table>
+          </li>
+          <li>Poll 2: Allow deprecated <tt>std::filesystem::u8path</tt> to be
+              called with sources with <tt>char8_t</tt> value type.
+              <table>
+                <tr>
+                  <th style="text-align:right">SF</th>
+                  <th style="text-align:right">F</th>
+                  <th style="text-align:right">N</th>
+                  <th style="text-align:right">A</th>
+                  <th style="text-align:right">SA</th>
+                </tr>
+                <tr>
+                  <td style="text-align:right">2</td>
+                  <td style="text-align:right">3</td>
+                  <td style="text-align:right">0</td>
+                  <td style="text-align:right">1</td>
+                  <td style="text-align:right">0</td>
+                </tr>
+              </table>
+            <ul>
+              <li>Peter explained his against vote; this maintains working
+                  around something that we don't really want to work in the
+                  first place.</li>
+            </ul>
+          </li>
+          <li>Poll 3: Restore <tt>char</tt>-based <tt>u8</tt> literals and
+              introduce new <tt>char8_t</tt> based literals with a new prefix.
+              <table>
+                <tr>
+                  <th style="text-align:right">SF</th>
+                  <th style="text-align:right">F</th>
+                  <th style="text-align:right">N</th>
+                  <th style="text-align:right">A</th>
+                  <th style="text-align:right">SA</th>
+                </tr>
+                <tr>
+                  <td style="text-align:right">1</td>
+                  <td style="text-align:right">3</td>
+                  <td style="text-align:right">1</td>
+                  <td style="text-align:right">1</td>
+                  <td style="text-align:right">0</td>
+                </tr>
+              </table>
+            <ul>
+              <li>Bryce explained his against vote; we'll need to converge on
+                  a very short prefix, 2 characters at most.  That seems
+                  unlikey.</li>
+              <li>JeanHeyd commented that he still prefers to go with a
+                  solution that pushes the community in a new and consistent
+                  direction.  <tt>u8</tt> literals aren't widely used, so we
+                  still have time to course correct.</li>
+              <li>Mark asked if tooling could be used to fix existing code by
+                  converting <tt>u8</tt> literals to ordinary literals encoded
+                  with escapes.</li>
+              <li>Tom responded that we discussed tooling possibilities at the
+                  last meeting.  Specifically Zach's suggestion that this
+                  could be a good test for Titus' goals for tooling.</li>
+            </ul>
+          </li>
+          <li>Poll 4: Assuming <tt>u8</tt> literals remain <tt>char8_t</tt>
+              based, allow <tt>char</tt> arrays to be initialized with
+              <tt>u8</tt> string literals.
+            <ul>
+              <li>Tom stated that the reason to consider this is that the
+                  <tt>as_char</tt> approach doesn't work for array
+                  initialization.</li>
+              <li>Bryce stated he wanted more time to think about this.</li>
+              <li>Mark agreed with wanting more time.</li>
+              <li>Poll not taken.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Review P1072 following San Diego LEWGI feedback.
+    <ul>
+      <li>Mark provided a summary of changes:
+        <ul>
+          <li>No buffer moving features; feedback from San Diego was negative
+              regarding that due to exposure of implementation details.</li>
+          <li><tt>resize_default_init()</tt> resizes the string such that the
+              added content is default initialized.  Failure to write to the
+              added elements results in undefined behavior.</li>
+          <li>This approach matches Google's existing implementation.</li>
+          <li>This approach is compatible with existing allocators.</li>
+          <li>libc++ is already using this approach as part of its
+              <tt>std::filesystem</tt> implementation to remove an
+              allocation.</li>
+          <li>This doesn't preclude a buffer migration feature in the
+              future.</li>
+          <li>The paper establishes that <tt>basic_string</tt> is allocator
+              aware.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2019_01_09">January 9th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Preparation for the Kona pre-meeting mailing deadline on 1/21.
+    <ul>
+      <li>Review the SG16 rupric assuming a draft is available.</li>
+      <li>Review the char8_t remediation paper assuming a revision is
+          available.</li>
+      <li>Review other papers requiring an update for Kona (P1041, P1097).</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Cameron Gunnin</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Michael Spencer</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom stated that he was unable to get a revision of the <tt>char8_t</tt>
+      remediation paper ready for this meeting, so no further discussion on
+      it for now.</li>
+  <li>We then started reviewing Steve's
+      <a href="http://www.open-std.org/pipermail/unicode/2019-January/000195.html">
+      draft SG16 rubric</a>.
+    <ul>
+      <li>Victor asked about locales as he and Howard have been working on
+          chrono updates that add overloads based on locale.</li>
+      <li>Tom said, yes, bring to SG16 anything involving locales.</li>
+      <li>Zach expressed a preference for just those locale features that
+          relate to Unicode.</li>
+      <li>Tom stated a preference for having a chance to offer our expertise;
+          to help ensure appropriate use of locales.</li>
+      <li>Michael asserted that we don't want new Unicode stuff dependent on
+          <tt>std::locale</tt>.</li>
+      <li>Zach observed that it is very hard to write portable code that uses
+          <tt>std::locale</tt> due to implementation defined things.  For
+          example,
+        <ul>
+          <li>the set of locales is not specified.</li>
+          <li>even the "C" locale is not portable.</li>
+        </ul>
+      </li>
+      <li>Tom suggested that the language regarding "requires review" by SG16
+          be softened as we don't have standing to actually require review.</li>
+      <li>Zach disagreed and offered the perspective that this paper should be
+          adopted by the LEWG and EWG chairs with the expectation that the
+          chairs will enforce review requirements.</li>
+      <li>Tom expresseed enthusiasm for that perspective; this paper should be
+          targeted to LEWG and EWG to get their buy-in.</li>
+      <li>Tom asked about the SG-7 rubric in the hopes that we could
+          compare/contrast with it.</li>
+      <li>Michael located it and provided a link:
+        <ul>
+          <li><a href="http://wiki.edg.com/pub/Wg21sandiego2018/SG7/d1354r0.html?twiki_redirect_cache=c261eaeb64220cb36ab24bdb6fb29d4c">
+              http://wiki.edg.com/pub/Wg21sandiego2018/SG7/d1354r0.html?twiki_redirect_cache=c261eaeb64220cb36ab24bdb6fb29d4c</a>
+        </ul>
+      </li>
+      <li>Tom suggested we should have a section on text containers and string
+          builders.</li>
+      <li>Zach asked if we care about string builders.  If a string builder is
+          used in such a way that it slices code unit sequences, isn't that
+          just an incorrect use of the builder?</li>
+      <li>Tom stated he wants to catch any new operations that are problematic
+          for some encodings.  For example, reliance on broken interfaces like
+          <tt>std::ctype::widen</tt></li>
+      <li>Cameron suggested we're interested in any new overloads involving
+          Unicode types.</li>
+      <li>Zach proposed adding a section detailing encoding assumptions.</li>
+      <li>Tom agreed and suggested that can appear in the text encoding
+          section; we need to make it explicit that char based values of
+          unknown origin are assumed to have execution encoding.</li>
+      <li>Zach disagreed with the assumption of execution encoding stating that
+          they should instead have an unknown encoding and their contents
+          should only be forwarded and operated on generically (e.g., as a bag
+          of bytes), not examined as having data in any particular
+          encoding.</li>
+      <li>Tom challenged this noting that reasonable assumptions can be made.
+          On Windows, execution encoding matches the system code page, on POSIX
+          it corresponds to the <tt>LANG</tt> or <tt>LC_CTYPE</tt> environment
+          variables, and is generally ASCII elsewhere (except z/OS).</li>
+      <li>Zach noted that assumption doesn't work for file names.</li>
+      <li>Tom agreed that filenames are special; they don't have a known
+          encoding.  But C++17 at least offers <tt>std::filesystem</tt> with
+          means to get a filename in a displayable format via the
+          <tt>*string</tt> and <tt>generic_*string</tt> member functions of
+          <tt>std::filesystem::path</tt>.</li>
+      <li>Zach asserted those member functions are a trap; the names retrieved
+          via those member functions don't necessarily round trip.</li>
+      <li>Michael observed that programmers need to be able to display file
+          names and, if the standard doesn't provide a way to do it,
+          programmers will do it themselves, probably badly.</li>
+      <li>Steve noted that file names may not be presentable at all.</li>
+      <li>Michael reiterated that we need interfaces that do the right thing
+          easily; e.g., to create a display name for a file in something other
+          than <tt>std::filesystem::path</tt>.</li>
+      <li>JeanHeyd observed that some of these problems would go away with a
+          new I/O layer that uses <tt>std::filesystem::path</tt> instead of
+          <tt>const char*</tt> interfaces.</li>
+      <li>Steve noted that we can't replace the OS interfaces though.</li>
+      <li>Tom stated that we need to update the paper to require consultation
+          with SG16 for anything involving file names.</li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p1378r0">P1378R0: std::string_literal</a>
+    <ul>
+      <li>JeanHeyd provided a link to an updated draft revision of the paper:
+        <ul>
+          <li><a href="https://thephd.github.io/vendor/future_cxx/papers/d1378.html">
+              https://thephd.github.io/vendor/future_cxx/papers/d1378.html</a></li>
+        </ul>
+      </li>
+      <li>JeanHeyd introduced the motivation; to provide means to guarantee
+          that a string literal is used in invocations of <tt>std::embed</tt>
+          in order to enable dependency discovery in build systems.
+          Additional motivation is to provide means to avoid unintended
+          array-to-ponter decay and to handle string literals with embedded
+          null characters without having to depend on deduction via array
+          reference in order to obtain the actual array size of the
+          literal.</li>
+      <li>JeanHeyd acknowledged that the proposal changes the type of all
+          string literals in ways that are unlikely to be acceptable.</li>
+      <li>Michael observed that the proposed design doesn't actually meet the
+          motivation requirements for <tt>std::embed</tt> since the proposed
+          type is copyable and therefore can be produced by many kinds of
+          expressions, not just literals.</li>
+      <li>Steve suggested another motivation: requiring string literals for
+          things like format strings and SQL; requiring a literal would avoid
+          the possibility of consuming user provided input that could be used
+          as an attack vector as in SQL injection attacks.</li>
+      <li>Zach observed that immediate (<tt>consteval</tt>) functions can help
+          in this regard since they can't consume run-time input by design.</li>
+      <li>Tom asked about a different implementation strategy; making all of
+          the class constructors private and befriending a UDL.  This would
+          ensure the class could only be constructed by calling a UDL (assuming
+          copy constructors are deleted).</li>
+      <li>Michael suggested the constructors could also use compiler magic to
+          require construction via a literal.</li>
+      <li>Steve noted that having the size of a string literal readily
+          available would be useful.</li>
+      <li>Michael noted that this design impacts type deduction for
+          <tt>auto</tt> declared variables and template parameters.</li>
+      <li>Zach suggested that two-step conversion as would be required for
+          backward compatibility would be problematic.</li>
+      <li>JeanHeyd responded that any number of builtin implicit conversions
+          are already permitted.</li>
+      <li>Tom wondered if the number of conversions might impact overload
+          resolution.</li>
+      <li>JeanHeyd suggested the design might be useful to limit when error
+          handling and encoding validation would be necessary for
+          <tt>std::text</tt>.</li>
+      <li>Zach countered that string literals can form ill-formed code unit
+          sequences.</li>
+      <li>Zach acknowledged that the ability to avoid <tt>strlen</tt> could be
+          a big deal.</li>
+      <li>Michael asserted that the motivational use cases can largely be met
+          with immediate (<tt>consteval</tt>) functions.</li>
+      <li>JeanHeyd provided an additional motivation; comparison between string
+          literals.  Today, whether <tt>"foo" == "foo"</tt> is unspecified.
+          The proposed <tt>std::string_literal</tt> could make such comparisons
+          work as expected.</li>
+      <li>Mark asserted that an implementation is needed to evaluate backward
+          compatibility impact.</li>
+      <li>Mark noted having previously had a desire to determine if a pointer
+          pointed to a string literal; to avoid storing the string
+          contents.</li>
+      <li>Zach and Tom both expressed having used or encountered string pool
+          classes that exist to collapse matching strings to a single copy.</li>
+    </ul>
+  </li>
+  <li>WG21 Direction group
+      <a href="http://www.open-std.org/pipermail/unicode/2019-January/000196.html">
+      response to P1238R0: SG16: Unicode Direction</a>
+    <ul>
+      <li>Steve summarized the response.</li>
+      <li>Tom noted that the DG did not comment on the constraints listed in
+          the paper.</li>
+      <li>Mark noted the DG request to clarify scope.</li>
+      <li>Zach stated that we need an elevator pitch and suggested: We want all
+          Unicode algorithms available via standard interfaces for C++23.</li>
+    </ul>
+  <li>Tom announced that the next meeting will start an hour later than
+      usual.</li>
 </ul>
 
 
