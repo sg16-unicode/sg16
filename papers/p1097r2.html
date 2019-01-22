@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>P1097R2: Named character escapes</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <style type="text/css">
+  html {
+    font-size: 100%;
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  body {
+    color: #444;
+    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 1em;
+    margin: auto;
+    max-width: 42em;
+    background: #fefefe;
+  }
+  
+  a {
+    color: #0645ad;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: #0b0080;
+  }
+  
+  a:hover {
+    color: #06e;
+  }
+  
+  a:active {
+    color: #faa700;
+  }
+  
+  a:focus {
+    outline: thin dotted;
+  }
+  
+  *::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+  
+  *::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+  
+  a::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+  
+  a::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+  
+  p {
+    margin: 1em 0;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #111;
+    line-height: 125%;
+    margin-top: 2em;
+    font-weight: normal;
+  }
+  
+  h4, h5, h6 {
+    font-weight: bold;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+  }
+  
+  h2 {
+    font-size: 2em;
+  }
+  
+  h3 {
+    font-size: 1.5em;
+  }
+  
+  h4 {
+    font-size: 1.2em;
+  }
+  
+  h5 {
+    font-size: 1em;
+  }
+  
+  h6 {
+    font-size: 0.9em;
+  }
+  
+  blockquote {
+    color: #666666;
+    margin: 0;
+    padding-left: 3em;
+    border-left: 0.5em #EEE solid;
+  }
+  
+  hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #eee;
+    margin: 1em 0;
+    padding: 0;
+  }
+  
+  pre, code, kbd, samp {
+    color: #000;
+    font-family: monospace, monospace;
+    _font-family: 'courier new', monospace;
+    font-size: 0.98em;
+  }
+  
+  pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  b, strong {
+    font-weight: bold;
+  }
+  
+  dfn {
+    font-style: italic;
+  }
+  
+  del {
+    background: #fcc;
+    color: #000;
+    text-decoration: line-through;
+  }
+  
+  ins {
+    background: #cfc;
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  mark {
+    background: #ff0;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+  }
+  
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  
+  sup {
+    top: -0.5em;
+  }
+  
+  sub {
+    bottom: -0.25em;
+  }
+  
+  ul, ol {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+  }
+  
+  li p:last-child {
+    margin-bottom: 0;
+  }
+  
+  ul ul, ol ol {
+    margin: .3em 0;
+  }
+  
+  dl {
+    margin-bottom: 1em;
+  }
+  
+  dt {
+    font-weight: bold;
+    margin-bottom: .8em;
+  }
+  
+  dd {
+    margin: 0 0 .8em 2em;
+  }
+  
+  dd:last-child {
+    margin-bottom: 0;
+  }
+  
+  img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+  }
+  
+  figure {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+  }
+  
+  figure img {
+    border: none;
+    margin: 0 auto;
+  }
+  
+  figcaption {
+    font-size: 0.8em;
+    font-style: italic;
+    margin: 0 0 .8em;
+  }
+  
+  table {
+    margin-bottom: 2em;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  table th {
+    padding: .2em 1em;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+  
+  table td {
+    padding: .2em 1em;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+  }
+  
+  .author {
+    font-size: 1.2em;
+    text-align: center;
+  }
+  
+  @media only screen and (min-width: 480px) {
+    body {
+      font-size: 14px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  @media print {
+    * {
+      background: transparent !important;
+      color: black !important;
+      filter: none !important;
+      -ms-filter: none !important;
+    }
+  
+    body {
+      font-size: 12pt;
+      max-width: 100%;
+    }
+  
+    a, a:visited {
+      text-decoration: underline;
+    }
+  
+    hr {
+      height: 1px;
+      border: 0;
+      border-bottom: 1px solid black;
+    }
+  
+    a[href]:after {
+      content: " (" attr(href) ")";
+    }
+  
+    abbr[title]:after {
+      content: " (" attr(title) ")";
+    }
+  
+    .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+      content: "";
+    }
+  
+    pre, blockquote {
+      border: 1px solid #999;
+      padding-right: 1em;
+      page-break-inside: avoid;
+    }
+  
+    tr, img {
+      page-break-inside: avoid;
+    }
+  
+    img {
+      max-width: 100% !important;
+    }
+  
+    @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+  }
+  
+    @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+  }
+  
+    p, h2, h3 {
+      orphans: 3;
+      widows: 3;
+    }
+  
+    h2, h3 {
+      page-break-after: avoid;
+    }
+  }
+  
+  </style>
+</head>
+<body>
+<h1 id="named-character-escapes">Named character escapes</h1>
+<p>Document Number: P1097R2<br />
+Date: 2019-01-21<br />
+Audience: SG16, EWG, CWG Author: R. Martinho Fernandes Reply-to: cpp@rmf.io</p>
+<h2 id="abstract">Abstract</h2>
+<p>This paper proposes a new character escape sequence that enables the programmer to refer to a character by its name or alias.</p>
+<h2 id="history">History</h2>
+<p><strong>r2</strong>: added section about implementation concerns and addressed existing conditionally-supported semantics</p>
+<p><strong>r1</strong>: minor fixup of formatting and examples</p>
+<p><strong>r0</strong>: initial revision</p>
+<h2 id="motivation">Motivation</h2>
+<p>Currently C++ provides four ways to specify characters in string literals:</p>
+<ol type="1">
+<li>the character itself in the appropriate source encoding;</li>
+<li>the character as a sequence of <code>\x</code> escapes that corresponds to the underlying code units of the character;</li>
+<li>the character as a <code>\u</code> escape that corresponds to the ISO 10646 short identifier of the character;</li>
+<li>the character as a <code>\U</code> escape that corresponds to the ISO 10646 short identifier of the character;</li>
+</ol>
+<p>These last two are the best way to represent specific Unicode characters that may be hard to type, hard to read, or that cannot be represented in the source encoding. For example, if one wants a string literal with a combining acute accent, typing <code>&quot;\u0301&quot;</code> is easier than producing a combining acute without a base character, and it is guaranteed that it won’t render wonky in a text editor (e.g. the acute could be rendered on top of the opening double quotes, making it ugly, and above all, easy to miss).</p>
+<p>However, <code>&quot;\u0301&quot;</code> is hard to read as well: yes, it’s unambiguously clear that this is the character U+0301, but in general there is no way to know what character that is without first looking it up on some table. This solves the problem of clarity that is inherent with typing the character directly, but in turn it obfuscates the actual character behind a series of meaningless numbers.</p>
+<p>Other programming languages, in particular Python 3, Perl 5, and Perl 6, have solved this obfuscation problem by providing an alternative character escape mechanism. In these languages, one can specify a character by using its Unicode Name, as in the following Python 3 example:</p>
+<pre><code>&gt;&gt;&gt; print(&#39;A\N{COMBINING ACUTE ACCENT}&#39;)
+Á</code></pre>
+<p>Having this ability enables one to choose between the brevity of “0301” and the clarity of “combining acute accent” as desired.</p>
+<p>What follows is a Tony Table that demonstrates the differences between the existing mechanisms and the proposed one.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 20%" />
+<col style="width: 12%" />
+<col style="width: 15%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Raw</th>
+<th style="text-align: center;"><code>\x</code></th>
+<th style="text-align: center;"><code>\u</code></th>
+<th style="text-align: center;"><code>\U</code></th>
+<th style="text-align: left;"><code>\N</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;​&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xE2\x80\x8B&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u200B&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U0000200B&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{ZERO WIDTH SPACE}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;‌&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xE2\x80\x8B&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u200B&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U0000200B&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{ZERO WIDTH NON-JOINER}&quot;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;‍&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xE2\x80\x8B&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u200B&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U0000200B&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{ZERO WIDTH JOINER}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;⁢&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xE2\x81\xA2&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u2062&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U00002062&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{INVISIBLE TIMES}&quot;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;´&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xC2\xB4&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u00B4&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U000000B4&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{ACUTE ACCENT}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;́&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xCC\x81&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u0301&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U00000301&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{COMBINING ACUTE ACCENT}&quot;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;´&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xE1\xBF\xBD&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u1FFD&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U00001FFD&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{GREEK OXIA}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;;&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\x3B&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u003B&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U0000003B&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{SEMICOLON}&quot;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;;&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xCD\xBE&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u037E&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U0000037E&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{GREEK QUESTION MARK}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;Ω&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xCE\xA9&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u03A9&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U000003A9&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{GREEK CAPITAL LETTER OMEGA}&quot;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;Ω&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xE2\x84\xA6&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u2126&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U00002126&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{OHM SIGN}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;A&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\x41&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u0391&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U00000391&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{LATIN CAPITAL LETTER A}&quot;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;Α&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xCE\x91&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u0391&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U00000391&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{GREEK CAPITAL LETTER ALPHA}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;А&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xD0\x90&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\uD090&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U0000D090&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{CYRILLIC CAPITAL LETTER A}&quot;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;Ꭺ&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xE1\x8E\xAA&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\u13AA&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U000013AA&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{CHEROKEE LETTER GO}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;ꓮ&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xEA\x93\xAE&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\uA4EE&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\U0000A4EE&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{LISU LETTER A}&quot;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>u8&quot;𐊠&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xF0\x90\x8A\xA0&quot;</code></td>
+<td style="text-align: center;">n/a</td>
+<td style="text-align: center;"><code>u8&quot;\U000102A0&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{CARIAN LETTER A}&quot;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>u8&quot;𖽀&quot;</code></td>
+<td style="text-align: center;"><code>u8&quot;\xF0\x96\xBD\x80&quot;</code></td>
+<td style="text-align: center;">n/a</td>
+<td style="text-align: center;"><code>u8&quot;\U00016F40&quot;</code></td>
+<td style="text-align: left;"><code>u8&quot;\N{MIAO LETTER ZZYA}&quot;</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="names">Names</h2>
+<p>Each Unicode character has a Name property associated. They correspond to the names in the English edition of ISO/IEC 10646. These names are meant to be used as unique identifiers for each character. Once assigned they never change. Such names contain only characters from a limited set: the capital letters A-Z, the digits 0-9, spaces, and hyphens; all of them are in the C++ basic character set. Supporting these names is the bare minimum necessary for this feature.</p>
+<p>However, for added convenience, some leeway in the matching of these names is preferable. The names use only capital letters, but it would be convenient to ignore case so that the following all result in the same string:</p>
+<pre><code>&quot;\N{LATIN CAPITAL LETTER A}&quot; // exact match
+&quot;\N{Latin capital letter A}&quot;
+&quot;\N{latin capital letter a}&quot;</code></pre>
+<p>Another convenient feature would be to allow hyphens and spaces to be treated the same, so as to make the following result in the same string:</p>
+<pre><code>&quot;\N{ZERO WIDTH SPACE}&quot; // exact match
+&quot;\N{ZERO-WIDTH SPACE}&quot; // common spelling, e.g. Wikipedia
+&quot;\N{zero-width space}&quot;</code></pre>
+<p>The Unicode Standard describes which transformations are guaranteed to still produce unique identifiers and recommends the loose matching rule <a href="https://www.unicode.org/reports/tr44/#UAX44-LM2">UAX44-LM2</a>: &quot;Ignore case, whitespace, underscore (’_’), and all medial hyphens except the hyphen in U+1180 HANGUL JUNGSEONG O-E&quot;. This is the most liberal set of transformations that can be forwards-compatible. Stricter sets of transformations are also possible. Python 3 allows lowercasing the names, but no other differences; Perl 6 allows only exact matching names.</p>
+<h2 id="name-aliases">Name Aliases</h2>
+<p>In addition to the Name property, Unicode characters can also have several values of the Name_Alias property assigned to them. The values of this property are effectively additional names for a character. Aliases can be corrections, names for characters that have no Name property, alternative names, or common abbreviations.</p>
+<p>Assignment of these aliases follows the same rules of assignment of Names: they draw from the same character set, once assigned the values are immutable, and they share the same namespace. Thanks to this last property, it is possible to allow named character escape sequences to match via both the Name and Name_Alias property.</p>
+<pre><code>&quot;\N{NO-BREAK SPACE}&quot;      // matches Name for U+00A0
+&quot;\N{KANNADA LETTER LLLA}&quot; // matches correction alias for U+0CDE
+&quot;\N{NBSP}&quot;                // matches abbreviation alias for U+00A0
+&quot;\N{LINE FEED}&quot;           // matches control character alias for U+000A
+&quot;\N{LF}&quot;                  // matches abbreviation alias for U+000A</code></pre>
+<p>All of Python 3, Perl 5, and Perl 6 support name aliases in their named character escapes.</p>
+<p>These aliases are defined normatively by the Unicode Standard, but not all of them are normative in ISO/IEC 10646. This means that, without a normative reference to the Unicode Standard, only names or correction aliases two can be specified to work.</p>
+<h2 id="named-character-sequences">Named Character Sequences</h2>
+<p>In addition to names and aliases, there is a third set of identifiers that shares the same namespace and the same rules of assignment: named character sequences. These names represent sequences of Unicode characters for which there is a need for an identifier; they are used e.g. to correlate with identifiers in other standards. Again, because these share the same namespace, it is possible to add these as a third option for matching named character escape sequences without conflict.</p>
+<pre><code>&quot;\N{LATIN SMALL LETTER I WITH MACRON AND GRAVE}&quot;  // matches the named sequence &lt;U+012B, U+0300&gt;
+&quot;\N{KEYCAP DIGIT ZERO}&quot;                           // matches the named sequence &lt;U+0030, U+FE0F, U+20E3&gt;&quot;</code></pre>
+<p>Python 3 does not support named character sequences, but Perl 5 and Perl 6 do.</p>
+<h2 id="proposal">Proposal</h2>
+<p>This paper proposes a new character escape sequence that enables the programmer to refer to a character by one of its names. Specifically, out of the possibilities delineated above, this paper proposes the following kinds of name matching:</p>
+<ol type="1">
+<li>Allow matching characters by the Name property value;</li>
+<li>Allow matching characters by any type of Name_Alias property values (correction, control, alternate, figment, and abbreviation);</li>
+<li>Allow matching any of those values in a case-insensitive manner.</li>
+</ol>
+<p>This specific set of features was chosen by virtue of being both reasonably simple and reasonably convenient. A larger feature set could also be specified if there is strong feedback in that direction.</p>
+<p>Note that, unlike with the <code>\u</code> and <code>\U</code> syntaxes, which are allowed in identifiers, the proposed <code>\N</code> is only valid in character and string literals.</p>
+<h2 id="implementation-concers">Implementation concers</h2>
+<p>In order for this to work, implementations need to include parts of the Unicode Character Database (UCD). The data for relevant Unicode properties, Name and Name_Alias, totals up to just shy of 2MB without performing any kind of optimization for space. The author believes this wouldn’t be an unreasonable burden on implementations.</p>
+<p>Later SG16 work may require other UCD properties; for reference, all the character properties from the UCD at present total to around 10MB of data, though many of them have only niche usages.</p>
+<h2 id="bikeshedding">Bikeshedding</h2>
+<p>The syntax used in the description above uses <code>\N{NAME}</code> as the escape sequence for this feature merely because of the author’s familiarity with Python 3. Perl 5 uses the same syntax as Python 3 but Perl 6 uses <code>\c[NAME]</code>, instead. Either of these two syntaxes would generate no significant conflicts with present day C++ syntax. The only potential conflict that this could cause would be with code that has character and string literals with extraneous backslashes: presently, the string literal <code>&quot;\N{NBSP}&quot;</code> is equivalent to <code>&quot;N{NBSP}&quot;</code>. This doesn’t seem like something that occurs often and in the unlikely case that it occurs, it’s easy to search for and to work around (one can simply remove the backslash).</p>
+<p>Other alternatives are also possible, as long as we paint the shed red.</p>
+<h2 id="technical-specifications">Technical Specifications</h2>
+<p>Add the following item after 2 [intro.refs], item (1.2):</p>
+<blockquote>
+<p><sup>(1.3)</sup>  — The Unicode Consortium. The Unicode Standard. http://www.unicode.org/versions/latest/</p>
+</blockquote>
+<p>Edit 5.13.3 [lex.ccon] as follows:</p>
+<blockquote>
+<p><em>escape-sequence</em>:<br />
+    <em>simple-escape-sequence</em><br />
+    <em>octal-escape-sequence</em><br />
+    <em>hexadecimal-escape-sequence</em><br />
+    <ins><em>named-escape-sequence</em></ins></p>
+<ins>
+<em>named-escape-sequence</em>:<br />
+    <code>\</code> <code>N</code> <code>{</code> <em>n-char-sequence</em> <code>}</code>
+</ins>
+<ins>
+<em>n-char-sequence</em>:<br />
+    <em>n-char</em><br />
+    <em>n-char-sequence</em> <em>n-char</em>
+</ins>
+<ins>
+<em>n-char</em>: one of<br />
+    <code>A</code> <code>B</code> <code>C</code> <code>D</code> <code>E</code> <code>F</code> <code>G</code> <code>H</code> <code>I</code> <code>J</code> <code>K</code> <code>L</code> <code>M</code> <code>N</code> <code>O</code> <code>P</code> <code>Q</code> <code>R</code> <code>S</code> <code>T</code> <code>U</code> <code>V</code> <code>W</code> <code>X</code> <code>Y</code> <code>Z</code><br />
+    <code>a</code> <code>b</code> <code>c</code> <code>d</code> <code>e</code> <code>f</code> <code>g</code> <code>h</code> <code>i</code> <code>j</code> <code>k</code> <code>l</code> <code>m</code> <code>n</code> <code>o</code> <code>p</code> <code>q</code> <code>r</code> <code>s</code> <code>t</code> <code>u</code> <code>v</code> <code>w</code> <code>x</code> <code>y</code> <code>z</code><br />
+    <code>0</code> <code>1</code> <code>2</code> <code>3</code> <code>4</code> <code>5</code> <code>6</code> <code>7</code> <code>8</code> <code>9</code><br />
+    <code>-</code>, or space
+</ins>
+</blockquote>
+<p>Add the following paragraph after 5.13.3 [lex.ccon], paragraph 9:</p>
+<blockquote>
+<p><sup>10</sup> <ins>A <em>named-escape-sequence</em> is translated to the encoding, in the appropriate execution character set, of the character whose Unicode Name or Name_Alias property value is equal to the <em>n-char-sequence</em> after replacing all instances of the lowercase letters with their corresponding uppercase letters. If there is no such character, the program is ill-formed.</ins></p>
+</blockquote>
+<p>Edit 5.13.5 [lex.string], paragraph 15 as follows:</p>
+<blockquote>
+<p><sup>15</sup> Escape sequences and <em>universal-character-names</em> in non-raw string literals have the same meaning as in character literals, except that the single quote <code>'</code> is representable either by itself or by the escape sequence <code>\'</code>, and the double quote <code>&quot;</code> shall be preceded by a <code>\</code>, and except that a <em>universal-character-name</em> <ins>or <em>named-escape-sequence</em></ins> in a <code>char16_t</code> string literal may yield a surrogate pair. In a narrow string literal, a <em>universal-character-name</em> <ins>or <em>named-escape-sequence</em></ins> may map to more than one char element due to multibyte encoding. The size of a <code>char32_t</code> or wide string literal is the total number of escape sequences, <em>universal-character-names</em><ins>, <em>named-escape-sequences</em></ins>, and other characters, plus one for the terminating <code>U'\0'</code> or <code>L'\0'</code>. The size of a <code>char16_t</code> string literal is the total number of escape sequences, <em>universal-character-names</em><ins>, <em>named-escape-sequences</em></ins>, and other characters, plus one for each character requiring a surrogate pair, plus one for the terminating <code>u'\0'</code>. [ <em>Note:</em> The size of a <code>char16_t</code> string literal is the number of code units, not the number of characters. — <em>end note</em>] Within <code>char32_t</code> and <code>char16_t</code> string literals, any universal-character-names shall be within the range <code>0x0</code> to <code>0x10FFFF</code>. The size of a narrow string literal is the total number of escape sequences and other characters, plus at least one for the multibyte encoding of each <em>universal-character-name</em><ins> or <em>named-escape-sequence</em></ins>, plus one for the terminating <code>'\0'</code>.</p>
+</blockquote>
+<p>Edit 5.13.3 [lex.ccon], paragraph 7, by adding the following to Table 8:</p>
+<blockquote>
+<ins>
+named escape sequence | Name/Name_Alias | <code>\N{</code><em>xxx</em><code>}</code>
+</ins>
+</blockquote>
+<p>Edit 5.2 [lex.phases], paragraph 1, step 5 as follows:</p>
+<blockquote>
+<ol start="5" type="1">
+<li>Each source character set member in a character literal or a string literal as well as each escape sequence<del> and</del><ins>,</ins> <em>universal-character-name</em><ins>, and <em>named-escape-sequence</em></ins> in a character literal or a non-raw string literal, is converted to the corresponding member of the execution character set ([lex.ccon], [lex.string]); if there is no corresponding member, it is converted to an implementation-defined member other than the null (wide) character.</li>
+</ol>
+</blockquote>
+</body>
+</html>
