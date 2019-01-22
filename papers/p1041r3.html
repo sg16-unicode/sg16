@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>P1041R3: Make char16_t/char32_t string literals be UTF-16/32</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <style type="text/css">
+  html {
+    font-size: 100%;
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  body {
+    color: #444;
+    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 1em;
+    margin: auto;
+    max-width: 42em;
+    background: #fefefe;
+  }
+  
+  a {
+    color: #0645ad;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: #0b0080;
+  }
+  
+  a:hover {
+    color: #06e;
+  }
+  
+  a:active {
+    color: #faa700;
+  }
+  
+  a:focus {
+    outline: thin dotted;
+  }
+  
+  *::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+  
+  *::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+  
+  a::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+  
+  a::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+  
+  p {
+    margin: 1em 0;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #111;
+    line-height: 125%;
+    margin-top: 2em;
+    font-weight: normal;
+  }
+  
+  h4, h5, h6 {
+    font-weight: bold;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+  }
+  
+  h2 {
+    font-size: 2em;
+  }
+  
+  h3 {
+    font-size: 1.5em;
+  }
+  
+  h4 {
+    font-size: 1.2em;
+  }
+  
+  h5 {
+    font-size: 1em;
+  }
+  
+  h6 {
+    font-size: 0.9em;
+  }
+  
+  blockquote {
+    color: #666666;
+    margin: 0;
+    padding-left: 3em;
+    border-left: 0.5em #EEE solid;
+  }
+  
+  hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #eee;
+    margin: 1em 0;
+    padding: 0;
+  }
+  
+  pre, code, kbd, samp {
+    color: #000;
+    font-family: monospace, monospace;
+    _font-family: 'courier new', monospace;
+    font-size: 0.98em;
+  }
+  
+  pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  b, strong {
+    font-weight: bold;
+  }
+  
+  dfn {
+    font-style: italic;
+  }
+  
+  del {
+    background: #fcc;
+    color: #000;
+    text-decoration: line-through;
+  }
+  
+  ins {
+    background: #cfc;
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  mark {
+    background: #ff0;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+  }
+  
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  
+  sup {
+    top: -0.5em;
+  }
+  
+  sub {
+    bottom: -0.25em;
+  }
+  
+  ul, ol {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+  }
+  
+  li p:last-child {
+    margin-bottom: 0;
+  }
+  
+  ul ul, ol ol {
+    margin: .3em 0;
+  }
+  
+  dl {
+    margin-bottom: 1em;
+  }
+  
+  dt {
+    font-weight: bold;
+    margin-bottom: .8em;
+  }
+  
+  dd {
+    margin: 0 0 .8em 2em;
+  }
+  
+  dd:last-child {
+    margin-bottom: 0;
+  }
+  
+  img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+  }
+  
+  figure {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+  }
+  
+  figure img {
+    border: none;
+    margin: 0 auto;
+  }
+  
+  figcaption {
+    font-size: 0.8em;
+    font-style: italic;
+    margin: 0 0 .8em;
+  }
+  
+  table {
+    margin-bottom: 2em;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  table th {
+    padding: .2em 1em;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+  
+  table td {
+    padding: .2em 1em;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+  }
+  
+  .author {
+    font-size: 1.2em;
+    text-align: center;
+  }
+  
+  @media only screen and (min-width: 480px) {
+    body {
+      font-size: 14px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  @media print {
+    * {
+      background: transparent !important;
+      color: black !important;
+      filter: none !important;
+      -ms-filter: none !important;
+    }
+  
+    body {
+      font-size: 12pt;
+      max-width: 100%;
+    }
+  
+    a, a:visited {
+      text-decoration: underline;
+    }
+  
+    hr {
+      height: 1px;
+      border: 0;
+      border-bottom: 1px solid black;
+    }
+  
+    a[href]:after {
+      content: " (" attr(href) ")";
+    }
+  
+    abbr[title]:after {
+      content: " (" attr(title) ")";
+    }
+  
+    .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+      content: "";
+    }
+  
+    pre, blockquote {
+      border: 1px solid #999;
+      padding-right: 1em;
+      page-break-inside: avoid;
+    }
+  
+    tr, img {
+      page-break-inside: avoid;
+    }
+  
+    img {
+      max-width: 100% !important;
+    }
+  
+    @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+  }
+  
+    @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+  }
+  
+    p, h2, h3 {
+      orphans: 3;
+      widows: 3;
+    }
+  
+    h2, h3 {
+      page-break-after: avoid;
+    }
+  }
+  
+  </style>
+</head>
+<body>
+<h1 id="make-char16_tchar32_t-string-literals-be-utf-1632">Make char16_t/char32_t string literals be UTF-16/32</h1>
+<p>Document Number: P1041R3<br />
+Date: 2019-01-21<br />
+Audience: Evolution Working Group<br />
+Reply-to: cpp@rmf.io</p>
+<h2 id="changelog">Changelog</h2>
+<ul>
+<li>Revision 3
+<ul>
+<li>Update after inclusion of P0482 in the working draft.</li>
+</ul></li>
+<li>Revision 2
+<ul>
+<li>Removed mention of P1025 following its inclusion in the working draft.</li>
+</ul></li>
+<li>Revision 1
+<ul>
+<li>Editorial changes.</li>
+</ul></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>C++11 introduced character types suitable for code units of the UTF-16 and UTF-32 encoding forms, namely <code>char16_t</code> and <code>char32_t</code>. Along with this, it also introduced new string literals whose types are arrays of those two character types, prefixed with <code>u</code> and <code>U</code>, respectively. And last but not least, it also introduced <em>UTF-8 string literals</em>, prefixed with <code>u8</code>, with types arrays of <code>const char</code>. Of these three new string literal types, only one has a guarantee about the values that the elements of the array have; in other words, only one has a guaranteed encoding form, the <em>UTF-8 string literals</em>.</p>
+<p>The standard text hints that the <code>char16_t</code> and <code>char32_t</code> string literals are intended to be encoded as, respectively, UTF-16 and UTF-32, but unlike it does for <em>UTF-8 string literals</em>, it never explicitly makes such a requirement.</p>
+<h2 id="motivation">Motivation</h2>
+<p>In defining <code>char16_t</code> string literals ([lex.string]/10), the standard makes a mention of “surrogate pairs”:</p>
+<blockquote>
+<p>A string-literal that begins with <code>u</code>, such as <code>u&quot;asdf&quot;</code>, is a <code>char16_t</code> string literal. A <code>char16_t</code> string literal has type “array of <em>n</em> <code>const char16_t</code>”, where <em>n</em> is the size of the string as defined below; it is initialized with the given characters. A single <em>c-char</em> may produce more than one <code>char16_t</code> character in the form of surrogate pairs.</p>
+</blockquote>
+<p>Further down, when defining the size of <code>char16_t</code> string literals ([lex.string]/15), there is another mention of “surrogate pairs”:</p>
+<blockquote>
+<p>The size of a <code>char16_t</code> string literal is the total number of escape sequences, <em>universal-character-names</em>, and other characters, plus one for each character requiring a surrogate pair, plus one for the terminating <code>u'\0'</code>. [<em>Note:</em> The size of a char16_­t string literal is the number of code units, not the number of characters. — <em>end note</em>]</p>
+</blockquote>
+<p>For <code>char32_t</code> string literals, the definition of their size ([lex.string]/15) essentially limits the encoding form used to one that doesn’t have more than one code unit per character:</p>
+<blockquote>
+<p>The size of a <code>char32_t</code> or wide string literal is the total number of escape sequences, <em>universal-character-names</em>, and other characters, plus one for the terminating <code>U'\0'</code> or <code>L'\0'</code>.</p>
+</blockquote>
+<p>Additionally, the standard constrains the range of <em>universal-character-names</em> to the range that is supported by all of the UTF encoding forms discussed here:</p>
+<blockquote>
+<p>Within <code>char32_t</code> and <code>char16_t</code> string literals, any <em>universal-character-names</em> shall be within the range <code>0x0</code> to <code>0x10FFFF</code>.</p>
+</blockquote>
+<p>All of these requirements, while never explicitly naming the UTF-16 or UTF-32 encoding forms, strongly imply that these are the encoding forms intended.</p>
+<p>The C standard defines the <code>__STDC_UTF_16__</code> and <code>__STDC_UTF_32__</code> in the <code>&lt;uchar.h&gt;</code> header, which C++ defers to for the contents of <code>&lt;cuchar&gt;</code>. These macros are optional, which seems to imply some intent that the encodings for <code>char16_t</code> and <code>char32_t</code> literals be implementation-defined. However, it would be questionable for an implementation to pick any other encoding forms for these string literals: there is no well-known encoding form that uses a concept named “surrogate pair” other than UTF-16, and there is no well-known encoding form that encodes each character as a single 32-bit code unit other than UTF-32.</p>
+<p>In practice, all implementations use UTF-16 and UTF-32 for these string literals. C++ should standardize this practice and make these requirements explicit instead of just hinting at them.</p>
+<h2 id="proposal">Proposal</h2>
+<p>This proposal renames “<code>char16_t</code> string literals” and “<code>char32_t</code> string literals” to “UTF-16 string literals” and “UTF-32 string literals”, to match the existing “UTF-8 string literals”, and explicitly requires the object representations of those literals to be the values that correspond to the UTF-16 and UTF-32 (respectively) encodings of the given characters.</p>
+<h2 id="technical-specifications">Technical Specifications</h2>
+<ul>
+<li><p>Add to [lex.string]/10:</p>
+<blockquote>
+<p>A <em>string-literal</em> that begins with <code>u</code>, such as <code>u&quot;asdf&quot;</code>, is a <del><code>char16_t</code> string literal</del><ins><em>UTF-16 string literal</em></ins>. A <del><code>char16_t</code> string literal</del><ins>UTF-16 string literal</ins> has type “array of <em>n</em> <code>const char16_t</code>”, where <em>n</em> is the size of the string as defined below; it is initialized with the given characters. A single <em>c-char</em> may produce more than one <code>char16_t</code> character in the form of surrogate pairs.</p>
+</blockquote></li>
+<li><p>Change [lex.string]/11:</p>
+<blockquote>
+<p>A <em>string-literal</em> that begins with <code>U</code>, such as <code>U&quot;asdf&quot;</code>, is a <del><code>char32_t</code> string literal</del><ins><em>UTF-32 string literal</em></ins>. A <del><code>char32_t</code> string literal</del><ins>UTF-32 string literal</ins> has type “array of <em>n</em> <code>const char32_t</code>”, where <em>n</em> is the size of the string as defined below; it is initialized with the given characters.</p>
+</blockquote></li>
+<li><p>Insert a paragraph between [lex.string]/10 and /11:</p>
+<blockquote>
+<ins>
+For a UTF-16 string literal, each successive element of the object representation has the value of the corresponding code unit of the UTF-16 encoding of the string.
+</ins>
+</blockquote></li>
+<li><p>Insert a paragraph between [lex.string]/11 and /12:</p>
+<blockquote>
+<ins>
+For a <em>UTF-32 string literal</em>, each successive element of the object representation has the value of the corresponding code unit of the UTF-32 encoding of the string.
+</ins>
+</blockquote></li>
+<li><p>Change [lex.ccon]/4:</p>
+<blockquote>
+<p>A character literal that begins with the letter <code>u</code>, such as <code>u'x'</code>, is a character literal of type <code>char16_t</code><ins>, known as a <em>UTF-16 character literal</em></ins>. The value of a <del><code>char16_t</code></del><ins>UTF-16</ins> character literal containing a single <em>c-char</em> is equal to its ISO 10646 code point value, provided that the code point value is representable with a single 16-bit code unit (that is, provided it is in the basic multi-lingual plane). If the value is not representable with a single 16-bit code unit, the program is ill-formed. A <del><code>char16_t</code></del><ins>UTF-16</ins> character literal containing multiple <em>c-char</em>s is ill-formed.</p>
+</blockquote></li>
+<li><p>Change [lex.ccon]/5:</p>
+<blockquote>
+<p>A character literal that begins with the letter <code>U</code>, such as <code>U'x'</code>, is a character literal of type <code>char32_t</code><ins>, known as a <em>UTF-32 character literal</em></ins>. The value of a <del><code>char32_­t</code></del><ins>UTF-32</ins> character literal containing a single <em>c-char</em> is equal to its ISO 10646 code point value. A <del><code>char32_­t</code></del><ins>UTF-32</ins> character literal containing multiple <em>c-char</em>s is ill-formed.</p>
+</blockquote></li>
+<li><p>Furthermore, replace all instances of <em><code>char16_t</code> string literal</em> with <em>UTF-16 string literal</em>, all instances of <em><code>char32_t</code> string literal</em> with <em>UTF-32 string literal</em>, all instances of <em><code>char16_t</code> character literal</em> with <em>UTF-16 character literal</em>, and all instances of <em><code>char32_t</code> character literal</em> with <em>UTF-32 character literal</em>.</p></li>
+</ul>
+</body>
+</html>
