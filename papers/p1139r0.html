@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>P1139R0: Address wording issues related to ISO 10646</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <style type="text/css">
+  html {
+    font-size: 100%;
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  body {
+    color: #444;
+    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 1em;
+    margin: auto;
+    max-width: 42em;
+    background: #fefefe;
+  }
+  
+  a {
+    color: #0645ad;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: #0b0080;
+  }
+  
+  a:hover {
+    color: #06e;
+  }
+  
+  a:active {
+    color: #faa700;
+  }
+  
+  a:focus {
+    outline: thin dotted;
+  }
+  
+  *::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+  
+  *::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+  
+  a::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+  
+  a::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+  
+  p {
+    margin: 1em 0;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #111;
+    line-height: 125%;
+    margin-top: 2em;
+    font-weight: normal;
+  }
+  
+  h4, h5, h6 {
+    font-weight: bold;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+  }
+  
+  h2 {
+    font-size: 2em;
+  }
+  
+  h3 {
+    font-size: 1.5em;
+  }
+  
+  h4 {
+    font-size: 1.2em;
+  }
+  
+  h5 {
+    font-size: 1em;
+  }
+  
+  h6 {
+    font-size: 0.9em;
+  }
+  
+  blockquote {
+    color: #666666;
+    margin: 0;
+    padding-left: 3em;
+    border-left: 0.5em #EEE solid;
+  }
+  
+  hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #eee;
+    margin: 1em 0;
+    padding: 0;
+  }
+  
+  pre, code, kbd, samp {
+    color: #000;
+    font-family: monospace, monospace;
+    _font-family: 'courier new', monospace;
+    font-size: 0.98em;
+  }
+  
+  pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  b, strong {
+    font-weight: bold;
+  }
+  
+  dfn {
+    font-style: italic;
+  }
+  
+  del {
+    background: #fcc;
+    color: #000;
+    text-decoration: line-through;
+  }
+  
+  ins {
+    background: #cfc;
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  mark {
+    background: #ff0;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+  }
+  
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  
+  sup {
+    top: -0.5em;
+  }
+  
+  sub {
+    bottom: -0.25em;
+  }
+  
+  ul, ol {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+  }
+  
+  li p:last-child {
+    margin-bottom: 0;
+  }
+  
+  ul ul, ol ol {
+    margin: .3em 0;
+  }
+  
+  dl {
+    margin-bottom: 1em;
+  }
+  
+  dt {
+    font-weight: bold;
+    margin-bottom: .8em;
+  }
+  
+  dd {
+    margin: 0 0 .8em 2em;
+  }
+  
+  dd:last-child {
+    margin-bottom: 0;
+  }
+  
+  img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+  }
+  
+  figure {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+  }
+  
+  figure img {
+    border: none;
+    margin: 0 auto;
+  }
+  
+  figcaption {
+    font-size: 0.8em;
+    font-style: italic;
+    margin: 0 0 .8em;
+  }
+  
+  table {
+    margin-bottom: 2em;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  table th {
+    padding: .2em 1em;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+  
+  table td {
+    padding: .2em 1em;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+  }
+  
+  .author {
+    font-size: 1.2em;
+    text-align: center;
+  }
+  
+  @media only screen and (min-width: 480px) {
+    body {
+      font-size: 14px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  @media print {
+    * {
+      background: transparent !important;
+      color: black !important;
+      filter: none !important;
+      -ms-filter: none !important;
+    }
+  
+    body {
+      font-size: 12pt;
+      max-width: 100%;
+    }
+  
+    a, a:visited {
+      text-decoration: underline;
+    }
+  
+    hr {
+      height: 1px;
+      border: 0;
+      border-bottom: 1px solid black;
+    }
+  
+    a[href]:after {
+      content: " (" attr(href) ")";
+    }
+  
+    abbr[title]:after {
+      content: " (" attr(title) ")";
+    }
+  
+    .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+      content: "";
+    }
+  
+    pre, blockquote {
+      border: 1px solid #999;
+      padding-right: 1em;
+      page-break-inside: avoid;
+    }
+  
+    tr, img {
+      page-break-inside: avoid;
+    }
+  
+    img {
+      max-width: 100% !important;
+    }
+  
+    @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+  }
+  
+    @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+  }
+  
+    p, h2, h3 {
+      orphans: 3;
+      widows: 3;
+    }
+  
+    h2, h3 {
+      page-break-after: avoid;
+    }
+  }
+  
+  </style>
+</head>
+<body>
+<h1 id="address-wording-issues-related-to-iso-10646">Address wording issues related to ISO 10646</h1>
+<p>Document Number: P1139R0<br />
+Date: 2019-01-21<br />
+Audience: SG16, CWG<br />
+Author: R. Martinho Fernandes<br />
+Reply-to: cpp@rmf.io</p>
+<h2 id="motivation">Motivation</h2>
+<p>Review of some editorial fixes following the recent update of the normative reference to ISO 10646 has unearthed a series of wording issues around the subject. This paper intends to fix those issues by rewording relevant paragraphs.</p>
+<h2 id="proposal">Proposal</h2>
+<p>This paper addresses all of the following issues:</p>
+<ol type="1">
+<li><p>The current wording in [lex.charset] does not specify what the behaviour is for a universal-character-name without a corresponding short identifier in ISO 10646.</p>
+<p>For example, <code>\U99004141</code> and <code>\U00110000</code>. Neither of these designates a code point in ISO 10646, but the standard is silent about this, which makes the behaviour undefined by omission.</p>
+<p>This paper addresses this by making such uses ill-formed, maintaining consistency with the current treatment of surrogate values (<code>\U0000D800</code> is already ill-formed).</p></li>
+<li><p>The current wording in [lex.charset] uses “hexadecimal value”, which is confusing because a value is just a number, and hexadecimal is just a way to represent numbers; “value” alone should suffice.</p>
+<p>This paper addresses this by removing the need for this term.</p></li>
+<li><p>There is some interest in using the U+ notation (as in U+0041 or U+1F34A) to refer to Unicode code points across the entire standard.</p>
+<p>This paper changes all the relevant wording to use U+ notation.</p></li>
+<li><p>The current text includes explanations of terms from ISO 10646 (like “surrogate code point” or “control character”) in normative text, which is undesirable.</p>
+<p>This paper moves such explanations to non-normative text, and clarifies some existing explanations.</p></li>
+</ol>
+<h2 id="technical-specifications">Technical Specifications</h2>
+<p>In this description, text that should be deleted is marked red and striked out; text that should be added is marked green and underlined. Apply these changes on top of the editorial fix provided in <a href="https://github.com/cplusplus/draft/pull/2201">PR #2201</a>.</p>
+<p>Edit 5.3 [lex.charset], paragraph 2 as follows.</p>
+<blockquote>
+<p><sup>2</sup> The <em>universal-character-name</em> construct provides a way to name other characters.</p>
+<p>    <em>hex-quad:</em>         <em>hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit</em></p>
+    <em>universal-character-name:</em>         *
+</blockquote>
+<p>Edit 5.13.3 [lex.ccon], paragraph 3 as follows.</p>
+<blockquote>
+<p><sup>3</sup> A character literal that begins with <code>u8</code>, such as <code>u8'w'</code>, is a character literal of type <code>char</code>, known as a <em>UTF-8 character literal</em>. The value of a UTF-8 character literal is equal to its ISO 10646 code point value, provided that the code point value is representable with a single UTF-8 code unit <del>(that is, provided it is in the C0 Controls and Basic Latin Unicode block)</del><ins>[<em>Note</em>—that is, provided it is in the range 0x0-0x7F, inclusive—<em>end note</em>]</ins>. If the value is not representable with a single UTF-8 code unit, the program is ill-formed. A UTF-8 character literal containing multiple <em>c-chars</em> is ill-formed.</p>
+</blockquote>
+<p>Edit 5.13.3 [lex.ccon], paragraph 4 as follows.</p>
+<blockquote>
+<p><sup>4</sup> A character literal that begins with the letter <code>u</code>, such as <code>u'x'</code>, is a character literal of type <code>char16_t</code>. The value of a <code>char16_t</code> character literal containing a single <em>c-char</em> is equal to its ISO 10646 code point value, provided that the code point value is representable with a single 16-bit code unit <del>(</del><ins>[<em>Note</em>—</ins>that is, provided it is in <del>the basic multi-lingual plane</del><ins>the range 0x0-0xFFFF, inclusive</ins><del>)</del><ins>—<em>end note</em>]</ins>. If the value is not representable with a single 16-bit code unit, the program is ill-formed. A <code>char16_t</code> character literal containing multiple <em>c-chars</em> is ill-formed.</p>
+</blockquote>
+<p>Edit 5.13.3 [lex.string], paragraph 10 as follows.</p>
+<blockquote>
+<p><sup>10</sup> A <em>string-literal</em> that begins with <code>u</code>, such as <code>u&quot;asdf&quot;</code>, is a <code>char16_t</code> string literal. A <code>char16_t</code> string literal has type “array of <em>n</em> <code>const char16_t</code>”, where <em>n</em> is the size of the string as defined below; it is initialized with the given characters. A single <em>c-char</em> may produce more than one <code>char16_t</code> character in the form of surrogate pairs <ins>[<em>Note</em>— a surrogate pair is a representation for a single character as a sequence of two 16-bit code units—<em>end note</em>]</ins>.</p>
+</blockquote>
+<p>Edit 19.8 [cpp.predefined], item (2.4) as follows.</p>
+<blockquote>
+<p><sup>(2.4)</sup> —<code>__STDC_ISO_10646__</code><br />
+An integer literal of the form <code>yyyymmL</code> (for example, <code>199712L</code>). If this symbol is defined, then every character in the Unicode required set, when stored in an object of type <code>wchar_t</code>, has the same value as the <del>short identifier</del><ins>code point</ins> of that character. The Unicode required set consists of all the characters that are defined by ISO/IEC 10646, along with all amendments and technical corrigenda as of the specified year and month.</p>
+</blockquote>
+</body>
+</html>
