@@ -10,6 +10,8 @@ Meetings are held regularly; invitations are sent to the mailing list.  Summarie
 WG Number     | Title/Notes/Links
 --------------- | -----
 \<None\> | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
+[WG21 P1423][] | char8_t backward compatibility remediation
+[WG21 P1139][] | Address wording issues related to ISO 10646
 [WG21 P1097][] | Named character escapes
 [WG21 P1041][] | Make char16_t/char32_t string literals be UTF-16/32
 [WG21 P1025][] | Update The Reference To The Unicode Standard
@@ -19,6 +21,8 @@ WG Number     | Title/Notes/Links
 ~~[WG21 P0169][]~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 
 [WG14 N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
+[WG21 P1423]: http://wg21.link/p1423
+[WG21 P1139]: http://wg21.link/p1139
 [WG21 P1097]: http://wg21.link/p1097
 [WG21 P1041]: http://wg21.link/p1041
 [WG21 P1025]: http://wg21.link/p1025

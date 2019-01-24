@@ -9,10 +9,11 @@ WG21 Number     | Title | Revisions
 [P1422R0][]     | SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09 | [R0][P1422R0]
 [P1238R0][]     | SG16: Unicode direction| [R0][P1238R0]
 [P1237R0][]     | SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03 | [R0][P1237R0]
+[P1139R1][]     | Address wording issues related to ISO 10646 | [R1][P1139R1] [R0][P1139R0]
 [P1137R0][]     | SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20 | [R0][P1137R0]
-[P1097R1][]     | Named character escapes | [R1][P1097R1] [R0][P1097R0]
+[P1097R2][]     | Named character escapes | [R2][P1097R2] [R1][P1097R1] [R0][P1097R0]
 [P1080R0][]     | SG16: Unicode meeting summaries 2018/03/28 - 2018/04/25 | [R0][P1080R0]
-[P1041R1][]     | Make char16_t/char32_t string literals be UTF-16/32 | [R1][P1041R1] [R0][P1041R0]
+[P1041R3][]     | Make char16_t/char32_t string literals be UTF-16/32 | [R3][P1041R3] [R1][P1041R1] [R0][P1041R0]
 [P1025R1][]     | Update The Reference To The Unicode Standard | [R1][P1025R1] [R0][P1025R0]
 [P0482R6][]     | char8_t: A type for UTF-8 characters and strings | [R6][P0482R6] [R5][P0482R5] [R4][P0482R4] [R3][P0482R3] [R2][P0482R2] [R1][P0482R1] [R0][P0482R0]
 
@@ -35,10 +36,14 @@ WG14 Number     | Title
 [P1025R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1025r1.html
 [P1041R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r0.md
 [P1041R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r1.html
+[P1041R3]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r3.html
 [P1080R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1080r0.html
 [P1097R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1097r0.html
 [P1097R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1097r1.html
+[P1097R2]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1097r2.html
 [P1137R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1137r0.html
+[P1139R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1139r0.html
+[P1139R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1139r1.html
 [P1237R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1237r0.html
 [P1238R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1238r0.html
 [P1422R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1422r0.html
