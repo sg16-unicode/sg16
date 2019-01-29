@@ -156,6 +156,9 @@ blockquote.stddel
 <h1 id="changes">Changes since <a href="http://wg21.link/p1423r0">P1423R0</a></h1>
 
 <ul>
+  <li>Corrected a typo in the example code for <a href="#option7">option 7</a>;
+      a string literal appeared where a character literal was intended.  Thanks
+      to Charles-Henri Gros for spotting it.</li>
 </ul>
 
 
@@ -1006,7 +1009,7 @@ to stdout.  In C++20, this code now writes the character literal as a number,
 and the address of the string literal, to stdout.
 </p>
 
-<fieldset><pre><code class="c++">std::cout &lt;&lt; u8"x";    // In C++20, writes the number 120.
+<fieldset><pre><code class="c++">std::cout &lt;&lt; u8'x';    // In C++20, writes the number 120.
 std::cout &lt;&lt; u8"text"; // In C++20, writes a memory address.</code></pre></fieldset>
 
 <p>This is a surprising change that provides no benefit to programmers.
