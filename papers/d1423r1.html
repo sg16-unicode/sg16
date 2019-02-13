@@ -159,6 +159,8 @@ blockquote.stddel
   <li>Corrected a typo in the example code for <a href="#option7">option 7</a>;
       a string literal appeared where a character literal was intended.  Thanks
       to Charles-Henri Gros for spotting it.</li>
+  <li>Corrected links to P0388R2; some of them inadvertently linked to
+      P0732R2 previously.</li>
 </ul>
 
 
@@ -644,7 +646,7 @@ constexpr const char (&amp;r)[] = u8"text";</code></pre>
       </fieldset>
     </td>
     <td>
-      <fieldset><pre><code class="c++">// Ok in C++20 with <a title="Class Types in Non-Type Template Parameters" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0732r2.pdf">P0388R2</a> <sup><a title="Class Types in Non-Type Template Parameters" href="#ref_p0388r2">[P0388R2]</a></sup>
+      <fieldset><pre><code class="c++">// Ok in C++20 with <a title="Class Types in Non-Type Template Parameters" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html">P0388R2</a> <sup><a title="Class Types in Non-Type Template Parameters" href="#ref_p0388r2">[P0388R2]</a></sup>
 
 constexpr const char (&amp;r)[] = u8"text"<ins>_as_char</ins>; <ins>// C++20 only</ins</code></pre>
       </fieldset>
@@ -696,7 +698,7 @@ constexpr const char (&amp;r)[] = u8"text";</code></pre>
       </fieldset>
     </td>
     <td>
-      <fieldset><pre><code class="c++">// Ok in C++20 with <a title="Class Types in Non-Type Template Parameters" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0732r2.pdf">P0388R2</a> <sup><a title="Class Types in Non-Type Template Parameters" href="#ref_p0388r2">[P0388R2]</a></sup>
+      <fieldset><pre><code class="c++">// Ok in C++20 with <a title="Class Types in Non-Type Template Parameters" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html">P0388R2</a> <sup><a title="Class Types in Non-Type Template Parameters" href="#ref_p0388r2">[P0388R2]</a></sup>
 
 constexpr const char (&amp;r)[] = <ins>U8("text")</ins>; <ins>// C++17 or C++20</ins</code></pre>
       </fieldset>
