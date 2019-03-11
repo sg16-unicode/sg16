@@ -5,7 +5,7 @@ ISO JTC1/SC22 WG21 and WG14 papers:
 
 WG21 Number     | Title | Revisions
 --------------- | ----- | ----
-[P1423R0][]     | char8_t backward compatibility remediation | [R0][P1423R0]
+[P1423R1][]     | char8_t backward compatibility remediation | [R1][P1423R1] [R0][P1423R0]
 [P1422R0][]     | SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09 | [R0][P1422R0]
 [P1253R0][]     | SG16 Guidelines for Review of Proposals | [R0][P1253R0]
 [P1238R0][]     | SG16: Unicode direction| [R0][P1238R0]
@@ -50,3 +50,4 @@ WG14 Number     | Title
 [P1238R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1238r0.html
 [P1422R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1422r0.html
 [P1423R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1423r0.html
+[P1423R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1423r1.html
