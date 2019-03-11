@@ -68,12 +68,11 @@ blockquote.stddel
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2019-01-29</td>
+    <td>2019-03-09</td>
   </tr>
   <tr>
     <th>Audience:</th>
-    <td>Evolution Working Group<br/>
-        Library Evolution Working Group</td>
+    <td>Library Working Group</td>
   </tr>
   <tr>
     <th>Reply-to:</th>
@@ -161,6 +160,9 @@ blockquote.stddel
       to Charles-Henri Gros for spotting it.</li>
   <li>Corrected links to P0388R2; some of them inadvertently linked to
       P0732R2 previously.</li>
+  <li>Added mention of <tt>u8R</tt> raw string literals.</li>
+  <li>Updated the anticipated impact section with survey results courtesy of
+      Debian code search.</li>
 </ul>
 
 
@@ -186,7 +188,8 @@ compatibility for existing C++17 programs in at least the following ways:
   <li>Change of return type for <tt>std::filesystem::path</tt> member functions
       <tt>u8string</tt> and <tt>generic_u8string</tt>.
   </li>
-  <li>Change of type for <tt>u8</tt> character and string literals.</li>
+  <li>Change of type for <tt>u8</tt> character and string literals and
+      <tt>u8R</tt> raw string literals.</li>
 </ol>
 </p>
 
@@ -355,19 +358,21 @@ std::cout &lt;&lt; u8"text";</code></pre>
 
 <h1 id="impact">Anticipated impact</h1>
 
+<p><tt>u8</tt> string literals were added in C++11, but support for <tt>u8</tt>
+character literals was only added in C++17.
+</p>
+
 <p>Code surveys have so far revealed little use of <tt>u8</tt> literals.
 Google and Facebook have both reported less than 1000 occurrences in their
 code bases, approximately half of which occur in test code.  Representatives
 of both organizations have stated that, given the actual size of their code
-base, this is approximately equivalent to 0.
+base, this is an insignificant number of occurrences.  Likewise, Firefox
+contains around 100 occurrences and Mozilla engineers have reviewed this paper
+and have no concerns regarding addressing the existing uses using the
+remediation approaches discussed here.
 </p>
 
-<p>Searches on Debian code search found uses in only a few packages and, within
-those packages, a small number of uses (mostly single digit use counts), most
-of which occurred in tests.
-</p>
-
-<p>Searches have been done on github as well, but github search doesn't
+<p>Code surveys have been attempted on github, but github search doesn't
 facilitate distinguishing uses of <tt>u8</tt> as identifiers (which is quite
 common) vs use as a UTF-8 literal.  Further, github doesn't provide a search
 that filters out duplicate hits for the same source code in different
@@ -376,9 +381,117 @@ challenging.  Most cases that were identified were in tests included in clones
 of Clang and gcc.
 </p>
 
-<p><tt>u8</tt> string literals were added in C++11, but support for <tt>u8</tt>
-character literals was only added in C++17.
+<p>Searches on Debian code search found uses in only a few packages and, with
+one exception discussed below, only a small number of uses (mostly single digit
+counts), most of which occurred in tests.
 </p>
+
+<p>Survey results for Debian code search
+(<a href="https://codesearch.debian.net">https://codesearch.debian.net</a>)
+follow.  These exclude hits to gcc, clang, packages like fmt and eastl that
+have already been conditionalized for <tt>char8_t</tt> in C++20, and C code.
+Additionally, packages bundled with other packages are omitted to avoid
+double counting.  Search hits reflect number of lines matching the search,
+not number of occurrences.  Search results are categorized by hits in
+program source files vs hits in test source files.
+</p>
+
+<p>There is one clear outlier in these search results.  Chromium has two orders
+of magnitude more uses of <tt>u8</tt> literals than any other package.  The
+Chromium team was contacted to discuss this.  Almost all of the existing uses
+appear in bulk data source files that the Chromium team has determined can be
+mechanically addressed.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Searched for</th>
+    <th>Debian packages (out of ~18000)</th>
+  </tr>
+  <tr>
+    <td><tt>char8_t</tt></td>
+    <td>spring (emulates its own <tt>char8_t</tt> support)</td>
+  </tr>
+  <tr>
+    <td><tt>u8string</tt></td>
+    <td>libopenmpt (defines a <tt>mpt::u8string</tt> typedef of
+        <tt>std::basic_string</tt> with a custom <tt>char_traits</tt>)<br/>
+        spring (defines a <tt>std::u8string</tt> class that derives from
+        <tt>std::string</tt>)</td>
+  </tr>
+  <tr>
+    <td><tt>u8string_view</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>u8streampos</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>mbrtoc8</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>c8rtomb</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>u8path(u8"text")</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>u8"text"</tt></td>
+    <td>
+        chromium (~10310, ~102 files)<br/>
+        firefox (97 hits, 1 files, 3 test files)<br/>
+        icu (83 hits, 1 files, 5 test files)<br/>
+        qbs (56 hits, 1 file, 1 test file)<br/>
+        mongodb (30 hits, 2 test files)<br/>
+        aseba (28 hits, 1 file)<br/>
+        monero (26 hits, 1 file, 1 test file)<br/>
+        nlohmann-json (21 hits, 1 file, 3 test files)<br/>
+        bambootracker (20 hits, 5 files)<br/>
+        capnproto (18 hits, 1 file, 1 test file)<br/>
+        lgogdownloader (11 hits, 1 file)<br/>
+        libosmium (10 hits, 3 test files)<br/>
+        cbmc (8 hits, 3 test files)<br/>
+        maim (8 hits, 1 file)<br/>
+        octave-ltfat (8 hits, 1 file)<br/>
+        praat (8 hits, 2 files)<br/>
+        slop (8 hits, 1 file)<br/>
+        mame (7 hits, 3 files)<br/>
+        nlohmann-json3 (7 hits, 3 test files)<br/>
+        sdcc (7 hits, 1 test file)<br/>
+        antlr4 (3 hits, 1 file)<br/>
+        keyman-keyboardprocessor (3 hits, 2 test files)<br/>
+        scram (3 hits, 2 test files)<br/>
+        tesseract (3 hits, 1 test file)<br/>
+        boost1.67 (2 hits, 1 test file)<br/>
+        freeorion (2 hits, 1 file)<br/>
+        supertux (2 hits, 1 file)<br/>
+        cjs (1 hit, 1 test file)<br/>
+        cpp-hocon (1 hit, 1 test file)<br/>
+        efl (1 hit, 1 file)<br/>
+        gjs (1 hit, 1 test file)<br/>
+        kate4 (1 hit, 1 example file)<br/>
+        kodi (1 hit, 1 test file)<br/>
+        libtcod (1 hit, 1 test file)<br/>
+        retroarch (1 hit, 1 file)<br/>
+        rtags (1 hit, 1 test file)<br/>
+    </td>
+  </tr>
+  <tr>
+    <td><tt>u8R"(text)"</tt></td>
+    <td>
+        chromium (940, 2 files, 2 test files)<br/>
+        kate4 (2 hits, 1 example file, 1 test file)<br/>
+        nlohmann-json (2 hits, 1 test file)<br/>
+        nlohmann-json3 (2 hits, 1 test file)<br/>
+        ksyntax-highlighting (1 hit, 1 test file)<br/>
+        ktexteditor (1 hit, 1 test file)<br/>
+    </td>
+  </tr>
+</table>
 
 
 <h1 id="remediation">Remediation approaches</h1>
@@ -898,7 +1011,7 @@ execution encoding and UTF-8 (and other untrusted input or encodings) is a
 recipe for continued occurrences of mojibake in applications.  For platforms
 that use UTF-8 as the execution encoding, ordinary literals are already UTF-8
 encoded.  This option would introduce three distinct ways of writing UTF-8
-literals on such platforms; having two ways to do (almost) the same things is
+literals on such platforms; having two ways to do (almost) the same thing is
 usually one too many already.
 </p>
 
