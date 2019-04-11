@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2019/01/23 - 2019/03/27</title>
+<title>SG16: Unicode meeting summaries 2019/01/23 - 2019/04/10</title>
 </head>
 
 <style type="text/css">
@@ -22,7 +22,7 @@ table#header td
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2019-04-02</td>
+    <td>2019-04-11</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -35,7 +35,7 @@ table#header td
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2019/01/23 - 2019/03/27</h1>
+<h1>SG16: Unicode meeting summaries 2019/01/23 - 2019/04/10</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -53,6 +53,8 @@ snapshot of select meeting summaries from that repository.
       March 13th, 2019</a></li>
   <li><a href="#2019_03_27">
       March 27th, 2019</a></li>
+  <li><a href="#2019_04_10">
+      April 10th, 2019</a></li>
 </ul>
 
 
@@ -718,7 +720,7 @@ snapshot of select meeting summaries from that repository.
 
 <ul>
   <li>Corentin Jabot</li>
-  <li>Hana Dusiková</li>
+  <li>Hana Dusíková</li>
   <li>Hubert Tong</li>
   <li>JeanHeyd Meneide</li>
   <li>JF Bastien</li>
@@ -998,6 +1000,145 @@ snapshot of select meeting summaries from that repository.
           <li>Sized output ranges can be used for memory safety.</li>
         </ul>
       </li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2019_04_10">April 10th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Continue discussion of JeanHeyd's D1629R0: Standard text encoding</li>
+  <li>Discuss any further work-in-progress from Corentin and Martinho on code point properties, and normalization.</li>
+  <li>Discuss execution encoding, current locale dependency, and the feasibility of mandating UTF-8.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hana Dusíková</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Continue discussion of JeanHeyd's D1629R0: Standard text encoding
+    <ul>
+      <li>JeanHeyd walked us through the code he has been developing to prototype interfaces to be proposed.
+        <ul>
+          <li><a href="https://github.com/ThePhD/phd/tree/master/include/phd/text">
+              https://github.com/ThePhD/phd/tree/master/include/phd/text</a></li>
+          <li>Encoding types have <tt>encode()</tt> and <tt>decode()</tt>
+              member functions that accept an input range, an output range, a
+              state, and an error handler and return an <tt>encoding_result</tt>
+              type that forwards the possibly mutated input range, output range,
+              and state.  These functions operate on a single code point at a
+              time.</li>
+          <li><tt>text_transcode</tt> and <tt>text_transcode_into</tt>
+              interfaces are provided for conversion of multiple code points
+              at a time.  Generic implementations are provided, but the design
+              is intended to support optimizing for contiguous ranges or
+              characteristics of specific encodings.</li>
+        </ul>
+      </li>
+      <li>Tom asked if input and output iterators/ranges are supported or if
+          forward iterators/ranges are required.</li>
+      <li>JeanHeyd replied that input and output iterators are supported, but
+          an error handler won't be able to observe the code units that
+          provoked invocation of the error handler.</li>
+      <li>Tom suggested that a
+          <a href="https://github.com/tahonermann/text_view/blob/master/include/text_view_detail/caching_iterator.hpp">
+          caching iterator</a> can be used to solve that problem.  This is the
+          approach used by
+          <a href="https://github.com/tahonermann/text_view">text_view</a>.</li>
+      <li>Steve added that the state type can also be used to cache such code
+          units.</li>
+      <li>JeanHeyd explained more about the error handling.
+          <tt>encoding_result</tt> can store an error status and any additional
+          useful information.  The implementation uses the facilities provided
+          by the <tt>&lt;system_error&gt;</tt> header.</li>
+      <li>Tom asked for clarification; ranges are always moved into and back
+          out of error handlers?</li>
+      <li>JeanHeyd answered, yes, via <tt>encoding_result</tt>.</li>
+      <li>Tom asked about the possibility to encode only a state change without
+          encoding a character.</li>
+      <li>Steve asked for clarification; as in for a ISO-2022 style shift
+          sequence?</li>
+      <li>Tom confirmed.</li>
+      <li>JeanHeyd replied that the state type can be used for whatever
+          purposes.</li>
+      <li>Tom expressed skepticism about that working from an interface
+          perspective since both input and state are provided.  Sometimes, you
+          just want to encode a state transition.</li>
+      <li>Steve noted that state is strongly tied to encoding and asked if
+          state needs to be exposed in the interface.  The ability to resume a
+          conversion is still necessary, but wouldn't have to be handled via
+          state.</li>
+      <li>JeanHeyd stated that having the state be separate is useful for
+          flexibility in resumption.</li>
+      <li>Steve added that state often becomes a house keeping burden.  Users
+          generally don't know how to work with it and do things like passing
+          an initial default constructed state when a resumption state is
+          needed.</li>
+      <li>Tom asked how much JeanHeyd had reviewed
+          <a href="https://github.com/tahonermann/text_view">text_view</a>
+          as some of what is being discussed appears to be reinventing
+          solutions implemented there.</li>
+      <li>JeanHeyd responded that the interfaces were influenced by reviews of
+          <a href="https://github.com/tzlaine/text">Boost.text</a>,
+          <a href="https://github.com/tahonermann/text_view">text_view</a>, and
+          <a href="https://github.com/rmartinho/ogonek">Ogonek</a>.</li>
+      <li>Corentin asked if the transcoding interfaces can provide lazy
+          ranges.</li>
+      <li>JeanHeyd responded no, not yet.</li>
+      <li>Steve stated that lazy ranges don't necessarily play well with
+          optimized transcoding operations.</li>
+      <li>JeanHeyd stated that the interface is intended to allow optimization.
+          Implementors can use <tt>if constexpr</tt> internally.</li>
+      <li>Tom expressed concern about reliance on <tt>if constexpr</tt>
+          within an encoding agnostic generic function and suggested
+          specialization as a more extensible solution.</li>
+      <li>JeanHeyd explained that overloading can be used to provide more
+          optimized implementations without lots of specializations.</li>
+      <li>Tom observed that the trade off is a bunch of overloads vs a bunch
+          of specializations.</li>
+      <li>JeanHeyd acknowledged the trade off, but noted that often fewer
+          overloads are required because conversions can be relied on.</li>
+      <li>Tom suggested that, perhaps, there should be a <tt>std::transcode</tt>
+          customization point.</li>
+      <li>JeanHeyd acknowledged and said he is still playing around with such
+          ideas and wants to enable users to provide custom overloads.</li>
+      <li>Tom expressed hope that users won't be writing these often at all;
+          that such interfaces should mostly be written by library
+          providers.</li>
+      <li>Steve agreed and added, or small infrastructure teams.</li>
+      <li>Steve asked about type erasure and support for dynamic encodings.</li>
+      <li>JeanHeyd expressed uncertainty about the need to provide that within
+          the standard and illustrated how a custom encoding that handles
+          dynamic encodings could be written.</li>
+      <li>Steve added that POSIX provides iconv which allows requesting a codec
+          for a named encoding and such functionality should be provided.</li>
+      <li>Tom suggested it might suffice to be able to write an
+          <tt>iconv_encoding</tt> type that wraps iconv.</li>
+      <li>Tom asked how transcoding between encodings with different associated
+          character sets are handled.</li>
+      <li>JeanHeyd responded that no support is present yet, but that
+          attempting to transcode between such encodings would fail compilation
+          if the code point types were not compatible.</li>
+      <li>Tom observed that failing compilation requires a strong type, not
+          <tt>char32_t</tt>, to enforce safety via the type system.</li>
+      <li>Corentin asserted that <tt>basic_text_view</tt> should not have a
+          template parameter for normalization since normalization is not
+          relevant for all encodings.</li>
+      <li>Tom agreed that, if present at all, normalization should be
+          incorporated into the encoding type.</li>
     </ul>
   </li>
 </ul>
