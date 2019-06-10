@@ -1,0 +1,1778 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22</title>
+</head>
+
+<style type="text/css">
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+</style>
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>P1666R0</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2019-06-09</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2019_01_23">
+      January 23rd, 2019</a></li>
+  <li><a href="#2019_02_13">
+      February 13th, 2019</a></li>
+  <li><a href="#2019_03_13">
+      March 13th, 2019</a></li>
+  <li><a href="#2019_03_27">
+      March 27th, 2019</a></li>
+  <li><a href="#2019_04_10">
+      April 10th, 2019</a></li>
+  <li><a href="#2019_05_15">
+      May 15th, 2019</a></li>
+  <li><a href="#2019_05_22">
+      May 22nd, 2019</a></li>
+</ul>
+
+
+<h1 id="2019_01_23">January 23rd, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Peter Bindels will present his work on a simple 2D graphics library.</li>
+  <li>Discuss Steve's latest draft of the SG16 rubric.</li>
+  <li>Discuss Tom's latest draft of the char8_t remediation paper.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Bryce Adelstein Lelblach</li>
+  <li>Corentin Jabot</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Michael Spencer</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Peter Bindels presented his work on a simple 2D graphics library.
+    <ul>
+      <li><a href="https://github.com/dascandy/pixel">https://github.com/dascandy/pixel</a></li>
+      <li>Peter summarrized applicability to SG16:
+        <ul>
+          <li>In a graphics API, what is the first thing you want to put on
+              the screen? Text of course!</li>
+          <li>Putting text on the screen requires Unicode support for the
+              library to be generally usable.</li>
+          <li>A text type handling Unicode is therefore needed.</li>
+        </ul>
+      </li>
+      <li>Michael stated that how to display text is not part of text
+          processing and therefore not part of SG16 scope, but rather fits
+          into SG13 scope. SG16 won't standardize
+          <a href="https://www.freedesktop.org/wiki/Software/HarfBuzz">harfbuzz</a>.
+          The question for SG16 is, how to accept text.</li>
+      <li>Zach suggested the perspective that, give me a sequence of code
+          points and I will render them. The Unicode line break algorithms
+          handle layout pretty well.</li>
+      <li>Peter noted that the bidirectional algorithm is needed as well.</li>
+      <li>Zach added that normalization probably isn't required though.</li>
+      <li>Tom asked if Peter wanted to support italic, bold, or underlined
+          text. A long and contentious debate had been on-going on the Unicode
+          Consortium mailing list regarding whether Unicode should enable
+          encoding stress indicators like these. See the threads at
+          <a href="https://unicode.org/pipermail/unicode/2019-January/007313.html">
+          https://unicode.org/pipermail/unicode/2019-January/007313.html</a>
+          and
+          <a href="https://unicode.org/pipermail/unicode/2019-January/007434.html">
+          https://unicode.org/pipermail/unicode/2019-January/007434.html</a>.
+      </li>
+      <li>Peter responded, no, plain text is sufficient.</li>
+      <li>Zach stated that stress indicators are handled by fonts and
+          controlled by markup.</li>
+      <li>Tom elaborated, the question was intended to discover if Peter's
+          needs are limited to plain text or whether a higher level of markup
+          is needed. Would there be a desire to standardize some kind of
+          markup?</li>
+      <li>Steve suggested that inline markup could be supported. Or not
+          supported as desired.</li>
+      <li>Zach added that text display is relatively simple once decoding, line
+          breaks, and bidirectional support are enabled; fonts take care of the
+          rest.</li>
+      <li>Steve stated that our immediate goals are low level; provide code
+          point and EGC decoding support.</li>
+      <li>Peter summarized, so we're on the right track working to get new
+          types into the standard.</li>
+      <li>Tom agreed, new types and new algorithms.</li>
+      <li>Steve added, and views.</li>
+      <li>Peter, changing topics, Christopher DiBella has been asking for SG20
+          how to educate people about Unicode.</li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p1253r0">P1253R0: Guidelines for when a WG21
+      proposal should be reviewed by SG16, the text and Unicode study group</a>
+    <ul>
+      <li>Tom asked, do we want to present this to the various WGs or just the
+          WG chairs?</li>
+      <li>Zach stated he was most concerned about EWGI and LEWGI.</li>
+      <li>Corentin suggested presenting to LEWGI, WG chairs, and mentioning it
+          at plenary.</li>
+      <li>Bryce suggested that we could present it at an evening session and
+          could arrange presentation at EWGI and LEWGI at Kona.</li>
+      <li>Tom stated he would follow up with WG chairs [Editor's note: Tom did
+          later reach out to the EWG, LEWG, CWG, LWG, EWGI, and LEWGI chairs to
+          ensure that
+        <ul>
+          <li>a. the chairs agree with the guidelines, and</li>
+          <li>b. are willing to direct proposal authors to SG16 when discussion
+              touches on the topics discussed in the paper.</li>
+        </ul>
+      </li>
+      <li>Several chairs have indicated their agreement so far. Tom also
+          requested presenting the paper to EWGI and LEWGI in Kona.]</li>
+      <li>Peter mentioned that there may be examples where a filename may be
+          mutated on open (for normalization purposes) such that attempts to
+          reopen the file by the mutated name fail. We should 1) verify that
+          this can happen and, if so, 2) update the paper to mention it.</li>
+      <li>Tom advised that, while we're all participating in WG discussions,
+          that we continue to look for additional guidelines to be added.</li>
+    </ul>
+  </li>
+  <li>Kona pre-planning:
+    <ul>
+      <li>Tom mentioned that he was not intending for SG16 to meet in Kona, but
+          it looks like we'll have a quorum after all, and papers to discuss,
+          so we will plan to meet.</li>
+      <li>Steve mentioned he has a paper discussing transliteration:
+          <a href="http://wg21.link/p1439r0">P1439R0: Charset Transcoding,
+          Transformation, and Transliteration</a>.</li>
+      <li>Tom mentioned that Martinho and Hana have papers for us as well.</li>
+        <ul>
+          <li><a href="http://wg21.link/p1139r1">P1139R1: Address wording
+              issues related to ISO 10646</a></li>
+          <li><a href="http://wg21.link/p1433r0">P1433R0: Compile Time Regular
+              Expressions</a></li>
+        </ul>
+      <li>Peter asked why Hana's paper is targeting SG16.</li>
+      <li>Zach responded that the Unicode standard specifies algorithms for
+          regular expressions.</li>
+      <li>Bryce suggested SG16 may want to review Hana's paper before LEWGI
+          does.</li>
+    </ul>
+  </li>
+  <li><tt>char8_t</tt> remediation:
+    <ul>
+      <li>Peter asked if anyone had searched for uses of <tt>u8R</tt>.</li>
+      <li>Tom replied, no, I didn't think to search for <tt>u8</tt> raw
+          literals.</li>
+      <li>Peter mentioned having found one in the wild.</li>
+      <li>Victor searched Facebook and found 3 uses.</li>
+      <li>Tom remembered that Victor previously mentioned approximately 1000
+          <tt>u8</tt> literals in Facebook code.</li>
+      <li>Victor confirmed, mostly in Facebook code, mostly in tests.</li>
+      <li>Zach commented that he mostly uses <tt>u8</tt> literals in tests as
+          well.</li>
+      <li>Steve stated that Chromium has a number of uses of <tt>u8R</tt>
+          literals.</li>
+      <li>Peter added that a December 2017 snapshot of the code base he works
+          on had 27 uses of <tt>u8</tt> literals, all of which were in tests.
+          Probably has some more now, but not a lot.</li>
+      <li>Tom wondered why hits tend to be in tests. Perhaps library authors
+          test things that users just don't use?</li>
+      <li>Zach responded that real world uses of libraries tend to use data
+          in strings, not string literals.</li>
+      <li>JeanHeyd echoed Zach, data tends to come from databases or files.</li>
+      <li>Steve stated that most <tt>u8</tt> literals in the code bases he
+          works on are in SQL queries or test code. They're still working to
+          get off of C++03 code and have only mostly been using Unicode
+          internally in the last 10 years.</li>
+      <li>Zach, stated that any changes from the <tt>char8_t</tt> proposal that
+          would result in silent behavioral changes must be made ill-formed and
+          that the remediation paper covers that. We need to be careful when
+          discussing the remediation paper that we don't blow up concerns that
+          aren't real. For example, with concerns that some code bases might be
+          badly impacted.</li>
+      <li>Tom asked Zach how he was feeling about code like
+          <tt>std::string(u8"text")</tt> now as he had previously expressed
+          concern.</li>
+      <li>Zach responded that he was previously concerned about the amount of
+          breakage, but based on anticipated impact and the fact that existing
+          uses will now be ill-formed, no longer concerned.</li>
+    </ul>
+  </li>
+  <li>Zach asked for clarity regarding guidance SG16 gave proposal authors in
+      San Diego regarding encoding aware interfaces.
+    <ul>
+      <li>Zach explained, in our
+          <a href="http://wiki.edg.com/bin/view/Wg21sandiego2018/D0881R3">response</a>
+          to
+          <a href="http://wg21.link/p0881r3">P0881R3: A Proposal to add
+          stacktrace library</a>, we said that file names should be treated as
+          just a bag of bytes. But in our response to
+          <a href="http://wg21.link/p1275r0">P1275R0: Desert Sessions:
+          Improving hostile environment interactions</a>, we argued for an
+          interface matching <tt>std::filesystem::path</tt> that exposes
+          content in multiple encodings.</li>
+      <li>Corentin argued that the responses are consistent. In both cases, the
+          content is stored as a bag of bytes, but in the latter case,
+          interfaces are available to offer it in an encoding suitable for
+          display.</li>
+      <li>JeanHeyd expressed a preference for just exposing bytes and leaving
+          display issues up to the consumer.</li>
+      <li>Zach stated that the display forms encourage errors; programmers try
+          to round-trip the names and that doesn't necessarily work.</li>
+      <li>Tom stated that it is good for the standard to provide encoding
+          aware interfaces, otherwise programmers will re-invent them
+          inconsistently.</li>
+      <li>Corentin observed that implimentations can provide higher quality
+          interfaces because they can rely on platform specific behavior.</li>
+      <li>Tom reported having recently searched for uses of <tt>u8string</tt>
+          and <tt>generic_u8string</tt> on Github and found only incorrect
+          uses. For example, cases where the programmer passed the result of
+          <tt>generic_u8string</tt> to <tt>fopen</tt>.</li>
+      <li>Steve said he would be in favor of deprecating the
+          <tt>std::filesystem::path</tt> <tt>u8string</tt> and
+          <tt>generic_u8string</tt> member functions for C++23.</li>
+      <li>Tom suggested we could deprecate them in favor of new names that
+          indicate they are for display only. But asked if Zach thought they
+          should exist at all.</li>
+      <li>Zach responded, no, they shouldn't exist as members of
+          <tt>std::filesystem::path</tt>. Rather, we should have better
+          separation of concerns and an independent interface for translating
+          file names to displayable strings.</li>
+      <li>Corentin opined that it is better for programmers to have to think
+          about encoding issues.</li>
+    </ul>
+  </li>
+  <li>Tom verified that we'll keep with the new meeting time slot for the
+      forseeable future and that the next meeting will be February 13th.</li>
+</ul>
+
+
+<h1 id="2019_02_13">February 13th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Preparation for Kona.</li>
+  <li>Discuss P1228R1 - A proposal to add an efficient string concatenation
+      routine to the Standard Library (Revision 1)</li>
+    <ul>
+      <li><a href="https://wg21.link/p1228r1">https://wg21.link/p1228r1</a></li>
+    </ul>
+  <li>Discuss P1439R0 - Charset Transcoding, Transformation, and
+      Transliteration</li>
+    <ul>
+      <li><a href="https://wg21.link/p1439r0">https://wg21.link/p1439r0</a></li>
+    </ul>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jorg Brown</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Preparation for Kona.
+    <ul>
+      <li>Tom mentioned that we meet after EWGI and LEWGI have wrapped up for
+          the week.</li>
+      <li>Steve observed that we can become a roadblock for proposals if we
+          meet late in the week. That probably isn't a concern for this
+          meeting, but could be for future meetings.</li>
+      <li>Peter noted that the <tt>char8_t</tt> remediation paper needs
+          scheduling in LEWG.</li>
+      <li>Tom stated he will reach out to Titus. [Editor's note: Tom checked
+          the LEWG schedule and <a href="http://wg21.link/p1423r0">P1423R0</a>
+          is on the P1 priority list to be slotted in ad-hoc. Titus expects
+          to get through all P1 priority papers]</li>
+      <li>Corentin asked about scheduling for
+          <a href="http://wg21.link/p1097r2">P1097R2</a>, Martinho's named
+          character escapes proposal.</li>
+      <li>Tom responded that he doesn't think of it as targeting C++20 due to
+          lack of implementation experience.</li>
+      <li>Zach stated it shouldn't be hard to implement.</li>
+      <li>Tom asked if escape sequences impact the preprocessor. Would
+          preprocessors require updates?</li>
+      <li>Hubert responded that they shouldn't, though <tt>_Pragma</tt> is
+          potentially impacted due to sometimes needing to reverse
+          translation of the literal.</li>
+      <li>Corentin observed that the paper is already on EWG's schedule for
+          Saturday.</li>
+    </ul>
+  </li>
+  <li><a href="http://wg21.link/p1228r1">P1228R1: A proposal to add an
+      efficient string concatenation routine to the Standard Library
+      (Revision 1)</a>
+    <ul>
+      <li>Jorg introduced the paper:</li>
+        <ul>
+          <li>The proposed design has been in use at Google for 12 years and
+              is available in Abseil as <tt>StrCat</tt>.</li>
+          <li>The design is motivated by performance and desire for a simple
+              API. Only two overloads are proposed.</li>
+          <li>The design has been discussed on the LEWG mailing list.
+            <ul>
+              <li><a href="http://lists.isocpp.org/lib-ext/2019/01/9692.php">
+              http://lists.isocpp.org/lib-ext/2019/01/9692.php</a></li>
+              <li><a href="http://lists.isocpp.org/lib-ext/2019/01/10020.php">
+              http://lists.isocpp.org/lib-ext/2019/01/10020.php</a></li>
+            </ul>
+          </li>
+          <li>The design does not have Unicode dependencies.</li>
+        </ul>
+      </li>
+      <li>Corentin observed that there is overlap with <tt>std::format</tt>.
+          Can internals be shared? Are customization points duplicated?</li>
+      <li>Zach stated that seems like more of a discussion for LEWG to have.</li>
+      <li>Corentin stated that the interface should prevent mixing types with
+          potentially different encodings. E.g., <tt>std::string</tt> and
+          <tt>std::u8string</tt>.</li>
+      <li>Victor agreed that it should not be possible to mix differently
+          encoded strings.</li>
+      <li>Zach suggested that it is reasonable to only support <tt>char</tt>
+          initially. Once you step outside of <tt>char</tt>, other locale
+          considerations kick in.</li>
+      <li>Tom disagreed with locales only being a concern outside of
+          <tt>char</tt> and professed agreement with the proposal that locales
+          be a separate concern.</li>
+      <li>Hubert agreed with the proposal scope; avoid conversion aspects for
+          both encoding and formatting, don't invite the complexities
+          exhibited by stream inserters.</li>
+      <li>Jorg stated that having to consider locale would kill performance.</li>
+      <li>Tom asked if anyone wanted to argue for locale awareness and got
+          no responses.</li>
+      <li>Corentin asked about dropping support for integral and float types
+          such that only string types would be supported.</li>
+      <li>Hubert agreed with that direction on the basis that, with numeric
+          types, you often want locale support.</li>
+      <li>Zach agreed observing that the proposed functionality seems to be
+          conflating concatenation and formatting in a single API.</li>
+      <li>Hubert observed that it is useful to be able to request how much
+          space would be needed for a numeric conversion.</li>
+      <li>Jorg stated that basic (non-locale aware) integer formatting is cheap
+          (4 instructions on Intel), but not for floating point.</li>
+      <li>Hubert mentioned that it is also useful to be able to query a maximum
+          buffer size for a type.</li>
+      <li>Jorg suggested that <tt>std::numeric_limits</tt> supports that.</li>
+      <li>Hubert disagreed; It says how many digits roundtrip, not how many
+          might be printed.</li>
+      <li>Corentin observed that concatentation of differently normalized
+          strings can change the number of perceived characters.</li>
+      <li>Peter asked why that is a problem.</li>
+      <li>Zach responded that combining NFC can result in fewer extended
+          grapheme clusters than the two strings by themselves contained.</li>
+      <li>Tom expressed distaste for section III.A and treating <tt>char</tt> as
+          an integral type instead of a character type.</li>
+      <li>Peter agreed, characters should be characters.</li>
+      <li>Jorg explained the direction was taken to handle <tt>int8_t</tt> and
+          friends that are often defined in terms of <tt>char</tt>.</li>
+      <li>Zach suggested letting deduction work, <tt>'0'+1</tt> deduces as
+          <tt>int</tt>.</li>
+      <li>Peter asked about section III.A and whether it is always customary
+          for a minus sign to precede a negative number. In financial contexts,
+          it sometimes follows the number.</li>
+      <li>Zach noted that the minus sign may appear at the end in RTL
+          languages.</li>
+      <li>Tom asked for additional argumentation regarding treating
+          <tt>char</tt> as an integral type vs a character type.</li>
+      <li>Zach suggested following the precedent set by
+          <tt>std:string::operator+()</tt>; accept the kinds of arguments that
+          it does and handle them the same way.</li>
+      <li>Jorg stated that, without numeric conversions, users would have to
+          call <tt>to_string</tt> which is more expensive.</li>
+      <li>Hubert suggested the use of a proxy type when conversion is
+          intended.</li>
+      <li>Peter posted a link to example code he had previously written that
+          used a rope to build a string.
+        <ul>
+          <li><a href="https://github.com/dascandy/s2/blob/master/tests/string/test_simple.cpp">
+              https://github.com/dascandy/s2/blob/master/tests/string/test_simple.cpp</a>
+          </li>
+        </ul>
+      </li>
+      <li>Tom summarized, the dea is to use <tt>operator+</tt> to construct a
+          rope that is evaluated and collapsed upon assignment to a
+          <tt>std::string</tt> or other concrete type.</li>
+      <li>Hubert noted that such approaches have difficulty with
+          <tt>auto</tt>.</li>
+      <li>Peter acknowledged that the result is rope if no conversion is
+          specified.</li>
+      <li>Zach asserted this is not a problem in practice and that auto can be
+          beneficial to postpone materialization.</li>
+      <li>Hubert stated that runs into problems with lifetime.</li>
+      <li>Tom asked Mark about applicability to
+          <a href="http://wg21.link/p1072">P1072</a>.</li>
+      <li>Mark responded, yes, <a href="http://wg21.link/p1072">P1072</a>
+          explicitly mentions Abseil's <tt>StrCat</tt> and is instrumental to
+          achieving desired performance.</li>
+      <li>Jorg asked for more feedback on whether <tt>wconcat</tt>,
+          <tt>u8concat</tt>, etc... should be provided.</li>
+      <li>Corentin replied, yes please.</li>
+      <li>Tom responded yes, I'd like to hear reasons not to provide them. As
+          long as the feature remains locale independent, there are no encoding
+          related concerns.</li>
+      <li>Peter reiterated, for any locale stuff, let some wrapper type deal
+          with it.</li>
+      <li>Jorg added, or, if you want locale sensitive stuff, use
+          <tt>std::format</tt>.</li>
+      <li>Peter mentioned it would be good to update the paper with benchmarks
+          comparing <tt>concat</tt> and <tt>std::format</tt>.</li>
+      <li>Peter asked if <tt>concat</tt> needs to be concerned with
+          <tt>char_traits</tt> and <tt>allocator</tt>?</li>
+      <li>Zach stated that "allocators are why we can't have nice things";
+          ignore them.</li>
+      <li>Tom stated that the alternative is to pass an allocator as an
+          argument.</li>
+      <li>Hubert suggested relying on independent type deduction for each
+          argument, no conversions.</li>
+      <li>Zach asked for clarification; calling <tt>concat(1,0)</tt> produces
+          <tt>"10"</tt>?</li>
+      <li>Jorg responded, yes.</li>
+      <li>Peter asekd about allowing the result type to be an explicitly
+          specified template parameter. This would allow supporting multiple
+          string types without requiring deduction of the value type.</li>
+      <li>Jorg expressed a preference for the option of passing an empty
+          string as the first argument.</li>
+      <li>Zach stated that LEWG will ask about constraints on the function.
+          Where does SFINAE happen?</li>
+      <li>Jorg commented that he came into this meeting only intending to
+          support <tt>std::string</tt> and things easily convertible to
+          <tt>std::string_view</tt>. Support for other types will require
+          constraining the value type across all arguments.</li>
+      <li>Tom asked for poll requests.</li>
+      <li>Corentin suggested, do we want to support unadorned numeric
+          conversions as arguments?</li>
+      <li>Poll: Do we want to restrict arguments to strings, characters, and
+          types convertible to strings.
+          <table>
+            <tr>
+              <th style="text-align:right">SF</th>
+              <th style="text-align:right">F</th>
+              <th style="text-align:right">N</th>
+              <th style="text-align:right">A</th>
+              <th style="text-align:right">SA</th>
+            </tr>
+            <tr>
+              <td style="text-align:right">3</td>
+              <td style="text-align:right">4</td>
+              <td style="text-align:right">1</td>
+              <td style="text-align:right">0</td>
+              <td style="text-align:right">1</td>
+            </tr>
+          </table>
+      </li>
+      <li>Jorg explained his against vote; It is really convenient to be able
+          to simply convert integers and there is lots of usage experience in
+          Google and Abseil.</li>
+      <li>Corentin asked if a better <tt>to_string</tt> would change his
+          vote.</li>
+      <li>Jorg responded, pobably not as it wouldn't be as convenient.</li>
+      <li>Peter stated that wrappers let us add features incrementally.</li>
+      <li>Jorg mentioned that Abseil's <tt>StrCat</tt> provides some converters
+          (e.g., for hex), but they are rarely used.</li>
+      <li>Victor stated he would like to see <tt>concat</tt> merged with an
+          improved <tt>to_string</tt>.</li>
+      <li>JeanHeyd stated that Sol2 provides a number of adorning types but
+          that users don't like them.</li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2019_03_13">March 13th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Post Kona review and follow up.</li>
+  <li>RFP: Transcoding interfaces.</li>
+  <li>RFP: Code point and EGC iterators.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Bob Steagall</li>
+  <li>Corentin Jabot</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Martinho Fernandes</li>
+  <li>Michael Spencer</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Post Kona review and follow up. 
+    <ul>
+      <li>Tom started discussion with a proposal to initiate a draft working
+          paper for SG16 proposals. The intent being to start drafting wording
+          for features we'd like to get into C++23.</li>
+      <li>Corentin expressed concerns that a large paper could prompt calls for
+          a TS approach and that small focused papers would be preferred.</li>
+      <li>Steve noted that a consolidated paper has an advantage in
+          demonstrating how the features work together.</li>
+      <li>Peter observed that we will have co-dependent parts.</li>
+      <li>Michael expressed distaste for large papers with loosely connected
+          features; everything shouldn't go in one paper.</li>
+      <li>Tom suggested brainstorming a list of features we'd like in C++23.
+          The following were suggested:
+        <ul>
+          <li><tt>std::text</tt> and <tt>std::text_view</tt>.</li>
+          <li>Unicode support for regular expressions.</li>
+          <li>Unicode code point properties.</li>
+          <li>Transcoding and transliteration interfaces (both compile-time
+              and run-time).</li>
+          <li>A trie container.</li>
+          <li>A rope container.</li>
+          <li>Unicode algorithms.</li>
+          <li>Normalization.</li>
+          <li>A code point type.</li>
+          <li>A (Unicode) scalar type.</li>
+        </ul>
+      </li>
+      <li>JeanHeyd suggested separate papers could address code point
+          properties, a code point type, and a scalar type.</li>
+      <li>Martinho stated that risks getting a result that isn't useful
+          depending on what features do/don't make it in.</li>
+      <li>Tom mentioned that the Design Group has stated a preference for
+          complete and cohesive proposals.</li>
+      <li>JeanHeyd stated that a collection of papers can demonstrate a
+          cohesive design.</li>
+      <li>Steve observed that large papers are hard to review and provided the
+          Ranges and Networking proposals as examples.</li>
+      <li>JeanHeyd suggested starting with determining what we need for the 5
+          standard mandated encodings without support for extensions.</li>
+      <li>Steve noted that support for extensions may demand different
+          interfaces for lossless vs lossy conversions and different error
+          handling.</li>
+      <li>JeanHeyd countered that the ordinary and wide encodings already may
+          be lossy, so such support is already needed.</li>
+      <li>JeanHeyd suggested that strong typing can be used to provide
+          interfaces that SFINAE based on requirements; e.g., that can require
+          non-lossy code point conversions.</li>
+      <li>Tom brought discussion back to the working paper idea and noted that
+          such a paper can help drive a consensus based process.</li>
+      <li>Steve expressed another concern with small papers; we can end up with
+          features being copied or re-implemented in different papers. For
+          example, <tt>source_location</tt> in both the Library Fundamentals TS
+          and in Contracts.</li>
+      <li>Corentin asked what the dependencies are between each of the
+          brainstormed features.</li>
+      <li>Martinho stated that there is a core set that needs to be done first.
+          Discussion identified the following:
+        <ul>
+          <li>Decoding and Encoding of UTF, both compile-time and run-time.</li>
+          <li>Unicode properties with tailoring for the private use area.</li>
+          <li>Normalization.</li>
+        </ul>
+      </li>
+      <li>Corentin asked if we could postpone tailoring and dependencies on
+          localization.</li>
+      <li>Martinho expressed a preference for Swift's model; default interfaces
+          use the default locale, tailored interfaces support providing a
+          locale.</li>
+      <li>Peter stated that, if tailoring is postponed, there is some risk of
+          defining interfaces that won't work with tailoring.</li>
+      <li>Corentin suggested that, if we need locale support, we need to start
+          from scratch.</li>
+      <li>JeanHeyd countered that, what Unicode demands from the locale is
+          different than what is provided by <tt>std::locale</tt>.</li>
+      <li>Tom asked, for locale support, do we rely on OS settings? Or require
+          the program to establish a locale?</li>
+      <li>Steve noted that, today, by default, we get the "C" locale unless
+          <tt>std::setlocale</tt> is called.</li>
+      <li>Tom drew discussion back to the working paper idea and asked for
+          volunteers to work on core features.
+        <ul>
+          <li>JeanHeyd volunteered to work on transcoding and transliteration
+              features.</li>
+          <li>Corentin volunteered to work on code point properties.</li>
+          <li>Martinho volunteered to work on normalization.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Discussion of D1515R0 - Code points, scalar values, UTF-8, and WTF-8
+    <ul>
+      <li><a href="https://rmartinho.github.io/cxx-papers/d1515r0.html">
+          https://rmartinho.github.io/cxx-papers/d1515r0.html</a>
+      </li>
+      <li>Martinho presents.
+        <ul>
+          <li>There is a trade off. If we favor code points, then interfaces
+              can work with WTF-8, Windows file names, and other bad data. If
+              we favor scalar values, then we don't have to check for the
+              presence of surrogate code points.</li>
+        </ul>
+      <li>Steve asserted that we need to be able to work with ill-formed UTF
+          text, but only at program boundaries.</li>
+      <li>Tom suggested there are reasons to support both code point types and
+          scalar value types.</li>
+      <li>JeanHeyd agreed that both are needed, but that scalar values should
+          be preferred.</li>
+      <li>Bob asked if data can be appropriately round-tripped if conversions
+          are done at program boundaries.</li>
+      <li>Tom replied that a higher level protocol is needed for that.</li>
+      <li>Steve provided the example of CDATA in XML.</li>
+      <li>Martinho reported seeing use of the private use area to preserve
+          invalid values.</li>
+      <li>JeanHeyd asserted that handling of invalid values should require
+          some form of opt-in.</li>
+      <li>Peter responded that the opt-in is the choice of encoding and
+          transcoding or transliteration operations.</li>
+      <li>Corentin asked about the motivation for both a code point type and a
+          scalar type. Why not just rely on UB which is what contracts would
+          provide anyway?</li>
+      <li>JeanHeyd asked rhetorically where the contract would be written if
+          there wasn't a type.</li>
+      <li>Tom elaborated, if the scalar type is a class type, then the contract
+          goes on constructors and assignment operators.</li>
+      <li>JeanHeyd asked about how to handle WTF-8 via an encoding.</li>
+      <li>Peter responded that you define a transcoder from WTF-8 to UTF-8.</li>
+      <li>Peter also suggested that, instead of using the private use area to
+          preserve invalid values, you map them to something else, some kind of
+          substitution character or marker. This doesn't necessarily preserve
+          roundtripping, but allows handling.</li>
+      <li>Steve noted that, if transcoding/transliteration interfaces are
+          extensible, then we don't have to solve this problem.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/cplusplus/draft/pull/2768">
+      https://github.com/cplusplus/draft/pull/2768</a>
+    <ul>
+      <li>Tom introduced the issue; this PR to the C++ standard was marked as
+          requiring SG16 review. The issue was created by Richard following his
+          editorial review of the wording changes in
+          <a href="http://wg21.link/p1139r2">P1139R2</a>.</li>
+      <li>Tom asked that everyone take a look and offer any feedback.</li>
+    </ul>
+  </li>
+  <li>Tom announced plans for our next meeting. It will be on 3/27 and JF has
+      volunteered to arrange for us to talk with the JavaScript team about their
+      support for Unicode regular expressions. At this meeting, we'll discuss
+      what we might want to ask/learn from them. If warranted, JF will then
+      seek to arrange a future meeting.
+  </li>
+</ul>
+
+
+<h1 id="2019_03_27">March 27th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discussion with JF Bastien regarding JavaScript support for Unicode
+      regular expressions. Based on outcome, JF can arrange for JavaScript
+      maintainers to attend a future meeting.</li>
+  <li>Discuss any work-in-progress from JeanHeyd, Corentin, and Martinho on
+      transcoding, code point properties, and normalization.</li>
+  <li>Discuss the recent LEWG mailing list emails regarding iostreams and
+      char8_t support.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hana Dusíková</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>JF Bastien</li>
+  <li>Mark Zeren</li>
+  <li>Michael Spencer</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Discussion with JF Bastien regarding coordinating Unicode regular expression support with ECMA TC39 and the ECMAScript standard.
+    <ul>
+      <li>JF introduces:
+        <ul>
+          <li>In contrast to what was stated in Kona, ECMAScript does specify
+              Unicode support for regular expressions.</li>
+          <li>It would be beneficial to align C++ and ECMAScript support for
+              Unicode regular expressions.</li>
+          <li>ECMA TC39 is currently working on adding support for Unicode
+              sequence properties.</li>
+          <li>ECMA TC39 is coordinating their work with the Unicode
+              Consortium.</li>
+          <li>SG16 should get involved and collaborate with ECMA TC39.</li>
+          <li>JF provided the following links for reference purposes:
+            <ul>
+              <li><a href="https://github.com/tc39/proposal-regexp-unicode-sequence-properties">
+                  https://github.com/tc39/proposal-regexp-unicode-sequence-properties</a></li>
+              <li><a href="https://unicode.org/L2/L2018/18337-broaden-properties.pdf">
+                  https://unicode.org/L2/L2018/18337-broaden-properties.pdf</a></li>
+              <li><a href="https://www.unicode.org/L2/L2019/19056-prop-cmts.pdf">
+                  https://www.unicode.org/L2/L2019/19056-prop-cmts.pdf</a></li>
+              <li><a href="http://unicode.org/reports/tr18/">
+                  http://unicode.org/reports/tr18/</a></li>
+            </ul>
+        </ul>
+      </li>
+      <li>JF volunteered to connect interested SG16 participants with ECMA TC39
+          participants and asked for volunteers.
+        <ul>
+          <li>Zach expressed interest with the specifc desire for C++ to be
+              aligned with the defacto standard (ECMAScript).</li>
+          <li>Hana opted in with explicit concerns regarding whether the C++
+              standard can defer to ECMAScript for wording specification.</li>
+          <li>Tom expressed interest in following along, but has no significant
+              ECMAScript or Unicode regular expression experience to contribute;
+              mostly intersted in staying informed for SG16 administrative
+              purposes.</li>
+          <li>Corentin said, sure, why not.</li>
+        </ul>
+      </li>
+      <li>Tom, responding to Hana's concern, stated that, by working with TC39
+          we can help ensure that the ECMAScript standard can be referenced
+          normatively by the C++ standard.</li>
+      <li>Hana noted that, in Kona, we stated a goal of supporting
+          <a href="http://unicode.org/reports/tr18">UTS#18</a> level 1, but
+          ECMAScript doesn't meet that.</li>
+      <li>Tom stated that is a good reason to work with them to find out why it
+          isn't implemented.</li>
+      <li>Hana provided a link discussing why level 1 is not met:
+        <ul>
+          <li><a href="https://github.com/tc39/proposal-regexp-unicode-property-escapes">
+              https://github.com/tc39/proposal-regexp-unicode-property-escapes</a></li>
+        </ul>
+      </li>
+      <li>Zach suggested that, if ECMAScript doesn't support it, we probably
+          don't need to either. Small differences in what is supported in
+          different languages is annoying because programmers tend to think it
+          is ok to copy and paste between languages, but then get different
+          behavior.</li>
+      <li>Zach suggested researching what level of UTS#18 support ICU
+          provides.</li>
+      <li>JF noted most implementations defer to ICU and only inline simple
+          expressions for performance.</li>
+      <li>Corentin observed that full UTS#18 support is madness and subsetting
+          is necessary.</li>
+      <li>JF stated it would be beneficial to identify an appropriate subset
+          of UTS#18 for both standards.</li>
+      <li>Hana noted that, in the link she provided, TC39 states what is
+          required and discourages implementors from offering extensions in
+          order to preserve portability and compatibility.</li>
+    </ul>
+  </li>
+  <li>D1628R0: Unicode character properties
+    <ul>
+      <li>Draft document available in the SG16 mailing list archives:
+        <ul>
+          <li><a href="http://www.open-std.org/pipermail/unicode/2019-March/000266.html">
+              http://www.open-std.org/pipermail/unicode/2019-March/000266.html</a></li>
+        </ul>
+      </li>
+      <li>Corentin presents:
+        <ul>
+          <li>Goal: Provide useful properties from
+              <a href="http://www.unicode.org/reports/tr44">UAX#44</a>.</li>
+          <li>Goal: Enable querying properties for any code point for a subset
+              of the UAX#44 properties that are deemed generally useful.</li>
+          <li>A reference implementation is available, but is considered early work:
+            <ul>
+              <li><a href="https://github.com/cor3ntin/ext-unicode-db">
+                  https://github.com/cor3ntin/ext-unicode-db</a>.</li>
+            </ul>
+          </li>
+          <li>Hana has been using the reference implementation in CTRE to
+              provide Unicode regular expression support in constexpr form.</li>
+          <li>The interface is specified as a set of predicate functions and
+              enumerations.</li>
+          <li>How to handle Unicode versions is an open question. Some
+              properties tend to be stable (e.g., general category), others are
+              less so (e.g., script, directional, joining).</li>
+          <li>Corentin compared the last 5 Unicode standards for differences in
+              property values and found little change.</li>
+          <li>Multiple version support is needed in order to provide a stable
+              and portable interface while allowing for implementors to provide
+              newer versions.</li>
+        </ul>
+      </li>
+      <li>Michael asked about providing different versions of the algorithms as
+          doing so could require table duplication.</li>
+      <li>Zach reported discovering that requirement as well. Multiple versions
+          of the algorithms can't be provided without duplicating some tabular
+          data. This could double the necessary storage foot print.</li>
+      <li>Zach observed that multiple versions of code point properties isn't
+          useful if version specific algorithms are not provided.</li>
+      <li>Zach stated he didn't see a reason to expose the "age" property.</li>
+      <li>Corentin offered two use cases for properties:
+        <ul>
+          <li>For use in implementing the Unicode algorithms.</li>
+          <li>For use by general programmers for non-algorithm purposes.</li>
+        </ul>
+      </li>
+      <li>Tom stated that it seems problematic to potentially have user code
+          using a version other than what the standard library is using.</li>
+      <li>Zach noted that providing multiple versions goes against our
+          existing guidance allowing implementors to float the Unicode
+          version.</li>
+      <li>Steve observed that the specified interfaces are constexpr, but ICU
+          doesn't provide data in constexpr form.</li>
+      <li>Tom responded that the interfaces could be implemented using
+          intrinsics that defer to ICU or a custom database.</li>
+      <li>Corentin added that most tables are small with the name table being
+          a notable exception. The constexpr design allows linking only what
+          is needed.</li>
+      <li>Tom asked, won't you still need the tables for run-time calls?</li>
+      <li>Corentin responded that the tables could be linked in only if
+          referenced.</li>
+      <li>Zach stated that isn't dependable; implementors might have to link
+          them in anyway.</li>
+      <li>Zach listed a few specific concerns with the paper:
+        <ul>
+          <li><tt>codepoint</tt> is marked as exposition only but can't be
+              because it is named in specified interfaces.</li>
+          <li><tt>codepoint</tt> needs to support <tt>char</tt> and
+              <tt>wchar_t</tt>.</li>
+          <li>Interfaces taking code points should accept any integral type,
+              encoding is not relevant here.</li>
+        </ul>
+      </li>
+      <li>Corentin explained that the <tt>codepoint</tt> type was introduced
+          specifically to not allow <tt>char</tt> and <tt>wchar_t</tt> in
+          order to avoid calls with character literals that might not be ASCII
+          based.</li>
+      <li>Zach stated a preference for integer values anyway.</li>
+      <li>Tom noted that using a <tt>codepoint</tt> type allows using the type
+          system to catch mistakes.</li>
+      <li>Zach stated that type safety is illusory because <tt>char</tt> and
+          <tt>wchar_t</tt> are code units not code points.</li>
+      <li>Tom countered that accepting <tt>char</tt> and <tt>wchar_t</tt> is
+          useful for character literals, but only for character literals.</li>
+      <li>Corentin mentioned that he wants the interface to be noexcept all the
+          way through and that wide contracts be used to avoid UB.</li>
+      <li>Michael stated that these should be Unicode scalar values instead of
+          code points then since any value is valid.</li>
+      <li>Corentin agreed, the interface is defined for any integer; the
+          predicates just return false if the value isn't a valid code
+          point.</li>
+      <li>Steve suggested we may want code point and scalar value types with
+          contracts, but that probably depends on alignment with
+          <tt>text_view</tt> and ranges. Maybe that is only useful at a higher
+          level than is needed for code point properties.</li>
+      <li>Zach predicted that LEWG will object to the <tt>"cp_"</tt> prefix on
+          these interfaces.</li>
+      <li>Zach expressed a desire for more motivation in the paper; to
+          demonstrate a need or justification for each exposed property.
+          Examples of why a regular programmer would care about each of these.
+          Maintaining large interfaces or lots of properties complicates
+          teaching.</li>
+      <li>Corentin explained wanting to provide replacements for some broken
+          things in the standard, like <tt>std::isalnum</tt>. Having these
+          available will help programmers use Unicode properly. As an example,
+          they are needed to implement Unicode regular expression support.</li>
+      <li>Zach acknowledged, just want to see that motivation expressed in
+          the paper.</li>
+      <li>Tom agreed with adding explicit motivation like the
+          <tt>std::isalnum</tt> example. Not necessarily code examples, but
+          scenarios.</li>
+      <li>Zach observed that some properties can be used incorrectly because
+          they typically aren't used in isolation. Some properties should only
+          be used via the Unicode algorithms.</li>
+      <li>Hana stated a preference for exposing the Unicode standard as it is
+          specified. Considerable work and expertise has gone into it. It is a
+          standard that people can learn.</li>
+      <li>Zach disagreed on a philosophical basis; want to keep things
+          simple.</li>
+      <li>Steve observed that some of this is ergonomics of naming. Programmers
+          should reach for a function first, then raw properties only if
+          necessary.</li>
+      <li>Zach cautioned about exposing an expert-only interface.</li>
+      <li>Corentin mentioned, by defering to Unicode, we avoid making mistakes.
+          Properties that are only used for derived properties are already
+          excluded.</li>
+      <li>Tom stated that we can always expose additional properties later as
+          we identify use cases.</li>
+      <li>Michael stated that some properties are implementation detail within
+          the Unicode standard; they exist for the algorithms to refer to them.
+          We should focus first on high level interfaces and those probably
+          won't be defined in terms of low level property interfaces.</li>
+      <li>Zach stated that properties that are only needed to implement an
+          algorithm need not be exposed individually.</li>
+      <li>Tom asked about tailoring and properties for the private use area
+          (PUA).</li>
+      <li>Corentin replied that tailoring should be provided by a separate
+          interface. The PUA shouldn't be used in open interchange.</li>
+      <li>Tom agreed, but stated that, within an application, a programmer
+          might want all libraries to see the same customized properties for
+          the PUA.</li>
+      <li>Steve noticed that the Unicode version numbers in the <tt>version</tt>
+          enumerator values jump from <tt>0x09</tt> to <tt>0x10</tt> rather
+          than to <tt>0x0A</tt>.</li>
+      <li>Corentin replied, oops.</li>
+      <li>Corentin added, if we don't support multiple Unicode versions, there
+          is a question of enumeration value stability across implementations
+          and differing Unicode versions.</li>
+      <li>Tom suggested that we'd like to see a revision of the paper and
+          asked for objections.</li>
+      <li>No objections were raised.</li>
+    </ul>
+  </li>
+  <li>D1629R0: Standard text encoding
+    <ul>
+      <li>JeanHeyd screen shared an early draft that has not yet been
+          published, so no link is available.</li>
+      <li>JeanHeyd presents:
+        <ul>
+          <li>The proposed design follows review of a number of prior papers
+              and projects:
+            <ul>
+              <li><a href="http://wg21.link/p0244">P0244 - Text_view: A C++
+                  concepts and range based character encoding and code point
+                  enumeration library</a></li>
+              <li><a href="https://github.com/tahonermann/text_view">
+                  text_view</a></li>
+              <li><a href="https://github.com/libogonek/ogonek">
+                  libogonek</a></li>
+              <li><a href="https://github.com/tzlaine/text">Boost.Text</a></li>
+            </ul>
+          </li>
+          <li>Enabling optimizations is a goal.</li>
+          <li>Want a range based approach. Want to enable lazy
+              encoding/decoding.</li>
+          <li>Wrapping iterators can be large, iterator/sentinel pairs are
+              helpful to reduce iterator sizes.</li>
+          <li>Can't depend on locale or <tt>codecvt</tt> because of performance
+              costs; <tt>wstring_convert</tt> exhibited these costs in
+              <a href="https://github.com/ThePhD/sol2">Sol2</a>.</li>
+          <li>Exposing state enables chunked streaming.</li>
+          <li>An empty state can indicate a self-synchronizing encoding.</li>
+          <li>State could be potentially omitted in interfaces for stateless
+              encodings.</li>
+          <li>The default error handler will substitute replacement
+              characters.</li>
+          <li>Error handling can be elided by specifying an assume_valid
+              handler.</li>
+          <li>Sized output ranges can be used for memory safety.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2019_04_10">April 10th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Continue discussion of JeanHeyd's D1629R0: Standard text encoding</li>
+  <li>Discuss any further work-in-progress from Corentin and Martinho on code point properties, and normalization.</li>
+  <li>Discuss execution encoding, current locale dependency, and the feasibility of mandating UTF-8.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hana Dusíková</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Continue discussion of JeanHeyd's D1629R0: Standard text encoding
+    <ul>
+      <li>JeanHeyd walked us through the code he has been developing to prototype interfaces to be proposed.
+        <ul>
+          <li><a href="https://github.com/ThePhD/phd/tree/master/include/phd/text">
+              https://github.com/ThePhD/phd/tree/master/include/phd/text</a></li>
+          <li>Encoding types have <tt>encode()</tt> and <tt>decode()</tt>
+              member functions that accept an input range, an output range, a
+              state, and an error handler and return an <tt>encoding_result</tt>
+              type that forwards the possibly mutated input range, output range,
+              and state.  These functions operate on a single code point at a
+              time.</li>
+          <li><tt>text_transcode</tt> and <tt>text_transcode_into</tt>
+              interfaces are provided for conversion of multiple code points
+              at a time.  Generic implementations are provided, but the design
+              is intended to support optimizing for contiguous ranges or
+              characteristics of specific encodings.</li>
+        </ul>
+      </li>
+      <li>Tom asked if input and output iterators/ranges are supported or if
+          forward iterators/ranges are required.</li>
+      <li>JeanHeyd replied that input and output iterators are supported, but
+          an error handler won't be able to observe the code units that
+          provoked invocation of the error handler.</li>
+      <li>Tom suggested that a
+          <a href="https://github.com/tahonermann/text_view/blob/master/include/text_view_detail/caching_iterator.hpp">
+          caching iterator</a> can be used to solve that problem.  This is the
+          approach used by
+          <a href="https://github.com/tahonermann/text_view">text_view</a>.</li>
+      <li>Steve added that the state type can also be used to cache such code
+          units.</li>
+      <li>JeanHeyd explained more about the error handling.
+          <tt>encoding_result</tt> can store an error status and any additional
+          useful information.  The implementation uses the facilities provided
+          by the <tt>&lt;system_error&gt;</tt> header.</li>
+      <li>Tom asked for clarification; ranges are always moved into and back
+          out of error handlers?</li>
+      <li>JeanHeyd answered, yes, via <tt>encoding_result</tt>.</li>
+      <li>Tom asked about the possibility to encode only a state change without
+          encoding a character.</li>
+      <li>Steve asked for clarification; as in for a ISO-2022 style shift
+          sequence?</li>
+      <li>Tom confirmed.</li>
+      <li>JeanHeyd replied that the state type can be used for whatever
+          purposes.</li>
+      <li>Tom expressed skepticism about that working from an interface
+          perspective since both input and state are provided.  Sometimes, you
+          just want to encode a state transition.</li>
+      <li>Steve noted that state is strongly tied to encoding and asked if
+          state needs to be exposed in the interface.  The ability to resume a
+          conversion is still necessary, but wouldn't have to be handled via
+          state.</li>
+      <li>JeanHeyd stated that having the state be separate is useful for
+          flexibility in resumption.</li>
+      <li>Steve added that state often becomes a house keeping burden.  Users
+          generally don't know how to work with it and do things like passing
+          an initial default constructed state when a resumption state is
+          needed.</li>
+      <li>Tom asked how much JeanHeyd had reviewed
+          <a href="https://github.com/tahonermann/text_view">text_view</a>
+          as some of what is being discussed appears to be reinventing
+          solutions implemented there.</li>
+      <li>JeanHeyd responded that the interfaces were influenced by reviews of
+          <a href="https://github.com/tzlaine/text">Boost.text</a>,
+          <a href="https://github.com/tahonermann/text_view">text_view</a>, and
+          <a href="https://github.com/rmartinho/ogonek">Ogonek</a>.</li>
+      <li>Corentin asked if the transcoding interfaces can provide lazy
+          ranges.</li>
+      <li>JeanHeyd responded no, not yet.</li>
+      <li>Steve stated that lazy ranges don't necessarily play well with
+          optimized transcoding operations.</li>
+      <li>JeanHeyd stated that the interface is intended to allow optimization.
+          Implementors can use <tt>if constexpr</tt> internally.</li>
+      <li>Tom expressed concern about reliance on <tt>if constexpr</tt>
+          within an encoding agnostic generic function and suggested
+          specialization as a more extensible solution.</li>
+      <li>JeanHeyd explained that overloading can be used to provide more
+          optimized implementations without lots of specializations.</li>
+      <li>Tom observed that the trade off is a bunch of overloads vs a bunch
+          of specializations.</li>
+      <li>JeanHeyd acknowledged the trade off, but noted that often fewer
+          overloads are required because conversions can be relied on.</li>
+      <li>Tom suggested that, perhaps, there should be a <tt>std::transcode</tt>
+          customization point.</li>
+      <li>JeanHeyd acknowledged and said he is still playing around with such
+          ideas and wants to enable users to provide custom overloads.</li>
+      <li>Tom expressed hope that users won't be writing these often at all;
+          that such interfaces should mostly be written by library
+          providers.</li>
+      <li>Steve agreed and added, or small infrastructure teams.</li>
+      <li>Steve asked about type erasure and support for dynamic encodings.</li>
+      <li>JeanHeyd expressed uncertainty about the need to provide that within
+          the standard and illustrated how a custom encoding that handles
+          dynamic encodings could be written.</li>
+      <li>Steve added that POSIX provides iconv which allows requesting a codec
+          for a named encoding and such functionality should be provided.</li>
+      <li>Tom suggested it might suffice to be able to write an
+          <tt>iconv_encoding</tt> type that wraps iconv.</li>
+      <li>Tom asked how transcoding between encodings with different associated
+          character sets are handled.</li>
+      <li>JeanHeyd responded that no support is present yet, but that
+          attempting to transcode between such encodings would fail compilation
+          if the code point types were not compatible.</li>
+      <li>Tom observed that failing compilation requires a strong type, not
+          <tt>char32_t</tt>, to enforce safety via the type system.</li>
+      <li>Corentin asserted that <tt>basic_text_view</tt> should not have a
+          template parameter for normalization since normalization is not
+          relevant for all encodings.</li>
+      <li>Tom agreed that, if present at all, normalization should be
+          incorporated into the encoding type.</li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2019_05_15">May 15th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Continue discussion of UTF-8 as execution encoding.  Our focus last time
+      was on impediments to use of UTF-8 as execution encoding.  Focus this
+      time will be on anticipated benefits of mandating UTF-8 and impact to
+      existing ecosystems.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Cameron Gunnin</li>
+  <li>Henri Sivonen</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>JF Bastien</li>
+  <li>Michael Spencer</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Discussion of potential benefits/costs of mandating UTF-8 as execution encoding:
+    <ul>
+      <li>Tom introduced the topic with a brief summary from the last meeting.</li>
+      <li>Zach stated he was all for moving to UTF-8.</li>
+      <li>Tom asked how code would be written differently compared to today.</li>
+      <li>Zach presented some problematic examples he has encountered in the
+          past.  The first was surprises with UTF-8 encoded literals in source
+          code not retaining UTF-8 encoding at run-time.  The second was
+          difficulties writing text and having it display in terminals as
+          expected.  Today's compilers don't have options to state that the
+          output of a program will have any particular encoding.  Writing
+          non-ASCII output is expert territory.  We can't write portable code
+          that dumps text and expect it to just work.</li>
+      <li>Tom noted some subtleties with those examples; there are actually four
+          encodings involved.  Source encoding, presumed execution encoding,
+          run-time execution encoding, and terminal/console encoding.  This
+          raises the question of what is meant by mandating UTF-8.  Mandating it
+          for all of these encodings?</li>
+      <li>Steve stated that these issues affect all platforms.  Use of
+          characters outside the basic source character set doesn't work unless
+          <tt>std::setlocale()</tt> is called to set a locale other than
+          <tt>"C"</tt>.  Changing the default locale to <tt>"C.UTF-8"</tt> would
+          be an improvement as it would suffice to make the multibyte conversion
+          functions work as expected without changing behavior for character
+          classification functions.  This matches what Python is doing as
+          described in
+          <a href="https://www.python.org/dev/peps/pep-0538">PEP-538</a>
+          and
+          <a href="https://www.python.org/dev/peps/pep-0540">PEP-540</a>.  This
+          still allows the locale to be run-time selectable, but provides a
+          better default for character encoding.</li>
+      <li>Tom commented that this would preserve existing behavior since, today,
+          unless <tt>std::setlocale()</tt> is called to change the current
+          locale, characters outside the basic source character set elicit
+          undefined behavior for the multibyte conversion functions.</li>
+      <li>Zach asked how this would be proposed.  By defining a "C.UTF-8"
+          locale?  Or by specifying that the default "C" locale operate as if
+          <tt>LC_CTYPE</tt> were set to UTF-8?</li>
+      <li>Steve responded that the implementation behave as though an implicit
+          call to <tt>std::setlocale(LC_CTYPE, "C.UTF-8")</tt> occurred during
+          process startup.</li>
+      <li>Henri observed that the behavior of <tt>nl_langinfo</tt> would be
+          affected by doing so; <tt>nl_langinfo(CODESET)</tt> would now return
+          a string reflecing UTF-8 rather than the encoding used to implement
+          the "C" locale.</li>
+      <li>Zach noted that such a change needs discussion with WG14 and POSIX
+          members.  It would not be good if behavior differed based on whether
+          C or C++ headers were included.</li>
+      <li>JeanHeyd indicated that he is already working on such a discussion
+          and plans to submit a paper to WG14 proposing that "C.UTF-8" be made
+          a standardized locale.</li>
+      <li>Steve noted that POSIX exposes more encoding aware facilities than C
+          does; more character classification functions for example.</li>
+      <li>Zach asserted that, if we made UTF-8 the default, life would be easier
+          for everyone.</li>
+      <li>Tom summarized discussion so far; we've been discussing changing the
+          default locale, but not mandating UTF-8.</li>
+      <li>Hubert noted that mandating UTF-8 will affect presumed encoding.</li>
+      <li>Henri suggested that mandating a particular encoding might solicit
+          reluctance from implementors.  If implementors don't go along, then
+          the standard doesn't match reality.</li>
+      <li>JeanHeyd agreed with the concern and noted that changing the default
+          leaves open an escape hatch for preserving existing behavior.  While
+          mandating a particular encoding would make some things easier, it
+          would also leave some platforms and/or implementations behind.</li>
+      <li>Tom asked Hubert for his perceptions regarding changing the default;
+          how would the platforms he supports be impacted?</li>
+      <li>Hubert replied that, on z/OS, it would be kind of odd due to the
+          possibility of multiple processes sharing the same language
+          environment.</li>
+      <li>Tom asked what happens today if a single process changes its
+          locale.</li>
+      <li>Hubert responded with some uncertainty.  Switching between EBCDIC code
+          pages is much less impactful than switching from an EBCDIC code page
+          to something ASCII based would be.</li>
+      <li>Hubert returned to questions of implementation; how would the implicit
+          call to <tt>std::setlocale()</tt> be implemented?  This isn't a
+          typical language level thing.</li>
+      <li>Tom responded that such a question is what he would have posed to
+          Hubert.</li>
+      <li>Hubert elaborated on potential complexities.  How would this work when
+          separately compiled components potentially compiled for different
+          standard versions are linked together?  Is this a linker option?</li>
+      <li>Tom stated that is outside the scope of the standard.</li>
+      <li>Hubert agreed, but noted that concerns like this don't come up very
+          often.</li>
+      <li>Zach reiterated the intent; that the C++ startup code perform as if an
+          implicit call to <tt>std::setlocale()</tt> took place.</li>
+      <li>Hubert acknowledged the intent, but noted the potential unintended
+          effects that Henri eluded to earlier.  For example, on AIX, Hubert
+          tried a program that displays the current locale encoding.  When
+          invoked with <tt>LANG=C</tt>, it indicated ISO-8859-1.  An implicit
+          call to <tt>std::setlocale()</tt> would change this behavior.</li>
+      <li>Tom said he would like to see a concrete example of that behavior.</li>
+      <li><em>[Editor's note: Tom later experimented on a Linux system and
+          observed the same behavior:
+<pre>
+$ cat t.cpp 
+#include &lt;langinfo.h&gt;
+#include &lt;locale&gt;
+#include &lt;cstdio&gt;
+
+int main() {
+  std::printf("%s\n", nl_langinfo(CODESET));
+  std::setlocale(LC_CTYPE, "");
+  std::printf("%s\n", nl_langinfo(CODESET));
+}
+
+$ g++ t.cpp -o t
+
+$ LANG=C.UTF-8 ./t
+ANSI_X3.4-1968
+UTF-8
+</pre>
+          </em>]</li>
+      <li>Zach suggested that the multibyte conversion functions don't really
+          work now, so changes can be made.</li>
+      <li>Hubert disagreed and stated they work exactly as intended.</li>
+      <li>Steve stated that functions like <tt>std::wctomb</tt> will silently
+          drop or replace characters for the "C" locale.</li>
+      <li>Tom asked Zach if this is an example of what he meant when he said
+          they were broken.</li>
+      <li>Zach replied, yes.</li>
+      <li>Henri noted that silently dropping/replacing characters can be a
+          security issue.  By specifying behavior, we may reduce security
+          problems.</li>
+      <li>Hubert agreed that, if you don't do proper error checking, that can
+          lead to problems.</li>
+      <li>Tom asked if these functions have appropriate error handling
+          interfaces.</li>
+      <li>JeanHeyd stated that they do, they return -1 on error.</li>
+      <li>Tom clarified, yes, they return -1 if an ill-formed code unit sequence
+          is encountered, but do they also return in error if a character lacks
+          representation in the current locale and a replacement character is
+          substituted?  Tom thought at least some implementations substituted
+          replacement characters without errors.</li>
+      <li>Tom summarized the ramifications of an implicit
+          <tt>std::setlocale()</tt> call; doing so is a breaking change given
+          Henri and Hubert's observations about querying the current locale
+          encoding.</li>
+      <li>Hubert agreed, noting that non-exotic platforms are impacted.</li>
+      <li>Steve suggested that the observeable impact should be limited to
+          querying locale properties.</li>
+      <li>Hubert stated that may be true, but that we haven't discussed presumed
+          execution ncoding yet.  The standard only discusses one execution
+          encoding, but there are two.</li>
+      <li>Tom acknowledged and added that we know this to be problematic as it
+          imposes a lowest common denominator approach for encoding literals.
+          If the presumed execution encoding were UTF-8, that would clearly be
+          problematic on z/OS, but even on ASCII based platforms, if the locale
+          can be changed at run-time, that limits use of UTF-8 in literals.</li>
+      <li>Hubert commented that the fallout for z/OS for changing presumed
+          execution encoding may not so bad because extensions are already
+          available to specify execution encoding and to opt into an ASCII based
+          encoding.  Additional support might be needed for locale
+          encodings.</li>
+      <li>Tom asked to clarify what was meant by additional support.</li>
+      <li>Hubert responded that he was thinking about message catalogs used with
+          translation.  Generally, messages can be written in a common subset of
+          characters available in all locales.  If we mandated an encoding that
+          doesn't share a common subset (e.g., UTF-8 on a predominantly EBCDIC
+          based platform), then strings would have to be maintained in resource
+          files outside of translation units, or written in escape
+          sequences.</li>
+      <li>Tom asked if Unicode escape sequences are used much on z/OS.</li>
+      <li>Hubert responded that, in newer code, yes, but generally only in
+          Unicode literals, not in ordinary or wide literals.</li>
+      <li>Tom returned to the question of benefits of mandating a single
+          execution encoding.  If we did so, then we could make text processing
+          decisions at compile-time.</li>
+      <li>JeanHeyd suggested that we can do that anyway.</li>
+      <li>Tom responded that, no, evaluation of functions that are locale
+          dependent must be deferred until run-time since the encoding is not
+          known.</li>
+      <li>Tom asked about the feasibility of changing the default locale given
+          existing ecosystems.  We would have to work with POSIX, WG14,
+          implementors, other languages?</li>
+      <li>Zach reiterated that he wants to see the portability problems writing
+          to terminals be fixed.</li>
+      <li>Tom asked, but isn't that a problem not specific to C++?  All
+          languages face this issue.</li>
+      <li>Zach noted, for all processes, data comes out as bytes, but terminals
+          can't handle them.</li>
+      <li>JeanHeyd noted that codecvt facets may interfere, but the primary
+          difficulty programmers face on Windows is that the default terminal
+          settings and execution encoding are locale dependent.</li>
+      <li>Zach observed that, if everything was UTF-8, then the terminal could
+          just do the right thing.  But we can't mandate behavior for all
+          languages.</li>
+      <li>Henri asked if Microsoft's new terminal might help.</li>
+      <li>Tom stated that it should, but will require some form of opt-in.
+          Historically, Microsoft's default console encoding has been
+          constrained by backward compatibility.  The encoding of the console
+          differs from the locale encoding in order to support those old
+          applications that depend on line drawing character sets.  Unclear how
+          new applications will opt-in to UTF-8 behavior.</li>
+      <li>Zach suggested that just having a way to determine if the current
+          locale supported UTF-8 would be useful.</li>
+      <li>Henri asserted that the experience with Python demonstrated that
+          such approaches don't work in practice.  Asking the C environment what
+          the execution encoding is rather than just assuming it may actually
+          cause more problems.  What would you do if the current encoding wasn't
+          compatible?</li>
+      <li>Zach replied that, if the encoding is known, then the program can
+          convert.</li>
+      <li>Tom stated that is how the multibyte conversion functions are already
+          specified to work; if they are used, then the output will match locale
+          encoding.</li>
+      <li>JeanHeyd expressed having unsatisfactory experience with the multibyte
+          conversion functions.  For example, Microsoft's implementation of
+          <tt>mbrtoc32</tt> unconditionally converts between UTF-8 and UTF-32 in
+          violation of the standard.  The conversion functions are also unable
+          to detect some kinds of mojibake; for many single byte encodings, all
+          possible code unit sequences are valid.</li>
+      <li>Hubert concurred that the multibyte conversion functions are not a
+          good alternative to ICU.  Discussions about <tt>source_location()</tt>
+          are touching on a bigger problem; C++ is just one language residing in
+          a large ecosystem in which implementors are beholden to the platforms
+          they support.</li>
+      <li>Henri asked about wide characters being compatible across locales.
+          What encoding does z/OS use for them?</li>
+      <li>Hubert deferred to documentation and noted that, on AIX, the wide
+          character set does vary for some Chinese locales.</li>
+      <li>Tom stated that the wide character set on z/OS is a wide form of
+          EBCDIC with support for ISO-2022 escape sequences.</li>
+      <li>Hubert followed up regarding the wide character sets used on AIX.
+          Depending on the size of <tt>wchar_t</tt>, either UTF-16 or UTF-32 is
+          used except for the Taiwanese locale which uses Big-5.</li>
+      <li>Tom asked JF what benefits Apple might see from changing the default
+          locale encoding to UTF-8.</li>
+      <li>JF responded that there would be some simplicity.</li>
+      <li>Tom pondered if the biggest benefit to Apple would come from dropping
+          locale dependent encoding completely.</li>
+      <li>Hubert asserted that isn't feasible; IBM customers are known to create
+          their own custom locales.</li>
+      <li>Steve noted that one way in which applications are meeting the
+          requirement for GB18030 by the PRC is via locales.</li>
+      <li>Henri expressed a belief that the PRC doesn't actually require GB18030
+          support; rather that the mandatory character subset from it be
+          supported.</li>
+      <li>Steve stated that he was required to add support for GB18030 and did
+          so via conversions at program boundaries.</li>
+      <li>JeanHeyd suggested that no one is really looking to deprecate locale
+          support.  We just want to make text processing easier and better
+          locale facilities would help.</li>
+      <li>Henri stated that he would like to deprecate broken character
+          classification functions like <tt>isalpha()</tt> since they can't
+          properly handle Unicode inputs.</li>
+      <li>JeanHeyd suggested that, if we had new and improved locale primitives,
+          then we could deprecate the old ones.</li>
+    </ul>
+  </li>
+  <li>Discussion then moved on to an issue that JF raised on the mailing list
+      concerning Unicode characters in identifiers.
+    <ul>
+      <li><a href="http://www.open-std.org/pipermail/unicode/2019-May/000367.html">
+          http://www.open-std.org/pipermail/unicode/2019-May/000367.html</a></li>
+      <li><a href="https://github.com/sg16-unicode/sg16/issues/48">
+          https://github.com/sg16-unicode/sg16/issues/48</a></li>
+      <li>Tom briefly introduced the topic.  The C++ standard specifies a
+          subset of Unicode characters that may be used in identifiers.  That
+          specification is via a series of code point ranges in
+          <a href="http://eel.is/c++draft/lex.name#1">[lex.name]p1</a>, but the
+          standard doesn't offer a rationale for the specified ranges.  It seems
+          likely that the ranges aren't being maintained as Unicode
+          evolves.</li>
+      <li>JF stated that the current ranges lack justification, but that isn't
+          much of a problem in practice.  Clang accepts identifiers using the
+          specified code points, but gcc does not, so such identifiers are not
+          portable in practice.  Perhaps the standard should just adopt and
+          defer to
+          <a href="https://unicode.org/reports/tr31">UAX#31</a>.</li>
+      <li>Henri asked what the motivation is to address this if it isn't a
+          problem in practice.</li>
+      <li>JF responded that it is a problem in principle.  It is unclear why
+          gcc allows the code points in identifiers if specified via <tt>\u</tt>
+          escapes, but not when the actual characters are present in the source
+          encoding.  If the standard was more precise, perhaps implementations
+          would be more consistent.  Also, such characters should be allowed in
+          module names and we should use the same identifier scheme there.</li>
+      <li>Henri asked how much of the concern is separating identifiers from
+          operators.</li>
+      <li>JF responded little since there are no plans to, for example, adopt
+          Unicode math symbols as operators.</li>
+      <li>Hubert provided a little history.  The existing code point ranges were
+          provided by Clark Nelson in WG14's
+          <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1518.htm">N1518</a>
+          and were based on the version of
+          <a href="https://unicode.org/reports/tr31">UAX#31</a> current at that
+          time.</li>
+      <li>Hubert stated that it would be annoying to have the standard defer to
+          a Unicode TR as doing so makes it that much more difficult to
+          determine what the actual rules are for a given standard.</li>
+      <li>Tom suggested that deferring to a Unicode TR would at least have the
+          benefit of the ranges matching whatever version of the Unicode
+          standard the implementation adheres to.  This would presumably help
+          maintain the ranges as characters are added over time.</li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2019_05_22">May 22nd, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Axel Andrejs from Microsoft will present and discuss Microsoft's ongoing
+      efforts to improve UTF-8 support in Windows.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Axel Andrejs</li>
+  <li>Henri Sivonen</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Microsoft's on-going efforts to improve UTF-8 support in Windows.
+    <ul>
+      <li>Axel lead with some Windows history and current efforts:
+        <ul>
+          <li>Windows was initially developed using locale dependent code
+              pages, but switched to UTF-16 long ago.</li>
+          <li>Today, the industry is moving to UTF-8, especially on the
+              web.</li>
+          <li>So, what to do about UTF-8?  Initial efforts were to improve
+              resource managers, but Windows remains UTF-16 based.</li>
+          <li>Now, what about the rest of the OS?  Windows 10 added support
+              for UTF-8 as an (algorithmic) active code page (ACP).</li>
+          <li>All of Windows' "ANSI" interfaces use
+              <tt>MultiByteToWideChar()</tt> to convert <tt>char</tt> based
+              input to UTF-16 using the active code page.  This suffices to
+              make UTF-8 mostly magically work, though Microsoft platforms
+              remain UTF-16 based.</li>
+          <li>Within the industry, most Windows developers don't test support
+              for many code pages; usually just a few for critical markets.
+              This leaves a large testing gap.</li>
+          <li>UTF-8 poses some problems as a code page.  Testing UTF-8
+              support has revealed cases of code that fails due to a number of
+              issues:
+            <ul>
+              <li>It is variable length and may require more than two code units
+                  per code point.  Code that (incorrectly) assumes wide strings
+                  are always larger (in terms of bytes) than the corresponding
+                  narrow encoding can cause buffer overflows.</li>
+              <li>The native C and C++ character type is <tt>char</tt> which is
+                  good in terms of flexibility, but bad in terms of type and
+                  encoding safety.  <tt>char</tt> can be used for UTF-8, but
+                  failure to perform conversions where needed leads to
+                  mojibake.</li>
+              <li>Some code just plain fails with any non-ASCII characters.</li>
+              <li>Many programs assume an encoding (ASCII or Windows-1252) and
+                  fail with UTF-8.</li>
+            </ul>
+          </li>
+          <li>Because of known cases of existing code failing when the active
+              code page is changed to UTF-8, Microsoft has no plans to ever
+              change an existing machine's active code page.  There is too much
+              potential for breakage.</li>
+          <li>Current efforts include improving UTF-8 support for individual
+              Windows components, resource managers, resource loaders, etc...
+              UTF-8 strings tend to be approximately 1/3 the size of wide
+              strings on average.  Focus on where that savings is
+              beneficial.</li>
+          <li>UTF-8 as active code page is still a beta option because there are
+              major applications that don't work correctly when it is enabled.
+              Most applications work ok in the US, but have problems
+              elsewhere.</li>
+          <li>Outside Windows desktop where compatibility with legacy
+              applications is less important, Windows platforms are moving more
+              towards UTF-8.  These include Xbox, Hololens, smart devices,
+              etc...</li>
+          <li>Bifurcation will continue.  We may evangelize UTF-8 in some
+              markets, but are unlikely to ever be able to move the entire
+              Windows ecosystem to UTF-8.</li>
+          <li>The latest Windows 10 release allows executables to opt-in to
+              UTF-8 as active code page via a fusion manifest.</li>
+          <li>May add support for executables to opt-out of UTF-8 support for
+              compatibility, either via a manifest setting or application
+              compatibility shim.</li>
+          <li>Windows subsystems will continue to migrate to UTF-8.</li>
+          <li>Would like to discontinue the ANSI/Wide interface split.  Likely
+              to introduce more interfaces that are UTF-8/Wide or just
+              UTF-8.</li>
+          <li>There are no plans for a native Windows UTF-8 kernel.</li>
+          <li>We'll continue to reach out to major applicaions that are found
+              not to work correctly when the active code page is set to
+              UTF-8.</li>
+          <li>Within Microsoft, a number of developers have UTF-8 enabled as
+              the active code page on their workstations.</li>
+          <li>We will continue to do more ecosystem outreach as our confidence
+              in UTF-8 as active code page increases.</li>
+          <li>But, Windows will always need to retain compatibility.</li>
+        </ul>
+    </ul>
+  </li>
+  <li>Henri asked if there are plans to augment existing ANSI/Wide interfaces
+      with U8 variants that only work with UTF-8.</li>
+  <li>Axel responded that they would like to do so where it makes sense.
+      Decisions to do so are up to component owners.  Feedback and requests for
+      specific interfaces are appreciated.  There are no plans for mass
+      conversion.</li>
+  <li>Henri asked what would happen if an executable that was marked to run
+      with UTF-8 was run on an older platform.</li>
+  <li>Axel replied uncertainly that the fusion manifest entries would probably
+      just be ignored.  This is what happens with Universal Windows Programs
+      (UWP) support.  Unsure if there is a way to mark the executable to fail
+      in such cases, but the executable could be marked to require a particular
+      level of OS support.</li>
+  <li>Mark asked how an executable that opts-in to UTF-8 as ACP would
+      interoperate at the command line.  Is any transcoding performed for
+      stdin/stdout?</li>
+  <li>Axel responded that, at present, all the opt-in does is override the ACP,
+      so no, no transcoding of the command line or standard streams is
+      performed.</li>
+  <li>Mark observed that this can then lead to failures.</li>
+  <li>Axel affirmed adding that thought has been put into implicit transcoding,
+      but it is a hard problem.</li>
+  <li>Tom agreed noting that file names pose a significant problem since they
+      may not be representable in a particular encoding.</li>
+  <li>Axel acknowledged, but stated that most file names are UTF-16.</li>
+  <li>Henri asked about the new terminal coming to Windows 10.  How will it
+      know how to interpret the output of a particular program?</li>
+  <li>Axel stated that there are active discussions about this and decisions
+      are not yet settled, but people are working on it.</li>
+  <li>Tom asked about recommendations for current developers.  How do we move
+      into this new world?</li>
+  <li>Axel responded that <tt>char*</tt> is kind of nice for it's genericity
+      but isn't safe.  Stronger types add safety, but increase the interface
+      surface area.  <tt>char8_t</tt> is a big topic.  ICU supports both
+      <tt>char16_t</tt> and <tt>wchar_t</tt>, but adds surface area.  As a
+      global model, that doesn't work too well.  If targeting Windows only,
+      best to stick to wide strings.  For cross platform, we're all on this
+      journey.  Would like more feedback.  There are always workarounds because
+      developers can do conversions themselves.  If there is demand, we'll add
+      additional interfaces if the value is there.  Would like more support for
+      command line handling.  Really want the industry to move to UTF-8 as ACP.
+      Library writers have to worry about all code pages anyway, including now
+      UTF-8.</li>
+  <li>Mark asked how new types like <tt>char8_t</tt> fit in.</li>
+  <li>Axel expressed similar curiosity.</li>
+  <li>Tom provided some thoughts on <tt>char8_t</tt>.  Unsure what kind of
+      adoption will occur.  Expecting to see uses in niches or as an internal
+      encoding type.  Type safety can be used to guard components that are
+      UTF-8 only from components that are locale dependent.</li>
+  <li>Henri asked if type based alias analysis is planned for the Microsoft
+      compiler.</li>
+  <li>Axel responded that he was unsure of the compiler team's plans.  Windows
+      interfaces have pretty basic types, so there is a lot of targeting lowest
+      common denominator.  Always looking to take advantage of new
+      features.</li>
+  <li>Mark offered the idea of a compiler option that would allow use of
+      <tt>char8_t</tt>, but would mangle it the same as <tt>char</tt> for
+      compatibility with prior compiler versions.  This would require errors for
+      ambiguous overloads, but might still be useful.</li>
+  <li>Tom expressed interest noting that Microsoft already does something
+      similar to duplicate symbols for <tt>char16_t</tt> and
+      <tt>wchar_t</tt>.</li>
+  <li>Axel confirmed noting that they sometimes put code in headers and compile
+      it twice (e.g., for ANSI and UNICODE expansions of <tt>TCHAR</tt>).</li>
+  <li>Henri asked why <tt>char16_t</tt> was not made the same type as
+      <tt>wchar_t</tt> on Windows.</li>
+  <li>Hubert responded that C++ requires different types for overloading
+      purposes.  Also because the encoding can differ.</li>
+  <li>Henri pondered whether, in retrospect, it would have been better if
+      </tt>char16_t</tt> was specified as the same type as <tt>wchar_t</tt> on
+      Windows and <tt>char32_t</tt> the same type as <tt>wchar_t</tt> on POSIX
+      systems.</li>
+  <li>Steve stated that anyone attempting to write portable code is unhappy with
+      <tt>wchar_t</tt>; it just isn't portable.</li>
+  <li>Mark added that the type separation is useful.  For <tt>char8_t</tt>, the
+      non-aliasing properties are a good motivator for a separate type.</li>
+  <li>Steve concurred noting that injecting Unicode into the type system will be
+      useful.  Additionally, <tt>std::byte</tt> will help us move further away
+      from <tt>char</tt> for everything.</li>
+  <li>Axel mentioned that, on Windows, there are few APIs that take
+      <tt>char*</tt> and that expect an encoding other than the ACP.  The only
+      indication is in documentation; the type system can't help enforce
+      encoding expectations today.</li>
+  <li>Mark asked what code page is used for Windows Subsystem for Linux
+      (WSL).</li>
+  <li>Axel responded that he would have to check, but once code reaches the
+      kernel, everything is UTF-16.</li>
+  <li>Tom observed that different encoding expectations in Windows vs the WSL
+      makes piping data problematic.</li>
+  <li>Mark surmised that the WSL uses UTF-8 like most Linux distributions.</li>
+  <li>Axel added that the International Platform team didn't do anything
+      special for WSL.</li>
+  <li>Mark speculated that, if we decided to be very aggressive, we could
+      require C++ code on Windows to run with the UTF-8 manifest option.</li>
+  <li>Axel confirmed, but noted that requires new OS versions.</li>
+  <li>Tom asked Axel if his team had reached out to other language maintainers
+      like for Python, Ruby, and Go.</li>
+  <li>Axel responded yes for .NET languages obviously, but not for other
+      languages.  Need to reach critical mass internally first, and then will
+      expand outreach to other languages.</li>
+  <li>Henri asked about enabling app development with UTF-8 on older OS
+      versions.  Are there any plans for the standard library to provide UTF-8
+      interfaces that convert to internal UTF-16 ones?</li>
+  <li>Axel responded that work is progressing to improve support for UTF-8 in
+      the CRT, but not sure of the time line.</li>
+  <li>Mark asked about any work on interfaces that operate at the grapheme
+      cluster level.</li>
+  <li>Axel responded no, at present, they are more focused on basic APIs like
+      <tt>CreateProcess</tt>.</li>
+  <li>Tom asked how SG16 can help with the effort to improve UTF-8 support.</li>
+  <li>Axel explained that the big challenge is how to handle the lowest common
+      denominator.  New language features are used internally, but public APIs
+      are very old school and limited to basic types.</li>
+  <li>Tom clarified, so keeping interfaces indpeendent of fancy new language
+      features is helpful?</li>
+  <li>Axel responded yes, but always interested in new types that make sense
+      within the Windows type system.</li>
+  <li>Tom summarized all of the different encodings that the C++ standard has
+      to interact with; source encoding, internal compiler encoding, presumed
+      (compile-time) execution and wide execution encodings, (run-time)
+      execution and wide execution encodings, UTF-8, UTF-16, and UTF-32.  How
+      do all of these encodings affect you?</li>
+  <li>Axel responded that they sometimes have to guess about encodings; may rely
+      on BOMs or recognition of UTF-8.</li>
+  <li>Tom asked if Microsoft had ever considered allowing filesystems to support
+      tagging files as having a particular encoding.  Some other OSs like z/OS
+      have such support.</li>
+  <li>Axel responded no, not aware of any such efforts.</li>
+  <li>Mark asked if Windows makes use of the Unicode Private Use Area
+      (PUA).</li>
+  <li>Axel responded yes, because, given the size of the development team at
+      Microsoft, the answer to "do we use ..." is always yes somewhere.</li>
+  <li>Henri commented that Microsoft's eudcedit.exe editor generates a magic
+      font for the PUA.</li>
+  <li>Tom asked if Axel had any thoughts about changing the default "C" locale
+      to be UTF-8.</li>
+  <li>Axel responded that it might work out ok.  Old CRTs still get used though.
+      But this would make it easy for programmers to start using UTF-8.</li>
+  <li>Mark noted that Microsoft maintains backward compatibility, but that there
+      may be some desire or intent for an ABI break at some point.  Perhaps that
+      would be the right time to change the default locale encoding.</li>
+  <li>Henri asked if layering new versions of C++ on top of older C and C++
+      run-times is supported or whether new C++ language standards require the
+      latest C and C++ run-time libraries.  Would it be possible to have the
+      compiler set the per-binary UTF-8 flag depending on target language
+      level?</li>
+  <li>Axel responded that the UTF-8 flag affects the process, so can't depend
+      on DLL options or settings.</li>
+  <li>Mark brought up a new issue; at some point, we will require various
+      Unicode data sets.  Windows now distributes a version of ICU.  Concerns
+      about the size of the chrono library were raised when it was added to the
+      standard and it is much smaller than the Unicode data set.  We'll likely
+      require at least data for normalization and collation.</li>
+  <li>Axel provided some additional background.  Windows has NLS interfaces.
+      ICU was added to Windows 10 two years ago, but application developers
+      still want to target Windows 7 where it isn't available.  Windows 10 now
+      supports about 3-4 times more locales than Windows 7 due to the inclusion
+      of the CLDR.  Carrying ICU with an application is becoming a significant
+      servicing issue.  Time zone data bases were integrated into Windows to
+      address similar servicing issues, but have to be updated often and quickly
+      for geopolitical reasons.  CLDR data is unlikely to be updated as
+      frequently.</li>
+  <li>Henri asked for more details.  How is ICU updated in Windows 10?  Will
+      older Windows 10 releases get updates?</li>
+  <li>Axel responded that the latest available ICU is distributed in each 6
+      month release cycle, but that locale data and Unicode versions are not
+      otherwise patched.  Exceptions could be made, but would require
+      significant motivation like the geopolitical reasons that motivate time
+      zone updates.</li>
+  <li>Henri surmised that older Windows 10 releases won't get support for new
+      Unicode characters, data tables, etc...</li>
+  <li>Axel confirmed.</li>
+  <li>Hubert stated that he had heard that the ICU distributed in Windows 10
+      does not exactly match any official ICU release.</li>
+  <li>Axel confirmed adding that patches are made for geopolticial reasons.</li>
+  <li>JeanHeyd stated that the road to UTF-8 support is going to be a long one.
+      He plans to take papers to the C and POSIX committees proposing to change
+      the default locale to UTF-8 in order to facilitate a similar change for
+      C++.  The goal is to allow applications to at least be able to communicate
+      without mangling text.  It sounds like Microsoft is heading in a good
+      direction, but the C committee may be reluctant to make such a
+      change.</li>
+  <li>Axel agreed that this will be a long journey and encouraged everyone to
+      play with the new UTF-8 functionality, report problems, and poke
+      application providers to improve support.  The problems are not massive,
+      but cost/benefit analysis must line up as always.  Application providers
+      will be required to support UTF-8 as ACP for some Microsoft platforms
+      like the Xbox and Hololens.</li>
+  <li>JeanHeyd commented that our biggest concern has been how to migrate to a
+      UTF-8 world.  At least it sounds like there is a path to follow.</li>
+</ul>
+
+
+</body>

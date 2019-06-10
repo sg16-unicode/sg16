@@ -5,7 +5,7 @@ ISO JTC1/SC22 WG21 and WG14 papers:
 
 WG21 Number     | Title | Revisions
 --------------- | ----- | ----
-[DXXXXR0][]     | SG16: Unicode meeting summaries 2019/01/23 - 2019/03/27 | [R0][DXXXXR0]
+[P1666R0][]     | SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22 | [R0][P1666R0]
 [P1423R1][]     | char8_t backward compatibility remediation | [R1][P1423R1] [R0][P1423R0]
 [P1422R0][]     | SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09 | [R0][P1422R0]
 [P1253R0][]     | SG16 Guidelines for Review of Proposals | [R0][P1253R0]
@@ -47,9 +47,9 @@ WG14 Number     | Title
 [P1139R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1139r0.html
 [P1139R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1139r1.html
 [P1237R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1237r0.html
-[P1253R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1253r0.html
 [P1238R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1238r0.html
+[P1253R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1253r0.html
 [P1422R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1422r0.html
 [P1423R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1423r0.html
 [P1423R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1423r1.html
-[DXXXXR0]: https://rawgit.com/sg16-unicode/sg16/master/papers/dxxxxr0-sg16-meeting-summaries.html
+[P1666R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1666r0.html
