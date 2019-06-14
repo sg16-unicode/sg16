@@ -16,7 +16,7 @@ Editor: Zach Laine, whatwasthataddress@gmail.com
 ED:
 Repository: sg16-unicode/sg16
 Abstract: SG16 initial Unicode direction and guidance for C++20 and beyond.
-Date: 2019-06-11
+Date: 2019-06-13
 Markup Shorthands: markdown yes, biblio yes, markup yes
 </pre>
 
@@ -38,6 +38,7 @@ This paper discusses a set of constraints, guidelines, directives, and non-direc
 # Changes since [[P1238R0]] # {#changes}
 
 - Added constraint 7, File names do not have an associated character encoding.
+- Added non-directive 3, Encoding of file names.
 
 
 # Constraints: Accepting the things we cannot change # {#constraints}
@@ -119,7 +120,7 @@ Unlike POSIX, Windows does not guarantee that the path separator character ('\' 
 
 Apple's APFS and HFS+ filesystems require well-formed UTF-8 file names.  Additionally, they both support normalization-insensitive file names.  APFS stores normalization-preserved file names with an associated hash of the Unicode 9.0 NFD form of the name thereby enabling the file to be opened with a name that doesn't match the original normalization.  HFS+ stores file names in Unicode 3.2 NFD form and normalizes when comparing file names.  Since the normalization forms used by these filesystems are tied to specific Unicode versions, it is possible for names normalized according to a different Unicode version to fail to match as intended.  More information can be found in the ["Frequently Asked Questions - Implementation" section of the Apple File System Guide](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/APFS_Guide/FAQ/FAQ.html#//apple_ref/doc/uid/TP40016999-CH6-DontLinkElementID_3) <sup>[[AppleFSG]]</sup>.
 
-It is common for C++ programs to produce output that contains file names.  It is likewise commonly expected for programs or computer users to be able to extract file names from such output and to be able to open the indicated file directly using the provided name.  The requirement to represent file names accurately has profound implications for text processing.  It means that, output that is otherwise well-formed text, may be correct, but not well-formed from a text encoding perspective if it contains file names.  Likewise, if the output of a program is well-formed text, but is transformed in some way, perhaps transcoded to another encoding or Unicode normalization form, then file names within the text may be damaged.  This places limits on what an implementation can assume about the output of a program.
+It is common for C++ programs to produce output that contains file names.  It is likewise commonly expected for programs or computer users to be able to extract file names from such output and to be able to open the indicated file directly using the provided name.  The requirement to represent file names accurately has profound implications for text processing.  It means that, output that is otherwise well-formed text, may be correct, but not well-formed from a text encoding perspective if it contains file names.  Likewise, if the output of a program is well-formed text, but is transformed in some way, perhaps transcoded to another encoding or Unicode normalization form, then file names within the text may be damaged.  Similar concerns apply to command lines as well; a program cannot unconditionally expect well-formed text for all of its command line arguments if it accepts file names.  These constraints place limits on what an implementation can assume about the input and output of a program.
 
 
 # Guidelines: Keep your eyes on the road, your hands upon the wheel # {#guidelines}
@@ -223,7 +224,7 @@ While not an SG16 priority, it will sometimes be necessary to resolve existing i
 
 # Non-directives: Thanks, but No Thanks # {#non-directives}
 
-The C++ standard currently lacks the necessary foundations for obtaining or displaying Unicode text through human interface devices. Until that changes, addressing user input and graphical rendering of text will remain out of scope for SG16.
+The C++ standard currently lacks the necessary foundations for obtaining or displaying Unicode text through human interface devices. Until that changes, addressing user input and graphical rendering of text will remain out of scope for SG16.  Likewise, encodings used for I/O (terminals, stdin, stdout, environment variables, file systems, etc...) are typically determined by the underlying platform that a C++ implementation runs on and cannot be dictated by the C++ standard.
 
 
 ## Non-directive: User input ## {#non-directive-ui}
@@ -231,9 +232,14 @@ The C++ standard currently lacks the necessary foundations for obtaining or disp
 Keyboard scan codes, key mapping, and methods of character composition entry are all fantastically interesting subjects, but require lower level device access than are currently provided by standard C++.  SG16's scope begins at the point where text is presented in memory as an encoded sequence of "characters".
 
 
-## Non-directive: Fonts, graphical text rendering  ## {#non-directive-graphics}
+## Non-directive: Fonts, graphical text rendering ## {#non-directive-graphics}
 
 What Unicode provides and what fonts and graphical text rendering facilities need are two related but distinct problems.  SG16's scope ends at the point where text is handed off to code capable of interacting with output devices like screens, speech readers, and brail terminals.
+
+
+## Non-directive: Encoding of file names ## {#non-directive-file-names}
+
+The permissible set of file names that a program may encounter is determined by the platform (C++ implementation, operating system, and file system) that the program runs on.  SG16 is not at liberty to place restrictions on the set of permissible characters or encodings (or lack there of) used to name files.
 
 
 # Acknowledgements # {#acknowledgements}

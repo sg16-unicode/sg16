@@ -1229,7 +1229,7 @@ Possible extra rowspan handling
   </style>
   <meta content="Bikeshed version 47cb5324cd11789aef12f220cf86d1780f94ab9c" name="generator">
   <link href="https://isocpp.org/favicon.ico" rel="icon">
-  <meta content="209cd791d78b961d1253389611916c0aa1b11ba1" name="document-revision">
+  <meta content="38a76b76892a765948cc5b045e101561f6187f88" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -1439,7 +1439,7 @@ pre .property::before, pre .property::after {
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">P1238R1<br>SG16: Unicode Direction</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Proposal, <time class="dt-updated" datetime="2019-06-11">2019-06-11</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Proposal, <time class="dt-updated" datetime="2019-06-13">2019-06-13</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Authors:
@@ -1508,6 +1508,7 @@ pre .property::before, pre .property::after {
      <ol class="toc">
       <li><a href="#non-directive-ui"><span class="secno">6.1</span> <span class="content">Non-directive: User input</span></a>
       <li><a href="#non-directive-graphics"><span class="secno">6.2</span> <span class="content">Non-directive: Fonts, graphical text rendering</span></a>
+      <li><a href="#non-directive-file-names"><span class="secno">6.3</span> <span class="content">Non-directive: Encoding of file names</span></a>
      </ol>
     <li><a href="#acknowledgements"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
     <li>
@@ -1538,6 +1539,8 @@ pre .property::before, pre .property::after {
    <ul>
     <li data-md>
      <p>Added constraint 7, File names do not have an associated character encoding.</p>
+    <li data-md>
+     <p>Added non-directive 3, Encoding of file names.</p>
    </ul>
    <h2 class="heading settled" data-level="2" id="constraints"><span class="secno">2. </span><span class="content">Constraints: Accepting the things we cannot change</span><a class="self-link" href="#constraints"></a></h2>
    <p>C++ has a long history and, as unfortunate as it may be at times, the past remains stubbornly immutable. As we work to improve the future, we must remain cognizant of the many billions of lines of C++ code in use today and how we will enable past work to retain its value in the future. The following limitations reflect constraints on what we cannot affordably change, at least not in the short term.</p>
@@ -1572,7 +1575,7 @@ pre .property::before, pre .property::after {
    <p>Windows also natively supports file systems that do not use "wide" file names, for example exFAT, ISO-9660, and NFS.  As with POSIX, interpretation of file names on these file systems is locale sensitive.</p>
    <p>Unlike POSIX, Windows does not guarantee that the path separator character ('\' U+005C Backslash) exists in all supported locale dependent character sets.  As a result, Windows installations configured for Japanese locales will display path separators using the ¥ (U+00A5 Yen) character.  Also unlike POSIX, Windows supports "ANSI" encodings that allow 0x5C to appear as a trailing code unit in file names which means that a simple search for the backslash character is insufficient to identify path separators in an "ANSI" encoded file name.</p>
    <p>Apple’s APFS and HFS+ filesystems require well-formed UTF-8 file names.  Additionally, they both support normalization-insensitive file names.  APFS stores normalization-preserved file names with an associated hash of the Unicode 9.0 NFD form of the name thereby enabling the file to be opened with a name that doesn’t match the original normalization.  HFS+ stores file names in Unicode 3.2 NFD form and normalizes when comparing file names.  Since the normalization forms used by these filesystems are tied to specific Unicode versions, it is possible for names normalized according to a different Unicode version to fail to match as intended.  More information can be found in the <a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/APFS_Guide/FAQ/FAQ.html#//apple_ref/doc/uid/TP40016999-CH6-DontLinkElementID_3">"Frequently Asked Questions - Implementation" section of the Apple File System Guide</a> <sup><a data-link-type="biblio" href="#biblio-applefsg">[AppleFSG]</a></sup>.</p>
-   <p>It is common for C++ programs to produce output that contains file names.  It is likewise commonly expected for programs or computer users to be able to extract file names from such output and to be able to open the indicated file directly using the provided name.  The requirement to represent file names accurately has profound implications for text processing.  It means that, output that is otherwise well-formed text, may be correct, but not well-formed from a text encoding perspective if it contains file names.  Likewise, if the output of a program is well-formed text, but is transformed in some way, perhaps transcoded to another encoding or Unicode normalization form, then file names within the text may be damaged.  This places limits on what an implementation can assume about the output of a program.</p>
+   <p>It is common for C++ programs to produce output that contains file names.  It is likewise commonly expected for programs or computer users to be able to extract file names from such output and to be able to open the indicated file directly using the provided name.  The requirement to represent file names accurately has profound implications for text processing.  It means that, output that is otherwise well-formed text, may be correct, but not well-formed from a text encoding perspective if it contains file names.  Likewise, if the output of a program is well-formed text, but is transformed in some way, perhaps transcoded to another encoding or Unicode normalization form, then file names within the text may be damaged.  Similar concerns apply to command lines as well; a program cannot unconditionally expect well-formed text for all of its command line arguments if it accepts file names.  These constraints place limits on what an implementation can assume about the input and output of a program.</p>
    <h2 class="heading settled" data-level="3" id="guidelines"><span class="secno">3. </span><span class="content">Guidelines: Keep your eyes on the road, your hands upon the wheel</span><a class="self-link" href="#guidelines"></a></h2>
    <p>Mistakes happen and will continue to happen. Following a few common guidelines will help to ensure we don’t stray too far off course and help to minimize mistakes. The guidelines here are in no way specific to Unicode or text processing, but represent areas where mistakes would be easy to make.</p>
    <h3 class="heading settled" data-level="3.1" id="guideline-practices"><span class="secno">3.1. </span><span class="content">Guideline: Avoid excessive inventiveness; look for existing practice</span><a class="self-link" href="#guideline-practices"></a></h3>
@@ -1649,11 +1652,13 @@ pre .property::before, pre .property::after {
    <h3 class="heading settled" data-level="5.5" id="directive-wording"><span class="secno">5.5. </span><span class="content">Directive: Propose resolutions for existing issues and wording improvements opportunistically</span><a class="self-link" href="#directive-wording"></a></h3>
    <p>While not an SG16 priority, it will sometimes be necessary to resolve existing issues or improve wording to accommodate new features. Issues that pertain to SG16 are currently tracked in our github repo at <a href="https://github.com/sg16-unicode/sg16/issues">https://github.com/sg16-unicode/sg16/issues</a>.</p>
    <h2 class="heading settled" data-level="6" id="non-directives"><span class="secno">6. </span><span class="content">Non-directives: Thanks, but No Thanks</span><a class="self-link" href="#non-directives"></a></h2>
-   <p>The C++ standard currently lacks the necessary foundations for obtaining or displaying Unicode text through human interface devices. Until that changes, addressing user input and graphical rendering of text will remain out of scope for SG16.</p>
+   <p>The C++ standard currently lacks the necessary foundations for obtaining or displaying Unicode text through human interface devices. Until that changes, addressing user input and graphical rendering of text will remain out of scope for SG16.  Likewise, encodings used for I/O (terminals, stdin, stdout, environment variables, file systems, etc...) are typically determined by the underlying platform that a C++ implementation runs on and cannot be dictated by the C++ standard.</p>
    <h3 class="heading settled" data-level="6.1" id="non-directive-ui"><span class="secno">6.1. </span><span class="content">Non-directive: User input</span><a class="self-link" href="#non-directive-ui"></a></h3>
    <p>Keyboard scan codes, key mapping, and methods of character composition entry are all fantastically interesting subjects, but require lower level device access than are currently provided by standard C++.  SG16’s scope begins at the point where text is presented in memory as an encoded sequence of "characters".</p>
    <h3 class="heading settled" data-level="6.2" id="non-directive-graphics"><span class="secno">6.2. </span><span class="content">Non-directive: Fonts, graphical text rendering</span><a class="self-link" href="#non-directive-graphics"></a></h3>
    <p>What Unicode provides and what fonts and graphical text rendering facilities need are two related but distinct problems.  SG16’s scope ends at the point where text is handed off to code capable of interacting with output devices like screens, speech readers, and brail terminals.</p>
+   <h3 class="heading settled" data-level="6.3" id="non-directive-file-names"><span class="secno">6.3. </span><span class="content">Non-directive: Encoding of file names</span><a class="self-link" href="#non-directive-file-names"></a></h3>
+   <p>The permissible set of file names that a program may encounter is determined by the platform (C++ implementation, operating system, and file system) that the program runs on.  SG16 is not at liberty to place restrictions on the set of permissible characters or encodings (or lack there of) used to name files.</p>
    <h2 class="heading settled" data-level="7" id="acknowledgements"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
    <p>SG16 would not exist if not for early and kind encouragement by Beman Dawes.</p>
    <p>Thank you to all 18 individuals who have attended at least one SG16 teleconference and have thereby contributed to the discussions shaping our future direction.</p>
