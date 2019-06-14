@@ -246,7 +246,7 @@ The permissible set of file names that a program may encounter is determined by 
 
 SG16 would not exist if not for early and kind encouragement by Beman Dawes.
 
-Thank you to all 18 individuals who have attended at least one SG16 teleconference and have thereby contributed to the discussions shaping our future direction.
+Thank you to everyone that has attended an SG16 teleconference and has thereby contributed to the discussions shaping our future direction.
 
 <pre class=biblio>
 {
