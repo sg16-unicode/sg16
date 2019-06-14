@@ -20,23 +20,25 @@ Date: 2019-06-13
 Markup Shorthands: markdown yes, biblio yes, markup yes
 </pre>
 
-The SG16 Unicode study group was officially formed at the 2018 WG21 meeting in Jacksonville, Florida. We have not yet had our inaugural meeting (that is planned to be held during the upcoming meeting in San Diego), but we've had an active group of WG21 members meeting via video conference regularly since August of 2017, well before our formation as an official study group. Summaries of these meetings are available at [the SG16 meetings repository](https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md).
+The SG16 Unicode study group was officially formed at the 2018 WG21 meeting in Jacksonville, Florida and had its inaugural meeting at the WG21 meeting in San Diego later that year.  However, an active group of WG21 members has been meeting via video conference regularly since August of 2017, well before our formation as an official study group. Summaries of these meetings are available at [the SG16 meetings repository](https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md).
 
-Our proposals so far have focused on relatively small or foundational features that have a realistic chance of being adopted for C++20. These include:
+Our proposals so far have focused on relatively small or foundational features that had a realistic chance of being accepted for C++20.  The following have been adopted for C++20:
 
-- [P0482R5: char8_t: A type for UTF-8 characters and strings](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html) <sup>[[P0482R5]]</sup>
+- [P0482R6: char8_t: A type for UTF-8 characters and strings](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html) <sup>[[P0482R6]]</sup>
 - [P1025R1: Update The Reference To The Unicode Standard](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1025r1.html) <sup>[[P1025R1]]</sup>
-- [P1041R1: Make char16_t/char32_t string literals be UTF-16/32](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html) <sup>[[P1041R1]]</sup>
-- [P1072R0: Default Initialization for basic_string](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html) <sup>[[P1072R0]]</sup>
-- [P1097R1: Named character escapes](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html) <sup>[[P1097R1]]</sup>
+- [P1041R4: Make char16_t/char32_t string literals be UTF-16/32](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1041r4.html) <sup>[[P1041R4]]</sup>
 
-All other work that we are pursuing is targeting C++23 or later.
+All other work that we are pursuing is targeting C++23 or later.  Proposals so far include:
+
+- [P1072R3: basic_string::resize_default_init](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1072r3.html) <sup>[[P1072R3]]</sup>
+- [P1097R1: Named character escapes](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html) <sup>[[P1097R1]]</sup>
 
 This paper discusses a set of constraints, guidelines, directives, and non-directives intended to guide our continuing efforts to improve Unicode and text processing support in C++. Paper authors intending to propose Unicode or text processing related features are encouraged to consider the perspectives and guidelines discussed here in their designs, or to submit papers arguing against them.
 
 
 # Changes since [[P1238R0]] # {#changes}
 
+- Updates to the introduction to reflect progress made for C++20.
 - Added constraint 7, File names do not have an associated character encoding.
 - Added non-directive 3, Encoding of file names.
 
@@ -56,7 +58,7 @@ Microsoft does not yet offer full support for UTF-8 as the execution encoding fo
 
 IBM has not publicly released a C++11 compliant version of their xlC compiler for z/OS. However, they have [publicly released support for Swift on z/OS](https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os) <sup>[[SwiftOnZ]]</sup>, and Swift is built on top of LLVM and Clang. Though IBM has not publicly released a port of Clang to z/OS, this indicates that such a port exists and a post to the Swift [developers mailing lists confirms it](https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html) <sup>[[ClangOnZ]]</sup>.
 
-The `char16_t` and `char32_t` encodings are currently implementation defined as well. However, all existing implementations use UTF-16 and UTF-32 respectively for these encodings, thus their implementation definedness is not a constraint. \[P1041R1](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html) <sup>[[P1041R1]]</sup> proposes officially standardizing UTF-16 and UTF-32 for these encodings.
+The `char16_t` and `char32_t` encodings are currently implementation defined as well. However, all existing implementations use UTF-16 and UTF-32 respectively for these encodings, thus their implementation definedness is not a constraint. \[P1041R4](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1041r4.html) <sup>[[P1041R4]]</sup> proposes officially standardizing UTF-16 and UTF-32 for these encodings.
 
 
 ## Constraint: The ordinary and wide execution encodings are run-time properties ## {#constraint-runtime}
@@ -65,7 +67,7 @@ The execution and wide execution encodings are not static properties of programs
 
 The dynamic nature of these encodings is not theoretical. On Windows, the execution encoding is determined at program startup based on the current active code page. On POSIX platforms, the run-time encoding is determined by the LANG, LC_ALL, or LC_CTYPE environment variables. Some existing programs depend on the ability to dynamically change (via POSIX `uselocale()` or Microsoft's `_configthreadlocale()`) the current locale (including the execution encoding) in order for a server process to concurrently serve multiple clients with different locale settings. A recent proposal to WG14 [(N2226)](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm) <sup>[[WG14-N2226]]</sup> proposes allowing the current locale settings to vary by thread. Attempting to restrict the ability to dynamically change the execution encoding would break existing code.
 
-Since the `char16_t` and `char32_t` encodings are currently implementation defined, they too could vary at run-time. However, as noted earlier, all implementations currently use UTF-16 and UTF-32 and do not support such variance. \[P1041R1](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html) <sup>[[P1041R1]]</sup> will solidify current practice and ensure these encodings are known at comple-time.
+Since the `char16_t` and `char32_t` encodings are currently implementation defined, they too could vary at run-time. However, as noted earlier, all implementations currently use UTF-16 and UTF-32 and do not support such variance. \[P1041R4](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1041r4.html) <sup>[[P1041R4]]</sup> will solidify current practice and ensure these encodings are known at comple-time.
 
 
 ## Constraint: There is no portable primary execution encoding ## {#constraint-portability}
@@ -135,7 +137,7 @@ C++ has some catching up to do when it comes to Unicode support. This means that
 
 ## Guideline: Avoid gratuitous departure from C ## {#guideline-inline}
 
-C and C++ continue to diverge and that is ok when there is good reason for it (e.g., to enable better type safety and overloading). However, gratuitous departure creates unnecessary interoperability and software composition challenges. Where it makes sense, proposing features that are applicable for C to WG14 will help to keep the common subset of the languages as large as it can reasonably be. \[P1041R1](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html) <sup>[[P1041R1]]</sup> and \[P1097R1](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html) <sup>[[P1097R1]]</sup> are great examples of features that would be appropriate to propose for inclusion in C.
+C and C++ continue to diverge and that is ok when there is good reason for it (e.g., to enable better type safety and overloading). However, gratuitous departure creates unnecessary interoperability and software composition challenges. Where it makes sense, proposing features that are applicable for C to WG14 will help to keep the common subset of the languages as large as it can reasonably be. \[P1041R4](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1041r4.html) <sup>[[P1041R4]]</sup> and \[P1097R1](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1097r1.html) <sup>[[P1097R1]]</sup> are great examples of features that would be appropriate to propose for inclusion in C.
 
 
 # Direction: Designing for where we want to be and how to get there # {#direction}
@@ -148,7 +150,7 @@ There are two primary candidates for use as internal encodings today: UTF-8 and 
 
 Use of the type system to ensure that transcoding is properly performed at program boundaries helps to prevent errors that lead to mojibake. Such errors can be subtle and only manifest in relatively rare situations, making them difficult to discover in testing. For example, failure to correctly transcode input from ISO-8859-1 to UTF-8 only results in negative symptoms when the input contains characters outside the ASCII range.
 
-This is where [the char8_t proposal](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html) <sup>[[P0482R5]]</sup> comes in to play. Having a distinct type for UTF-8 text, like we do for UTF-16 and UTF-32, enables use of any of UTF-8, UTF-16, or UTF-32 as a statically known internal encoding, without the implementation defined signedness and aliasing concerns of `char`, and with protection against accidental interchange with `char` or `wchar_t` based interfaces without proper transcoding having been performed first. Solid support in the type system, combined with statically known encodings, provides the flexibility needed to design safe and generic text handling interfaces, including ones that can support constexpr evaluation. Why might constexpr evaluation be interesting? Consider [the std::embed proposal](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html) <sup>[[P1040R1]]</sup> and the ability to process a text file loaded at compile time.
+This is where [the char8_t proposal](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html) <sup>[[P0482R6]]</sup> comes in to play. Having a distinct type for UTF-8 text, like we do for UTF-16 and UTF-32, enables use of any of UTF-8, UTF-16, or UTF-32 as a statically known internal encoding, without the implementation defined signedness and aliasing concerns of `char`, and with protection against accidental interchange with `char` or `wchar_t` based interfaces without proper transcoding having been performed first. Solid support in the type system, combined with statically known encodings, provides the flexibility needed to design safe and generic text handling interfaces, including ones that can support constexpr evaluation. Why might constexpr evaluation be interesting? Consider [the std::embed proposal](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html) <sup>[[P1040R1]]</sup> and the ability to process a text file loaded at compile time.
 
 Distinct code unit types (`char8_t`, `char16_t`, `char32_t`) enable statically known internal encodings, but not without some cost. Existing code that works with UTF-8 today is written using `char`, `unsigned char`, or `uint8_t`. Likewise, existing code that works with UTF-16 today is written using `char16_t`, `wchar_t`, `unsigned short`, or `uint16_t`. ICU supports customization of its internal code unit type, but `char16_t` is used by default, following ICU's adoption of C++11. Prior to the switch to C++11, the default varied by platform. The switch to `char16_t` created friction with existing code by, for example, requiring that ICU data passed to Windows `wchar_t` interfaces be copied or `reinterpret_cast`. Similar friction will occur with `char8_t`. ICU dealt with this by providing interfaces that, for at least some cases, encapsulate uses of `reinterpret_cast` and handling of the resulting aliasing issues.
 
@@ -274,12 +276,12 @@ Thank you to everyone that has attended an SG16 teleconference and has thereby c
         "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0244r2.html",
         "date": "2017"
     },
-    "P0482R5" : {
+    "P0482R6" : {
         "authors": [
             "Tom Honermann"
         ],
-        "title": "char8_t: A type for UTF-8 characters and strings (Revision 5)",
-        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r5.html",
+        "title": "char8_t: A type for UTF-8 characters and strings (Revision 6)",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html",
         "date": "2018"
     },
     "P1025R1" : {
@@ -298,22 +300,22 @@ Thank you to everyone that has attended an SG16 teleconference and has thereby c
         "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1040r1.html",
         "date": "2018"
     },
-    "P1041R1": {
+    "P1041R4": {
         "authors": [
             "Martinho Fernandes"
         ],
         "title": "Make char16_t/char32_t String Literals be UTF-16/32",
-        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1041r1.html",
-        "date": "2018"
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1041r4.html",
+        "date": "2019"
     },
-    "P1072R0": {
+    "P1072R3": {
         "authors": [
             "Chris Kennelly",
             "Mark Zeren"
         ],
-        "title": "Default Initialization for basic_string",
-        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1072r0.html",
-        "date": "2018"
+        "title": "basic_string::resize_default_init",
+        "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1072r3.html",
+        "date": "2019"
     },
     "P1097R1": {
         "authors": [
