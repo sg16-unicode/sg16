@@ -38,7 +38,9 @@ This paper discusses a set of constraints, guidelines, directives, and non-direc
 
 # Changes since [[P1238R0]] # {#changes}
 
-- Updates to the introduction to reflect progress made for C++20.
+- Updated the introduction to reflect progress made for C++20.
+- Updated constraint 1 with news of new compilers for z/OS that target newer language standards.
+- Removed discussion of the encoding of char16_t and char32_t literals being implementation defined now that \[P1041R4](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1041r4.html) <sup>[[P1041R4]]</sup> has been adopted for C++20.
 - Added constraint 7, File names do not have an associated character encoding.
 - Added non-directive 3, Encoding of file names.
 
@@ -54,11 +56,9 @@ C++ has a long history and, as unfortunate as it may be at times, the past remai
 
 Might these platforms eventually move to UTF-8 or possibly cease to be relevant for new C++ standards?
 
-Microsoft does not yet offer full support for UTF-8 as the execution encoding for its compiler. Support for a /utf-8 compiler option was added recently, but it does not affect the behavior of their standard library implementation, nor is UTF-8 selectable as the execution encoding at run-time via environment settings or by calling `setlocale()`. Recent Windows 10 releases now support a beta option that allows setting the Windows system code page to UTF-8 and this does affect the standard library (as well as all other programs running on the system). These additions indicate that it will likely be possible to write native UTF-8 programs for Windows using the Microsoft compiler in the not too distant future. However, there will be existing software written for Windows that will need to be migrated to new C++ standards without incurring the cost of transition to UTF-8 for a long time to come.
+Microsoft does not yet offer full support for UTF-8 as the execution encoding for its compiler. Support for a /utf-8 compiler option was added recently, but it does not affect the behavior of their standard library implementation, nor is UTF-8 selectable as the execution encoding at run-time via environment settings or by calling `setlocale()`. Recent Windows 10 releases now support a beta option that allows setting the Windows active code page (ACP) to UTF-8 and this does affect the standard library (as well as all other programs running on the system). These additions indicate that it will likely be possible to write native UTF-8 programs for Windows using the Microsoft compiler in the not too distant future. However, there will be existing software written for Windows that will need to be migrated to new C++ standards without incurring the cost of transition to UTF-8 for a long time to come.
 
-IBM has not publicly released a C++11 compliant version of their xlC compiler for z/OS. However, they have [publicly released support for Swift on z/OS](https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os) <sup>[[SwiftOnZ]]</sup>, and Swift is built on top of LLVM and Clang. Though IBM has not publicly released a port of Clang to z/OS, this indicates that such a port exists and a post to the Swift [developers mailing lists confirms it](https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html) <sup>[[ClangOnZ]]</sup>.
-
-The `char16_t` and `char32_t` encodings are currently implementation defined as well. However, all existing implementations use UTF-16 and UTF-32 respectively for these encodings, thus their implementation definedness is not a constraint. \[P1041R4](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1041r4.html) <sup>[[P1041R4]]</sup> proposes officially standardizing UTF-16 and UTF-32 for these encodings.
+IBM has not publicly released a C++11 compliant version of their xlC compiler for z/OS.  However, this is due to an intent to migrate to new compiler infrastructure; [IBM XL C/C++ V2.3.1 for z/OS V2.3](https://www-01.ibm.com/servers/resourcelink/svc00100.nsf/pages/xlCC++V231ForZOsV23?OpenDocument) includes new Clang based compilers <sup>[[ClangOnZ]]</sup>.  [Dignus](http://www.dignus.com) also provides an LLVM based C++ compiler with support for C++14 and parts of C++17.  Though lagging other platforms some, it seems z/OS will continue to remain relevant for new C++ standards.
 
 
 ## Constraint: The ordinary and wide execution encodings are run-time properties ## {#constraint-runtime}
@@ -66,8 +66,6 @@ The `char16_t` and `char32_t` encodings are currently implementation defined as 
 The execution and wide execution encodings are not static properties of programs, and therefore not fully known at compile-time. These encodings are determined at run-time and may be dynamically changed by calls to `setlocale()`. At compile-time, character and string literals are transcoded (in translation phase 5) from the source encoding to an encoding that is expected to be compatible with whatever encoding is selected at run-time. If the compile-time selected encoding turns out not to be compatible with the run-time encoding, then encoding confusion (mojibake) ensues.
 
 The dynamic nature of these encodings is not theoretical. On Windows, the execution encoding is determined at program startup based on the current active code page. On POSIX platforms, the run-time encoding is determined by the LANG, LC_ALL, or LC_CTYPE environment variables. Some existing programs depend on the ability to dynamically change (via POSIX `uselocale()` or Microsoft's `_configthreadlocale()`) the current locale (including the execution encoding) in order for a server process to concurrently serve multiple clients with different locale settings. A recent proposal to WG14 [(N2226)](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2226.htm) <sup>[[WG14-N2226]]</sup> proposes allowing the current locale settings to vary by thread. Attempting to restrict the ability to dynamically change the execution encoding would break existing code.
-
-Since the `char16_t` and `char32_t` encodings are currently implementation defined, they too could vary at run-time. However, as noted earlier, all implementations currently use UTF-16 and UTF-32 and do not support such variance. \[P1041R4](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1041r4.html) <sup>[[P1041R4]]</sup> will solidify current practice and ensure these encodings are known at comple-time.
 
 
 ## Constraint: There is no portable primary execution encoding ## {#constraint-portability}
@@ -333,21 +331,13 @@ Thank you to everyone that has attended an SG16 teleconference and has thereby c
         "href": "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1238r0.html",
         "date": "2018"
     },
-    "SwiftOnZ": {
+    "ClangOnZ": {
         "authors": [
             "IBM"
         ],
-        "title": "IBM Toolkit for Swift on z/OS",
-        "href": "https://developer.ibm.com/mainframe/products/ibm-toolkit-swift-z-os",
-        "date": "2017"
-    },
-    "ClangOnZ": {
-        "authors": [
-            "Geoff Wozniak"
-        ],
-        "title": "[swift-dev] z/OS, Swift, and encodings",
-        "href": "https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20170508/004572.html",
-        "date": "2017"
+        "title": "Benefits of upgrading to XL C/C++ V2.3.1 for z/OS V2.3",
+        "href": "https://www-01.ibm.com/support/docview.wss?uid=ibm10879011",
+        "date": "2019"
     },
     "POSIX": {
         "authors": [
