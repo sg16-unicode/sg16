@@ -72,7 +72,8 @@ blockquote.stddel
   </tr>
   <tr>
     <th>Audience:</th>
-    <td>Library Working Group</td>
+    <td>Library Evolution Working Group<br/>
+        Library Working Group</td>
   </tr>
   <tr>
     <th>Reply-to:</th>
@@ -155,6 +156,27 @@ blockquote.stddel
 <h1 id="changes">Changes since <a href="http://wg21.link/p1423r1">P1423R1</a></h1>
 
 <ul>
+  <li>Addressed wording and feature feedback provided during the
+      2019-05-21 LWG telecon:
+    <ul>
+      <li>Added deleted overloads of
+          <tt>basic_ostream&lt;wchar_t, ...&gt;::operator&lt;&lt;</tt> for
+          <tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt> character
+          and string types.  This maintains consistency of deleted overloads for
+          ordinary and wide streams.</li>
+      <li>Moved wording for the deleted <tt>ostream</tt> inserter overloads from
+          <a href="http://eel.is/c++draft/ostream.inserters.character">
+          29.7.5.2.4 [ostream.inserters.character]</a> to the <tt>ostream</tt>
+          synopsis in
+          <a href="http://eel.is/c++draft/ostream">29.7.5.1 [ostream]</a> and
+          removed parameter names.</li>
+      <li>Updated code comments in the new paragraph added to
+          <a href="http://eel.is/c++draft/diff.cpp17.input.output">
+          C.5.11 [diff.cpp17.input.output]</a> to avoid assumptions of which
+          <tt>ostream</tt> inserter overload would be invoked.</li>
+    </ul>
+  </li>
+  <li>Rebased wording on N4810.</li>
 </ul>
 
 
@@ -1154,7 +1176,8 @@ This paper proposes implementing only options 7 and 8.
 
 <ul>
   <li>Add deleted overloads of
-      <tt>basic_ostream&lt;char, ...&gt;::operator&lt;&lt;</tt> for
+      <tt>basic_ostream&lt;char, ...&gt;::operator&lt;&lt;</tt> and
+      <tt>basic_ostream&lt;wchar_t, ...&gt;::operator&lt;&lt;</tt> for
       <tt>char8_t</tt> character and string types.  This avoids the silent
       and surprising behavior change introduced by
       <a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
@@ -1167,6 +1190,9 @@ This paper proposes implementing only options 7 and 8.
   <li>Add deleted overloads of
       <tt>basic_ostream&lt;char, ...&gt;::operator&lt;&lt;</tt> for
       <tt>wchar_t</tt>, <tt>char16_t</tt> and <tt>char32_t</tt> character and
+      string types and deleted overloads of
+      <tt>basic_ostream&lt;wchar_t, ...&gt;::operator&lt;&lt;</tt> for
+      <tt>char16_t</tt> and <tt>char32_t</tt> character and
       string types.  This removes surprising behavior that has been present
       since C++11; that characters are formatted as numeric values and that
       strings are formatted as pointers.</li>
@@ -1191,18 +1217,18 @@ This paper proposes implementing only options 7 and 8.
 
 <p>These changes are relative to
 <a title="Working Draft, Standard for Programming Language C++"
-   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4762.pdf">
-N4762</a>
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4810.pdf">
+N4810</a>
 <sup><a title="Working Draft, Standard for Programming Language C++"
-        href="#ref_n4762">
-[N4762]</a></sup></p>
+        href="#ref_n4810">
+[N4810]</a></sup></p>
 
 
 <h2 id="library_wording">Library wording</h2>
 
 <p>Change in table 35 of
 <a href="http://eel.is/c++draft/support.limits.general#3">
-16.3.1 [support.limits.general] paragraph 3</a>:
+17.3.1 [support.limits.general] paragraph 3</a>:
 <blockquote>
 <div style="margin-left: 1em;">
 <table>
@@ -1226,7 +1252,7 @@ N4762</a>
         </tr>
         <tr>
           <td>__cpp_lib_char8_t</td>
-          <td><del>201811</del><ins>201902L</ins> <strong><em style="background-color: yellow">** placeholder **</em></strong></td>
+          <td><del>201811</del><ins>201907L</ins> <strong><em style="background-color: yellow">** placeholder **</em></strong></td>
           <td>&lt;atomic&gt;
               &lt;filesystem&gt;
               &lt;istream&gt;
@@ -1254,38 +1280,79 @@ test macro will be selected by the project editor to reflect the date of
 approval.</em>
 </p>
 
-<p>Append new paragraphs in
-<a href="http://eel.is/c++draft/ostream.inserters.character">
-28.7.5.2.4 [ostream.inserters.character]</a>:
-<blockquote class=stdins>
-template&lt;class traits&gt;<br/>
-&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp; out, wchar_t c) = delete;<br/>
-template&lt;class traits&gt;<br/>
-&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp; out, char8_t c) = delete;<br/>
-template&lt;class traits&gt;<br/>
-&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp; out, char16_t c) = delete;<br/>
-template&lt;class traits&gt;<br/>
-&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp; out, char32_t c) = delete;<br/>
-</blockquote>
-<blockquote class=stdins>
-<em>6. [ Note:</em> These overloads prevent formatting character values as
-numeric values.
-<em>&mdash; end note ]</em>
-</blockquote>
-<blockquote class=stdins>
-template&lt;class traits&gt;<br/>
-&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp; out, const wchar_t* s) = delete;<br/>
-template&lt;class traits&gt;<br/>
-&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp; out, const char8_t* s) = delete;<br/>
-template&lt;class traits&gt;<br/>
-&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp; out, const char16_t* s) = delete;<br/>
-template&lt;class traits&gt;<br/>
-&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp; out, const char32_t* s) = delete;<br/>
-</blockquote>
-<blockquote class=stdins>
-<em>7. [ Note:</em> These overloads prevent formatting strings as pointer
-values.
-<em>&mdash; end note ]</em>
+
+<p>Change in
+<a href="http://eel.is/c++draft/ostream">
+29.7.5.1 [ostream]</a>:
+
+<blockquote>
+<div style="margin-left: 1em;">
+namespace std {<br/>
+<br/>
+&nbsp;&nbsp;[&hellip;]<br/>
+<br/>
+&nbsp;&nbsp;// [ostream.inserters.character], character inserters<br/>
+&nbsp;&nbsp;template&lt;class charT, class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;charT, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;, charT);<br/>
+&nbsp;&nbsp;template&lt;class charT, class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;charT, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;, char);<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, char);<br/>
+<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, signed char);<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, unsigned char);<br/>
+<br/>
+<ins>
+&nbsp;&nbsp;// The following deleted overloads prevent formatting character values as numeric values.</br>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, wchar_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, char8_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, char16_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, char32_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, char8_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, char16_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, char32_t) = delete;<br/>
+<br/>
+</ins>
+&nbsp;&nbsp;template&lt;class charT, class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;charT, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;, const charT*);<br/>
+&nbsp;&nbsp;template&lt;class charT, class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;charT, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;, const char*);<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const char*);<br/>
+<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const signed char*);<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const unsigned char*);<br/>
+<ins>
+<br/>
+&nbsp;&nbsp;// The following deleted overloads prevent formatting strings as pointer values.</br>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const wchar_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const char8_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const char16_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const char32_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, const char8_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, const char16_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, const char32_t*) = delete;<br/>
+</ins>
+}
+</div>
 </blockquote>
 </p>
 
@@ -1296,12 +1363,14 @@ values.
 <a href="http://eel.is/c++draft/diff.cpp17.input.output#2">
 C.5.11 [diff.cpp17.input.output] paragraph 2</a>:
 <blockquote>
-<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/ostream.inserters.character">27.7.5.2.4</a><br/>
+<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/ostream.inserters.character">29.7.5.2.4</a><br/>
 <strong>Change</strong>: Overload resolution for ostream inserters
 used with UTF-8 literals.<br/>
 <strong>Rationale</strong>: Required for new features.<br/>
 <strong>Effect on original feature</strong>: Valid ISO C++ 2017 code that
-passes UTF-8 literals to <tt>basic_ostream<ins>&lt;char, ...&gt;</ins>::operator&lt;&lt;</tt> <del>no
+passes UTF-8 literals to <tt>basic_ostream<ins>&lt;char, ...&gt;</ins>::operator&lt;&lt;</tt>
+<ins>or <tt>basic_ostream<ins>&lt;wchar_t, ...&gt;</ins>::operator&lt;&lt;</tt></ins>
+<del>no
 longer calls character related overloads</del><ins>is now ill-formed</ins>.
 <br/>
 <div style="margin-left: 1em;">
@@ -1321,20 +1390,22 @@ std::cout &lt;&lt; u8'X';          <em>// Previously called operator&lt;&lt;(cha
 <a href="http://eel.is/c++draft/diff.cpp17.input.output#2">
 C.5.11 [diff.cpp17.input.output] paragraph 2</a>:
 <blockquote class="stdins">
-<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/ostream.inserters.character">27.7.5.2.4</a><br/>
+<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/ostream.inserters.character">29.7.5.2.4</a><br/>
 <strong>Change</strong>: Overload resolution for ostream inserters
-used with <tt>wchar_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt> types.<br/>
+used with <tt>wchar_t</tt>, <tt>char16_t</tt>, or <tt>char32_t</tt> types.<br/>
 <strong>Rationale</strong>: Removal of surprising behavior.<br/>
 <strong>Effect on original feature</strong>: Valid ISO C++ 2017 code that
-passes <tt>wchar_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt> characters
-or strings to <tt>basic_ostream&lt;char, ...&gt;::operator&lt;&lt;</tt> is now
-ill-formed.
+passes <tt>wchar_t</tt>, <tt>char16_t</tt>, or <tt>char32_t</tt> characters
+or strings to <tt>basic_ostream&lt;char, ...&gt;::operator&lt;&lt;</tt>, or
+that passes <tt>char16_t</tt>, or <tt>char32_t</tt> characters
+or strings to <tt>basic_ostream&lt;wchar_t, ...&gt;::operator&lt;&lt;</tt>
+is now ill-formed.
 <br/>
 <div style="margin-left: 1em;">
 <tt>
-<pre>std::cout &lt;&lt; u"text";        <em>// Previously called operator&lt;&lt;(const void*) and printed a pointer value.</em>
+<pre>std::cout &lt;&lt; u"text";        <em>// Previously formatted the string as a pointer value.</em>
                              <em>// Now ill-formed.</em>
-std::cout &lt;&lt; u'X';           <em>// Previously called operator&lt;&lt;(int) and printed an integer value.</em>
+std::cout &lt;&lt; u'X';           <em>// Previously formatted the character as an integer value.</em>
                              <em>// Now ill-formed.</em>
 </pre>
 </tt>
@@ -1347,13 +1418,13 @@ std::cout &lt;&lt; u'X';           <em>// Previously called operator&lt;&lt;(int
 
 <p>Change in
 <a href="http://eel.is/c++draft/depr.fs.path.factory#1">
-D.16 [depr.fs.path.factory] paragraph 1</a>:
+D.17 [depr.fs.path.factory] paragraph 1</a>:
 <blockquote>
 <em>Requires:</em> The <tt>source</tt> and <tt>[first, last)</tt> sequences are
 UTF-8 encoded.  The value type of <tt>Source</tt> and <tt>InputIterator</tt> is
 <tt>char</tt><ins> or <tt>char8_t</tt></ins>.  <tt>Source</tt> meets the
 requirements specified in
-<a href="http://eel.is/c++draft/fs.path.req">27.11.7.3</a>.
+<a href="http://eel.is/c++draft/fs.path.req">29.11.7.3</a>.
 </blockquote>
 </p>
 
@@ -1364,11 +1435,11 @@ requirements specified in
 
 <table id="references">
   <tr>
-    <td id="ref_n4762"><sup>[N4762]</sup></td>
+    <td id="ref_n4810"><sup>[N4810]</sup></td>
     <td>
-      "Working Draft, Standard for Programming Language C++", N4762, 2018.<br/>
-      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4762.pdf">
-      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4762.pdf</a></td>
+      "Working Draft, Standard for Programming Language C++", N4810, 2019.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4810.pdf">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4810.pdf</a></td>
   </tr>
   <tr>
     <td id="ref_p0388r2"><sup>[P0388R2]</sup></td>
