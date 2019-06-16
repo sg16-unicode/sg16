@@ -9,7 +9,7 @@ WG21 Number     | Title | Revisions
 [D1423R2][]     | char8_t backward compatibility remediation | [DR2][D1423R2] [R1][P1423R1] [R0][P1423R0]
 [P1422R0][]     | SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09 | [R0][P1422R0]
 [P1253R0][]     | SG16 Guidelines for Review of Proposals | [R0][P1253R0]
-[D1238R1][]     | SG16: Unicode direction| [DR1][D1238R1] [R0][P1238R0]
+[P1238R1][]     | SG16: Unicode direction| [R1][P1238R1] [R0][P1238R0]
 [P1237R0][]     | SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03 | [R0][P1237R0]
 [P1139R1][]     | Address wording issues related to ISO 10646 | [R1][P1139R1] [R0][P1139R0]
 [P1137R0][]     | SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20 | [R0][P1137R0]
@@ -48,7 +48,7 @@ WG14 Number     | Title
 [P1139R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1139r1.html
 [P1237R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1237r0.html
 [P1238R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1238r0.html
-[D1238R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/d1238r1.html
+[P1238R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1238r1.html
 [P1253R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1253r0.html
 [P1422R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1422r0.html
 [P1423R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1423r0.html
