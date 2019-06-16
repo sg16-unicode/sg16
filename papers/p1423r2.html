@@ -1,0 +1,1478 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+
+<title>char8_t backward compatibility remediation</title>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<style type="text/css">
+pre {
+    display: inline;
+}
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+table#references th,
+table#references td
+{
+    vertical-align: top;
+}
+
+ins, ins * { text-decoration:none; font-weight:bold; background-color:#A0FFA0 }
+del, del * { text-decoration:line-through; background-color:#FFA0A0 }
+#hidedel:checked ~ * del, #hidedel:checked ~ * del * { display:none; visibility:hidden }
+
+blockquote
+{
+    color: #000000;
+    background-color: #F1F1F1;
+    border: 1px solid #D1D1D1;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+blockquote.stdins
+{
+    text-decoration: underline;
+    color: #000000;
+    background-color: #C8FFC8;
+    border: 1px solid #B3EBB3;
+    padding: 0.5em;
+}
+blockquote.stddel
+{
+    text-decoration: line-through;
+    color: #000000;
+    background-color: #FFEBFF;
+    border: 1px solid #ECD7EC;
+    padding-left: 0.5empadding-right: 0.5em;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>P1423R2</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2019-06-16</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>Library Evolution Working Group<br/>
+        Library Working Group</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+<h1>char8_t backward compatibility remediation</h1>
+
+<ul>
+  <li><a href="#changes">
+      Changes since P1423R1</a></li>
+  <li><a href="#introduction">
+      Introduction</a></li>
+  <li><a href="#examples">
+      Examples</a></li>
+  <li><a href="#impact">
+      Anticipated impact</a></li>
+  <li><a href="#remediation">
+      Remediation approaches</a>
+    <ul>
+      <li><a href="#disable">
+          Disable <tt>char8_t</tt> support</a></li>
+      <li><a href="#overload">
+          Add overloads</a></li>
+      <li><a href="#ordinary">
+          Change <tt>u8</tt> literals to ordinary literals with escape sequences</a></li>
+      <li><a href="#reinterpret_cast">
+          reinterpret_cast <tt>u8</tt> literals to <tt>char</tt></a></li>
+      <li><a href="#emulate">
+          Emulate C++17 <tt>u8</tt> literals</a></li>
+      <li><a href="#array-subst">
+          Substitute class types for C arrays initialized with <tt>u8</tt> string literals</a></li>
+      </li>
+      <li><a href="#conversion_fns">
+          Use explicit conversion functions</a></li>
+      <li><a href="#tooling">
+          Tooling</a></li>
+    </ul>
+  </li>
+  <li><a href="#options">
+      Options considered to reduce backward compatibility impact</a>
+    <ul>
+      <li><a href="#option1">
+          1) Reinstate <tt>u8</tt> literals as type <tt>char</tt> and introduce a new literal prefix for <tt>char8_t</tt></a></li>
+      <li><a href="#option2">
+          2) Allow implicit conversions from <tt>char8_t</tt> to <tt>char</tt></a></li>
+      <li><a href="#option3">
+          3) Allow initializing an array of <tt>char</tt> with a <tt>u8</tt> string literal</a></li>
+      <li><a href="#option4">
+          4) Allow initializing an array with a reference to an array</a></li>
+      <li><a href="#option5">
+          5) Allow <tt>std::string</tt> to be initialized with <tt>char8_t</tt> based types</a></li>
+      <li><a href="#option6">
+          6) Allow implicit conversions from <tt>std::u8string</tt> to <tt>std::string</tt></a></li>
+      <li><a href="#option7">
+          7) Add deleted ostream inserters for <tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt></a></li>
+      <li><a href="#option8">
+          8) Allow <tt>std::filesystem::u8path</tt> to accept ranges and iterators with <tt>char8_t</tt> value types</a></li>
+    </ul>
+  </li>
+  <li><a href="#proposal">
+      Proposal</a></li>
+  <li><a href="#wording">
+      Wording</a>
+    <ul>
+      <li><a href="#library_wording">
+          Library wording</a></li>
+      <li><a href="#annex_c_wording">
+          Annex C Compatibility wording</a></li>
+      <li><a href="#annex_d_wording">
+          Annex D Compatibility features wording</a></li>
+    </ul>
+  </li>
+  <li><a href="#references">
+      References</a></li>
+</ul>
+
+
+<h1 id="changes">Changes since <a href="http://wg21.link/p1423r1">P1423R1</a></h1>
+
+<ul>
+  <li>Addressed wording and feature feedback provided during the
+      2019-05-21 LWG telecon:
+    <ul>
+      <li>Added deleted overloads of
+          <tt>basic_ostream&lt;wchar_t, ...&gt;::operator&lt;&lt;</tt> for
+          <tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt> character
+          and string types.  This maintains consistency of deleted overloads for
+          ordinary and wide streams.</li>
+      <li>Moved wording for the deleted <tt>ostream</tt> inserter overloads from
+          <a href="http://eel.is/c++draft/ostream.inserters.character">
+          29.7.5.2.4 [ostream.inserters.character]</a> to the <tt>ostream</tt>
+          synopsis in
+          <a href="http://eel.is/c++draft/ostream">29.7.5.1 [ostream]</a> and
+          removed parameter names.</li>
+      <li>Updated code comments in the new paragraph added to
+          <a href="http://eel.is/c++draft/diff.cpp17.input.output">
+          C.5.11 [diff.cpp17.input.output]</a> to avoid assumptions of which
+          <tt>ostream</tt> inserter overload would be invoked.</li>
+    </ul>
+  </li>
+  <li>Rebased wording on N4810.</li>
+</ul>
+
+
+<h1 id="introduction">Introduction</h1>
+
+<p>The support for <tt>char8_t</tt> as adopted for C++20 via
+<a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html">
+P0482R6</a>
+<sup><a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
+        href="#ref_p0482r6">
+[P0482R6]</a></sup> affects backward
+compatibility for existing C++17 programs in at least the following ways:
+<ol>
+  <li>Introduction of a new <tt>char8_t</tt> keyword, new
+      <tt>std::u8string</tt>,
+      <tt>std::u8string_view</tt>,
+      <tt>std::u8streampos</tt> type aliases and
+      <tt>std::mbrtoc8</tt> and
+      <tt>std::c8rtomb</tt> functions; these names may conflict with existing
+      uses of these names.
+  </li>
+  <li>Change of return type for <tt>std::filesystem::path</tt> member functions
+      <tt>u8string</tt> and <tt>generic_u8string</tt>.
+  </li>
+  <li>Change of type for <tt>u8</tt> character and string literals and
+      <tt>u8R</tt> raw string literals.</li>
+</ol>
+</p>
+
+<p>This paper does <em>not</em> further discuss case 1 above.  Adding new
+keywords and new members to the <tt>std</tt> namespace is business as usual;
+see
+<a title="SD-8: Standard Library Compatibility"
+   href="https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility">
+SD-8</a>
+<sup><a title="https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility"
+      href="#ref_sd8">
+[SD-8]</a></sup>.  It is
+acknowledged that these additions will affect some code bases.  Code surveys
+have found that these names have generally been used to emulate the set of
+features introduced with the adoption of
+<a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html">
+P0482R6</a>
+<sup><a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
+      href="#ref_p0482r6">
+[P0482R6]</a></sup>.  In some cases, existing code has already been updated to
+adapt to the new standard features.  For example,
+<a href="https://github.com/electronicarts/EASTL">EASTL</a> will now use the
+the standard provided <tt>char8_t</tt> type when available instead of the type
+alias previously used.  The pull request for this change can be found at
+<a href="https://github.com/electronicarts/EASTL/pull/239">
+https://github.com/electronicarts/EASTL/pull/239</a>.
+</p>
+
+<p>Case 2 above is a change that does <em>not</em> fit into the set of standard
+library rights reserved in
+<a title="SD-8: Standard Library Compatibility"
+   href="https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility">
+SD-8</a>
+<sup><a title="https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility"
+      href="#ref_sd8">
+[SD-8]</a></sup>.
+This is a cause for concern, but is somewhat mitigated by the fact that
+<tt>std::filesystem</tt> is new with C++17 and therefore does not have a long
+history of use.  Some options for dealing with this change are discussed later
+in this paper.
+</p>
+
+<p>Case 3 above is the change responsible for most of the backward
+compatibility impact.
+</p>
+
+<p>This paper is motivated by three goals:
+<ul>
+  <li>To document a set of options available to programmers to facilitate
+      migration of existing code to C++20.  Where possible, options are
+      presented for writing code that is compatible with both C++17 and C++20.
+  </li>
+  <li>To ensure that WG21 members are aware of the backward compatibility
+      issues and anticipated impact, and find the set of options available to
+      mitigate the impact acceptable.
+  </li>
+  <li>To consider options available to reduce backward compatibility impact.
+      This paper documents a number of such options, but only proposes two
+      small standard library changes intended to remove backward compatibility
+      impact that was not intended by the adoption of P0482R6.
+  </li>
+</ul>
+</p>
+
+
+<h1 id="examples">Examples</h1>
+
+<p>The following table presents examples of well-formed C++17 code that is
+either ill-formed or behaves differently in C++20.  The table also reflects the
+intended changes proposed in this paper.  Note that most of these examples
+remain ill-formed with this proposal.  This is intentional as the examples
+reflect problematic code that leads to mojibake in C++17 code due to use of the
+same type (<tt>char</tt>) for multiple encodings (execution encoding and UTF-8).
+</p>
+
+<p>
+<table border="1">
+  <tr>
+    <th>Code</th>
+    <th>C++17</th>
+    <th>C++20 with P0482R6</th>
+    <th>C++20 with this proposal</th>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">const char *p = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>Initializes <tt>p</tt> with the address of the UTF-8 encoded string.</td>
+    <td>Ill-formed.</td>
+    <td>Ill-formed.</td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">char a[] = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>Initializes <tt>a</tt> with the UTF-8 encoded string.</td>
+    <td>Ill-formed.</td>
+    <td>Ill-formed.</td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">int operator ""_udl(const char*, unsigned long);
+int v = u8"text"_udl;</code></pre>
+      </fieldset>
+    </td>
+    <td>Initializes <tt>v</tt> with the result of calling
+        <tt>operator ""_udl</tt> with the UTF-8 encoded string literal.
+    </td>
+    <td>Ill-formed.</td>
+    <td>Ill-formed.</td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">std::string s(u8"text");</code></pre>
+      </fieldset>
+    </td>
+    <td>Initializes <tt>s</tt> with the UTF-8 encoded string.</td>
+    <td>Ill-formed.</td>
+    <td>Ill-formed.</td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">std::filesystem::path p = ...;
+std::string s = p.u8string();</code></pre>
+      </fieldset>
+    </td>
+    <td>Initializes <tt>s</tt> with the UTF-8 encoded representation
+        of the file path stored in <tt>p</tt>.
+    </td>
+    <td>Ill-formed.</td>
+    <td>Ill-formed.</td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">std::cout &lt;&lt; u8'x';
+std::cout &lt;&lt; u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>Writes a sequence of UTF-8 code units as characters to stdout.<br/>
+        (mojibake if the execution character encoding is not UTF-8)
+    </td>
+    <td>Writes an integer or pointer value to stdout.<br/>
+        (consistent with handling of char16_t and char32_t)
+    </td>
+    <td>Ill-formed.<br/>
+        (for all of char8_t, char16_t, and char32_t)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">std::filesystem::u8path(u8"filename");</code></pre>
+      </fieldset>
+    </td>
+    <td>Constructs a <tt>std::filesystem::path</tt> object from the UTF-8
+        encoded string.</td>
+    <td>Ill-formed.</td>
+    <td>Constructs a <tt>std::filesystem::path</tt> object from the UTF-8
+        encoded string.</td>
+  </tr>
+</table>
+</p>
+
+
+<h1 id="impact">Anticipated impact</h1>
+
+<p><tt>u8</tt> string literals were added in C++11, but support for <tt>u8</tt>
+character literals was only added in C++17.
+</p>
+
+<p>Code surveys have so far revealed little use of <tt>u8</tt> literals.
+Google and Facebook have both reported less than 1000 occurrences in their
+code bases, approximately half of which occur in test code.  Representatives
+of both organizations have stated that, given the actual size of their code
+base, this is an insignificant number of occurrences.  Likewise, Firefox
+contains around 100 occurrences and Mozilla engineers have reviewed this paper
+and have no concerns regarding addressing the existing uses using the
+remediation approaches discussed here.
+</p>
+
+<p>Code surveys have been attempted on github, but github search doesn't
+facilitate distinguishing uses of <tt>u8</tt> as identifiers (which is quite
+common) vs use as a UTF-8 literal.  Further, github doesn't provide a search
+that filters out duplicate hits for the same source code in different
+repositories.  As a result, finding instances of <tt>u8</tt> literals is
+challenging.  Most cases that were identified were in tests included in clones
+of Clang and gcc.
+</p>
+
+<p>Searches on Debian code search found uses in only a few packages and, with
+one exception discussed below, only a small number of uses (mostly single digit
+counts), most of which occurred in tests.
+</p>
+
+<p>Survey results for Debian code search
+(<a href="https://codesearch.debian.net">https://codesearch.debian.net</a>)
+follow.  These exclude hits to gcc, clang, packages like fmt and eastl that
+have already been conditionalized for <tt>char8_t</tt> in C++20, and C code.
+Additionally, packages bundled with other packages are omitted to avoid
+double counting.  Search hits reflect number of lines matching the search,
+not number of occurrences.  Search results are categorized by hits in
+program source files vs hits in test source files.
+</p>
+
+<p>There is one clear outlier in these search results.  Chromium has two orders
+of magnitude more uses of <tt>u8</tt> literals than any other package.  The
+Chromium team was contacted to discuss this.  Almost all of the existing uses
+appear in bulk data source files that the Chromium team has determined can be
+mechanically addressed.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Searched for</th>
+    <th>Debian packages (out of ~18000)</th>
+  </tr>
+  <tr>
+    <td><tt>char8_t</tt></td>
+    <td>spring (emulates its own <tt>char8_t</tt> support)</td>
+  </tr>
+  <tr>
+    <td><tt>u8string</tt></td>
+    <td>libopenmpt (defines a <tt>mpt::u8string</tt> typedef of
+        <tt>std::basic_string</tt> with a custom <tt>char_traits</tt>)<br/>
+        spring (defines a <tt>std::u8string</tt> class that derives from
+        <tt>std::string</tt>)</td>
+  </tr>
+  <tr>
+    <td><tt>u8string_view</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>u8streampos</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>mbrtoc8</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>c8rtomb</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>u8path(u8"text")</tt></td>
+    <td>&lt;none&gt;</td>
+  </tr>
+  <tr>
+    <td><tt>u8"text"</tt></td>
+    <td>
+        chromium (~10310, ~102 files)<br/>
+        firefox (97 hits, 1 files, 3 test files)<br/>
+        icu (83 hits, 1 files, 5 test files)<br/>
+        qbs (56 hits, 1 file, 1 test file)<br/>
+        mongodb (30 hits, 2 test files)<br/>
+        aseba (28 hits, 1 file)<br/>
+        monero (26 hits, 1 file, 1 test file)<br/>
+        nlohmann-json (21 hits, 1 file, 3 test files)<br/>
+        bambootracker (20 hits, 5 files)<br/>
+        capnproto (18 hits, 1 file, 1 test file)<br/>
+        lgogdownloader (11 hits, 1 file)<br/>
+        libosmium (10 hits, 3 test files)<br/>
+        cbmc (8 hits, 3 test files)<br/>
+        maim (8 hits, 1 file)<br/>
+        octave-ltfat (8 hits, 1 file)<br/>
+        praat (8 hits, 2 files)<br/>
+        slop (8 hits, 1 file)<br/>
+        mame (7 hits, 3 files)<br/>
+        nlohmann-json3 (7 hits, 3 test files)<br/>
+        sdcc (7 hits, 1 test file)<br/>
+        antlr4 (3 hits, 1 file)<br/>
+        keyman-keyboardprocessor (3 hits, 2 test files)<br/>
+        scram (3 hits, 2 test files)<br/>
+        tesseract (3 hits, 1 test file)<br/>
+        boost1.67 (2 hits, 1 test file)<br/>
+        freeorion (2 hits, 1 file)<br/>
+        supertux (2 hits, 1 file)<br/>
+        cjs (1 hit, 1 test file)<br/>
+        cpp-hocon (1 hit, 1 test file)<br/>
+        efl (1 hit, 1 file)<br/>
+        gjs (1 hit, 1 test file)<br/>
+        kate4 (1 hit, 1 example file)<br/>
+        kodi (1 hit, 1 test file)<br/>
+        libtcod (1 hit, 1 test file)<br/>
+        retroarch (1 hit, 1 file)<br/>
+        rtags (1 hit, 1 test file)<br/>
+    </td>
+  </tr>
+  <tr>
+    <td><tt>u8R"(text)"</tt></td>
+    <td>
+        chromium (940, 2 files, 2 test files)<br/>
+        kate4 (2 hits, 1 example file, 1 test file)<br/>
+        nlohmann-json (2 hits, 1 test file)<br/>
+        nlohmann-json3 (2 hits, 1 test file)<br/>
+        ksyntax-highlighting (1 hit, 1 test file)<br/>
+        ktexteditor (1 hit, 1 test file)<br/>
+    </td>
+  </tr>
+</table>
+
+
+<h1 id="remediation">Remediation approaches</h1>
+
+<p>A single approach to addressing backward compatibility impact is unlikely to
+be the best approach for all projects.  This section presents a number of
+options to address various types of backward compatibility impact.  In some
+cases, the best solution may involve a mix of these options.
+</p>
+
+<p>Each of these approaches assumes a requirement for continued use of UTF-8
+encoded literals with <tt>char</tt> based types.  For most projects, such a
+requirement is expected to be temporary while the project is fully migrated to
+C++20.  However, some projects may retain a sustained need for such literals.
+For those projects, the <a href="#emulate">Emulate C++17 <tt>u8</tt>
+literals</a> approach is able to address most cases of backward compatibility
+impact.
+</p>
+
+
+<h2 id="disable">Disable <tt>char8_t</tt> support</h2>
+
+<p>The simplest possible solution in the short term is to simply disable the
+new features completely.  Clang and gcc will allow disabling <tt>char8_t</tt>
+features in both the language and standard library, via a <tt>-fno-char8_t</tt>
+option.  It is expected that Microsoft and EDG based compilers will offer a
+similar option.
+</p>
+
+<p>This option should be considered a short-term solution to enable testing
+existing C++17 code compiled as C++20 with minimal effort.  This isn't a
+viable long-term option as continued use would potentially complicate
+composition with code that depends on the new features.
+</p>
+
+
+<h2 id="overload">Add overloads</h2>
+
+<p>Adding function overloads that accept <tt>char8_t</tt> based types is an
+effective step towards full migration to C++20.  Ideally, older <tt>char</tt>
+based functions would eventually be removed.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">int ft(const char*);
+
+
+
+
+
+ft(u8"text");</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">int ft(const char*);
+<ins>#if defined(__cpp_char8_t)
+int ft(const char8_t*);
+#endif</ins>
+
+ft(u8"text"); <ins>// C++17 or C++20</ins></code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">int operator ""_udl(const char*, unsigned long);
+
+
+
+
+int v = u8"text"_udl;</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">int operator ""_udl(const char*, unsigned long);
+<ins>#if defined(__cpp_char8_t)
+int operator ""_udl(const char8_t*, unsigned long);
+#endif</ins>
+
+int v = u8"text"_udl; <ins>// C++17 or C++20</ins></code></pre>
+      </fieldset>
+    </td>
+  </tr>
+</table>
+
+
+<h2 id="ordinary">Change <tt>u8</tt> literals to ordinary literals with escape sequences</h2>
+
+<p>This approach may be a reasonable option when the execution encoding is
+ASCII based (but not UTF-8; otherwise just use ordinary literals) and
+characters outside the basic source character set are infrequently used in
+existing <tt>u8</tt> literals.  This approach matches how code using UTF-8
+had to be written prior to C++11.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">u8"\u00E1"<br/></code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++"><ins>"\xC3\xA1" // U+00E1</ins></code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">u8"á"<br/>(assuming source encoding is UTF-8)</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++"><ins>"\xC3\xA1" // U+00E1</ins><br/>(works with any source encoding)</code></pre>
+      </fieldset>
+    </td>
+  </tr>
+</table>
+
+
+<h2 id="reinterpret_cast">reinterpret_cast <tt>u8</tt> literals to <tt>char</tt></h2>
+
+<p>Common uses of <tt>u8</tt> literals can be handled in a backward compatible
+manner through use of <tt>reinterpret_cast</tt>.  Note that use of
+<tt>reinterpret_cast</tt> is well-formed in these situations since
+<a href="http://eel.is/c++draft/expr#basic.lval-11">lvalues of type
+<tt>char</tt> may be used to access values of other types</a>.  Such code is
+valid in both C++17 and C++20.
+</p>
+
+<p>This approach may suffice when there are just a few uses of UTF-8 literals
+that need to be addressed and the uses do not appear in <tt>constexpr</tt>
+context.  In general, sprinkling <tt>reinterpret_cast</tt> all over a code
+base is not desirable.
+</p>
+
+<table border="1">
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">const char &amp;r = u8’x';</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">const char &amp;r = <ins>reinterpret_cast&lt;const char &amp;&gt;(</ins>u8’x'<ins>)</ins>;     <ins>// C++17 or C++20</ins></code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">const char *p = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">const char *p = <ins>reinterpret_cast&lt;const char *&gt;(</ins>u8"text"<ins>)</ins>;  <ins>// C++17 or C++20</ins></code></pre>
+      </fieldset>
+    </td>
+  </tr>
+</table>
+
+
+<h2 id="emulate">Emulate C++17 <tt>u8</tt> literals</h2>
+
+<p>The techniques applied here are also applicable to the examples illustrated
+in the prior section regarding use of <tt>reinterpret_cast</tt>.  This approach
+makes use of
+<a title="Class Types in Non-Type Template Parameters"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0732r2.pdf">
+P0732R2</a>
+<sup><a title="Class Types in Non-Type Template Parameters"
+        href="#ref_p0732r2">
+[P0732R2]</a></sup>
+to enable constexpr UTF-8 encoded <tt>char</tt> based literals using a user
+defined literal.  The example code below defines overloaded character and
+string UDL operators named <tt>_as_char</tt>.  These UDLs can then be used in
+place of existing UTF-8 character and string literals.
+</p>
+
+<p>
+<fieldset>
+<pre><code class="c++">#include &lt;utility&gt;
+
+template&lt;std::size_t N&gt;
+struct char8_t_string_literal {
+  static constexpr inline std::size_t size = N;
+  template&lt;std::size_t... I&gt;
+  constexpr char8_t_string_literal(
+    const char8_t (&amp;r)[N],
+    std::index_sequence&lt;I...&gt;)
+  :
+    s{r[I]...}
+  {}
+  constexpr char8_t_string_literal(
+    const char8_t (&amp;r)[N])
+  :
+    char8_t_string_literal(r, std::make_index_sequence&lt;N&gt;())
+  {}
+  auto operator &lt;=&gt;(const char8_t_string_literal&amp;) = default;
+  char8_t s[N];
+};
+
+template&lt;char8_t_string_literal L, std::size_t... I&gt;
+constexpr inline const char as_char_buffer[sizeof...(I)] =
+  { static_cast&lt;char&gt;(L.s[I])... };
+
+template&lt;char8_t_string_literal L, std::size_t... I&gt;
+constexpr auto&amp; make_as_char_buffer(std::index_sequence&lt;I...&gt;) {
+  return as_char_buffer&lt;L, I...&gt;;
+}
+
+constexpr char operator ""_as_char(char8_t c) {
+  return c;
+}
+
+template&lt;char8_t_string_literal L&gt;
+constexpr auto&amp; operator""_as_char() {
+  return make_as_char_buffer&lt;L&gt;(std::make_index_sequence&lt;decltype(L)::size&gt;());
+}
+</code></pre>
+</fieldset>
+</p>
+
+<table border="1">
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">constexpr const char &amp;r = u8’x';</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">constexpr const char &amp;r = u8’x'<ins>_as_char</ins>;        <ins>// C++20 only</ins</code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">constexpr const char *p = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">constexpr const char *p = u8"text"<ins>_as_char</ins>;     <ins>// C++20 only</ins</code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">// gcc extension in C++17; standard C++ doesn't permit conversion
+// to arrays of unknown bound.
+constexpr const char (&amp;r)[] = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">// Ok in C++20 with <a title="Class Types in Non-Type Template Parameters" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html">P0388R2</a> <sup><a title="Class Types in Non-Type Template Parameters" href="#ref_p0388r2">[P0388R2]</a></sup>
+
+constexpr const char (&amp;r)[] = u8"text"<ins>_as_char</ins>; <ins>// C++20 only</ins</code></pre>
+      </fieldset>
+    </td>
+  </tr>
+</table>
+
+<p>When wrapped in macros, the above UDL can be used to retain source
+compatibility across C++17 and C++20 for all known scenarios except for
+array initialization.
+<fieldset><pre><code class="c++">#if defined(__cpp_char8_t)
+#define U8(x) u8##x##_as_char
+#else
+#define U8(x) u8##x
+#endif
+</code></pre></fieldset>
+</p>
+
+<table border="1">
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">constexpr const char &amp;r = u8’x';</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">constexpr const char &amp;r = <ins>U8(’x')</ins>;        <ins>// C++17 or C++20</ins</code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">constexpr const char *p = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">constexpr const char *p = <ins>U8("text")</ins>;     <ins>// C++17 or C++20</ins</code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">// gcc extension in C++17; standard C++ doesn't permit conversion
+// to arrays of unknown bound.
+constexpr const char (&amp;r)[] = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">// Ok in C++20 with <a title="Class Types in Non-Type Template Parameters" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html">P0388R2</a> <sup><a title="Class Types in Non-Type Template Parameters" href="#ref_p0388r2">[P0388R2]</a></sup>
+
+constexpr const char (&amp;r)[] = <ins>U8("text")</ins>; <ins>// C++17 or C++20</ins</code></pre>
+      </fieldset>
+    </td>
+  </tr>
+</table>
+
+<h2 id="array-subst">Substitute class types for C arrays initialized with <tt>u8</tt> string literals</h2>
+
+<p>In C++17, arrays of <tt>char</tt> may be initialized with <tt>u8</tt> string
+literals, but such initialization is ill-formed in C++20.  C++17 behavior can
+be emulated by substituting a class type with appropriate class template
+argument deduction guides.
+</p>
+
+<p>
+<fieldset>
+<pre><code class="c++">#include &lt;utility&gt;
+
+template&lt;std::size_t N&gt;
+struct char_array {
+  template&lt;std::size_t P, std::size_t... I&gt;
+  constexpr char_array(
+    const char (&amp;r)[P],
+    std::index_sequence&lt;I...&gt;)
+  :
+    data{(I&lt;P?r[I]:'\0')...}
+  {}
+  template&lt;std::size_t P, typename = std::enable_if_t&lt;(P&lt;=N)&gt;&gt;
+  constexpr char_array(const char(&amp;r)[P])
+    : char_array(r, std::make_index_sequence&lt;N&gt;())
+    {}
+
+#if defined(__cpp_char8_t)
+  template&lt;std::size_t P, std::size_t... I&gt;
+  constexpr char_array(
+    const char8_t (&amp;r)[P],
+    std::index_sequence&lt;I...&gt;)
+  :
+    data{(I&lt;P?static_cast&lt;char&gt;(r[I]):'\0')...}
+  {}
+  template&lt;std::size_t P, typename = std::enable_if_t&lt;(P&lt;=N)&gt;&gt;
+  constexpr char_array(const char8_t(&amp;r)[P])
+    : char_array(r, std::make_index_sequence&lt;N&gt;())
+    {}
+#endif
+
+  constexpr (&amp;operator const char() const)[N] {
+    return data;
+  }
+  constexpr (&amp;operator char())[N] {
+    return data;
+  }
+
+  char data[N];
+};
+template&lt;std::size_t N&gt;
+char_array(const char(&amp;)[N]) -&gt; char_array&lt;N&gt;;
+#if defined(__cpp_char8_t)
+template&lt;std::size_t N&gt;
+char_array(const char8_t(&amp;)[N]) -&gt; char_array&lt;N&gt;;
+#endif
+</code></pre>
+</fieldset>
+</p>
+
+<table border="1">
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">char a[] = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++"><ins>char_array</ins> a = u8"text";              <ins>// Ok, initialized with "text\0"</ins></code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">constexpr char a[] = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">constexpr <ins>char_array</ins> a = u8"text";    <ins>// Ok, initialized with "text\0"</ins></code></pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">constexpr char a[3] = u8"text";  // ill-formed</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">constexpr <ins>char_array&lt;3&gt;</ins> a = u8"text"; // ill-formed (too many initializers)</pre>
+      </fieldset>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <fieldset><pre><code class="c++">constexpr char a[6] = u8"text";</code></pre>
+      </fieldset>
+    </td>
+    <td>
+      <fieldset><pre><code class="c++">constexpr <ins>char_array&lt;6&gt;</ins> a = u8"text"; <ins>// Ok, initialized with "text\0\0"</code></pre>
+      </fieldset>
+    </td>
+  </tr>
+</table>
+
+
+<h2 id="conversion_fns">Use explicit conversion functions</h2>
+
+<p>Explicit conversion functions can be used, in a C++17 compatible manner,
+to cope with the change of return type to the <tt>std::filesystem::path</tt>
+member functions when a UTF-8 encoded path is desired in an object of type
+<tt>std::string</tt>.  For example:
+</p>
+
+<p>
+<fieldset><pre><code class="c++">std::string from_u8string(const std::string &amp;s) {
+  return s;
+}
+std::string from_u8string(std::string &amp;&amp;s) {
+  return std::move(s);
+}
+#if defined(__cpp_lib_char8_t)
+std::string from_u8string(const std::u8string &amp;s) {
+  return std::string(s.begin(), s.end());
+}
+#endif
+
+std::filesystem::path p = ...;
+std::string s = from_u8string(p.u8string());  // C++17 or C++20</code></pre>
+</fieldset>
+</p>
+
+<p>This naturally incurs a cost when building with <tt>char8_t</tt> support
+enabled due to the need to copy the path contents.
+</p>
+
+
+<h2 id="tooling">Tooling</h2>
+
+<p>Tooling could potentially assist programmers in migrating code.  Several of
+the approaches discussed above could be applied mechanically to an existing
+code base.  For example, re-writing existing <tt>u8</tt> literals to ordinary
+literals with escape sequences, or adding an <tt>_as_char</tt> UDL suffix to
+existing literals (inserting include directives as needed).
+</p>
+
+
+<h1 id="options">Options considered to reduce backward compatibility impact</h1>
+
+<p>The following sections summarize options that have been considered to
+reduce backward compatibility impact.  Most of these options are <em>not</em>
+proposed in this paper because they would actively interfere with goals of
+the <tt>char8_t</tt> proposal; to enable the type system to protect against
+inadvertent mixing of UTF-8 data and the execution encoding.  However, some
+of these options may be useful for some code bases and could be provided by
+implementations as opt-in extensions.
+</p>
+
+<p>Only two of these options (7 and 8) are proposed for inclusion in the
+standard.  In both  of these cases, the concern that is addressed was not
+specifically intended by the changes adopted in P0482R6.  These are
+effectively bug fixes.
+</p>
+
+
+<h2 id="option1">1) Reinstate <tt>u8</tt> literals as type <tt>char</tt> and introduce a new literal prefix for <tt>char8_t</tt></h2>
+
+<p><em>Not proposed</em></p>
+
+<p>Many of the backward compatibility concerns could be avoided by reinstating
+<tt>u8</tt> literals as having type <tt>char</tt> and introducing a new prefix,
+for example <tt>U8</tt>, to specify UTF-8 literals with type <tt>char8_t</tt>.
+</p>
+
+<p>The visible difference between <tt>u8</tt> and <tt>U8</tt> is subtle.  Some
+coding compliance standards, such as MISRA, forbid use of identifiers that
+differ only in case.  It has been suggested that C++11's use of <tt>u</tt> and
+<tt>U</tt> to denote UTF-16 and UTF-32 literals was a mistake because the
+visual distinction is too subtle.  To avoid these subtle visual differences,
+new literal prefixes such as <tt>utf8</tt>, <tt>utf16</tt>, and <tt>utf32</tt>
+could be introduced and the old ones deprecated.  The downside of these
+prefixes is, of course, that they are longer.
+</p>
+
+<p>Implementing this option would continue enabling problems with encoding
+confusion that we see today.  The execution encoding is not UTF-8 on some
+popular platforms and continuing to use <tt>char</tt> based types for
+execution encoding and UTF-8 (and other untrusted input or encodings) is a
+recipe for continued occurrences of mojibake in applications.  For platforms
+that use UTF-8 as the execution encoding, ordinary literals are already UTF-8
+encoded.  This option would introduce three distinct ways of writing UTF-8
+literals on such platforms; having two ways to do (almost) the same thing is
+usually one too many already.
+</p>
+
+
+<h2 id="option2">2) Allow implicit conversions from <tt>char8_t</tt> to <tt>char</tt></h2>
+
+<p><em>Not proposed</em></p>
+
+<p>Allowing implicit conversions from <tt>char8_t</tt> to <tt>char</tt> was
+considered with the original P0482 proposal.  The concerns with this approach
+are the same as in option 1; this enables continued, potentially unintended,
+mixing of UTF-8 data with non-UTF-8 data resulting in mojibake.
+
+<p>Additionally, allowing implicit conversions would not address all
+compatibility concerns.  For example:
+<fieldset><pre><code class="c++">template&lt;typename T&gt; void f(T); // #1
+void f(char);                   // #2
+f(u8'x'); // Calls #2 in C++17, would still call #1 in C++20.</code></pre></fieldset>
+</p>
+
+<p>However, such implicit conversions could still be useful for some existing
+code.  Implementations could offer extensions to enable such conversions.
+</p>
+
+
+<h2 id="option3">3) Allow initializing an array of <tt>char</tt> with a <tt>u8</tt> string literal</h2>
+
+<p><em>Not proposed</em></p>
+
+<p>This option would allow the following code to remain well-formed in C++20.
+</p>
+
+<fieldset><pre><code class="c++">char a[] = u8"text";</code></pre></fieldset>
+
+<p>Array initialization is the one context in which the previously discussed
+uses of <tt>reinterpret_cast</tt> or the <tt>_as_char</tt> UDL isn't an option.
+This option would allow array initializations to remain well-formed and avoid
+the need for workarounds like the previously discussed <tt>char_array</tt>
+template.  However, this option would continue to promote mixing of UTF-8 data
+with non-UTF-8 data potentially resulting in mojibake.
+</p>
+
+<p>Implementations could allow these initializations as a conforming extension.
+</p>
+
+
+<h2 id="option4">4) Allow initializing an array with a reference to an array</h2>
+
+<p><em>Not proposed</em></p>
+
+<p>This option would enable use of the previously discussed <tt>_as_char</tt>
+UDL to initialize an array without the need for workarounds like the previously
+discussed <tt>char_array</tt> template.  However, this option would continue to
+promote mixing of UTF-8 data with non-UTF-8 data potentially resulting in
+mojibake.
+</p>
+
+<fieldset><pre><code class="c++">char a[] = u8"text"_as_char;</code></pre></fieldset>
+
+<p>Implementations could allow these initializations as a conforming extension.
+</p>
+
+
+<h2 id="option5">5) Allow <tt>std::string</tt> to be initialized with <tt>char8_t</tt> based types</h2>
+
+<p><em>Not proposed</em></p>
+
+<p>This option has been suggested as a way to allow some existing uses of
+<tt>std::string</tt> to hold UTF-8 data to remain valid in C++20.  For
+example:
+</p>
+
+<fieldset><pre><code class="c++">std::string s1 = u8"text";
+std::string s2 = s1 + u8"text";</code></pre></fieldset>
+
+<p>This option constitutes a narrow fix for a few specific use cases within a
+considerably larger problem space.  Further, it would require changes to
+<tt>std::basic_string</tt> specifically for its <tt>char</tt>-based
+specializations.  As with previously discussed options, this would again
+continue to promote mixing of UTF-8 data with non-UTF-8 data potentially
+resulting in mojibake.
+</p>
+
+
+<h2 id="option6">6) Allow implicit conversions from <tt>std::u8string</tt> to <tt>std::string</tt></h2>
+
+<p><em>Not proposed</em></p>
+
+<p>This option has been suggested as a means to address the backward
+compatibility impact due to the changes to the <tt>std::filesystem::path</tt>
+<tt>u8string</tt> and <tt>generic_u8string</tt> member functions.  It would
+allow code like the following to continue to work as expected:
+</p>
+
+<fieldset><pre><code class="c++">std::filesystem::path p = ...;
+std::string s1 = p.u8string();</code></pre></fieldset>
+
+<p>This option is, again, not proposed because it would allow unintended
+mixing of UTF-8 encoded data and the execution character encoding.
+</p>
+
+
+<h2 id="option7">7) Add deleted ostream inserters for <tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt></h2>
+
+<p><em>Proposed</em></p>
+
+<p>An unintended and silent behavioral change was introduced with the adoption
+of P0482R6.  In C++17, the following code wrote the code units of the literals
+to stdout.  In C++20, this code now writes the character literal as a number,
+and the address of the string literal, to stdout.
+</p>
+
+<fieldset><pre><code class="c++">std::cout &lt;&lt; u8'x';    // In C++20, writes the number 120.
+std::cout &lt;&lt; u8"text"; // In C++20, writes a memory address.</code></pre></fieldset>
+
+<p>This is a surprising change that provides no benefit to programmers.
+Adding deleted ostream inserters would avoid this surprising behavioral change
+while reserving the possibility to specify behavior for these operations in the
+future (for example, to specify implicit transcoding to the execution
+encoding).
+</p>
+
+
+<h2 id="option8">8) Allow <tt>std::filesystem::u8path</tt> to accept ranges and iterators with <tt>char8_t</tt> value types</h2>
+
+<p><em>Proposed</em></p>
+
+<p>Another unintended behavioral change introduced with the adoption of
+P0482R6 is that the following code is now ill-formed because
+<tt>std::filesystem::u8path</tt> requires a range or pair of iterators
+specifically with a value type of <tt>char</tt>.
+</p>
+
+<fieldset><pre><code class="c++">std::filesystem::u8path(u8"text");</code></pre></fieldset>
+
+<p><tt>std::filesystem::u8path</tt> is now deprecated, but since it previously
+required UTF-8 data, there is no risk of encoding confusion (unlike with many of
+the other options discussed in this paper).  Allowing it to continue to be
+called with <tt>u8</tt> literals (or other <tt>char8_t</tt> based ranges and
+iterators) causes no harm other than potentially encouraging continued use of a
+deprecated interface.
+</p>
+
+
+<h1 id="proposal">Proposal</h1>
+
+This paper proposes implementing only options 7 and 8.
+
+<ul>
+  <li>Add deleted overloads of
+      <tt>basic_ostream&lt;char, ...&gt;::operator&lt;&lt;</tt> and
+      <tt>basic_ostream&lt;wchar_t, ...&gt;::operator&lt;&lt;</tt> for
+      <tt>char8_t</tt> character and string types.  This avoids the silent
+      and surprising behavior change introduced by
+      <a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
+         href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html">
+      P0482R6</a>
+      <sup><a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
+              href="#ref_p0482r6">
+      [P0482R6]</a></sup> that resulted in UTF-8 characters being formatted as
+      numeric values and UTF-8 strings being formatted as pointers.</li>
+  <li>Add deleted overloads of
+      <tt>basic_ostream&lt;char, ...&gt;::operator&lt;&lt;</tt> for
+      <tt>wchar_t</tt>, <tt>char16_t</tt> and <tt>char32_t</tt> character and
+      string types and deleted overloads of
+      <tt>basic_ostream&lt;wchar_t, ...&gt;::operator&lt;&lt;</tt> for
+      <tt>char16_t</tt> and <tt>char32_t</tt> character and
+      string types.  This removes surprising behavior that has been present
+      since C++11; that characters are formatted as numeric values and that
+      strings are formatted as pointers.</li>
+  <li>Modify <tt>std::filesystem::u8path</tt> to accept ranges and iterators
+      with <tt>char8_t</tt> value types.  This allows existing code that passes
+      UTF-8 string literals to remain well-formed.<br/>
+      <tt>u8path(u8"filename"); // Ok; ill-formed following
+      <a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
+         href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html">
+      P0482R6</a>
+      <sup><a title="char8_t: A type for UTF-8 characters and strings (Revision 6)"
+              href="#ref_p0482r6">
+      [P0482R6]</a></sup>.</tt></li>
+  <li>Update the <tt>__cpp_lib_char8_t</tt> feature test macro to reflect
+      proposed changes in library behavior.</li>
+</ul>
+
+
+<h1 id="wording">Wording</h1>
+
+<input type="checkbox" id="hidedel">Hide deleted text</input>
+
+<p>These changes are relative to
+<a title="Working Draft, Standard for Programming Language C++"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4810.pdf">
+N4810</a>
+<sup><a title="Working Draft, Standard for Programming Language C++"
+        href="#ref_n4810">
+[N4810]</a></sup></p>
+
+
+<h2 id="library_wording">Library wording</h2>
+
+<p>Change in table 35 of
+<a href="http://eel.is/c++draft/support.limits.general#3">
+17.3.1 [support.limits.general] paragraph 3</a>:
+<blockquote>
+<div style="margin-left: 1em;">
+<table>
+  <tr>
+    <td align="center">
+      Table 35 &mdash; Standard library feature-test macros
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <table border="1">
+        <tr>
+          <th align="center">Macro name</th>
+          <th align="center">Value</th>
+          <th align="center">Header(s)</th>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+        <tr>
+          <td>__cpp_lib_char8_t</td>
+          <td><del>201811</del><ins>201907L</ins> <strong><em style="background-color: yellow">** placeholder **</em></strong></td>
+          <td>&lt;atomic&gt;
+              &lt;filesystem&gt;
+              &lt;istream&gt;
+              &lt;limits&gt;
+              &lt;locale&gt;
+              &lt;ostream&gt;
+              &lt;string&gt;
+              &lt;string_view&gt;</td>
+        </tr>
+        <tr>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+          <td>[&hellip;]</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+</blockquote>
+</p>
+
+<p><em>Drafting note: the final value for the <tt>__cpp_lib_char8_t</tt> feature
+test macro will be selected by the project editor to reflect the date of
+approval.</em>
+</p>
+
+
+<p>Change in
+<a href="http://eel.is/c++draft/ostream">
+29.7.5.1 [ostream]</a>:
+
+<blockquote>
+<div style="margin-left: 1em;">
+namespace std {<br/>
+<br/>
+&nbsp;&nbsp;[&hellip;]<br/>
+<br/>
+&nbsp;&nbsp;// [ostream.inserters.character], character inserters<br/>
+&nbsp;&nbsp;template&lt;class charT, class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;charT, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;, charT);<br/>
+&nbsp;&nbsp;template&lt;class charT, class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;charT, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;, char);<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, char);<br/>
+<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, signed char);<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, unsigned char);<br/>
+<br/>
+<ins>
+&nbsp;&nbsp;// The following deleted overloads prevent formatting character values as numeric values.</br>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, wchar_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, char8_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, char16_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, char32_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, char8_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, char16_t) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, char32_t) = delete;<br/>
+<br/>
+</ins>
+&nbsp;&nbsp;template&lt;class charT, class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;charT, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;, const charT*);<br/>
+&nbsp;&nbsp;template&lt;class charT, class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;charT, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;, const char*);<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const char*);<br/>
+<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const signed char*);<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const unsigned char*);<br/>
+<ins>
+<br/>
+&nbsp;&nbsp;// The following deleted overloads prevent formatting strings as pointer values.</br>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const wchar_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const char8_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const char16_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;char, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char, traits&gt;&amp;, const char32_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, const char8_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, const char16_t*) = delete;<br/>
+&nbsp;&nbsp;template&lt;class traits&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;basic_ostream&lt;wchar_t, traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;wchar_t, traits&gt;&amp;, const char32_t*) = delete;<br/>
+</ins>
+}
+</div>
+</blockquote>
+</p>
+
+
+<h2 id="annex_c_wording">Annex C Compatibility wording</h2>
+
+<p>Change in
+<a href="http://eel.is/c++draft/diff.cpp17.input.output#2">
+C.5.11 [diff.cpp17.input.output] paragraph 2</a>:
+<blockquote>
+<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/ostream.inserters.character">29.7.5.2.4</a><br/>
+<strong>Change</strong>: Overload resolution for ostream inserters
+used with UTF-8 literals.<br/>
+<strong>Rationale</strong>: Required for new features.<br/>
+<strong>Effect on original feature</strong>: Valid ISO C++ 2017 code that
+passes UTF-8 literals to <tt>basic_ostream<ins>&lt;char, ...&gt;</ins>::operator&lt;&lt;</tt>
+<ins>or <tt>basic_ostream<ins>&lt;wchar_t, ...&gt;</ins>::operator&lt;&lt;</tt></ins>
+<del>no
+longer calls character related overloads</del><ins>is now ill-formed</ins>.
+<br/>
+<div style="margin-left: 1em;">
+<tt>
+<pre>std::cout &lt;&lt; u8"text";       <em>// Previously called operator&lt;&lt;(const char*) and printed a string.</em>
+                             <em>// Now <del>calls operator&lt;&lt;(const void*) and prints a pointer value</del><ins>ill-formed</ins>.</em>
+std::cout &lt;&lt; u8'X';          <em>// Previously called operator&lt;&lt;(char) and printed a character.</em>
+                             <em>// Now <del>calls operator&lt;&lt;(int) and prints an integer value</del><ins>ill-formed</ins>.</em>
+</pre>
+</tt>
+</div>
+</blockquote>
+</p>
+
+
+<p>Add a new paragraph after
+<a href="http://eel.is/c++draft/diff.cpp17.input.output#2">
+C.5.11 [diff.cpp17.input.output] paragraph 2</a>:
+<blockquote class="stdins">
+<strong>Affected subclause:</strong> <a href="http://eel.is/c++draft/ostream.inserters.character">29.7.5.2.4</a><br/>
+<strong>Change</strong>: Overload resolution for ostream inserters
+used with <tt>wchar_t</tt>, <tt>char16_t</tt>, or <tt>char32_t</tt> types.<br/>
+<strong>Rationale</strong>: Removal of surprising behavior.<br/>
+<strong>Effect on original feature</strong>: Valid ISO C++ 2017 code that
+passes <tt>wchar_t</tt>, <tt>char16_t</tt>, or <tt>char32_t</tt> characters
+or strings to <tt>basic_ostream&lt;char, ...&gt;::operator&lt;&lt;</tt>, or
+that passes <tt>char16_t</tt>, or <tt>char32_t</tt> characters
+or strings to <tt>basic_ostream&lt;wchar_t, ...&gt;::operator&lt;&lt;</tt>
+is now ill-formed.
+<br/>
+<div style="margin-left: 1em;">
+<tt>
+<pre>std::cout &lt;&lt; u"text";        <em>// Previously formatted the string as a pointer value.</em>
+                             <em>// Now ill-formed.</em>
+std::cout &lt;&lt; u'X';           <em>// Previously formatted the character as an integer value.</em>
+                             <em>// Now ill-formed.</em>
+</pre>
+</tt>
+</div>
+</blockquote>
+</p>
+
+
+<h2 id="annex_d_wording">Annex D Compatibility features wording</h2>
+
+<p>Change in
+<a href="http://eel.is/c++draft/depr.fs.path.factory#1">
+D.17 [depr.fs.path.factory] paragraph 1</a>:
+<blockquote>
+<em>Requires:</em> The <tt>source</tt> and <tt>[first, last)</tt> sequences are
+UTF-8 encoded.  The value type of <tt>Source</tt> and <tt>InputIterator</tt> is
+<tt>char</tt><ins> or <tt>char8_t</tt></ins>.  <tt>Source</tt> meets the
+requirements specified in
+<a href="http://eel.is/c++draft/fs.path.req">29.11.7.3</a>.
+</blockquote>
+</p>
+
+
+
+
+<h1 id="references">References</h1>
+
+<table id="references">
+  <tr>
+    <td id="ref_n4810"><sup>[N4810]</sup></td>
+    <td>
+      "Working Draft, Standard for Programming Language C++", N4810, 2019.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4810.pdf">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4810.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_p0388r2"><sup>[P0388R2]</sup></td>
+    <td>
+      Robert Haberlach,
+      "Permit conversions to arrays of unknown bound", P0388R2, 2018.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_p0482r6"><sup>[P0482R6]</sup></td>
+    <td>
+      Tom Honermann,
+      "char8_t: A type for UTF-8 characters and strings (Revision 6)", P0482R6, 2018.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0482r6.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_p0732r2"><sup>[P0732R2]</sup></td>
+    <td>
+      Jeff Snyder and Louis Dionne,
+      "Class Types in Non-Type Template Parameters", P0732R2, 2018.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0732r2.pdf">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0732r2.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_sd8"><sup>[SD-8]</sup></td>
+    <td>
+      Titus Winters,
+      "SD-8: Standard Library Compatibility", SD-8, 2018.<br/>
+      <a href="https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility">
+      https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility</a></td>
+  </tr>
+</table>
+
+</body>
