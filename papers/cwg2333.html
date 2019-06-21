@@ -45,7 +45,7 @@ blockquote.stddel
 
 <p>
 Tom Honermann &lt;tom@honermann.net&gt;<br/>
-2019-01-05
+2019-06-20
 </p>
 
 <h1>Core Issue 2333: Escape sequences in UTF-8 character literals</h1>
@@ -144,10 +144,10 @@ character literal of type <tt>char8_t</tt>, known as a
 <em>UTF-8 character literal</em>.  The value of a UTF-8 character literal
 <ins>that is not specified with a hexadecimal or octal escape sequence </ins>is
 equal to its ISO/IEC 10646 code point value, provided that the code point value
-is representable with a single UTF-8 code unit (that is, provided it is in the
-C0 Controls and Basic Latin Unicode block).  If the value is not representable
-with a single UTF-8 code unit, the program is ill-formed.  A UTF-8 character
-literal containing multiple
+can be encoded as a single UTF-8 code unit.  [ <em>Note:</em> That is, provided
+the code point value is in the range 0x0-0x7F (inclusive). &mdash;
+<em>end note</em> ]   If the value is not representable with a single UTF-8 code
+unit, the program is ill-formed.  A UTF-8 character literal containing multiple
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-chars</a> is ill-formed.
 </blockquote>
 </p>
@@ -157,15 +157,15 @@ literal containing multiple
 5.13.3 [lex.ccon] paragraph 4</a>:
 <blockquote>
 A character literal that begins with the letter <tt>u</tt>, such as
-<tt>u'x'</tt>, is a character literal of type <tt>char16_t</tt>t.  The value of
-a <tt>char16_t</tt> character literal <del>containing a single
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a></del><ins>that
-is not specified with a hexadecimal or octal escape sequence</ins> is equal to
-its ISO/IEC 10646 code point value, provided that the code point value is
-representable with a single 16-bit code unit (that is, provided it is in the
-basic multi-lingual plane).  If the value is not representable with a single
-16-bit code unit, the program is ill-formed.  A <tt>char16_t</tT> character
-literal containing multiple
+<tt>u'x'</tt>, is a character literal of type <tt>char16_t</tt>, known as a
+<em>UTF-16 character literal</em>.  The value of a UTF-16 character literal
+<ins>that is not specified with a hexadecimal or octal escape sequence</ins>
+is equal to its ISO/IEC 10646 code point value, provided that the code point
+value is representable with a single 16-bit code unit. [ <em>Note:</em> That
+is, provided the code point value is in the range 0x0-0xFFFF (inclusive).
+&mdash; <em>end note</em> ]  If the value is not representable with a single
+16-bit code unit, the program is ill-formed.  A UTF-16 character literal
+containing multiple
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-chars</a> is ill-formed.
 </blockquote>
 </p>
@@ -175,12 +175,13 @@ literal containing multiple
 5.13.3 [lex.ccon] paragraph 5</a>:
 <blockquote>
 A character literal that begins with the letter <tt>U</tt>, such as
-<tt>U'y'</tt>, is a character literal of type <tt>char32_t</tt>.  The value of
-a <tt>char32_t</tt> character literal <del>containing a single
+<tt>U'y'</tt>, is a character literal of type <tt>char32_t</tt>, known as a
+<em>UTF-32 character literal</em>.  The value of a UTF-32 character literal
+<del>containing a single
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a></del><ins>that
 is not specified with a hexadecimal or octal escape sequence</ins> is equal
-to its ISO/IEC 10646 code point value.  A <tt>char32_t</tT> character literal
-containing multiple
+to its ISO/IEC 10646 code point value.  A UTF-32 character literal containing
+multiple
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-chars</a> is ill-formed.
 </blockquote>
 </p>
