@@ -68,7 +68,7 @@ blockquote.stddel
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2019-07-14</td>
+    <td>2019-07-15</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -156,6 +156,10 @@ blockquote.stddel
 <h1 id="changes">Changes since <a href="http://wg21.link/p1423r2">P1423R2</a></h1>
 
 <ul>
+  <li>Added links to a
+      <a href="https://github.com/tahonermann/char8_t-remediation">github repository</a>
+      that implements several of the remediation approaches discussed in
+      this paper.</li>
   <li>Updated the <a href="#emulate">"Emulate C++17 <tt>u8</tt> literals"</a>
       remediation approach with corrections regarding
       <a title="Permit conversions to arrays of unknown bound" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html">P0388R2</a>
@@ -513,6 +517,14 @@ literals</a> approach is able to address most cases of backward compatibility
 impact.
 </p>
 
+<p>Several of these approaches have been implemented in a header only library
+available at
+<a href="https://github.com/tahonermann/char8_t-remediation">https://github.com/tahonermann/char8_t-remediation</a>.
+The header provides compiler feature testing, types, and macro definitions
+that enable code to be written with <tt>char</tt> typed UTF-8 literals
+compatibility for C++17 and C++20.
+</p>
+
 
 <h2 id="disable">Disable <tt>char8_t</tt> support</h2>
 
@@ -834,6 +846,11 @@ constexpr const char (&amp;r)[] = <ins>U8("text")</ins>; <ins>// C++17 or C++20 
   </tr>
 </table>
 
+<p>An implementation of the above <tt>U8</tt> macro is available in a header
+only library available at
+<a href="https://github.com/tahonermann/char8_t-remediation">https://github.com/tahonermann/char8_t-remediation</a>.
+</p>
+
 <h2 id="array-subst">Substitute class types for C arrays initialized with <tt>u8</tt> string literals</h2>
 
 <p>In C++17, arrays of <tt>char</tt> may be initialized with <tt>u8</tt> string
@@ -939,6 +956,11 @@ char_array(const char8_t(&amp;)[N]) -&gt; char_array&lt;N&gt;;
     </td>
   </tr>
 </table>
+
+<p>An implementation of the above <tt>char_array</tt> class template is
+available in a header only library available at
+<a href="https://github.com/tahonermann/char8_t-remediation">https://github.com/tahonermann/char8_t-remediation</a>.
+</p>
 
 
 <h2 id="conversion_fns">Use explicit conversion functions</h2>
