@@ -160,7 +160,7 @@ blockquote.stddel
       <a href="https://github.com/tahonermann/char8_t-remediation">github repository</a>
       that implements several of the remediation approaches discussed in
       this paper.</li>
-  <li>Updated the <a href="#emulate">"Emulate C++17 <tt>u8</tt> literals"</a>
+  <li>Updated the "<a href="#emulate">Emulate C++17 <tt>u8</tt> literals</a>"
       remediation approach with corrections regarding
       <a title="Permit conversions to arrays of unknown bound" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html">P0388R2</a>
       in C++20 (it
@@ -169,6 +169,9 @@ blockquote.stddel
   <li>Corrected several link titles for references to
       <a title="Permit conversions to arrays of unknown bound" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0388r2.html">P0388R2</a>.
       </li>
+  <li>Updated the "<a href="#overload">Add Overloads</a>" remediation approach
+      to discuss ambiguous overload resolution issues based on feedback provided
+      by Marc Mutz.  Thanks, Marc!</li>
 </ul>
 
 
@@ -549,6 +552,12 @@ effective step towards full migration to C++20.  Ideally, older <tt>char</tt>
 based functions would eventually be removed.
 </p>
 
+<p>If the overlaods do not need to accept null values (<tt>nullptr</tt>,
+<tt>0</tt>, <tt>NULL</tt>), then adding a regular overload suffices as in
+the following example.  However, this approach will result in overload
+resolution failure if callers are permitted to pass null values.
+</p>
+
 <table border="1">
   <tr>
     <th>Before</th>
@@ -596,6 +605,37 @@ int v = u8"text"_udl; <ins>// C++17 or C++20</ins></code></pre>
     </td>
   </tr>
 </table>
+
+<p>If handling of null values is required, then some additional finessing
+is required.  There are three approaches:
+<ul>
+  <li>Have callers cast null values to the type needed for the desired
+      overload.<br/>
+      This approach requires updates to existing callers.
+  </li>
+  <li>Add additional overloads for <tt>nullptr_t</tt> and <tt>int</tt>.<br/>
+      This doesn't scale if there are multiple parameters.
+  </li>
+  <li>Define the <tt>char8_t</tt> overload as a template.<br/>
+  </li>
+</ul>
+The third option relies on overload resolution preferring a non-template
+function over a function template to avoid ambiguous overload resolution
+as shown in the following example.
+</p>
+<p>
+<fieldset><pre><code class="c++">int ft(const char*, const char*);       // #1
+#if defined(__cpp_char8_t)
+template&lt;typename = void&gt;
+int ft(const char8_t*, const char8_t*); // #2
+#endif
+
+ft(nullptr,  nullptr);  <ins>// Calls #1</ins>
+ft("text",   nullptr);  <ins>// Calls #1</ins>
+ft(u8"text", nullptr);  <ins>// Calls #2</ins>
+ft(u8"text", "text");   <ins>// ill-formed</ins></code></pre>
+</fieldset>
+</p>
 
 
 <h2 id="ordinary">Change <tt>u8</tt> literals to ordinary literals with escape sequences</h2>
