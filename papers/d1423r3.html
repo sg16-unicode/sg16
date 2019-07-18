@@ -1487,15 +1487,22 @@ std::cout &lt;&lt; u'X';           <em>// Previously formatted the character as 
 <a href="http://eel.is/c++draft/depr.fs.path.factory#1">
 D.17 [depr.fs.path.factory] paragraph 1</a>:
 <blockquote>
+<pre>
+template&lt;class Source&gt;
+  path u8path(const Source&amp; source);
+template&lt;class InputIterator&gt;
+  path u8path(InputIterator first, InputIterator last);
+</pre>
+<br/>
+<div style="margin-left: 1em;">
 <em>Requires:</em> The <tt>source</tt> and <tt>[first, last)</tt> sequences are
 UTF-8 encoded.  The value type of <tt>Source</tt> and <tt>InputIterator</tt> is
 <tt>char</tt><ins> or <tt>char8_t</tt></ins>.  <tt>Source</tt> meets the
 requirements specified in
 <a href="http://eel.is/c++draft/fs.path.req">29.11.7.3</a>.
+</div>
 </blockquote>
 </p>
-
-
 
 
 <h1 id="references">References</h1>
