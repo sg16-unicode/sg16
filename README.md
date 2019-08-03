@@ -26,9 +26,9 @@ WG Number     | Status      | Title/Notes/Links
 
 # WG14 Papers (C)
 
-WG Number     | Title/Notes/Links
-------------- | -----
-[N2231][]     | char8_t: A type for UTF-8 characters and strings
+WG Number     | Status      | Title/Notes/Links
+------------- | ------      | -----
+[N2231][]     |             | char8_t: A type for UTF-8 characters and strings
 
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [P1629]: http://wg21.link/p1629
