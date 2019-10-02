@@ -5,6 +5,7 @@ ISO JTC1/SC22 WG21 and WG14 papers:
 
 WG21 Number     | Title | Revisions
 --------------- | ----- | ----
+[P1896R0][]     | SG16: Unicode meeting summaries 2019/06/12 - 2019/09/25 | [R0][P1896R0]
 [P1666R0][]     | SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22 | [R0][P1666R0]
 [P1423R3][]     | char8_t backward compatibility remediation | [R3][P1423R3] [R2][P1423R2] [R1][P1423R1] [R0][P1423R0]
 [P1422R0][]     | SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09 | [R0][P1422R0]
@@ -56,3 +57,4 @@ WG14 Number     | Title
 [P1423R2]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1423r2.html
 [P1423R3]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1423r3.html
 [P1666R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1666r0.html
+[P1896R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1896r0.html

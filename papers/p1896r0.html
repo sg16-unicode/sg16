@@ -1,0 +1,1731 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2019/06/12 - 2019/09/25</title>
+</head>
+
+<style type="text/css">
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+</style>
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>P1896R0</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2019-10-02</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2019/06/12 - 2019/09/25</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2019_06_12">
+      June 12th, 2019</a></li>
+  <li><a href="#2019_06_26">
+      June 26th, 2019</a></li>
+  <li><a href="#2019_07_31">
+      July 31st, 2019</a></li>
+  <li><a href="#2019_08_21">
+      August 21st, 2019</a></li>
+  <li><a href="#2019_09_14">
+      September 14th, 2019</a></li>
+  <li><a href="#2019_09_25">
+      September 25th, 2019</a></li>
+</ul>
+
+
+<h1 id="2019_06_12">June 12th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss and provide feedback for any draft papers targeting the 6/17
+      pre-Cologne mailing.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Nathan Myers</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Planning for Cologne:
+    <ul>
+      <li>Tom communicated that SG16 has requested a half day session in
+          Cologne.</li>
+      <li>Tom communicated that SG16 will host an evening session.  Potential
+          topics (subject to author's desire) include:
+        <ul>
+          <li>UTF-8 and current ecosystems.</li>
+          <li>JeanHeyd's work on transcoding interfaces.</li>
+          <li>Corentin's work on character properties.</li>
+          <li>Hana's work on Unicode support in CTRE.</li>
+        </ul>
+      </li>
+      <li>JeanHeyd confirmed that his transcoding interfaces paper will appear
+          in the pre-meeting mailing.</li>
+    </ul>
+  </li>
+    <li>Discussion of the file name constraints added to the draft D1238R1
+        posted to the SG16 mailing list:
+      <ul>
+        <li><a href="http://www.open-std.org/pipermail/unicode/2019-June/000386.html">http://www.open-std.org/pipermail/unicode/2019-June/000386.html</a>
+        <li>Steve expressed approval for the new section.</li>
+        <li>Zach agreed noting uncertainty that anyone cares about the details
+            of normalization-insensitivity.</li>
+        <li>Tom concurred and indicated he was unsure how important that
+            is.</li>
+        <li>Zach stated that it is important since extremely subtle bugs can
+            happen from changing normalization.</li>
+        <li>Tom acknowledged the possibility and noted reported problems for
+            Apple's migration from HFS+ to APFS.</li>
+        <li>Zach observed that there is no good way to tell what filesystem
+            you are working on and what its idiosyncracies are.</li>
+        <li>Nathan asserted that programmers have to deal with presentation of
+            file names and allow user selection.</li>
+        <li>Steve noted that different file names can present the same (due to
+            Unicode confusables or normalization differences).</li>
+        <li>Zach recalled an email from Marshall Clow some time ago regarding
+            file systems using completely different normalization schemes.
+            Different filesystems do things differently.</li>
+        <li>Nathan stated that uploading a file to a web site also has
+            presentation issues.</li>
+        <li>Mark stated that jumping from one filesystem to another is
+            inherently lossy, but treated as a transfer issue.  The only way
+            to store a file accurately in text is to write it in something
+            like base64.  Writing a file name to a text file may break the
+            encoding of the file.</li>
+        <li>Zach claimed that we can't fix these issues except by declaring
+            "things must work" and letting implementors figure it out, which
+            they probably can't do.</li>
+        <li>Steve noted that we keep getting asked about handling of file names
+            and this is intended to document constraints.</li>
+        <li>Mark recalled an example; from the stack trace proposal, we
+            specified file names be handled as a sequence of bytes.</li>
+        <li>Tom mentioned he was thinking about sending an email to the Unicode
+            Consortium's mailing list asking about current thinking regarding
+            file names in text files.</li>
+        <li>Mark argued that we should just try and stay out of this space.</li>
+        <li>Tom asserted it is a big question for `std::text`.  How do we allow
+            file names in <tt>std::text</tt>, particularly if we require
+            well-formed content?</li>
+        <li>Mark suggested relying on an error policy.</li>
+        <li>Zach claimed that we need to emphasize that, if a file name is
+            retrieved from the file system, programmers must maintain it as is.
+            Don't mutate it at all, don't compare it to text.</li>
+        <li>Tom asked how one puts file names in text and have it be well-formed
+            text?</li>
+        <li>Zach replied simply, you don't.</li>
+        <li>Mark provided an example of Apache using base64 encoding of names in
+            URLs.</li>
+        <li>Zach asserted that applications must provide a file selector
+            interface.</li>
+        <li>Tom asked how one would write <tt>ls</tt>?</li>
+        <li>Zach responded that the file name be written in a presentation
+            format that isn't necessarily suitable for referencing the
+            file.</li>
+        <li>Steve observed that this already happens all the time that file
+            names appear in output, but can't be parsed out or referenced as
+            is.</li>
+        <li>Tom acknowledged and observed this is why GNU `find` has a
+            <tt>-print0</tt> option.</li>
+        <li>Nathan suggested that we may need to publish a document on how to
+            deal with file names.</li>
+        <li>Steve mentioned that we have <tt>std::filesystem</tt> and it has
+            facilities for getting names out of paths.</li>
+        <li>Zach claimed that problems happen if, for example, you have a UCS-2
+            file name on Windows that is ill-formed UTF-16.</li>
+        <li>Tom confirmed that recent Windows 10 releases still allow creation
+            of file names that are not valid UTF-16.</li>
+        <li>Zach asserted that we don't want interfaces that do transcoding or
+            normalization to touch filenames.</li>
+        <li>JeanHeyd suggested adding a new non-directive to the paper stating
+            that we won't attempt to impose restrictions on file names.</li>
+        <li>Tom agreed to do so.</li>
+        <li><em>[Editor's note: Tom did so in
+            <a href="https://wg21.link/p1238r1">P1238R1</a>
+            for the Cologne pre-meeting mailing]</em></li>
+    </ul>
+  </li>
+  <li>Discussion of planned transcoding papers:
+    <ul>
+      <li>Zach stated he wasn't going to be able to produce a paper on
+          transcoding for the Cologne pre-meeting mailing.</li>
+      <li>Tom let Zach know that was ok, especially since JeanHeyd was who had
+          volunteered to write that paper and is currently working on a
+          draft.</li>
+      <li>Zach noted a performance concern to address in the paper; generic
+          transcoder interfaces don't perform well with smart iterators.  For
+          maximum performance, vector operations must be used as Bob Steagall
+          demonstrated.</li>
+      <li>Tom acknowledged that specializations for contiguous storage are
+          needed.</li>
+      <li>JeanHeyd said he came to the same conclusion and that the paper would
+          discuss it.  He also indicated intent to share the draft on the SG16
+          mailing list.</li>
+      <li><em>[Editor's note: JeanHeyd later shared that draft on the SG16
+          Slack channel.  The draft can be found at
+          <a href="https://thephd.github.io/vendor/future_cxx/papers/d1629.html">https://thephd.github.io/vendor/future_cxx/papers/d1629.html</a>
+          and will be in the pre-meeting mailing as
+          <a href="https://wg21.link/p1629r0">P1629R0</a>.]</em></li>
+    </ul>
+  </li>
+  <li>Discussion of z/OS compiler updates:
+    <ul>
+      <li>Tom communicated recent news within the z/OS ecosystem.  IBM recently
+          released versions of Clang for z/OS with their latest updates for
+          their xlC compiler.  Additionally, a third party provider also
+          maintains a z/OS C++14+ compiler based on LLVM.  Tom stated the
+          details would appear in a revision of P1238.</li>
+      <li><em>[Editor's note: Tom did add those details to
+          <a href="https://wg21.link/p1238r1">P1238R1</a>
+          for the Cologne pre-meeting mailing]</em></li>
+    </ul>
+  </li>
+  <li>Discussion of Boost review for JeanHeyd's
+      <a href="https://github.com/ThePhD/out_ptr"><tt>out_ptr</tt></a>.
+    <ul>
+      <li>Zach communicated that Boost formal review for JeanHeyd's
+          <a href="https://github.com/ThePhD/out_ptr"><tt>out_ptr</tt></a>
+          library would begin on Monday June 17th and encouraged everyone to
+          participate via the Boost mailing list.
+    </ul>
+  </li>
+  <li>Discussion of C standard string transcoding functions:
+    <ul>
+      <li>JeanHeyd asked for feedback regarding a set of transcoding functions
+          he is considering proposing to the C committee at their October
+          meeting in Ithaca.  The functions match the existing C
+          <tt>mbstowcs</tt>/<tt>wcstombs</tt> and
+          <tt>mbsrtowcs</tt>/<tt>wcsrtombs</tt> functions but transcode between
+          UTF-8 (<tt>char8_t</tt>), UTF-16 (<tt>char16_t</tt>), and UTF-32
+          (<tt>char32_t</tt>).  The full cartesian product for all of the
+          encodings results in approximately 40 functions.  He is wondering if
+          the full set is needed or if a reduced set would suffice.  These
+          functions are not used often and aren't very performant.</li>
+      <li>Tom stated that <tt>mbstowcs</tt> should be able to perform ok.</li>
+      <li>JeanHeyd stated that dropping the restartable ones would reduce the
+          number, but those are useful in some cases.  Another approach is to
+          just propose the <tt>c8</tt>, <tt>c16</tt>, and <tt>c32</tt> variants
+          that convert between the execution encoding.</li>
+      <li>Tom agreed that just providing conversion between the execution
+          encoding and UTF variants was probably sufficient.</li>
+    </ul>
+  </li>
+  <li>Discussion of updates to
+      <a href="https://wg21.link/p1072">P1072</a>:
+    <ul>
+      <li>Mark provided an update regarding plans for
+          <a href="https://wg21.link/p1072">P1072</a>.  There are two options:
+        <ul>
+          <li>Propose a lambda based interface.</li>
+          <li>Propose an independent class coupled to <tt>std::string</tt>.</li>
+        </ul>
+      </li>
+      <li>Mark clarified that neither proposal would appear in the pre-meeting
+          mailing.</li>
+      <li>Zach expressed a desire for the functionality and for additional
+          progress to be made.</li>
+    </ul>
+  </li>
+  <li>Discussion of planned C committee proposals:
+    <ul>
+      <li>Tom asked for any volunteers interested in writing and presenting
+          papers to the C committee in October that propose functionality we've
+          added or plan to add for C++.  Such features include:
+        <ul>
+          <li><tt>char8_t</tt>
+              (<a href="https://wg21.link/p0482">P0482</a>)</li>
+          <li>Make char16_t/char32_t string literals be UTF-16/32
+              (<a href="https://wg21.link/p1041">P1041</a>)</li>
+          <li>Named character escapes:
+              (<a href="https://wg21.link/p1097">P1097</a>)</li>
+        </ul>
+      </li>
+      <li>JeanHeyd asked if we had ever followed up with the C committee
+          regarding any known implementations that use an encoding other thatn
+          UTF-16/UTF-32 for <tt>char16_t</tt>/<tt>char32_t</tt> literals or
+          that don't define <tt>__STDC_UTF_16__</tt> and/or
+          <tt>__STDC_UTF_32__</tt>.</li>
+      <li>Tom responded that Philipp Krause had confirmed that there are no
+          known implementations.</li>
+      <li><em>[Editor's note: though not mentioned in the meeting, there are
+          implementations that use UTF-16 and UTF-32, but neglect to define the
+          <tt>__STDC_UTF_16__</tt> and/or <tt>__STDC_UTF_32__</tt>
+          macros.]</em></li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2019_06_26">June 26th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss papers from the Cologne pre-meeting mailing.  At least:
+    <ul>
+      <li>P1629R0 - Standard Text Encoding</li>
+      <li>P0267R9 - A Proposal to Add 2D Graphics Rendering and Display to C++
+        <ul>
+          <li>just the new interfaces for text rendering.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Elias Kosunen</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>JF Bastien</li>
+  <li>Mark Zeren</li>
+  <li>Michael Spencer</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom started the meeting with some administrative details:
+    <ul>
+      <li>Our regular meeting cadence would have us meet July 10th and July
+          24th, but the Cologne meeting is the 15th through the 20th.
+          Tentative plan is to skip the next two regular meetings, meet July
+          31st, and then back to our regular meetings during the 2nd and 4th
+          weeks of the month in August.</li>
+      <li>Hubert asked when the post-meeting mailing deadline is.</li>
+      <li>Mark responded, August 5th.</li>
+      <li>Tom communicated that issue #8
+          (<a href="https://github.com/sg16-unicode/sg16/issues/8">https://github.com/sg16-unicode/sg16/issues/8</a>)
+          has been closed as resolved by the adoption of
+          <a href="https://wg21.link/P1139R2">P1139R2</a>
+          in Kona.</li>
+      <li>Tom also communicated that the revision of 
+          <a href="https://wg21.link/p1423r2">P1423R2</a>
+          in the Cologne pre-meeting mailing adds deleted
+          <tt>operator&lt;&lt;</tt> overloads for wide streams for
+          <tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt> following
+          LWG feedback during their
+          <a href="http://wiki.edg.com/bin/view/Wg21cologne2019/LWGTelecom21May">May 21st paper review telecon</a>.
+          These changes will require LEWG review in Cologne.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1629r0">P1629R0 - Standard Text Encoding</a>:
+    <ul>
+      <li>JeanHeyd presented and provided a link to a draft revision (with only
+          clerical errors fixed).
+        <ul>
+          <li><a href="https://thephd.github.io/vendor/future_cxx/papers/d1629.html">https://thephd.github.io/vendor/future_cxx/papers/d1629.html</a></li>
+          <li>The proposal includes low level and high level interfaces.</li>
+          <li>Normalization support will come later.</li>
+        </ul>
+      </li>
+      <li>Peter (via chat): There is a typo in section 3.3.2, "GB1032" should
+          be "GB2312" or "GB18030".</li>
+      <li>Elias (via chat): In 3.2.3.2, on the last line of the first snippet,
+          the <tt>basic_utf8</tt> instead of <tt>basic_utf16</tt> is probably
+          a typo?</li>
+      <li>Zach expressed surprise at the lack of low level transcoding
+          algorithms and lack of iterator based interfaces.</li>
+      <li>JeanHeyd replied that those algorithms are implemented within the
+          encoding object and that the interface is range based rather than
+          iterator based.  Objects are used instead of free functions in order
+          to maintain state.</li>
+      <li>Zach asked where code point conversion is happening; there isn't much
+          state needed.</li>
+      <li>JeanHeyd explained that roundtripping through the encoding handles
+          code points internally.  State is needed for non-Unicode encodings
+          and for error handling.</li>
+      <li>Zach stated that, in Boost.text, the error handler is a template
+          parameter.</li>
+      <li>Zach asked if this design precludes doing performance optimizations
+          like Bob Steagall has demonstrated.</li>
+      <li>JeanHeyd replied that such optimizations are excluded in the encoder
+          interface, but are intended to be supported by specializing the high
+          level interfaces; the specified free functions are customization
+          points that can enable optimizations.</li>
+      <li>Tom asked why the <tt>encode</tt> and <tt>decode</tt> functions on
+          the encoding object preclude optimizations.</li>
+      <li>JeanHeyd replied that they only process one code point at a time.</li>
+      <li>Zach asked what the motivation is for the slower interfaces over
+          faster ones.</li>
+      <li>JeanHeyd replied that the <tt>encode</tt> and <tt>decode</tt>
+          customization points are eager and convert as much as possible.  The
+          encoding object enables an iterative approach in which writing just
+          the encoding object suffices to enable the high level interfaces to
+          work correctly, but at a less-than-optimal speed.  </li>
+      <li>Steve said that it sounds like the code point at a time encoding
+          object is the extension point for custom encoding.  It is unlikely
+          that anyone will bother with a high performance implementation for
+          many legacy encodings as vectorizing support takes a lot of work.</li>
+      <li>Zach expressed support for a convenience approach and a fast path, but
+          also sees value in an iterator approach as well.  Encoding details
+          should be in either the algorithm (eager/fast) or in the iterator
+          (lazy/slow).  Having building blocks for constructing iterators isn't
+          key.</li>
+      <li>Zach expanded by contrasting with Python where the encode and decode
+          functions always confused him because encoding and decoding are
+          basically different names for the same algorithm with direction
+          reversed.  This design seems over generalized.</li>
+      <li>Tom stated that the design is range based, so iterators can be wrapped
+          in a range, does that not suffice for iterator use cases?</li>
+      <li>Zach replied that standard alorithms don't take an output range, they
+          take output iterators.</li>
+      <li>Zach stated, when I'm doing a transcode, sometimes I want to loop and
+          break, sometimes I just want to convert everything.</li>
+      <li>Peter stated he was confused by Zach's comments.</li>
+      <li>JeanHeyd attempted to paraphrase.  What Zach is saying, is rather than
+          specify building blocks, we should specify lazy transcoding iterators.
+          The concern with that approach is that writing an iterator is a lot
+          harder to do.</li>
+      <li>Tom agreed noting that he discovered how hard they are to write when
+          working on text_view.  For example, decoding iterators need to eagerly
+          consume code units.</li>
+      <li>Mark noted that we don't need to make it easy for implementors to
+          write iterators, but it is good to make things easy for other
+          programmers.</li>
+      <li>Zach stated that someone still needs to write the lazy iterator.
+          There is an impedence mismatch between input and output.  A general
+          template based iterator doesn't work.</li>
+      <li>Tom stated it did for text_view.</li>
+      <li>JeanHeyd stated that the ideas came from text_view and libogonek.
+          The encoding object avoids having to write iterators and ranges.</li>
+      <li>Zach stated he would like to understand how that works.</li>
+      <li>Tom explained how input text iterators and output text iterators can
+          be used together; e.g., via <tt>std::copy</tt>.</li>
+      <li>JeanHeyd expounded; Libogonek proved this out and Peter's S2 library
+          did something similar.</li>
+      <li>Peter (via chat): +1, doing exactly that in
+          <a href="http://github.com/dascandy/s2">http://github.com/dascandy/s2</a>.
+          I have the rope concept that combines different code-point iterators
+          as a single range so you can copy from that to a target (and the
+          assignment operator for target encodings is optimized to first
+          calculate size &amp; then do the copy).
+          <tt>s2::basic_string&lt;s2::encoding::utf8&gt; u8s =
+          u16s.view();</tt></li>
+      <li>Peter (via chat): 90% sure this is my hook for encoding conversion
+          fast path -
+          <a href="https://github.com/dascandy/s2/blob/master/include/s2/detail/rope_detail.h#L41">https://github.com/dascandy/s2/blob/master/include/s2/detail/rope_detail.h#L41</a></li>
+      <li>Zach said he would like to see the code in libogonek to better
+          understand it.  It is well understood how encoders produce code units
+          and decoders produce code points, but hard to see how transcoding can
+          be done without missing optimization opportunities.</li>
+      <li>JeanHeyd explained that the fast path customization points enable that
+          optimization by skipping the separate decode and encode steps.</li>
+      <li>Zach asked if iterator facade ever got standardized?  It makes writing
+          iterators easy.</li>
+      <li><em>[Editor's note: no they haven't.  The iterator facade proposal is
+          <a href="https://wg21.link/p0186">P0186</a>.
+          It was discussed in Oulu in 2016.  Meeting minutes are
+          <a href="http://wiki.edg.com/bin/view/Wg21oulu/P0186">here</a>).]
+          </em></li>
+      <li>Zach expressed skepticism regarding encoding builders; we just need
+          to worry about common encodings.</li>
+      <li>Tom stated that there are use cases for code point at a time
+          enumeration.</li>
+      <li>Zach agreed but stated that should be provided via lazy iterators;
+          this design is taking generic programming too far.</li>
+      <li>Zach expressed a desire to be able to write a transcoding iterator
+          that avoids construction of the intermediate code point value during
+          conversion.</li>
+      <li>JeanHeyd noted that there are three extension points for customizing
+          performance: the encoding object, transcoding iterators, and
+          customization points.</li>
+      <li>Steve provided an example in which fast transcoding is trivial:
+          transcoding ASCII to ISO-8859-1.</li>
+      <li>Mark observed that programmers want fast functions and transcoding
+          iterators, not encoding objects. </li>
+      <li>Steve stated that, within iconv's implementation, all transcoding
+          conversions go through Unicode code points for all encodings.  This
+          is presumably fast enough for most use cases.  Converting from
+          Shift-JIS to Big-5 doesn't require extreme performance.</li>
+      <li>JeanHeyd stated that additional work is needed to enable that middle
+          path with fast transcoding iterators.</li>
+      <li>Tom agreed; we need the lowest level for fall back to enable
+          transcoding iterators between all encodings, but can optimize
+          specific cases.</li>
+      <li>Zach stated that we really just need to list the specific transcoding
+          iterators that are required.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p0267r9">P0267R9 - A Proposal to Add 2D Graphics Rendering and Display to C++</a>:
+    <ul>
+      <li>Tom, unsurprisingly, stated that the interface should use
+          <tt>std:u8string</tt> since it requires UTF-8 encoded text.</li>
+      <li>Michael agreed and expressed dislike for the asumption of UTF-8 in a
+          <tt>std::string</tt> object.</li>
+      <li>Zach stated that the interfaces should be <tt>std::string_view</tt>
+          and execution encoding.</li>
+      <li>Steve pondered whether all current graphical display systems are
+          Unicode.</li>
+      <li>Tom stated that the X window system is locale based.</li>
+      <li>Zach suggested it would be least surprising to programmers to use
+          execution encoding.  That way they can just pass regular strings.</li>
+      <li>Peter stated that, On UNIX systems, UTF-8 tends to be the default,
+          so things will work as is, but Windows would be problematic.</li>
+      <li>Zach observed that, without standard library support, converting text
+          from execution encoding to UTF-8 is hard.</li>
+      <li>Peter suggested leaving it to the UI libraries to figure it out.</li>
+      <li>Zach responded that this is a UI library, so we need to figure it
+          out.</li>
+      <li>Michael pondered whether we should add overloads for
+          <tt>char</tt>, <tt>wchar_t</tt>, <tt>char8_t</tt>, <tt>char16_t</tt>,
+          and <tt>char32_t</tt>.</li>
+      <li>Zach suggested that we only need <tt>char</tt> and
+          <tt>char8_t</tt>.</li>
+      <li>Hubert observed that the standard library is designed around
+          locales.</li>
+      <li>Tom asked Hubert to clarify, are you thinking these interfaces should
+          take a locale object?</li>
+      <li>Hubert responded that, if you have strings that you don't know the
+          encoding for, then yes.</li>
+      <li>JeanHeyd expressed a preference for just using <tt>std::u8string</tt>
+          to avoid locale dependencies.</li>
+      <li>Mark agreed that, perhaps, just <tt>char8_t</tt> is enough.</li>
+      <li>Tom stated that, by the time 2D graphics is standardized, we should be
+          able to get good conversion routines in the standard library or we
+          will have failed miserably!</li>
+      <li>Hubert observed that the paper is missing bidirectional language
+          support.</li>
+      <li>Tom noticed that the paper doesn't say what happens with ill-formed
+          encoded input.</li>
+      <li>Mark suggested discussing font names; these should probably be
+          bag-of-byte names.  The paper defers to the HTML CSS
+          specification.</li>
+      <li>Zach noticed that the paper doesn't discuss normalization.  It would
+          be nice if it called it out specifically.</li>
+      <li>Tom asked if normalization matters.</li>
+      <li>Zach responded that it does in some cases.</li>
+      <li>JF suggested that we should make it possible to defer to the CSS
+          specification if we can't right now.  We don't want to do what we
+          previously did in forking the Unicode identifier specification from
+          <a href="https://unicode.org/reports/tr31">UAX#13</a></li>
+      <li>Mark noticed that some of the interfaces pass and return
+          <tt>std::string</tt> by value where they probably shouldn't.</li>
+      <li>JF pondered about overlap with SG13 and avoiding conflicts in
+          scheduling when meeting in Cologne.</li>
+      <li><em>[Editor's note: SG13 and SG16 are meeting on separate
+          days.]</em></li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1750r0">P1750R0 - A Proposal to Add Process Management to the C++ Standard Library</a>:
+    <ul>
+      <li>Elias described the overlap with
+          <a href="https://wg21.link/p1275">P1275</a>
+          and stated he is aware of previous SG16 review and is working with
+          Isabella Muerte.</li>
+      <li>Elias described the pipe interface.</li>
+      <li>Tom asked if any operating system supports wide pipes.</li>
+      <li>Elias stated he is unsure if Windows does.  The interface is templated
+          on char type.</li>
+      <li>Tom stated that Windows doesn't; <tt>ReadFile</tt> and
+          <tt>WriteFile</tt> are used with pipes and they are byte
+          oriented.</li>
+      <li>Hubert asked about the interaction with streams.</li>
+      <li>Elias responded that pipes can be wrapped in iostreams.</li>
+      <li>Tom summarized the feedback so far: wide pipes may not be needed and
+          prior SG16 concerns regarding environment variables still stand.</li>
+      <li>Tom stated that command lines probably need to be considered to be
+          in execution encoding.</li>
+      <li>Hubert stated that, for command lines, <tt>exec</tt> interfaces will
+          likely be used and they use arrays, not strings.  A formatting
+          approach makes sense.</li>
+      <li>Elias stated that <tt>process_launcher</tt> takes a
+          <tt>std::filesystem::path</tt>, not a string.</li>
+    </ul>
+  </li>
+  <li>Meeting in Cologne.
+    <ul>
+      <li>Tom communicated the tentative schedule for when SG16 would meet.</li>
+      <li>Zach stated he will miss Monday.</li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2019_07_31">July 31st, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Cologne post-meeting discussion.</li>
+  <li>Goals for WG14 in Ithaca (October 21st-25th).</li>
+  <li>Goals for Belfast (November 4th-9th).</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Nathan Myers</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Mark Zeren</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Discuss drafting guidance explaining our consensus regarding providing
+      char/wchar_t, char16_t, and char8_t overloads in Cologne.
+    <ul>
+      <li>Tom introduced the need to discuss guidance by presenting poll
+          results taken for three papers:
+        <ul>
+          <li><a href="http://wg21.link/p1030r2">P1030R2</a>:
+              std::filesystem::path_view:
+            <ul>
+              <li><tt>char</tt> and <tt>wchar_t</tt> oriented interfaces should
+                  be provided that behave according to the
+                  <tt>std::filesystem::path</tt> specification in terms of
+                  encoding.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">3</td>
+                      <td style="text-align:right">2</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">4</td>
+                      <td style="text-align:right">2</td>
+                    </tr>
+                  </table>
+              </li>
+              <li><tt>char32_t</tt> oriented interfaces should be provided that
+                  behave according to the
+                  <tt>std::filesystem::path</tt> specification in terms of
+                  encoding.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">2</td>
+                      <td style="text-align:right">2</td>
+                      <td style="text-align:right">4</td>
+                      <td style="text-align:right">2</td>
+                      <td style="text-align:right">2</td>
+                    </tr>
+                  </table>
+              </li>
+            </ul>
+          </li>
+          <li><a href="http://wg21.link/P0267R9">P0267R9</a>:
+              A Proposal to Add 2D Graphics Rendering and Display to C++
+            <ul>
+              <li>Provide overloads for <tt>char</tt> (execution encoding) and
+                  <tt>wchar_t</tt>.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">4</td>
+                      <td style="text-align:right">3</td>
+                      <td style="text-align:right">3</td>
+                    </tr>
+                  </table>
+              </li>
+              <li>Provide overloads for <tt>char16_t</tt>.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">5</td>
+                      <td style="text-align:right">2</td>
+                      <td style="text-align:right">3</td>
+                    </tr>
+                  </table>
+              </li>
+              <li>Provide overloads for <tt>char32_t</tt>.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">3</td>
+                      <td style="text-align:right">3</td>
+                      <td style="text-align:right">4</td>
+                    </tr>
+                  </table>
+              </li>
+            </ul>
+          </li>
+          <li><a href="http://wg21.link/P1750R0">P1750R0</a>:
+              A Proposal to Add Process Management to the C++ Standard Library
+            <ul>
+              <li>Provide <tt>std::process</tt> <tt>char</tt> (execution
+                  encoding) and <tt>wchar_t</tt> interfaces.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">7</td>
+                      <td style="text-align:right">2</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">0</td>
+                    </tr>
+                  </table>
+              <li>Provide <tt>std::process</tt> <tt>char8_t</tt> interfaces.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">3</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">5</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">0</td>
+                    </tr>
+                  </table>
+              <li>Provide <tt>std::process</tt> <tt>char16_t</tt> interfaces.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">8</td>
+                      <td style="text-align:right">1</td>
+                      <td style="text-align:right">0</td>
+                    </tr>
+                  </table>
+              <li>Provide <tt>std::process</tt> <tt>char32_t</tt> interfaces.
+                  <table>
+                    <tr>
+                      <th style="text-align:right">SF</th>
+                      <th style="text-align:right">F</th>
+                      <th style="text-align:right">N</th>
+                      <th style="text-align:right">A</th>
+                      <th style="text-align:right">SA</th>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">0</td>
+                      <td style="text-align:right">3</td>
+                      <td style="text-align:right">5</td>
+                      <td style="text-align:right">0</td>
+                    </tr>
+                  </table>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Tom explained that, to an outside observer, our guidance looks inconsistent:
+        <ul>
+          <li>For polls about providing <tt>char</tt> and <tt>wchar_t</tt> based
+              interfaces:
+            <ul>
+              <li>For P1030R2, we were evenly split with strong positions on
+                  both sides.</li>
+              <li>For P0267R9, we were fairly opposed to providing them.</li>
+              <li>For P1750R0, we were strongly in favor of providing them.</li>
+            </ul>
+          </li>
+          <li>For polls about providing <tt>char16_t</tt> based interfaces:
+            <ul>
+              <li>For P1030R2, we didn't even ask the question (we know of
+                  UTF-16 based file systems).</li>
+              <li>For P0267R9, we were opposed to providing them.</li>
+              <li>For P1750R0, we barely could have cared less about the
+                  question.</li>
+            </ul>
+          </li>
+          <li>For polls about providing <tt>char32_t</tt> based interfaces:
+            <ul>
+              <li>For P1030R2, we were evenly split with strong positions on
+                  both sides.</li>
+              <li>For P0267R9 and P1750R0, we were opposed (though more
+                  strongly so for P0267R9).</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Zach addressed <tt>char32_t</tt> as the easy case first.  The
+          <tt>char32_t</tt> overloads exist for completeness, but no one
+          actually uses them.  They are inefficient.  <tt>char32_t</tt> is more
+          useful for interfaces that accept non-contiguous data.</li>
+      <li>Mark stated that <tt>char32_t</tt> is useful when examining Unicode
+          scalar values or elements of a grapheme cluster.</li>
+      <li>Zach replied that, If we have a grapheme cluster span like type some
+          day, then we'll want a contiguous <tt>char32_t</tt> interface.  We can
+          always add <tt>char32_t</tt> overloads as needed later.</li>
+      <li>Mark agreed that we can wait for use cases to materialize.</li>
+      <li>Tom asked if we should consider deprecating any existing
+          <tt>char32_t</tt> interfaces.</li>
+      <li>Peter, despite not having been present for these polls and related
+          discussion in Cologne, quickly recognized some patterns in the polls
+          and offered some insightful rationale:
+        <ul>
+          <li>For P1750, we are replacing existing functionality, so need to
+              support existing non-standard <tt>char</tt> and <tt>wchar_t</tt>
+              based interfaces.  <tt>char8_t</tt> is our intended future
+              direction, so we want that interface.  We don't want to emphasize
+              <tt>char16_t</tt> and <tt>char32_t</tt> going forward.</li>
+          <li>For P0267, we are not replacing existing functionality, so we
+              don't need <tt>char</tt>, <tt>wchar_t</tt>, <tt>char16_t</tt>, or
+              <tt>char32_t</tt> based interfaces; we can restrict to
+              <tt>char8_t</tt> for now.</li>
+          <li>For P1030, it seems like we don't know what we want.</li>
+        </ul>
+      </li>
+      <li>Mark added an additional rationale for P0267; fonts are Unicode based,
+          so it makes sense to just start with Unicode input.</li>
+      <li>Tom noted that, in the time since Cologne, Niall has decided to add
+          <tt>char</tt> and <tt>wchar_t</tt> based interfaces to P1030.</li>
+      <li>Zach expressed support for Peter's observations; <tt>char</tt> and
+          <tt>wchar_t</tt> based interfaces are important for migration
+          purposes.</li>
+      <li>Mark agreed and noted that we don't want to construct road blocks for
+          proposals for new interfaces.</li>
+      <li>Peter acknowledged that we don't want to make migration difficult and
+          then raised the point that Apple's HFS+ and APFS filesystems are
+          problematic for <tt>path_view</tt> because their behavior is
+          non-portable.</li>
+      <li>Zach noted that similar problems exist for Windows with NTFS allowing
+          UCS2 file names that are not valid UTF-16.</li>
+      <li>Peter provided an additional example regarding FAT derived filesystems
+          storing locale case translation tables and noted that this is
+          problematic when files are written with one locale and read using a
+          different one (probably on a different system).</li>
+      <li>Tom returned to Peter's rationale in the context of P1030.  What is
+          being proposed is a more performant alternative for some uses of
+          <tt>std::filesystem::path</tt>.</li>
+      <li>Peter stated that the rationale for not providing <tt>char</tt> and
+          <tt>wchar_t</tt> based interfaces is that the filesystem only offers
+          bytes when names are enumerated.  If we give those bytes back, the
+          filesystem will accept them.  We can get a displayable string, as from
+          the <tt>u8string()</tt> member function of
+          <tt>std::filesystem::path</tt>, but we can't necessarily pass that
+          path back to the filesystem.</li>
+      <li>Tom stated that that rationale contradicts guidance regarding not
+          wanting to construct impediments to migration.  The vast majority of
+          file names use only the basic source character set.  By not providing
+          <tt>char</tt> interfaces, we're making very common use cases
+          difficult.</li>
+      <li>Zach observed that support for all valid file names requires use of
+          <tt>char</tt> on Linux and <tt>wchar_t</tt> on Windows today.  The
+          goal of the <tt>std::byte</tt> oriented interface is to provide
+          something portable.</li>
+      <li>Tom objected to those interfaces providing a portable abstraction
+          since:
+        <ol>
+          <li>The underlying operating system interfaces used to implement
+              those interfaces may themselves perform translations.  For
+              example, the normalization performed by HFS+ and APFS, and</li>
+          <li>Some OS interfaces don't support arbitrary byte sequences as
+              file names.  For example, on Window's, a byte oriented interface
+              would either use <tt>CreateFileA</tt> which would perform locale
+              conversions, or <tt>CreateFileW</tt> which requires a sequence
+              of 16-bit values (e.g., an odd number of bytes isn't
+              supported).</li>
+        </ol>
+      </li>
+      <li><em>[Editor's note: at this point, Tom became completely engrossed
+          in the conversation and utterly and completely failed to record
+          individual commentary.  The following reflects his recollection of
+          the discussion.
+        <ul>
+          <li>Zach lol'd at the contortions that Tom's face apparently
+              exhibited as Tom struggled to comprehend why anyone thought the
+              <tt>std::byte</tt> based interface was a good idea.</li>
+          <li>Tom was awakened to the possibility that the <tt>std::byte</tt>
+              interface wasn't necessarily conceived of as a means to specify
+              an actual sequence of bytes to be stored directly in the
+              filesystem, but rather as a pointer to a sequence of bytes that
+              represent an opaque structure that was (probably) provided by
+              the OS in the first place.</li>
+        </ul>
+          ]</em>
+      </li>
+      <li>Zach stated that <tt>path_view</tt> is intended for performance and
+          doesn't support mutation.</li>
+      <li>JeanHeyd asserted that the <tt>std::byte</tt> oriented interface is
+          intended to allow passing back to the OS a path name that was
+          originally provided by the OS.</li>
+      <li>Zach agreed and added that the byte oriented interface is more like a
+          handle to a file name, specifically a reference to something matching
+          the representation stored in <tt>std::filesystem::path</tt>.</li>
+      <li>JeanHeyd added that the byte oriented interface exists for
+          performance, but the <tt>char</tt> and <tt>wchar_t</tt> interfaces
+          should be provided for simple portable uses.</li>
+      <li>Zach expressed a preference for making use of the <tt>path_view</tt>
+          <tt>char</tt> based interface ill-formed on Windows and use of the
+          <tt>wchar_t</tt> interface ill-formed everywhere else, but added he
+          was now convinced that the <tt>char</tt> and <tt>wchar_t</tt> based
+          interfaces should be provided.</li>
+      <li>Mark observed that providing those means we need to worry about
+          life-time management and when conversions occur.</li>
+      <li>JeanHeyd responded that working implementations of <tt>path_view</tt>
+          have already shipped and have demonstrated reduced overhead due to
+          avoidance of allocation.</li>
+      <li>Tom expressed a preference for introducing a <tt>raw_path</tt> type
+          to represent a canonical path rather than using
+          <tt>std::byte</tt>.</li>
+      <li>JeanHeyd suggested using <tt>std::filesystem::path::value_type</tt>
+          but noted that casts would still be needed.</li>
+      <li>Zach ponded the idea of a <tt>raw_path</tt> type that is only
+          constructible from <tt>wchar_t</tt> on non-Windows systems and only
+          constructed from <tt>char</tt> elsewhere.</li>
+    </ul>
+  </li>
+  <li>Tom confirmed the date for our next telecon; August 21st with the intent
+      being to discuss
+      <a href="http://wg21.link/p1108r2">P1108R2</a> - <tt>web_view</tt>.</li>
+</ul>
+
+
+<h1 id="2019_08_21">August 21st, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss P1108, "web_view".  Our focus will be, unsurprisingly, character
+      encodings and the use of iostreams with (presumably) UTF-8 data.</li>
+  <li>Goals for WG14 in Ithaca (October 21st-25th).</li>
+  <li>Goals for Belfast (November 4th-9th).</li>
+  <li>Discuss a few follow up items from P1689, "Format for describing
+      dependencies of source files", following discussion in SG15.
+    <ul>
+      <li>Bikeshed "data".  What do we call the code unit equivalent in path
+          names?</li>
+      <li>Are we ok stating that JSON readers/writers are not allowed to apply
+          Unicode normalization?</li>
+      <li>Are we ok with allowing a BOM (JSON doesn't permit one)?</li>
+    </ul>
+  </li>
+  <li>Is "execution character set" the right term for the run-time locale
+      dependent encoding used by the character classification and conversion
+      functions?</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hal Finkel</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Discussion of a draft of P1108R3 - web_view:
+    <ul>
+      <li><a href="https://wg21.link/p1108r3">https://wg21.link/p1108r3</a>.
+      <li>Hal introduces.
+        <ul>
+          <li>A protoype is available using wxWidgets:
+            <ul>
+              <li><a href="https://github.com/hfinkel/web_view">https://github.com/hfinkel/web_view</a>
+            </ul>
+          </li>
+          <li>There are a variety of ways we can provide graphical interaction
+              within the standard.</li>
+          <li>This approach comes out of discussions with folks at Apple and
+              Nvidia.</li>
+          <li>This approach outsources functionality to well used outside
+              standards.</li>
+          <li>The basic idea is that system services already exist with
+              different APIs that can be wrapped in a standard interface.</li>
+          <li>For security reasons, interactions should run out-of-process
+              and the interface must therefore not be too fine grained.</li>
+          <li>There is a common subset of functionality among the various system
+              services that provides a push/pull interface.</li>
+          <li>Constructing a <tt>web_view</tt> presents a window in which web
+              content can be displayed and (Javascript) scripts can be run.</li>
+          <li>URI scheme extensions are supported by registering a (single)
+              callback handler (per scheme).</li>
+          <li>Close handlers are supported by registering a (single) callback
+              handler.</li>
+          <li>Interfaces are provided to request window close and to wait for
+              window close.</li>
+          <li>An example of a dynamic page is available in the paper.</li>
+        </ul>
+      </li>
+      <li>Hal provided a (successful!) live demonstration of the example from
+          the paper.</li>
+      <li>Hal then provided an additional (successful!) live demo of an
+          additional example.</li>
+      <li>Zach asked how C++ code can be invoked to update the displayed
+          page.</li>
+      <li>Hal responded that interaction is enabled by registering a URI scheme
+          handler callback via the <tt>set_uri_scheme_handler</tt>
+          interface.</li>
+      <li>Tom asked if the interface is effectively append only.</li>
+      <li>Hal responded that it is based on a push model, so yes, requests
+          update state.  The design supports both push (via <tt>run_script</tt>)
+          and pull (via callbacks registered with
+          <tt>set_uri_scheme_handler</tt>).</li>
+      <li>Zach stated that users will want the ability to route schemes to
+          direct requests.</li>
+      <li>Tom suggested that routing can be implemented via the callback
+          registered with <tt>set_uri_scheme_handler</tt>.</li>
+      <li>Corentin suggested using Web Sockets as well.</li>
+      <li>Hal responded that there are many examples where utility libraries
+          would come in helpful.  For example, we probably don't want to do URI
+          encoding and decoding, nor build interfaces using
+          <tt>std::format</tt>.  We probably want JSON support libraries.  Such
+          utility libraries should be proposed separately though.</li>
+      <li>Tom asked to clarify if <tt>run_script</tt> is for Javascript only and
+          whether it would make sense for other languages to be supported.</li>
+      <li>Hal responded that it may be useful to specify the scripting language,
+          like for Web Assembly.</li>
+      <li>Zach suggested that such support could always be wrapped in
+          Javascript.</li>
+      <li>Zach acknowledged the elephant in the room by asking about the use of
+          <tt>std::string</tt> in the interface.</li>
+      <li>Corentin stated that we should give the same advice as for 2D
+          graphics; use Unicode everywhere and, specifically, UTF-8.
+          Supporting both UTF-8 and UTF-16 would complicate the interface.</li>
+      <li>Zach noted that the W3C recommends UTF-8 only.</li>
+      <li>Zach observed that for support of
+          <a href="https://tools.ietf.org/html/rfc3986">RFC 39865</a>, encoding
+          of URIs could be handled within the library thereby allowing all URIs
+          to be provided in UTF-8.  The remaining interfaces could all take
+          UTF-8 only as well, except, perhaps, for the window title.</li>
+      <li>Tom stated that, for the title, even if UTF-16 is eventually required,
+          conversion from UTF-8 is loss-less.</li>
+      <li>Corentin suggested that URI escaping is complicated and that an
+          interface for it should not be part of this proposal.</li>
+      <li>Tom asked if existing web view providers provide URI encoding services
+          or if the implementation would be obligated to provide it.</li>
+      <li>Hal responded that some web view implementors just reject invalid URIs
+          and that some others may not validate much for file handling.  It
+          isn't clear how existing web view providers interpret input; they
+          probably just assume UTF-8.</li>
+      <li>Hal asked that, if UTF-8 were required, would it be sufficient to
+          indicate that by just using <tt>std::u8string</tt> in the
+          interface.</li>
+      <li>Zach responded yes, though <tt>std::u8string</tt> doesn't enforce
+          well-formed UTF-8, so it may still be necessary to explicitly specify
+          a requirement for well-formed UTF-8 data.</li>
+      <li>Corentin asked if use of <tt>char8_t</tt> based types doesn't already
+          ensure that.</li>
+      <li>Hubert responded no, we can't enforce well-formedness since
+          programmers can always create <tt>char8_t</tt> arrays with non-UTF-8
+          data.</li>
+      <li>Zach suggested that we add blanket wording somewhere in the standard
+          library specification stating that, for interfaces that use
+          <tt>std::u8string</tt> in library functions, that behavior is
+          undefined if data is not well-formed UTF-8.</li>
+      <li>Hubert stated that approach makes sense.</li>
+      <li>Hal, changing topics, asked for feedback regarding use of
+          <tt>std::ostream</tt> in the URI scheme callbacks.</li>
+      <li>Zach asked if we have <tt>char8_t</tt> based streams yet.</li>
+      <li>Tom responded no.</li>
+      <li>Zach stated that we would want that to help ensure the data is
+          UTF-8.</li>
+      <li>Hubert suggested that <tt>codecvt</tt> facets could be used to perform
+          conversions.</li>
+      <li>Zach acknowledged and added that, if the programmer imbues a locale,
+          it is up to them to make sure it makes sense.</li>
+      <li>Corentin asked if Hal had considered use of strings instead of
+          streams?</li>
+      <li>Hal responded that a string based approach might make sense.  The
+          benefit of the stream approach is that it allows partial writes and
+          some of the lower level interfaces support that.</li>
+      <li>Tom, clarifying, stated that, within a callback handler, data written
+          to the stream may start being processed by the web view before the
+          handler returns.</li>
+      <li>Corentin suggested that we're going to have to provide
+          <tt>char8_t</tt> based streams in C++23 anyway.</li>
+      <li>Tom agreed.</li>
+      <li>Hubert returned discussion to the earlier comments on blanket UTF-8
+          wording for <tt>std::u8string</tt>.  The place to add such wording is
+          in
+          <a href="http://eel.is/c++draft/res.on.arguments">[res.on.arguments]</a>;
+          "each of the following applies to all functions ... unless explicitly
+          stated otherwise".</li>
+      <li>Zach volunteered to draft that blanket wording.</li>
+      <li>Hal stated that we kind of broke UTF-8 hello world in C++20, but
+          iostreams are weird for non-text data anyway.</li>
+      <li>Tom replied that it was already broken, but we certainly didn't make
+          it any easier.</li>
+      <li>Hubert noted that localizations on iostreams currently require
+          characters not in ASCII.  For example, monetary symbols like the Euro
+          sign (€).</li>
+      <li>Hal noted that the URI scheme handler takes a constrained parameter,
+          so overloads could be provided to handle strings and streams.</li>
+      <li>Hal stated that the next revision of the paper will include
+          discussion about the URI scheme handler composing a string and
+          returning it vs support for partial writes via iostreams or some
+          other concept.</li>
+      <li>Tom suggested that there may be something in the Networking TS worth
+          looking at.</li>
+      <li>Hubert suggested that something lower level in iostreams, like
+          <tt>std::streambuf</tt>, might be worth looking at too.</li>
+      <li>Hal observed that <tt>std::streambuf</tt> has an associated
+          locale.</li>
+      <li>Tom acknowedlged; that is where <tt>std::codecvt</tt> facets do their
+          work.</li>
+      <li>Tom pondered whether we should ban <tt>std::codecvt</tt> facets on
+          future <tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt>
+          iostreams by making attempts to imbue such streams with such a facet
+          an error.</li>
+      <li>Tom mentioned that we've talked about string builders in the past and
+          this is a clear example where such builders could be useful; though
+          <tt>std::format</tt> might just be that tool these days.</li>
+      <li>Zach observed that Beast and the like traffic in large ranges.
+          Perhaps some of those types would be useful here.</li>
+      <li>Corentin suggested that Web Sockets are a better solution.</li>
+      <li>Tom asked if it might make sense for the URI scheme handler to just
+          use Web Sockets.</li>
+      <li>Hal responded with concerns about complexity; the underlying APIs
+          aren't the same.</li>
+      <li>Hal stated that we will need to figure out the string vs stream
+          interface as we want to avoid having to do unnecessary copies.  We
+          don't want to motivate the interface based on not knowing how to
+          print UTF-8 to streams.  Responses are probably small, so strings
+          are usually ok.  But encoded images might get pushed through these
+          interfaces as well.</li>
+      <li>Zach asked how many URL scheme handlers can be active at a time; if
+          we were reviewing for SG13, I would want to know how much data can
+          get pushed.</li>
+      <li>Hal responded that the interface currently feels quick from a human
+          perspective, but measurements of throughput haven't been done
+          yet.</li>
+      <li>Hal followed up with some details of the prototype; wxWidgets has
+          an unfortunate feature where all of the URI callbacks are called on
+          the UI thread.  That isn't desired since a slow handler blocks the UI.
+          All of the underlying implementations support running handlers on
+          non-UI threads.  The prototype needs to be changed to further explore
+          that.</li>
+      <li>Hubert noted that an implementation could presumably host this as a
+          single processs where the C++ code is the plugin, so we can't
+          necessarily assume a thread model.</li>
+      <li>Hal responded that, on most systems, the straight forward
+          implementation method has the UI driven by a thread in the same
+          process, but the web content renderer code runs in a separate process
+          driven by RPCs.  This will determine performance characteristics.</li>
+    </ul>
+  </li>
+  <li>Discussion of goals for WG14 in Ithaca (October 21st-25th):
+    <ul>
+      <li>JeanHeyd stated that he is planning to attend and to bring papers for:
+        <ul>
+          <li>[nodiscard]</li>
+          <li>Additional conversion functions for <tt>char</tt> and
+              <tt>wchar_t</tt>.</li>
+          <li>Support for <tt>C.UTF-8</tt> as the default C locale.</li>
+        </ul>
+      </li>
+      <li>Steve stated that the only thing that knows the encoding of
+          <tt>wchar_t</tt> is the standard library and asked if any encodings
+          other than UTF-16 or UTF-32 are used in practice.</li>
+      <li>JeanHeyd responded yes, AIX for Chinese locales uses Big-5.</li>
+      <li>Tom added that z/OS uses a wide EBCDIC.</li>
+      <li>Corentin asked what the motivation is for SG16 to add more conversion
+          functions to C.</li>
+      <li>JeanHeyd responded that it allows C++ implmenentors to use features
+          provided by C.</li>
+      <li>Tom suggested that it might be worth asking implementors what they
+          would want and whether they would actually use C interfaces.</li>
+      <li>JeanHeyd acknowledged and stated he would ask.</li>
+      <li>Zach stated that such interfaces might be nice to have for C, but C
+          interfaces can't achieve the performance that Bob Steagall
+          demonstrated with his UTF-8 work.</li>
+      <li>JeanHeyd noted that, since these interfaces are based on NTBSs, they
+          will need to check for null characters or know the string length
+          ahead of time.</li>
+      <li>Zach suggested that, for performance, it may be worth only looking
+          ahead 16 bytes at a time.</li>
+      <li>Tom stated that he is hoping to attend Ithaca and to bring papers for:
+        <ul>
+          <li>char8_t.</li>
+          <li>Make char16_t/char32_t string literals be UTF-16/32.</li>
+          <li>Named character escapes.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Discussion of goals for Belfast (November 4th-9th).
+    <ul>
+      <li>Steve stated he would like to put together an initial pass at cleaning
+          up terminology for encoding and character sets.</li>
+      <li>Hubert stated that he would be happy with SG16 bringing such a paper,
+          but timing is bad for CWG given where C++20 is at.</li>
+      <li>Tom stated he would like to bring a paper to enable a portable method
+          of specifying that source files are UTF-8 encoded.</li>
+      <li>JeanHeyd stated he is working towards getting funding to work nearly
+          full time on the
+          <a href="https://wg21.link/p1629">P1629</a>
+          standard text encoding paper.</li>
+      <li>Tom asked JeanHeyd what we can do to help prove the design works well
+          in practice and suggested porting some project to it to demonstrate
+          that:
+        <ul>
+          <li>the interface works and fits existing use cases.</li>
+          <li>that code is better.</li>
+          <li>that performance is retained or improved.</li>
+        </ul>
+      </li>
+      <li>JeanHeyd responded that there are opportunities for a few checkpoints along the way.  For example, CppCon where a presentation is currently planned.</li>
+      <li>Tom asked for candidate projects that would be good for exercising the interface.</li>
+      <li>JeanHeyd responded that he had previously tried with a chat server and that a text editor would be a good choice.</li>
+    </ul>
+  </li>
+  <li>Tom confirmed that the next meeting will be on September 4th.</li>
+</ul>
+
+
+<h1 id="2019_09_14">September 14th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss Corentin's draft D1854R0 - Conversion to execution encoding
+      should not lead to loss of meaning
+    <ul>
+      <li><a href="https://cor3ntin.github.io/posts/encoding/D1854.pdf">https://cor3ntin.github.io/posts/encoding/D1854.pdf</a></li>
+    </ul>
+  </li>
+  <li>Discuss a few follow up items from
+      <a href="https://wg21.link/p1689">P1689, "Format for describing dependencies of source files"</a>
+      following discussion in SG15.
+    <ul>
+      <li>Bikeshed "data". What do we call the code unit equivalent in path
+          names?</li>
+      <li>Are we ok stating that JSON readers/writers are not allowed to apply
+          Unicode normalization?</li>
+      <li>Are we ok with allowing a BOM (JSON doesn't permit one)?</li>
+    </ul>
+  </li>
+  <li>Is "execution character set" the right term for the run-time locale
+      dependent encoding used by the character classification and conversion
+      functions?</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>David Wendt</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Nathan Myers</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>The meeting started off with a round of introductions for the benefit of
+      new attendees.</li>
+  <li>Discuss Corentin's draft D1854R0 - Conversion to execution encoding should
+      not lead to loss of meaning
+    <ul>
+      <li><a href="https://cor3ntin.github.io/posts/encoding/D1854.pdf">https://cor3ntin.github.io/posts/encoding/D1854.pdf</a></li>
+      <li>Corentin introduced the paper:
+        <ul>
+          <li>The basic idea is to avoid the meaning of the program silently
+              changing in unintended ways due to lack of representation in the
+              execution character set for a character in a character or string
+              literal.</li>
+        </ul>
+      </li>
+      <li>Zach asked if he hadn't previously signed up to write this paper.</li>
+      <li>Corentin explained that Zach signed up to write a paper about
+          <tt>u8string</tt>.</li>
+      <li>Tom then proceeded to explain the wrong paper but succeeded at only
+          further confusing himself.</li>
+      <li>Zach clarified that the paper he did sign up to write was to permit
+          <tt>uX"xxx"</tt> string literals only when the execution encoding is
+          a Unicode encoding.</li>
+      <li>Tom returned discussion to the paper at hand and noted that the paper
+          only adds restrictions on ordinary and wide literals because
+          restrictions are already in place for <tt>u8</tt>, <tt>u</tt>, and
+          <tt>U</tt> literals.</li>
+      <li>Corentin demonstrated via godbolt.org that gcc rejects
+          non-representable characters and that MSVC substitutes a <tt>?</tt>.
+        <ul>
+          <li><a href="https://godbolt.org/z/kDwR1l">https://godbolt.org/z/kDwR1l</a></li>
+          <li><em>[Editor's note: demonstration of MSVC's substitution of a
+              <tt>?</tt> character requires adding the
+              <tt>/source-charset:utf-8</tt> option to the MSVC command line in
+              the above link.  Without that option, the UTF-8 encoded source is
+              interpreted by the MSVC compiler as Windows-1252.]</em></li>
+        </ul>
+      </li>
+      <li>Corentin summarized that the goal is to standardize gcc's
+          behavior.</li>
+      <li>Corentin stated that he was unsure if Microsoft would be willing to
+          implement this outside of <tt>/permissive-</tt> mode since this might
+          break existing code even though such code is already fragile and
+          subject to breakage just by being compiled on a different system (with
+          a different default execution character set).</li>
+      <li>Tom noted that by making this standard, if an implementor remains
+          non-conforming, then users can complain if they want to.</li>
+      <li>Tom asked if there are any possible advantages to status quo.</li>
+      <li>Zach replied no, this just hurts portability.</li>
+      <li>Corentin observed that code can always be updated to use an escape
+          sequence instead of an unrepresentable character.</li>
+      <li>Peter expressed concern about wide encoding because, on Windows, it
+          is (or used to be) UCS-2, so emoji can't be represented.</li>
+      <li>Tom restated Peter's point; there may be cases where graceful
+          degradation is ok.  E.g., losing emojis.</li>
+      <li>Peter reported testing gcc and found that, in wide encodings,
+          characters outside the BMP were lost when printing to the console.
+<pre>
+int main() {
+    std::wstring s = L"\U0001f4a9";
+    std::wcout &lt;&lt; s;
+}
+</pre>
+      </li>
+      <li>Tom suggested that this is due to a libstdc++ iostreams issue; wide
+          characters are simply truncated when <tt>std::wcout</tt> writes them
+          to stdout.</li>
+      <li>Corentin demonstrated that gcc rejects wide string literals with
+          characters not representable in the wide execution character set as
+          well.</li>
+      <li>Tom requested a quick walk through of the wording.</li>
+      <li>Tom suggested to update the paper to use stable names for the sections
+          to be updated since numbers change.</li>
+      <li>Peter noted that, in section 5.13.3.8, the red text is missing
+          strike through.</li>
+      <li>Corentin commented that, until writing this paper, he was not aware
+          of multi-character literals.</li>
+      <li>Peter responded regarding a recent use case for them for a table
+          driven switch handling approach:
+<pre>
+uint32_t tableId = (table-&gt;Signature[0] &lt;&lt; 24) |
+                   (table-&gt;Signature[1] &lt;&lt; 16) |
+                   (table-&gt;Signature[2] &lt;&lt;  8) |
+                   (table-&gt;Signature[3] &lt;&lt;  0);
+switch(tableId) {
+    case 'APIC':
+    ...
+}
+</pre>
+      <li>Tom expressed some initial surprise to see the proposed wording
+          changes for octal and hex escapes, but concluded that they make
+          sense.</li>
+      <li><em>[Editor's note: it would be helpful to add examples to the paper
+          of code that would become ill-formed.]</em></li>
+    </ul>
+  </li>
+  <li>Discuss a few follow up items from
+      <a href="https://wg21.link/p1689">P1689, "Format for describing dependencies of source files"</a>
+      following discussion in SG15.
+    <ul>
+      <li>Bikeshed "data". What do we call the code unit equivalent in path
+          names?
+        <ul>
+          <li>Tom introduced the naming concern.
+              <a href="https://wg21.link/p1689r0">P1689R0</a>
+              used the name "data" to refer to the sequence of individual
+              elements of a path.
+              <a href="https://wg21.link/p1689r1">P1689R1</a>
+              changed the name to "code-units" following feedback in Cologne.
+              Do we want to suggest a different name given our stance on
+              file names not having an associated encoding and, arguably
+              therefore, no "code units"?</li>
+          <li>Corentin argued to not invest time in this discussion unless/until
+              SG15 progresses the paper further.</li>
+          <li>Corentin also observed that user's won't see this name, so it
+              doesn't really matter.</li>
+        </ul>
+      </li>
+      <li>Are we ok stating that JSON readers/writers are not allowed to apply
+          Unicode normalization?
+        <ul>
+          <li>Tom explained that this is no longer a concern.  in
+              <a href="https://wg21.link/p1689r1">P1689R1</a>,
+              code units are always explicitly specified.
+        </ul>
+      </li>
+      <li>Are we ok with allowing a BOM (JSON doesn't permit one)?
+        <ul>
+          <li>Corentin argued that we should follow the JSON specification.</li>
+          <li>Tom explained his understanding that allowing one doesn't violate
+              RFC 8259 since the BOM limitations there only apply to
+              network-transmitted text, and ECMA 404 doesn't specify encoding
+              at all; there is no mention of "BOM", "byte order", or "UTF-8" in
+              that specification.
+            <ul>
+              <li><a href="https://tools.ietf.org/html/rfc8259#section-8.1">https://tools.ietf.org/html/rfc8259#section-8.1</a></li>
+              <li><a href="https://www.ecma-international.org/publications/standards/Ecma-404.htm">https://www.ecma-international.org/publications/standards/Ecma-404.htm</a></li>
+            </ul>
+          </li>
+          <li>Zach asked what motivation exists for allowing a BOM.</li>
+          <li>Tom replied that it would be useful for non-ASCII based platforms
+              like z/OS.</li>
+          <li>Peter added that it is useful for Windows as well since text files
+              are likely to be interpreted as Windows-1252.</li>
+          <li>Corentin noted that Unicode recommends against use of a BOM.</li>
+          <li>Corentin stated that, if the specifications don't require UTF-8
+              encoded JSON, then we should specify that.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Is "execution character set" the right term for the run-time locale
+      dependent encoding used by the character classification and conversion
+      functions?
+    <ul>
+      <li>Zach suggested asking core about this since it seems like we've just
+          been using the wrong terms.</li>
+      <li>Steve noted that the existing wording is all old langauge pertaining
+          to character sets, not necessarily encoding.</li>
+      <li>Tom stated that there was an email thread about this on the core and
+          SG16 mailing lists and that the conclusion was that Steve and Tom
+          should write a paper.  Steve has since done some work, but Tom
+          hasn't.</li>
+      <li>Zach stated that we need someone to go through the existing wording
+          and refine our understanding of it.</li>
+      <li>Tom agreed, and added that that is the paper to be written.  We use
+          terms like "execution encoding" now that aren't defined in the
+          standard.</li>
+      <li>Steve stated he would love to expose encoding details somehow.</li>
+      <li>Corentin asked if we want to change the names as they've been around
+          a long time.</li>
+      <li>Steve stated he thinks it is worth tightening the specification
+          without changing the intent.  Other than that we should state that
+          the wide character encoding can be a variable length encoding.</li>
+      <li>Zach commented that clarifying terms in the standard is a good use
+          of our time.</li>
+      <li>Corentin stated we should have different names for compile-time and
+          run-time encodings and that wording should state requirements
+          regarding their compatibility.</li>
+      <li>Steve asserted that some archaeology is necessary here as much of
+          this wording was created when locales were being developed around
+          the expectation that code worked with the "C" locale.</li>
+      <li>Peter observed that variable length encodings go back to at least
+          GB2313 from the 1980s.</li>
+      <li>Steve noted that shift encodings go back to then too.</li>
+    </ul>
+  </li>
+  <li>Zach mentioned that he has a repository where he is working on several
+      small papers.
+    <ul>
+      <li><a href="https://github.com/tzlaine/small_wg1_papers">https://github.com/tzlaine/small_wg1_papers</a></li>
+    </ul>
+  </li>
+  <li>Peter requested feedback on his slides for CppCon.</li>
+  <li>Tom stated that the next meeting will be September 25th.</li>
+</ul>
+
+
+<h1 id="2019_09_25">September 25th, 2019</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss LWG#3290 - Are std::format field widths code units, code points, or something else?
+    <ul>
+      <li><a href="https://cplusplus.github.io/LWG/issue3290">https://cplusplus.github.io/LWG/issue3290</a>
+      <li>Victor plans to have a draft paper for discussion.</li>
+    </ul>
+  </li>
+  <li>Discuss P1844R0: Enhancement of regex
+    <ul>
+      <li><a href="https://wg21.link/p1844">https://wg21.link/p1844</a>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Lyberta</li>
+  <li>Mark Zeren</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Discuss D1868R0 - 🦄 width: clarifying units of width and precision in
+      std::format
+    <ul>
+      <li><a href="http://wiki.edg.com/pub/Wg21belfast/SG16/D1868R0.html">http://wiki.edg.com/pub/Wg21belfast/SG16/D1868R0.html</a></li>
+      <li>Addresses
+          <a href="https://cplusplus.github.io/LWG/issue3290">https://cplusplus.github.io/LWG/issue3290</a></li>
+      <li>Victor introduces:
+        <ul>
+          <li>Any solution to this problem must deal with conflicting
+              constraints.  The programmer's intention is to align text output
+              assuming a monospace font and some understanding of how the text
+              will be rendered (e.g., how many terminal columns will be consumed
+              by each "character").  Implementors desire a clear and precise
+              specification; preferably one that does not have great complexity
+              that may lead to reliability issues or bug reports.</li>
+          <li>Field precision is more consequential than field width because it
+              truncates text potentially resulting in ill-formed output if
+              truncation doesn't occur at a suitable boundary.</li>
+          <li>Experimentation with an approach that estimates field width based
+              on Unicode's extended grapheme clusters and script blocks produced
+              good results; better results than estimation based on code point
+              counts.</li>
+          <li>Experimentation on macOS, Linux, and Windows revealed that Windows
+              currently has the most significant limitations with regard to
+              support for Unicode characters currently not represented in
+              Microsoft's supported ANSI code pages.  Experiments have not been
+              performed using the new Windows terminal which may be expected to
+              produce better results.</li>
+          <li>Testing of Unicode family emoji demonstrated the most variability
+              of results since family emoji may be rendered as a single glyph
+              or as a series of glyphs each representing a family member.</li>
+          <li>Field width is an estimate.  Unless apriori knowledge of how the
+              text will actually be rendered is available, the width of any
+              given text can only be approximated.</li>
+          <li>The experimental implementation uses
+              <a href="https://github.com/tzlaine/text">Boost.text</a>
+              to identify extended grapheme cluster boundaries and computes
+              width based on Unicode block ranges culled from an implementation
+              of <tt>wcswidth</tt>.</li>
+        </ul>
+      </li>
+      <li>Corentin mentioned that the issue with family emoji extends to other
+          sequences of combining emoji.  For example, ninja cat
+          (<tt>U+1F431 {CAT FACE}</tt>, <tt>U+200D {ZERO WIDTH JOINER}</tt>,
+          <tt>U+1F464 {BUST IN SILHOUETTE}`</tt> is rendered with a single glyph
+          on Windows, but currently with two glyphs on Linux.  Width
+          fundamentally depends on rendering.</li>
+      <li>Corentin added that, for non-Unicode encodings, width estimation must
+          look at code units and do things differently for double-byte
+          characters vs single-byte characters.</li>
+      <li>Victor stated that he is content with handling of non-Unicode
+          encodings being implementation defined.</li>
+      <li>Zach agreed and asserted that we want a 90% solution.  Support of
+          non-Unicode encodings would require information that we can't
+          currently specify in the <tt>std::format</tt> interface assuming
+          <tt>std::format</tt> remains locale independent; it is ok for
+          implementations to assume an encoding.</li>
+      <li>Tom thanked Victor for doing this research and stated he found it
+          sufficiently compelling to take the code unit solution he previously
+          advocated for resolving
+          <a href="https://wg21.link/lwg3290">LWG 3290</a>
+          off the table.  In particular, the demonstration of prior art in the
+          form of POSIX
+          <a href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcswidth.html"><tt>wcswidth</tt></a>
+          lent confidence to this approach.</li>
+      <li>Tom asked if width calculation for <tt>wchar_t</tt> could be delegated
+          to <tt>wcswidth</tt>.</li>
+      <li>Victor replied that <tt>wcswidth</tt> is locale dependent and that
+          goes against the <tt>std::format</tt> design.</li>
+      <li>Tom asked if width calculation for <tt>char</tt> and <tt>wchar_t</tt>
+          couldn't be implementation defined such that an implementation could
+          query locale only when width or precision is explicitly specified and
+          the arguments are characters or strings.  Width or precision
+          specifiers would effectively constitute an opt-in for locale
+          dependence.</li>
+      <li>Zach objected on the basis that dependence on locale could cause
+          output to differ on one platform vs another for the same character or
+          string data.</li>
+      <li>Victor clarified that, if encoding doesn't match, the worst case
+          result is mis-alignment.</li>
+      <li>Corentin stated that, as currently specified, <tt>std::format</tt>
+          formats bytes since it doesn't know the precise encoding of inputs.
+          Correct text manipulation requires knowing the encoding.</li>
+      <li>Corentin expressed agreement that display width is what programmers
+          expect.  Perhaps in C++23, the ability to pass an encoding argument
+          could be added.</li>
+      <li>Tom mentioned that <tt>std::format</tt> can take a
+          <tt>std::locale</tt> argument from which the encoding could be
+          queried thus making it possible for programmers to opt-in to locale
+          awareness simply by passing a locale object.</li>
+      <li>Zach again objected based on the desire to have portable output.</li>
+      <li>Corentin expressed a strong preference for a good solution in C++20
+          and asked if we could specify that width and precision units are
+          display width and, for characters outside the basic source character
+          set, behavior is implementation defined.</li>
+      <li>Victor stated that is a minimum viable solution.  The paper proposes
+          that encoding is an implementation defined fixed encoding, not a
+          run-time selected one.</li>
+      <li>Corentin confirmed satisfaction with a minimal solution for C++20
+          that we can iterate on for C++23 and that retains some
+          flexibilty.</li>
+      <li>Zach observed that, if we make it implementation defined today, then
+          we'll be stuck with implementation choices.  If the standard doesn't
+          specify behavior, then implementors will choose one and we'll get
+          stuck either way.  This is similar to breaking ABI; it can be an
+          over-my-dead-body issue.</li>
+      <li>Corentin again expressed a desire for some way to preserve the
+          ability to make changes later.</li>
+      <li>Zach stated that it is important to remember what Victor said
+          previously; width is an estimate.</li>
+      <li>Mark observed that what we're discussing is mostly an edge case since
+          most fields are aligned for numeric output.</li>
+      <li>Tom countered that alignment is useful for things like names.</li>
+      <li>Tom asked if <tt>std::format</tt> is constexpr.</li>
+      <li>Victor replied that parsing of the format string is constexpr, but
+          actual formatting is not.</li>
+      <li>Corentin stated it would be useful to have constexpr formatting at
+          some point, but querying locale would prevent that.</li>
+      <li>Tom disagreed and stated that an implementation could use an internal
+          locale if formatting at compile-time.</li>
+      <li>Tom summarized his perceptions of our positions so far:
+        <ul>
+          <li>We appear to have agreement for display widths in some form.</li>
+          <li>We have disagreements over adding a locale dependency as part of
+              encoding assumption.</li>
+        </ul>
+      </li>
+      <li>Corentin asked Zach if he thought a best attempt at display width is
+          sufficient.</li>
+      <li>Zach replied that he wants the algorithm in the paper so that the
+          same behavior is exhibited on all platforms and is unconcerned about
+          rendering dependent cases like for family emoji.</li>
+      <li>Victor reiterated that width calculation is best effort and that he
+          is ok with consistent results only being ensured for the basic source
+          character set.  This assurance only requires a fixed system dependent
+          encoding.</li>
+      <li>JeanHeyd asked for clarification that we would only be guaranteeing
+          alignment for the basic source character set in C++20 while leaving
+          further specification until C++23.</li>
+      <li>Victor replied, yes, basically.</li>
+      <li>JeanHeyd asked if that implied an implementation defined fixed
+          encoding.</li>
+      <li>Victor responded, not implementation defined, but rather platform
+          dependent so that all implementations targeting a given platform
+          would exhibit the same behavior.</li>
+      <li>Tom observed that, if the system defined fixed encoding differs by
+          platform, then we won't get consistent results.</li>
+      <li>Zach disagreed based on a premise that, for the purposes of width
+          computation, consistent results are achieved by interpreting the input
+          as Unicode.</li>
+      <li>Corentin stated that he thinks we need to defer to (wide) execution
+          encoding when computing width.</li>
+      <li>Tom agreed stating that we should make width calculation as right as
+          we can make it.</li>
+      <li>JeanHeyd reformulated the trade off.  The most right answer depends on
+          locale.  The always consistent result generates garbage consistently
+          but avoids the locale dependency.</li>
+      <li>Victor stated that rendering can always change; we just need to decide
+          if we are ok depending on something at run-time.</li>
+      <li>Zach re-iterated that, with the current specification, width
+          calculation only works for single byte characters that render as a
+          single glyph and we don't have a way to customize the width formatting
+          unless we defer to something at run-time, but doing so conflicts with
+          design goals of <tt>std::format</tt>.</li>
+      <li>Corentin observed that the same issue exists with <tt>printf</tt> as
+          it will fail if the execution encoding doesn't match the run-time
+          locale encoding; C and C++ fundamentally depend on encoding
+          compatibility.</li>
+      <li>Victor reminded everyone that the paper does support use of the
+          locale encoding via an opt-in specifier.</li>
+      <li>Steve reminded everyone that there is no system call to get the actual
+          display width, so we're always guessing anyway.</li>
+      <li>JeanHeyd stated that he thought opt-in for locale dependent width was
+          acceptable.</li>
+      <li>Zach expressed a desire to get the right default for the long-term.
+          If we make the default behavior locale sensitive, then we'll be stuck
+          with that forever.</li>
+      <li>Tom responded that, in the long term, encoding will hopefully become
+          separated from locale thereby eliminating the wrong default
+          concern.</li>
+      <li>Corentin suggested that, for C++20, we could require the <tt>'l'</tt>
+          in the specifier and not have a non-locale option until we figure this
+          out.</li>
+      <li>Steve observed that the locale dependency creates a buffer overflow
+          situation in the case where the locale changes in between width
+          calculation and actual formatting to a buffer.</li>
+      <li>Corentin stated a preference to just require <tt>'l'</tt> in the width
+          specification for C++20 to give us time to address this properly.</li>
+      <li>Tom suggested adding a reference to
+          <a href="https://wg21.link/lwg3290">LWG 3290</a> in the paper.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will be on October 9th.</li>
+</ul>
+
+
+</body>
