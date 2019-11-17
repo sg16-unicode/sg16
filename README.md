@@ -7,34 +7,52 @@ Meetings are generally held twice a month; invitations are sent to the mailing l
 
 The following are papers and projects currently under our purview.  Additionally, we provide input to proposals that originate elsewhere that target EWG, LEWG, or other study groups when those proposals touch on topics listed in [P1253 - Guidelines for when a WG21 proposal should be reviewed by SG16][P1253].
 
-# WG21 Papers (C++)
+# WG21 (C++) Papers
 
-WG Number     | Status      | Title/Notes/Links
-------------- | ------      | -----
-\<None\>      |             | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
-[P1949][]     |             | C++ Identifier Syntax using Unicode Standard Annex 31
-[P1892][]     |             | Extended locale-specific presentation specifiers for std::format
-[P1885][]     |             | Naming Text Encodings to Demystify Them
-[P1880][]     |             | uNstring Arguments Shall Be UTF-N Encoded
-~~[P1879][]~~ | ~~Dropped~~ | ~~Please Don't Rewrite My String Literals~~<br/>(This proposal was withdrawn by the author)
-[P1868][]     |             | 🦄 width: clarifying units of width and precision in std::format
-[P1859][]     |             | Standard terminology for execution character set encodings
-[P1854][]     |             | Conversion to execution encoding should not lead to loss of meaning
-[P1844][]     |             | Enhancement of regex
-[P1629][]     |             | Standard Text Encoding
-[P1628][]     |             | Unicode character properties
+## Active Papers and Projects
+
+WG Number     | Title/Notes/Links
+------------- | -----
+\<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
+[P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
+[P1892][]     | Extended locale-specific presentation specifiers for std::format
+[P1885][]     | Naming Text Encodings to Demystify Them
+[P1880][]     | uNstring Arguments Shall Be UTF-N Encoded
+[P1868][]     | 🦄 width: clarifying units of width and precision in std::format
+[P1859][]     | Standard terminology for execution character set encodings
+[P1854][]     | Conversion to execution encoding should not lead to loss of meaning
+[P1844][]     | Enhancement of regex
+[P1629][]     | Standard Text Encoding
+[P1628][]     | Unicode character properties
+[P1097][]     | Named character escapes
+[P0244][]     | Text_view: A C++ concepts and range based character encoding and code point enumeration library
+
+## Accepted Papers
+
+The following papers have been adopted for an ISO standard.
+
+WG Number     | Standard    | Title/Notes/Links
+------------- | --------    | -----
 [P1423][]     | C++20       | char8_t backward compatibility remediation
 [P1139][]     | C++20       | Address wording issues related to ISO 10646
-[P1097][]     |             | Named character escapes
 [P1041][]     | C++20       | Make char16_t/char32_t string literals be UTF-16/32
 [P1025][]     | C++20       | Update The Reference To The Unicode Standard
 [P0645][]     | C++20       | Text Formatting
 [P0482][]     | C++20       | char8_t: A type for UTF-8 characters and strings
-[P0244][]     |             | Text_view: A C++ concepts and range based character encoding and code point enumeration library
-~~[P0353][]~~ | ~~Dropped~~ | ~~Unicode Friendly Encoding Conversions for the Standard Library~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
-~~[P0169][]~~ | ~~Dropped~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 
-# WG14 Papers (C)
+## Inactive Papers
+
+The following papers are no longer being pursued.
+
+WG Number     | Title/Notes/Links
+------------- | -----
+~~[P1879][]~~ | ~~Please Don't Rewrite My String Literals~~<br/>(This proposal was withdrawn by the author)
+~~[P0353][]~~ | ~~Unicode Friendly Encoding Conversions for the Standard Library~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
+~~[P0169][]~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
+
+# WG14 (C) Papers
+
+## Active Papers
 
 WG Number     | Status      | Title/Notes/Links
 ------------- | ------      | -----
