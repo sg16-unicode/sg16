@@ -31,6 +31,11 @@ del, del *
     color: #000000;
     background-color:#FFA0A0
 }
+nop, nop *
+{
+    color: #000000;
+    background-color:#B0B0FF
+}
 
 blockquote
 {
@@ -53,6 +58,13 @@ blockquote.stddel
     text-decoration: line-through;
     color: #000000;
     background-color: #FFA0A0;
+    border: 1px solid #ECD7EC;
+    padding-left: 0.5empadding-right: 0.5em;
+}
+blockquote.stdnop
+{
+    color: #000000;
+    background-color: #B0B0FF;
     border: 1px solid #ECD7EC;
     padding-left: 0.5empadding-right: 0.5em;
 }
@@ -277,6 +289,15 @@ Additionally, the wording updates are intended to:
 <a title="Working Draft, Standard for Programming Language C++"
    href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4835.pdf">
 N4835</a>.
+</p>
+
+<p>The changes to
+<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a> and
+<a href="http://eel.is/c++draft/lex.string">[lex.string]</a>
+are rather pervasive.  For ease of review, unchanged paragraphs in these
+sections are retained in the wording below.  These paragraphs are
+introduced with "<em>No</em> changes to ..." and are <nop>highlighted with
+a blue background</nop>.
 </p>
 
 <p>These changes do not reflect recent editorial changes made in
@@ -978,10 +999,10 @@ one of the following optionally preceded by an
 </blockquote>
 </p>
 
-<p>Change in
+<p><em>No</em> changes to
 <a href="http://eel.is/c++draft/lex.string#2">
 5.13.5 [lex.string] paragraph 2</a>:
-<blockquote>
+<blockquote class="stdnop">
 A
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that has an <tt>R</tt> in the prefix is a
@@ -1001,10 +1022,10 @@ shall consist of at most 16 characters.
 </blockquote>
 </p>
 
-<p>Change in
+<p><em>No</em> changes to
 <a href="http://eel.is/c++draft/lex.string#3">
 5.13.5 [lex.string] paragraph 3</a>:
-<blockquote>
+<blockquote class="stdnop">
 [ <em>Note:</em> The characters <tt>'('</tt> and <tt>')'</tt> are permitted in a
 <a href="http://eel.is/c++draft/lex.string#nt:raw-string"><em>raw-string</em></a>.
 Thus, <tt>R"delimiter((a|b))delimiter"</tt> is equivalent to <tt>"(a|b)"</tt>.
@@ -1012,10 +1033,10 @@ Thus, <tt>R"delimiter((a|b))delimiter"</tt> is equivalent to <tt>"(a|b)"</tt>.
 </blockquote>
 </p>
 
-<p>Change in
+<p><em>No</em> changes to
 <a href="http://eel.is/c++draft/lex.string#4">
 5.13.5 [lex.string] paragraph 4</a>:
-<blockquote>
+<blockquote class="stdnop">
 [ <em>Note:</em> A source-file new-line in a raw string literal results in a new-line in the resulting execution string literal.
 Assuming no whitespace at the beginning of lines in the following example, the assert will succeed:
 <div style="margin-left: 1em;">
@@ -1028,10 +1049,10 @@ assert(std::strcmp(p, "a\\\nb\nc") == 0);</code></pre>
 </blockquote>
 </p>
 
-<p>Change in
+<p><em>No</em> changes to
 <a href="http://eel.is/c++draft/lex.string#5">
 5.13.5 [lex.string] paragraph 5</a>:
-<blockquote>
+<blockquote class="stdnop">
 [ <em>Example:</em> The raw string
 <div style="margin-left: 1em;">
 <pre><code>R"a(
@@ -1111,10 +1132,10 @@ of the corresponding code unit of the UTF-8 encoding of the string.</del>
 </blockquote>
 </p>
 
-<p>Change in
+<p><em>No</em> changes to
 <a href="http://eel.is/c++draft/lex.string#8">
 5.13.5 [lex.string] paragraph 8</a>:
-<blockquote>
+<blockquote class="stdnop">
 Ordinary string literals and UTF-8 string literals are also referred to as narrow string literals.
 </blockquote>
 </p>
