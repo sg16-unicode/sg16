@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-01-08</td>
+    <td>2020-01-09</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -252,9 +252,9 @@ The proposed wording changes are intended to resolve
 </p>
 
 <p>
-The concept of an "associated encoding" is introduced for character and string
-literals so as to enable wording to be independent of the particular kind of
-literal (ordinary, wide or Unicode).
+The concept of an "associated character encoding" is introduced for character
+and string literals so as to enable wording to be independent of the particular
+kind of literal (ordinary, wide or Unicode).
 </p>
 
 <p>
@@ -280,6 +280,13 @@ Additionally, the wording updates are intended to:
       <a href="https://github.com/sg16-unicode/sg16/issues/9">https://github.com/sg16-unicode/sg16/issues/9</a>).
   <li>Modernize the wording with current style preferences and terminology.</li>
 </ul>
+</p>
+
+
+<h1>Acknowledgements</h1>
+
+<p>Thank you to Jens Maurer and Steve Downey for providing feedback on initial
+drafts of this paper!
 </p>
 
 
@@ -325,13 +332,13 @@ in a character literal or a string literal, as well as each
 and
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
 in a character literal or a non-raw string literal, is converted to the
-<del>corresponding member of the execution character set</del><ins>literal's associated encoding</ins>
+<del>corresponding member of the execution character set</del><ins>literal's associated character encoding</ins>
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>,
 <a href="http://eel.is/c++draft/lex.string">[lex.string]</a>)<del>;</del><ins>.</ins>
 <del>if there is no corresponding member, it is </del><ins>If a character
-lacks representation in the associated encoding, then the character is converted
-to an implementation-defined character or the literal is ill-formed as specified
-in
+lacks representation in the associated character encoding, then the character is
+converted to an implementation-defined character or the literal is ill-formed as
+specified in
 <a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a> and
 <a href="http://eel.is/c++draft/lex.string">[lex.string]</a>.</ins>
 <sup><a href="http://eel.is/c++draft/lex.phases#footnote-8">8</a></sup>
@@ -506,9 +513,9 @@ A character literal that does not begin with
 such as <tt>'v'</tt>,</ins>
 is an <em>ordinary character literal</em><ins>,
 has type <tt>char</tt> unless otherwise specified to have type <tt>int</tt> as
-described below, and has the execution character set
+described below, and has the encoding of the execution character set
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
-as its associated encoding</ins>.<del>
+as its associated character encoding</ins>.<del>
 An ordinary character literal that contains a single
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
 representable in the execution character set
@@ -608,7 +615,7 @@ existing practice
 A character literal that begins with <del>the letter </del><tt>L</tt>, such as
 <tt>L'z'</tt>, is a <em>wide-character literal</em><ins>, has type
 <tt>wchar_t</tt><sup><a href="http://eel.is/c++draft/lex.ccon#footnote-18">18</a></sup>,
-and has the execution wide-character set
+and has the encoding of the execution wide-character set
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
 as its associated character encoding</ins>.<del>
 A wide-character literal
@@ -657,8 +664,8 @@ The value of a character literal consisting of a single
 or
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
 is the code point value of the specified character encoded according to the
-character literal's associated encoding.  If the character lacks representation
-in the associated encoding, then:
+character literal's associated character encoding.  If the character lacks
+representation in the associated character encoding, then:
 <table>
   <tr>
     <td>(X.1) &mdash;</td>
@@ -678,7 +685,7 @@ in the associated encoding, then:
   </tr>
 </table>
 If the character requires multiple code units to be encoded in the associated
-encoding, then:
+character encoding, then:
 <table>
   <tr>
     <td>(X.4) &mdash;</td>
@@ -712,8 +719,8 @@ escape sequences has been moved to a new paragraph.
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>
 is specified in table
 <a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.
-<em>[ Note:</em> The execution character sets do not require representation
-for the
+<em>[ Note:</em> The execution character set and the execution wide-character
+set do not require representation for the
 <tt>new-line (NL)</tt>,
 <tt>horizontal tab (HT)</tt>,
 <tt>vertical tab (VT)</tt>, or
@@ -1085,7 +1092,7 @@ after
 (<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>)
 in the
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>'s
-associated encoding.
+associated character encoding.
 </blockquote>
 </p>
 
@@ -1103,7 +1110,7 @@ string literal initialization has been moved to a new paragraph.
 that does not begin with an
 <a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>
 is an <em>ordinary string literal</em><ins>, has type <tt>char</tt> as its
-associated code unit type, and has the execution character set
+associated code unit type, and has the encoding of the execution character set
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
 as its associated character encoding</ins>.<del>  An ordinary string literal
 has type "array of <em>n</em> const char" where <em>n</em> is the size of the
@@ -1192,7 +1199,8 @@ A
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
 that begins with <tt>L</tt>, such as <tt>L"asdf"</tt>, is a
 <em>wide string literal</em><ins>, has type <tt>wchar_t</tt> as its
-associated code unit type, and has the execution wide-character set
+associated code unit type, and has the encoding of the execution wide-character
+set
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
 as its associated character encoding</ins>.<del>  A wide string literal has
 type "array of <em>n</em> const wchar_t", where <em>n</em> is the size of the
@@ -1419,7 +1427,7 @@ The characters denoted by each
 are encoded to a code unit sequence using the
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>'s
 associated encoding.  If a character lacks representation in the associated
-encoding, then:
+character encoding, then:
 <table>
   <tr>
     <td>(X.1) &mdash;</td>
