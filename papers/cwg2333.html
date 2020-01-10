@@ -47,7 +47,7 @@ blockquote
 }
 blockquote.stdins
 {
-    text-decoration: underline;
+    /* text-decoration: underline; */
     color: #000000;
     background-color: #C8FFC8;
     border: 1px solid #B3EBB3;
@@ -323,24 +323,25 @@ merge conflict resolution will be required.
 "<tt>simple-escape-sequence</tt>" addresses
 <a href="http://wg21.link/cwg1656">CWG 1656</a>.
 <blockquote>
-Each <del>basic source character set member</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char">basic-c-char</a>,
-<a href="http://eel.is/c++draft/lex.string#nt:basic-s-char">basic-s-char</a>, and
-<a href="http://eel.is/c++draft/lex.string#nt:r-char">r-char</a>
+Each <del>basic source character set member</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
+<a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>, and
+<a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>
 </ins>
 in a character literal or a string literal, as well as each
-<del>escape sequence</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a></ins>
+<del>escape sequence</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a></ins>
 and
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 in a character literal or a non-raw string literal, is converted to the
 <del>corresponding member of the execution character set</del><ins>literal's associated character encoding</ins>
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>,
 <a href="http://eel.is/c++draft/lex.string">[lex.string]</a>)<del>;</del><ins>.</ins>
-<del>if there is no corresponding member, it is </del><ins>If a character
+<del>if there is no corresponding member, it is converted to an implementation
+defined member other than the null (wide) character</del><ins>If a character
 lacks representation in the associated character encoding, then the character is
 converted to an implementation-defined character or the literal is ill-formed as
 specified in
 <a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a> and
-<a href="http://eel.is/c++draft/lex.string">[lex.string]</a>.</ins>
+<a href="http://eel.is/c++draft/lex.string">[lex.string]</a></ins>.
 <sup><a href="http://eel.is/c++draft/lex.phases#footnote-8">8</a></sup>
 </blockquote>
 </p>
@@ -352,7 +353,7 @@ specified in
 seems important to include here.
 <blockquote>
 <ins>A null character is appended to every
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>.
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>.
 </ins>White-space
 characters separating tokens are no longer significant. Each
 preprocessing token is converted into a token
@@ -487,11 +488,11 @@ numeric-escape-sequence:
 <blockquote>
 A <del>character literal</del><ins><em>character literal</em></ins> is
 <del>one or more characters</del><ins>a
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence">c-char-sequence</a></ins>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a></ins>
 enclosed in single quotes, as in
 <del><tt>'x'</tt></del><ins><tt>'v'</tt></ins>, optionally preceded by
 <del><tt>u8</tt>, <tt>u</tt>, <tt>U</tt>, or <tt>L</tt></del><ins>an
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a></ins>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a></ins>,
 as in <tt>u8'w'</tt>, <tt>u'x'</tt>, <tt>U'y'</tt>, or <tt>L'z'</tt><del>,
 respectively</del>.
 </blockquote>
@@ -509,7 +510,7 @@ A character literal that does not begin with
 <tt>u8</tt>, <tt>u</tt>,
 <tt>U</tt>, or <tt>L</tt>
 </del><ins>an
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>,
 such as <tt>'v'</tt>,</ins>
 is an <em>ordinary character literal</em><ins>,
 has type <tt>char</tt> unless otherwise specified to have type <tt>int</tt> as
@@ -517,17 +518,17 @@ described below, and has the encoding of the execution character set
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
 as its associated character encoding</ins>.<del>
 An ordinary character literal that contains a single
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 representable in the execution character set
 has type <tt>char</tt>, with value equal to the numerical value of the encoding
 of the
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 in the execution character set.  An ordinary character literal that
 contains more than one
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 is a <em>multicharacter literal</em>.  A multicharacter literal, or an
 ordinary character literal containing a single
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 not representable in the execution character set, is conditionally-supported,
 has type <tt>int</tt>, and has an implementation-defined value.</del>
 </blockquote>
@@ -553,7 +554,8 @@ can be encoded as a single UTF-8 code unit.  [ <em>Note:</em> That is, provided
 the code point value is in the range 0x0-0x7F (inclusive). &mdash;
 <em>end note</em> ]   If the value is not representable with a single UTF-8 code
 unit, the program is ill-formed.  A UTF-8 character literal containing multiple
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>s is ill-formed.
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>s is
+ill-formed.
 </del>
 </blockquote>
 </p>
@@ -577,7 +579,8 @@ is, provided the code point value is in the range 0x0-0xFFFF (inclusive).
 &mdash; <em>end note</em> ]  If the value is not representable with a single
 16-bit code unit, the program is ill-formed.  A UTF-16 character literal
 containing multiple
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>s is ill-formed.
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>s is
+ill-formed.
 </del>
 </blockquote>
 </p>
@@ -594,10 +597,11 @@ A character literal that begins with <del>the letter </del><tt>U</tt>, such as
 <em>UTF-32 character literal</em><ins>, has type <tt>char32_t</tt>, and has
 UTF-32 as its associated character encoding</ins>.<del>
 The value of a UTF-32 character literal containing a single
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 is equal to its ISO/IEC 10646 code point value.  A UTF-32 character literal
 containing multiple
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>s is ill-formed.
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>s is
+ill-formed.
 </del>
 </blockquote>
 </p>
@@ -620,11 +624,12 @@ and has the encoding of the execution wide-character set
 as its associated character encoding</ins>.<del>
 A wide-character literal
 has type <tt>wchar_t</tt>.<sup><a href="http://eel.is/c++draft/lex.ccon#footnote-18">18</a></sup>
-The value of a wide-character literal containing a single c-char has value
-equal to the numerical value of the encoding of the
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
+The value of a wide-character literal containing a single
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
+has value equal to the numerical value of the encoding of the
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 in the execution wide-character set, unless the
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 has no representation in the execution wide-character set, in which case the
 value is implementation-defined.
 [ <em>Note:</em> The type <tt>wchar_t</tt> is able to represent all members of
@@ -632,7 +637,7 @@ the execution wide-character set (see
 <a href="http://eel.is/c++draft/basic.fundamental">[basic.fundamental]</a>).
 &mdash; <em>end note</em> ]
 The value of a wide-character literal containing multiple
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>s
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>s
 is implementation-defined.
 </del>
 </blockquote>
@@ -643,9 +648,9 @@ is implementation-defined.
 5.13.3 [lex.ccon] paragraph 6</a>:
 <blockquote class="stdins">
 A character literal with a
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence">c-char-sequence</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
 containing more than one
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>,
 as in <tt>'abcd'</tt>, is a <em>multicharacter literal</em>.
 An ordinary character literal that is a multicharacter literal is conditionally
 supported, has type <tt>int</tt>, and has an implementation-defined value.
@@ -659,10 +664,10 @@ ill-formed.
 <p>Add another new paragraph (X):
 <blockquote class="stdins">
 The value of a character literal consisting of a single
-<a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char">basic-c-char</a>,
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>,
 or
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 is the code point value of the specified character encoded according to the
 character literal's associated character encoding.  If the character lacks
 representation in the associated character encoding, then:
@@ -716,7 +721,7 @@ character encoding, then:
 escape sequences has been moved to a new paragraph.
 <blockquote>
 <ins>The character specified by a
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
 is specified in table
 <a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.
 <em>[ Note:</em> The execution character set and the execution wide-character
@@ -727,7 +732,7 @@ set do not require representation for the
 <tt>form feed (FF)</tt> characters
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>); the UTF-8,
 UTF-16, and UTF-32 encodings are able to represent all of the
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
 characters using a single code unit.
 <em>&mdash; end note ]</em>
 </ins>
@@ -753,7 +758,7 @@ sequence specifies a single character.
 <td align="left">Table <a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>:
 <del>E</del><ins>Simple e</ins>scape sequences</td>
 <td/>
-<td aligh="right">[tab:lex.ccon.esc]</td>
+<td align="right">[tab:lex.ccon.esc]</td>
 </tr>
 </table>
 <br/>
@@ -796,7 +801,7 @@ escape sequences has been removed as redundant; the form is implicit in the
 grammar.
 <blockquote>
 <ins>The value of a character literal consisting of a single
-<a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence">numeric-escape-sequence</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
 is the numeric value of the octal or hexadecimal number.</ins><del>  The
 escape <tt>\ooo</tt> consists of the backslash followed by one, two, or
 three octal digits that are taken to specify the value of the desired character.
@@ -845,16 +850,16 @@ note duplicates normative text in
 5.2 [lex.phases] paragraph 1</a>.
 <blockquote class="stddel">
 A
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 is translated to the encoding, in the appropriate execution character set, of
 the character named.  If there is no such encoding, the
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 is translated to an implementation-defined encoding.
 [ <em>Note:</em> In translation phase 1, a
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 is introduced whenever an actual extended character is encountered in the
 source text.  Therefore, all extended characters are described in terms of
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>s
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s
 However, the actual compiler implementation may use its own native character
 set, so long as the same results are obtained.  &mdash; <em>end note</em> ]
 </blockquote>
@@ -982,12 +987,12 @@ surrounded by double quotes, optionally prefixed by
 <tt>uR"*~(...)*~"</tt>, <tt>U"..."</tt>,
 <tt>UR"zzz(...)zzz"</tt>, <tt>L"..."</tt>, or <tt>LR"(...)"</tt>, respectively.</del><ins>is
 one of the following optionally preceded by an
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>:
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>:
 <table>
   <tr>
     <td>(1.1) &mdash;</td>
     <td>an optional
-        <a href="http://eel.is/c++draft/lex.string#nt:s-char-sequence">s-char-sequence</a>
+        <a href="http://eel.is/c++draft/lex.string#nt:s-char-sequence"><em>s-char-sequence</em></a>
         enclosed in double quotes as in <tt>""</tt>, <tt>"abc"</tt>,
         <tt>u8"def"</tt>, <tt>u"ghi"</tt>, <tt>U"jkl"</tt>, or <tt>L"mno"</tt>.
     </td>
@@ -995,7 +1000,7 @@ one of the following optionally preceded by an
   <tr>
     <td>(1.2) &mdash;</td>
     <td>a
-        <a href="http://eel.is/c++draft/lex.string#nt:raw-string">raw-string</a>
+        <a href="http://eel.is/c++draft/lex.string#nt:raw-string"><em>raw-string</em></a>
         preceded by <tt>R</tt> as in <tt>R"()"</tt>, <tt>R"(ABC)"</tt>,
         <tt>u8R"**(DEF)**"</tt>, <tt>uR"*~(GHI)*~"</tt>,
         <tt>UR"zzz(JKL)zzz"</tt>, or <tt>LR"(MNO)"</tt>.
@@ -1080,10 +1085,10 @@ is equivalent to <tt>"x = \"\\\"y\\\"\""</tt>.
 <a href="http://eel.is/c++draft/lex.string#5">
 5.13.5 [lex.string] paragraph 5</a>:
 <blockquote class="stdins">
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>s
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>s
 have type "array of <em>n</em> <tt>const</tt> <em>CHAR_T</em>" where
 <em>CHAR_T</em> is the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>'s
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
 associated code unit type, and
 <em>n</em>
 is the number of code units required to represent the contents of the string
@@ -1091,7 +1096,7 @@ after
 <a href="http://eel.is/c++draft/lex.phases#1.7">translation phase 7</a>
 (<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>)
 in the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>'s
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
 associated character encoding.
 </blockquote>
 </p>
@@ -1106,9 +1111,9 @@ been moved to the new paragraph above.  Wording for storage duration and
 string literal initialization has been moved to a new paragraph.
 <blockquote>
 <del>After translation phase 6, a</del><ins>A</ins>
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that does not begin with an
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>
 is an <em>ordinary string literal</em><ins>, has type <tt>char</tt> as its
 associated code unit type, and has the encoding of the execution character set
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
@@ -1127,7 +1132,7 @@ and is initialized with the given characters.</del>
 has been moved to new paragraphs.
 <blockquote>
 A
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that begins with <tt>u8</tt>, such as <tt>u8"asdf"</tt>, is a
 <em>UTF-8 string literal</em><ins>, has type <tt>char8_t</tt> as its
 associated code unit type, and has UTF-8 as its associated character
@@ -1155,7 +1160,7 @@ has been moved to new paragraphs.  The note has been deleted as redundant; the
 use of surrogate pairs is explicit in the UTF-16 encoding.
 <blockquote>
 A
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that begins with <tt>u</tt>, such as <tt>u"asdf"</tt>, is a
 <em>UTF-16 string literal</em><ins>, has type <tt>char16_t</tt> as its
 associated code unit type, and has UTF-16 as its associated character
@@ -1164,7 +1169,7 @@ encoding</ins>.<del>  A UTF-16 string literal has type "array of
 defined below; each successive element of the array has the value of the
 corresponding code unit of the UTF-16 encoding of the string.
 [ <em>Note:</em> A single
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char">c-char</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 may produce more than one char16_t character in the form of surrogate pairs.
 A surrogate pair is a representation for a single code point as a sequence of
 two 16-bit code units.  &mdash; <em>end note</em> ]</del>
@@ -1178,7 +1183,7 @@ two 16-bit code units.  &mdash; <em>end note</em> ]</del>
 has been moved to new paragraphs.
 <blockquote>
 A
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that begins with <tt>U</tt>, such as <tt>U"asdf"</tt>, is a
 <em>UTF-32 string literal</em><ins>, has type <tt>char32_t</tt> as its
 associated code unit type, and has UTF-32 as its associated character
@@ -1196,7 +1201,7 @@ corresponding code unit of the UTF-32 encoding of the string.</del>
 has been moved to new paragraphs.
 <blockquote>
 A
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that begins with <tt>L</tt>, such as <tt>L"asdf"</tt>, is a
 <em>wide string literal</em><ins>, has type <tt>wchar_t</tt> as its
 associated code unit type, and has the encoding of the execution wide-character
@@ -1213,23 +1218,24 @@ string as defined below; it is initialized with the given characters.</del>
 5.13.5 [lex.string] paragraph 12</a>:
 <blockquote>
 In
-<a href="http://eel.is/c++draft/lex.phases">translation phase 6</a>,
+<a href="http://eel.is/c++draft/lex.phases">translation phase 6</a>
+(<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>),
 adjacent
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>s
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>s
 are concatenated.  If both
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>s
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>s
 have the same
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>,
 the resulting concatenated string literal has that
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>.
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>.
 If one
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 has no
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>,
 it is treated as a
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 of the same
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>
 as the other operand.  If a UTF-8 string literal token is adjacent to a wide
 string literal token, the program is ill-formed.  Any other concatenations are
 conditionally-supported with implementation-defined behavior.
@@ -1238,9 +1244,9 @@ Because the interpretation happens in translation phase 6 (<del>after each
 character from a string literal has been translated into a value from the
 appropriate character set</del><ins>after the string literal contents have been
 encoded in the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>'s
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
 associated character encoding</ins>), a
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a><ins>'</ins>s
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a><ins>'</ins>s
 initial rawness has no effect on the interpretation or well-formedness of the
 concatenation.  &mdash; <em>end note</em> ] Table
 <a href="http://eel.is/c++draft/lex.string#tab:lex.string.concat">9</a>
@@ -1251,7 +1257,7 @@ has some examples of valid concatenations.
 <td align="left">Table <a href="http://eel.is/c++draft/lex.string#tab:lex.string.concat">9</a>:
 String literal concatenations</td>
 <td/>
-<td aligh="right">[tab:lex.string.concat]</td>
+<td align="right">[tab:lex.string.concat]</td>
 </tr>
 </table>
 <br/>
@@ -1323,9 +1329,12 @@ String literal concatenations</td>
 </tr>
 </table>
 </div>
+<br/>
 Characters in concatenated strings are kept distinct.<br/><br/>
 [ <em>Example:</em>
+<div style="margin-left: 1em;">
 <pre><code>"\xA" "B"</code></pre>
+</div>
 contains the two characters <tt>'\xA'</tt> and <tt>'B'</tt> after concatenation
 (and not the single hexadecimal character <tt>'\xAB'</tt>).
 &mdash; <em>end example</em> ]
@@ -1337,7 +1346,8 @@ contains the two characters <tt>'\xA'</tt> and <tt>'B'</tt> after concatenation
 5.13.5 [lex.string] paragraph 13</a>:
 <blockquote>
 After any necessary concatenation, in
-<a href="http://eel.is/c++draft/lex.phases">translation phase 7</a>,
+<a href="http://eel.is/c++draft/lex.phases">translation phase 7</a>
+(<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>),
 <del><tt>'\0'</tt></del><ins>a null character</ins> is appended to every
 string literal so that programs that scan a string can find its end.
 </blockquote>
@@ -1353,35 +1363,36 @@ with the grammar.  The discussion of string length is unnecessary as string
 length is determined by encoding.
 <blockquote class="stddel">
 Escape sequences and
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>s
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s
 in non-raw string literals have the same meaning as in
-<a href="http://eel.is/c++draft/lex.ccon">character literals</a>, except that
+<a href="http://eel.is/c++draft/lex.ccon">character literals</a>
+(<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>), except that
 the single quote <tt>'</tt> is representable either by itself or by the escape
 sequence <tt>\'</tt>, and the double quote <tt>"</tt> shall be preceded by a
 <tt>\</tt>, and except that a
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 in a UTF-16 string literal may yield a surrogate pair.  In a narrow string
 literal, a
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 may map to more than one <tt>char</tt> or <tt>char8_t</tt> element due to
-<a href="http://eel.is/c++draft/lex.string#def:encoding,multibyte">multibyte encoding</a>.
+<a href="http://eel.is/c++draft/lex.string#def:encoding,multibyte"><em>multibyte encoding</em></a>.
 The size of a <tt>char32_t</tt> or wide string
 literal is the total number of escape sequences,
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>s,
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s,
 and other characters, plus one for the terminating <tt>U'\0'</tt> or
 <tt>L'\0'</tt>.  The size of a UTF-16 string literal is the total number of
 escape sequences,
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>s,
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s,
 and other characters, plus one for each character requiring a surrogate pair,
 plus one for the terminating <tt>u'\0'</tt>.  [ <em>Note:</em> The size of a
 <tt>char16_t</tt> string literal is the number of
 code units, not the number of characters.  &mdash; <em>end note</em> ] Within
 <tt>char32_t</tt> and <tt>char16_t</tt> string literals, any
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>s
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s
 shall be within the range <tt>0x0</tt> to <tt>0x10FFFF</tt>.  The size of a
 narrow string literal is the total number of escape sequences and other
 characters, plus at least one for the multibyte encoding of each
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>,
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>,
 plus one for the terminating <tt>'\0'</tt>.
 </blockquote>
 </p>
@@ -1393,13 +1404,13 @@ plus one for the terminating <tt>'\0'</tt>.
 been moved to a new paragraph.
 <blockquote>
 Evaluating a
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 results in a string literal object with static storage duration<ins>
 (<a href="http://eel.is/c++draft/basic.stc">[basic.stc]</a>)</ins><del>,
 initialized from the given characters as specified above</del>.  Whether all
 string literals are distinct (that is, are stored in nonoverlapping objects)
 and whether successive evaluations of a
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 yield the same or a different object is unspecified.  [ <em>Note:</em> The
 effect of attempting to modify a string literal is undefined.
 &mdash; <em>end note</em> ]
@@ -1412,20 +1423,20 @@ effect of attempting to modify a string literal is undefined.
 <blockquote class="stdins">
 String literal objects are initialized with a sequence of code unit values
 corresponding to the sequence of
-<a href="http://eel.is/c++draft/lex.string#nt:s-char">s-char</a>s
+<a href="http://eel.is/c++draft/lex.string#nt:s-char"><em>s-char</em></a>s
 (for a non-raw string literal) and
-<a href="http://eel.is/c++draft/lex.string#nt:r-char">r-char</a>s
+<a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>s
 (for a raw string literal) in the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>.
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>.
 The characters denoted by each
-<a href="http://eel.is/c++draft/lex.string#nt:basic-s-char">basic-s-char</a>,
-<a href="http://eel.is/c++draft/lex.string#nt:r-char">r-char</a>,
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>
+<a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>,
+<a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>), and
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>
+<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
 are encoded to a code unit sequence using the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal">string-literal</a>'s
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
 associated encoding.  If a character lacks representation in the associated
 character encoding, then:
 <table>
@@ -1446,7 +1457,7 @@ character encoding, then:
   </tr>
 </table>
 Each
-<a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence">numeric-escape-sequence</a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
 contributes a single code unit value with the numeric value of the octal or
 hexadecimal number.  There is no limit to the number of digits in a hexadecimal
