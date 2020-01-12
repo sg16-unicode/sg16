@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-01-09</td>
+    <td>2020-01-11</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -280,6 +280,52 @@ Additionally, the wording updates are intended to:
       <a href="https://github.com/sg16-unicode/sg16/issues/9">https://github.com/sg16-unicode/sg16/issues/9</a>).
   <li>Modernize the wording with current style preferences and terminology.</li>
 </ul>
+</p>
+
+
+<h1>Implementation impact</h1>
+
+<p>
+The author intends the proposed wording to reflect existing practice for the
+gcc and Clang compilers.  If this proposal is adopted, neither of those
+compilers are expected to require updates.
+</p>
+
+<p>
+However, there is implementation impact to the Microsoft Visual C++ compiler.
+Consider the following (C++20) code:
+<div style="margin-left: 1em;">
+<pre><code>constexpr const char8_t c[] = u8"\xc3\x80"; // UTF-8 encoding of U+00C0 {LATIN CAPITAL LETTER A WITH GRAVE}
+#if defined(_MSC_VER)
+  // Microsoft Visual C++:
+  static_assert(c[0] == 0xC3); // UTF-8 encoding of U+00C3 {LATIN CAPITAL LETTER A WITH TILDE}
+  static_assert(c[1] == 0x83);
+  static_assert(c[2] == 0xC2); // UTF-8 encoding of U+0080 {&lt;control&gt;}
+  static_assert(c[3] == 0x80);
+  static_assert(c[4] == 0x00); // null
+#else
+  // Gcc and Clang:
+  static_assert(c[0] == 0xC3); // UTF-8 encoding of U+00C0 {LATIN CAPITAL LETTER A WITH GRAVE}
+  static_assert(c[1] == 0x80);
+  static_assert(c[2] == 0x00); // null
+#endif
+</code></pre>
+</div>
+Gcc and Clang encode the hexadecimal escapes as code units in the target (UTF-8)
+encoding and perform no conversions (consistent with the behavior intended by
+this proposal).  However, Visual C++ considers each hexadecimal escape to
+specify a code point in the source encoding and encodes each as UTF-8.
+</p>
+
+<p>
+The author does not know if the Visual C++ behavior exhibited for UTF-8 literals
+is intentional or reflective of a defect.  The behavior is inconsistent for
+UTF-8 and UTF-16 literals.  For UTF-8 literals, numeric escape sequences that
+specify values outside the range of <tt>char8_t</tt> are accepted as code
+point values and encoded as UTF-8.  However, for UTF-16 literals, numeric escape
+sequences that specify values outside the range of <tt>char16_t</tt> are
+rejected rather than being considered a code point value and encoded as a UTF-16
+surrogate pair.
 </p>
 
 
