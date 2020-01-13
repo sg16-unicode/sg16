@@ -87,7 +87,8 @@ blockquote.stddel
   </tr>
   <tr>
     <th>Reply-to:</th>
-    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;<br/>
+        Peter Bindels &lt;peterbindels@gmail.com&gt;</td>
   </tr>
 </table>
 
@@ -133,7 +134,6 @@ P1097R2</a><sup><a title="Named character escapes"
 This proposal does not deviate from the general design intent in Fernandes'
 work, but does deviate in the following specific details:
 <ul>
-  <li>This proposal includes support for Unicode named character sequences.</li>
   <li>This proposal uses 
       <a href="https://www.unicode.org/reports/tr44/tr44-24.html#UAX44-LM2">UAX44-LM2</a>
       for matching names rather than just case-insensitive matching.  This is
@@ -160,8 +160,7 @@ This proposal enables the above literals to be written using Unicode assigned
 names instead of Unicode code point values.
 <div style="margin-left: 1em;">
 <pre><code class="c++">U'\N{LATIN CAPITAL LETTER A WITH MACRON}'                           // Equivalent to U'\u0100'
-u8"\N{LATIN CAPITAL LETTER A WITH MACRON}\N{COMBINING GRAVE ACCENT" // Equivalent to u8"\u0100\u0300"
-u8"\N{LATIN CAPITAL LETTER A WITH MACRON AND GRAVE}"                // Equivalent to u8"\u0100\u0300"</code></pre>
+u8"\N{LATIN CAPITAL LETTER A WITH MACRON}\N{COMBINING GRAVE ACCENT" // Equivalent to u8"\u0100\u0300"</code></pre>
 </div>
 </p>
 
@@ -320,7 +319,7 @@ For languages that include such support, more details can be found in the
   <table border="1" style="border-collapse: collapse">
     <tr>
       <th style="text-align:left">Language</th>
-      <th style="text-align:left">Named character sequence Support</th>
+      <th style="text-align:left">Named character escape support</th>
     </tr>
     <tr> <td>C#</td>           <td>No</td> </tr>
     <tr> <td>D</td>            <td>Yes; HTML 5 named character references</td> </tr>
@@ -886,7 +885,6 @@ The wording included in this proposal is for the following design:
     <ul>
       <li>ISO/IEC 10646 assigned names.</li>
       <li>ISO/IEC 10646 assigned name aliases.</li>
-      <li>ISO/IEC 10646 named sequences.</li>
       <li>No allowance for additional implementation-defined names.</li>
     </ul>
   </li>
@@ -927,6 +925,14 @@ as modifications of the current proposal.
     See the
     <a href="#design_compat">Backward compatibility</a>
     section for more discussion of this option.
+  </li>
+  <li>Allow names to match ISO/IEC 10646 named sequences such that the
+      following would be equivalent:
+    <ul>
+      <li><tt>"\N{LATIN CAPITAL LETTER A WITH MACRON AND GRAVE}"</tt></li>
+      <li><tt>"\N{LATIN CAPITAL LETTER A WITH MACRON}\N{COMBINING GRAVE ACCENT"</tt></li>
+      <li><tt>"\u0100\u0300"</tt></li>
+    </ul>
   </li>
 </ol>
 </p>
@@ -1002,6 +1008,12 @@ Thank you to Corentin Jabot for the excellent work he did experimenting with
 and analyzing implementation impact.  Without his work, the data necessary to
 respond to the implementation concerns raised in Belfast would not have been
 available at this time, thereby delaying further progress on this proposal.
+</p>
+
+<p>
+Thank you to Peter Bindels and Corentin Jabot for providing feedback on an
+initial draft that I delivered to then less than two hours before the Prague
+pre-meeting mailing deadline!
 </p>
 
 
@@ -1315,9 +1327,8 @@ A
 <a href="http://eel.is/c++draft/lex.ccon#nt:named-escape-sequence"><em>named-escape-sequence</em></a>
 is translated to the encoding, in the appropriate execution character set, of
 the character or character sequence associated with the ISO/IEC 10646
-<tt>associated character name</tt>,
-<tt>character name alias</tt>, or
-<tt>named UCS sequence identifier (NUSI)</tt>
+<tt>associated character name</tt> or
+<tt>character name alias</tt>
 that matches the name specified by the
 <a href="http://eel.is/c++draft/lex.ccon#nt:n-char-sequence"><em>n-char-sequence</em></a>.
 Matching of names is performed by:
@@ -1339,15 +1350,10 @@ If no name is matched, then the program is ill-formed.  If the matched name is
 <tt>HANGUL JUNGSEONG OE</tt>, then steps 2 and 3 are performed against the name
 <tt>HANGUL JUNGSEONG O-E</tt> and, if the names match, U+1180
 {HANGUL JUNGSEONG O-E} is encoded, otherwise U+116C {HANGUL JUNGSEONG OE} is
-encoded.  Otherwise, the character or character sequence associated with the
-matched name is encoded.  [ <em>Note:</em> The special handling of U+1180
+encoded.  Otherwise, the character associated with the matched name is encoded.
+[ <em>Note:</em> The special handling of U+1180
 {HANGUL JUNGSEONG O-E} resolves an ambiguity in the matching algorithm; this
-is the only case of ambiguity. &mdash; <em>end note</em> ]  A
-<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
-containing a
-<a href="http://eel.is/c++draft/lex.ccon#nt:named-escape-sequence"><em>named-escape-sequence</em></a>
-matching a named UCS sequence identifier that has an associated character
-sequence with more than one character is ill-formed.
+is the only case of ambiguity. &mdash; <em>end note</em> ]
 </blockquote>
 </p>
 
