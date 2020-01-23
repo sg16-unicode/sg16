@@ -237,6 +237,9 @@ encoding of the source file to the execution character set.
           a misreading of [lex.phases].</li>
       <li>[lex.ccon]p7: Removed the note about UTF encodings being able to
           represent all simple-escape-sequences using a single code unit.</li>
+      <li>[lex.ccon]p7: Moved the contents of footnote 19 (explaining why
+          <tt>\?</tt> is recognized as a simple escape sequence) into a
+          note.</li>
     </ul>
   </li>
 </ul>
@@ -258,7 +261,6 @@ encoding of the source file to the execution character set.
   <li>Make the implementation-defined wide character weird cases conditionally supported (matches Clang behavior).</li>
   <li>"A character literal whose encoding prefix is X"</li>
   <li>Combine p2-p6 into one paragraph with a table [lex.ccon.XXX] showing the type and associated encoding.  Include "such as" examples.</li>
-  <li>[lex.ccon]p7: Move footnote 19 into a note.</li>
   <li>[lex.ccon]p7: Move the new implementation defined escape sequence paragraph after this paragraph into p7.</li>
   <li>[lex.ccon]: Introduce a new term for extended simple-escape-sequences.</li>
   <li>[lex.ccon]p8: Combine first two bullets.  Get rid of the bullets.  "The literal is ill-formed if UTF... otherwise ...</li>
@@ -811,7 +813,10 @@ escape sequences has been moved to a new paragraph.
 <ins>The character specified by a
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
 is specified in table
-<a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.</ins>
+<a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.
+[ <em>Note:</em> Using an escape sequence for a question mark is supported for
+compatibility with ISO C++ 2014 and ISO C.  &mdash; <em>end note</em> ]
+</ins>
 <del>Certain non-graphic characters, the single quote <tt>'</tt>, the double quote
 <tt>"</tt>, the question mark
 <tt>?</tt>,<sup><a href="http://eel.is/c++draft/lex.ccon#footnote-19">19</a></sup>
@@ -847,14 +852,25 @@ sequence specifies a single character.
 <tr><td>form feed</td>      <td>FF</td>    <td><tt>\f</tt></td></tr>
 <tr><td>alert</td>          <td>BEL</td>   <td><tt>\a</tt></td></tr>
 <tr><td>backslash</td>      <td>\</td>     <td><tt>\\</tt></td></tr>
-<tr><td>question mark
-        <ins><sup><a href="http://eel.is/c++draft/lex.ccon#footnote-19">19</a></sup></ins></td>  <td>?</td>     <td><tt>\?</tt></td></tr>
+<tr><td>question mark</td>  <td>?</td>     <td><tt>\?</tt></td></tr>
 <tr><td>single quote</td>   <td>'</td>     <td><tt>\'</tt></td></tr>
 <tr><td>double quote</td>   <td>"</td>     <td><tt>\"</tt></td></tr>
 <tr><td><del>octal number</del></td>   <td><del>ooo</del></td>   <td><tt><del>\ooo</del></tt></td></tr>
 <tr><td><del>hex number</del></td>     <td><del>hhh</del></td>   <td><tt><del>\xhhh</del></tt></td></tr>
 </table>
 </div>
+</blockquote>
+</p>
+
+<p>Delete
+<a href="http://eel.is/c++draft/lex.ccon#footnote-19">footnote 19</a>
+referenced from
+<a href="http://eel.is/c++draft/lex.ccon#7">
+5.13.3 [lex.ccon] paragraph 7</a>:<br/>
+<em>Drafting Note:</em> The footnote text was moved into a note in
+<a href="http://eel.is/c++draft/lex.ccon#7">[lex.ccon] paragraph 7</a>.
+<blockquote class="stddel">
+19) Using an escape sequence for a question mark is supported for compatibility with ISO C++ 2014 and ISO C.
 </blockquote>
 </p>
 
