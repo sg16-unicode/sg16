@@ -243,6 +243,10 @@ encoding of the source file to the execution character set.
           grammar productionsto address previously missing grammar support
           for conditionally-supported implementation-defined escape
           sequences.</li>
+      <li>[lex.ccon]p1: Restored original wording and added a drafting note
+          that this paragraph will be editorially deleted and all occurrences
+          of "string literal" replaced with references to the
+          <tt><em>string-literal</em></tt> grammar production.</li>
       <li>[lex.ccon]p7: Integrated wording for conditionally-supported
           implementation-defined escape sequences into this paragraph;
           this content was previously in a new paragraph.</li>
@@ -265,7 +269,6 @@ encoding of the source file to the execution character set.
 <ul>
   <li>Fix italics; only present for initial definition.</li>
   <li>[lex.phases]p5: Move footnote 8 content into a note in [lex.ccon].</li>
-  <li>[lex.ccon]p1: Revert all changes (this paragraph will be editorially deleted and uses of "character literal" will be replaced.</li>
   <li>[lex.ccon]p2: Remove "such as 'x'"</li>
   <li>[lex.ccon]p3: Remove "such as 'x'"</li>
   <li>[lex.ccon]p4: Remove "such as 'x'"</li>
@@ -637,19 +640,19 @@ any member of the basic source character set that is not in
 </blockquote>
 </p>
 
-<p>Change in
+<p><em>No</em> changes to
 <a href="http://eel.is/c++draft/lex.ccon#1">
-5.13.3 [lex.ccon] paragraph 1</a>:
-<blockquote>
-A <del>character literal</del><ins><em>character literal</em></ins> is
-<del>one or more characters</del><ins>a
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a></ins>
-enclosed in single quotes, as in
-<del><tt>'x'</tt></del><ins><tt>'v'</tt></ins>, optionally preceded by
-<del><tt>u8</tt>, <tt>u</tt>, <tt>U</tt>, or <tt>L</tt></del><ins>an
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a></ins>,
-as in <tt>u8'w'</tt>, <tt>u'x'</tt>, <tt>U'y'</tt>, or <tt>L'z'</tt><del>,
-respectively</del>.
+5.13.3 [lex.ccon] paragraph 1</a>:<br/>
+<em>Drafting Note:</em> Per discussion in the
+<a href="http://wiki.edg.com/bin/view/Wg21prague/IssuesProcessingTeleconference2020-01-16">January 16th, 2020 core issues processing teleconference</a>,
+this paragraph will be editorially deleted and all occurrences of
+"string literal" will be replaced with references to the
+<tt><em>string-literal</em></tt> grammar production.
+<blockquote class="stdnop">
+A character literal is one or more characters enclosed in single quotes, as in
+<tt>'x'</tt>, optionally preceded by
+<tt>u8</tt>, <tt>u</tt>, <tt>U</tt>, or <tt>L</tt></del>,
+as in <tt>u8'w'</tt>, <tt>u'x'</tt>, <tt>U'y'</tt>, or <tt>L'z'</tt>, respectively.
 </blockquote>
 </p>
 
