@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-01-22</td>
+    <td>2020-01-23</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -231,6 +231,8 @@ encoding of the source file to the execution character set.
   <li>Addressed core wording review provided at the
       <a href="http://wiki.edg.com/bin/view/Wg21prague/IssuesProcessingTeleconference2020-01-16">January 16th, 2020 core issues processing teleconference</a>.
     <ul>
+      <li>[lex.phases]p5: Reworded and made portions of the wording
+          a non-normative note.</li>
       <li>[lex.ccon]: Added new
           <tt>character-escape-sequence</tt> and
           <tt>simple-escape-sequence-char</tt>
@@ -261,8 +263,8 @@ encoding of the source file to the execution character set.
 <p>
 <span style="background-color:red">TODO:</span>
 <ul>
-  <li>[lex.phases]p5: Move "as specified"to the end of the first sentence, keep deletions as is, make the last sentence a note.</li>
   <li>Fix italics; only present for initial definition.</li>
+  <li>[lex.phases]p5: Move footnote 8 content into a note in [lex.ccon].</li>
   <li>[lex.ccon]p1: Revert all changes (this paragraph will be editorially deleted and uses of "character literal" will be replaced.</li>
   <li>[lex.ccon]p2: Remove "such as 'x'"</li>
   <li>[lex.ccon]p3: Remove "such as 'x'"</li>
@@ -439,16 +441,21 @@ in a character literal or a string literal, as well as each
 and
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 in a character literal or a non-raw string literal, is converted to the
-<del>corresponding member of the execution character set</del><ins>literal's associated character encoding</ins>
+<del>corresponding member of the execution character set
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>,
-<a href="http://eel.is/c++draft/lex.string">[lex.string]</a>)<del>;</del><ins>.</ins>
-<del>if there is no corresponding member, it is converted to an implementation
-defined member other than the null (wide) character</del><ins>If a character
-lacks representation in the associated character encoding, then the character is
-converted to an implementation-defined character or the literal is ill-formed as
-specified in
+<a href="http://eel.is/c++draft/lex.string">[lex.string]</a>);
+</del><ins>literal's
+associated character encoding as specified in
 <a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a> and
-<a href="http://eel.is/c++draft/lex.string">[lex.string]</a></ins>.
+<a href="http://eel.is/c++draft/lex.string">[lex.string]</a>.</ins>
+<del>if there is no corresponding member, it is converted to an implementation
+defined member other than the null (wide) character</del>
+<ins>[ <em>Note:</em> If a character lacks representation in the associated
+character encoding, then the character is converted to an
+implementation-defined character or the literal is ill-formed
+(<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>,
+<a href="http://eel.is/c++draft/lex.string">[lex.string]</a>)
+&mdash; <em>end note</em> ]</ins>.
 <sup><a href="http://eel.is/c++draft/lex.phases#footnote-8">8</a></sup>
 </blockquote>
 </p>
