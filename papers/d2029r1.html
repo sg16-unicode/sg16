@@ -231,6 +231,19 @@ encoding of the source file to the execution character set.
   <li>Addressed core wording review provided at the
       <a href="http://wiki.edg.com/bin/view/Wg21prague/IssuesProcessingTeleconference2020-01-16">January 16th, 2020 core issues processing teleconference</a>.
     <ul>
+      <li>[lex.ccon]: Added new
+          <tt>character-escape-sequence</tt> and
+          <tt>simple-escape-sequence-char</tt>
+          grammar productions to simplify wording.</li>
+      <li>[lex.ccon]: Added new
+          <tt>conditional-escape-sequence</tt> and
+          <tt>conditional-escape-sequence-char</tt>
+          grammar productionsto address previously missing grammar support
+          for conditionally-supported implementation-defined escape
+          sequences.</li>
+      <li>[lex.ccon]p7: Integrated wording for conditionally-supported
+          implementation-defined escape sequences into this paragraph;
+          this content was previously in a new paragraph.</li>
       <li>[lex.ccon]p7: Removed the incorrect note about NL, HT, VT, and FF
           potentially lacking representation in the execution character set
           and the execution wide-character set.  The note was added following
@@ -261,8 +274,6 @@ encoding of the source file to the execution character set.
   <li>Make the implementation-defined wide character weird cases conditionally supported (matches Clang behavior).</li>
   <li>"A character literal whose encoding prefix is X"</li>
   <li>Combine p2-p6 into one paragraph with a table [lex.ccon.XXX] showing the type and associated encoding.  Include "such as" examples.</li>
-  <li>[lex.ccon]p7: Move the new implementation defined escape sequence paragraph after this paragraph into p7.</li>
-  <li>[lex.ccon]: Introduce a new term for extended simple-escape-sequences.</li>
   <li>[lex.ccon]p8: Combine first two bullets.  Get rid of the bullets.  "The literal is ill-formed if UTF... otherwise ...</li>
 </ul>
 </p>
@@ -302,11 +313,19 @@ kind of literal (ordinary, wide or Unicode).
 </p>
 
 <p>
-New <tt>basic-c-char</tt>, <tt>basic-s-char</tt>, and
-<tt>numeric-escape-sequence</tt> grammar productions are proposed in order
+New <tt>basic-c-char</tt>, <tt>basic-s-char</tt>,
+<tt>character-escape-sequence</tt>, <tt>numeric-escape-sequence</tt>, and
+<tt>simple-escape-sequence-char</tt> grammar productions are proposed in order
 to simplify wording.  The <tt>c-char</tt>, <tt>s-char</tt>, and
 <tt>escape-sequence</tt> grammar productions are updated to define them in
 terms of the new grammar productions.
+</p>
+
+<p>
+new <tt>conditional-escape-sequence</tt> and
+<tt>conditional-escape-sequence-char</tt> grammar production are proposed to
+address previously missing grammar support for conditionally-supported
+implementation-defined escape sequences.
 </p>
 
 <p>
@@ -315,12 +334,10 @@ Additionally, the wording updates are intended to:
   <li>Specify behavior for non-ordinary character and string literals when a
       character lacks representation in the applicable character encoding.
       (Wording was previously missing)</li>
-  <li>Specify behavior for simple-escape-sequences that denote characters that
-      lack representation in the applicable character encoding.
-      (Wording was previously missing)</li>
-  <li>Remove wording that states that <tt>wchar_t</tt> is able to represent all
-      members of the execution wide-character set as this contradicts wide
-      spread existing practice (SG16 has an issue tracking this at
+  <li>Remove non-normative wording that states that <tt>wchar_t</tt> is able to
+      represent all members of the execution wide-character set as this
+      contradicts wide spread existing practice (SG16 has an issue tracking
+      this at
       <a href="https://github.com/sg16-unicode/sg16/issues/9">https://github.com/sg16-unicode/sg16/issues/9</a>).
   <li>Modernize the wording with current style preferences and terminology.</li>
 </ul>
@@ -410,7 +427,7 @@ merge conflict resolution will be required.
 <a href="http://eel.is/c++draft/lex.phases#1.5">
 5.2 [lex.phases] paragraph 5</a>:<br/>
 <em>Drafting Note:</em> The change of "escape sequence" to
-"<tt>simple-escape-sequence</tt>" addresses
+"<tt>character-escape-sequence</tt>" addresses
 <a href="http://wg21.link/cwg1656">CWG 1656</a>.
 <blockquote>
 Each <del>basic source character set member</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
@@ -418,7 +435,7 @@ Each <del>basic source character set member</del><ins><a href="http://eel.is/c++
 <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>
 </ins>
 in a character literal or a string literal, as well as each
-<del>escape sequence</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a></ins>
+<del>escape sequence</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a></ins>
 and
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 in a character literal or a non-raw string literal, is converted to the
@@ -518,27 +535,68 @@ character
 </div>
 <br/></ins>
 <a href="http://eel.is/c++draft/lex.ccon#nt:escape-sequence">escape-sequence:</a>
-<div style="margin-left: 1em;">
+<del><div style="margin-left: 1em;">
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>
 </div>
-<del><div style="margin-left: 1em;">
+<div style="margin-left: 1em;">
 <a href="http://eel.is/c++draft/lex.ccon#nt:octal-escape-sequence">octal-escape-sequence</a>
 </div></del>
 <del><div style="margin-left: 1em;">
 <a href="http://eel.is/c++draft/lex.ccon#nt:hexadecimal-escape-sequence">hexadecimal-escape-sequence</a>
 </div></del>
 <div style="margin-left: 1em;">
-<ins>numeric-escape-sequence</ins>
+<ins><a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence">character-escape-sequence</a></ins>
 </div>
-<br/>
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence:</a> one of
 <div style="margin-left: 1em;">
-<tt>\'</tt>&ensp; <tt>\"</tt>&ensp; <tt>\?</tt>&ensp; <tt>\\</tt><br/>
-<tt>\a</tt>&ensp; <tt>\b</tt>&ensp; <tt>\f</tt>&ensp; <tt>\n</tt>&ensp; <tt>\r</tt>&ensp; <tt>\t</tt>&ensp; <tt>\v</tt>&ensp;
+<ins><a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence">numeric-escape-sequence</a></ins>
 </div>
 <br/>
 <ins>
-numeric-escape-sequence:
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence">character-escape-sequence</a>:
+<div style="margin-left: 1em;">
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>
+</div>
+<div style="margin-left: 1em;">
+<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence">conditional-escape-sequence</a>
+</div>
+<br/>
+</ins>
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence:</a><del> one of</del>
+<div style="margin-left: 1em;">
+<del>
+<tt>\'</tt>&ensp; <tt>\"</tt>&ensp; <tt>\?</tt>&ensp; <tt>\\</tt><br/>
+<tt>\a</tt>&ensp; <tt>\b</tt>&ensp; <tt>\f</tt>&ensp; <tt>\n</tt>&ensp; <tt>\r</tt>&ensp; <tt>\t</tt>&ensp; <tt>\v</tt>&ensp;<br/>
+</del>
+<ins>
+<tt>\</tt> <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>
+</ins>
+</div>
+<ins><br/></ins>
+<ins>
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>: one of
+<div style="margin-left: 1em;">
+<tt>'</tt>&nbsp; <tt>"</tt>&nbsp; <tt>?</tt>&nbsp; <tt>\</tt><br/>
+<tt>a</tt>&nbsp; <tt>b</tt>&nbsp; <tt>f</tt>&nbsp; <tt>n</tt>&nbsp; <tt>r</tt>&nbsp; <tt>t</tt>&nbsp; <tt>v</tt>
+</div>
+<br/>
+</ins>
+<ins>
+<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence">conditional-escape-sequence</a>:
+<div style="margin-left: 1em;">
+<tt>\</tt> <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence-char">conditional-escape-sequence-char</a>
+</div>
+<br/>
+</ins>
+<ins>
+<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence-char">conditional-escape-sequence-char</a>:
+<div style="margin-left: 1em;">
+any member of the basic source character set that is not in
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>
+</div>
+</ins>
+<br/>
+<ins>
+<a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence">numeric-escape-sequence</a>:
 <div style="margin-left: 1em;">
 <a href="http://eel.is/c++draft/lex.ccon#nt:octal-escape-sequence">octal-escape-sequence</a>
 </div>
@@ -755,7 +813,7 @@ ill-formed.
 <blockquote class="stdins">
 The value of a character literal consisting of a single
 <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>,
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>,
 or
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 is the code point value of the specified character encoded according to the
@@ -807,8 +865,10 @@ character encoding, then:
 <p>Change in
 <a href="http://eel.is/c++draft/lex.ccon#7">
 5.13.3 [lex.ccon] paragraph 7</a>:<br/>
-<em>Drafting Note:</em> Wording for additional conditionally-supported simple
-escape sequences has been moved to a new paragraph.
+<em>Drafting Note:</em> The added note is content moved from
+<a href="http://eel.is/c++draft/lex.ccon#footnote-19">footnote 19</a>.
+The deleted text has been removed as redundant since it repeats information
+implicit in the grammar.
 <blockquote>
 <ins>The character specified by a
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
@@ -816,7 +876,9 @@ is specified in table
 <a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.
 [ <em>Note:</em> Using an escape sequence for a question mark is supported for
 compatibility with ISO C++ 2014 and ISO C.  &mdash; <em>end note</em> ]
-</ins>
+<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>s
+are conditionally-supported and specify an implementation-defined
+character.</ins>
 <del>Certain non-graphic characters, the single quote <tt>'</tt>, the double quote
 <tt>"</tt>, the question mark
 <tt>?</tt>,<sup><a href="http://eel.is/c++draft/lex.ccon#footnote-19">19</a></sup>
@@ -874,17 +936,6 @@ referenced from
 </blockquote>
 </p>
 
-<p>Add a new paragraph after
-<a href="http://eel.is/c++draft/lex.ccon#7">
-5.13.3 [lex.ccon] paragraph 7</a>:
-<blockquote class="stdins">
-Additional simple escape sequences in which the character following the
-backslash is not listed in Table
-<a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>
-are conditionally-supported, with implementation-defined semantics.
-</blockquote>
-</p>
-
 <p>Change in
 <a href="http://eel.is/c++draft/lex.ccon#8">
 5.13.3 [lex.ccon] paragraph 8</a>:<br/>
@@ -936,7 +987,7 @@ of the character literal type, then:
 <a href="http://eel.is/c++draft/lex.ccon#9">
 5.13.3 [lex.ccon] paragraph 9</a>:<br/>
 <em>Drafting Note:</em> The normative text was combined with wording for
-<tt>basic-c-char</tt> and <tt>simple-escape-sequence</tt> above.  The deleted
+<tt>basic-c-char</tt> and <tt>character-escape-sequence</tt> above.  The deleted
 note duplicates normative text in
 <a href="http://eel.is/c++draft/lex.phases#1.1">
 5.2 [lex.phases] paragraph 1</a>.
@@ -1523,7 +1574,7 @@ corresponding to the sequence of
 The characters denoted by each
 <a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>,
 <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>,
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>), and
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
 (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
