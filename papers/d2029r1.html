@@ -794,8 +794,8 @@ character encoding, then:
   <tr>
     <td>(X.6) &mdash;</td>
     <td>for a UTF-8 or UTF-16 character literal, the literal is
-        ill-formed.  <em>[ Note:</em> UTF-32 never requires multiple code units
-        for an encoded character. <em>&mdash; end note ]</em>
+        ill-formed.  [ <em>Note:</em> UTF-32 never requires multiple code units
+        for an encoded character. &mdash; <em>end note</em> ]
 </td>
   </tr>
 </table>
@@ -890,10 +890,10 @@ respectively.
 <del>  The value of a character literal is implementation-defined if it
 falls outside of the implementation-defined range defined for <tt>char</tt>
 (for character literals with no prefix) or <tt>wchar_t</tt> (for character
-literals prefixed by <tt>L</tt>).  <em>[ Note:</em> If the value of
+literals prefixed by <tt>L</tt>).  [ <em>Note:</em> If the value of
 a character literal prefixed by <tt>u</tt>, <tt>u8</tt>, or <tt>U</tt> is
 outside the range defined for its type, the program is ill-formed.
-<em>&mdash; end note ]</em></del><ins>If the numeric value exceeds the range
+&mdash; <em>end note</em> ]</del><ins>If the numeric value exceeds the range
 of the character literal type, then:
 <table>
   <tr>
