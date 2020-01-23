@@ -227,6 +227,22 @@ encoding of the source file to the execution character set.
 <h1>Changes from <a href="https://wg21.link/p2029r0">P2029R0</a></h1>
 
 <p>
+<ul>
+  <li>Addressed core wording review provided at the
+      <a href="http://wiki.edg.com/bin/view/Wg21prague/IssuesProcessingTeleconference2020-01-16">January 16th, 2020 core issues processing teleconference</a>.
+    <ul>
+      <li>[lex.ccon]p7: Removed the incorrect note about NL, HT, VT, and FF
+          potentially lacking representation in the execution character set
+          and the execution wide-character set.  The note was added following
+          a misreading of [lex.phases].</li>
+      <li>[lex.ccon]p7: Removed the note about UTF encodings being able to
+          represent all simple-escape-sequences using a single code unit.</li>
+    </ul>
+  </li>
+</ul>
+</p>
+
+<p>
 <span style="background-color:red">TODO:</span>
 <ul>
   <li>[lex.phases]p5: Move "as specified"to the end of the first sentence, keep deletions as is, make the last sentence a note.</li>
@@ -795,19 +811,7 @@ escape sequences has been moved to a new paragraph.
 <ins>The character specified by a
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
 is specified in table
-<a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.
-<em>[ Note:</em> The execution character set and the execution wide-character
-set do not require representation for the
-<tt>new-line (NL)</tt>,
-<tt>horizontal tab (HT)</tt>,
-<tt>vertical tab (VT)</tt>, or
-<tt>form feed (FF)</tt> characters
-(<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>); the UTF-8,
-UTF-16, and UTF-32 encodings are able to represent all of the
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
-characters using a single code unit.
-<em>&mdash; end note ]</em>
-</ins>
+<a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.</ins>
 <del>Certain non-graphic characters, the single quote <tt>'</tt>, the double quote
 <tt>"</tt>, the question mark
 <tt>?</tt>,<sup><a href="http://eel.is/c++draft/lex.ccon#footnote-19">19</a></sup>
