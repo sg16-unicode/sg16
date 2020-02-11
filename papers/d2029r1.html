@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-02-10</td>
+    <td>2020-02-12</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -99,6 +99,25 @@ blockquote.stdnop
 Proposed resolution for core issues 411, 1656, and 2333; numeric and universal
 character escapes in character and string literals
 </h1>
+
+
+<ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#changes">Changes from P2029R0</a></li>
+  <li><a href="#proposed">Proposed resolution overview</a></li>
+  <li>
+    <a href="#impact">Implementation impact</>
+    <ul>
+      <li><a href="#impact-escapes">Semantics of numeric-escape-sequences in UTF-8 literals</a></li>
+      <li><a href="#impact-badchar">Character literal type for characters not representable in the execution character set</a></li>
+    </ul>
+  </li>
+  <li><a href="#ack">Acknowledgements</a></li>
+  <li><a href="#pr">Proposed resolution</a></li>
+</ul>
+
+
+<h1 id="introduction">Introduction</h1>
 
 <p>
 This paper proposes substantial changes to
@@ -224,7 +243,7 @@ encoding of the source file to the execution character set.
 </p>
 
 
-<h1>Changes from <a href="https://wg21.link/p2029r0">P2029R0</a></h1>
+<h1 id="changes">Changes from <a href="https://wg21.link/p2029r0">P2029R0</a></h1>
 
 <p>
 <ul>
@@ -274,11 +293,14 @@ encoding of the source file to the execution character set.
           note.</li>
     </ul>
   </li>
+  <li>Updated the implementation impact section to note Visual C++'s current
+      handling of character literals for characters that lack representation
+      in the execution character set.</li>
 </ul>
 </p>
 
 
-<h1>Proposed resolution overview</h1>
+<h1 id="proposed">Proposed resolution overview</h1>
 
 <p>
 The proposed wording changes are intended to resolve
@@ -367,16 +389,18 @@ execution (wide-)character set or cannot be encoded in a single code unit.
 </p>
 
 
-<h1>Implementation impact</h1>
+<h1 id="impact">Implementation impact</h1>
 
 <p>
 The author intends the proposed wording to reflect existing practice for the
 gcc and Clang compilers.  If this proposal is adopted, neither of those
 compilers are expected to require updates.
+However, there is implementation impact to the Microsoft Visual C++ compiler.
 </p>
 
+<h2 id="impact-escapes">Semantics of numeric-escape-sequences in UTF-8 literals</h2>
+
 <p>
-However, there is implementation impact to the Microsoft Visual C++ compiler.
 Consider the following (C++20) code:
 <div style="margin-left: 1em;">
 <pre><code>constexpr const char8_t c[] = u8"\xc3\x80"; // UTF-8 encoding of U+00C0 {LATIN CAPITAL LETTER A WITH GRAVE}
@@ -412,15 +436,64 @@ rejected rather than being considered a code point value and encoded as a UTF-16
 surrogate pair.
 </p>
 
+<h2 id="impact-badchar">Character literal type for characters not representable in the execution character set</h2>
 
-<h1>Acknowledgements</h1>
+<p>
+Consider the following code assuming that the execution character set does not
+have representation for the specified Unicode code points.
+<div style="margin-left: 1em;">
+<pre><code>auto c1 = '\uFF10';
+extern char c1;
+#ifdef _MSC_VER
+static_assert('\uFF10' == '?');
+#endif
+auto c2 = '\U0001F235';
+extern int c2;
+#ifdef _MSC_VER
+static_assert('\U0001F235' == '??');
+#endif
+</code></pre>
+</div>
+This code should be rejected (both before and after this proposal) because the
+redeclaration of <tt>c1</tt> with type <tt>char</tt> does not match the first
+declaration for which <tt>c1</tt> should have a deduced type of <tt>int</tt>.
+Visual C++ accepts it when compiled with <tt>/execution-charset:windows-1252</tt>
+with the following warnings:
+<div style="margin-left: 1em;">
+<pre><code>&lt;source&gt;(1): warning C4566: character represented by universal-character-name '\uFF10' cannot be represented in the current code page (1252)
+&lt;source&gt;(4): warning C4566: character represented by universal-character-name '\uFF10' cannot be represented in the current code page (1252)
+&lt;source&gt;(6): warning C4566: character represented by universal-character-name '\U0001F235' cannot be represented in the current code page (1252)
+&lt;source&gt;(9): warning C4566: character represented by universal-character-name '\U0001F235' cannot be represented in the current code page (1252)
+</code></pre>
+</div>
+It seems that the Visual C++ compiler translates unrepresentable characters
+from the Unicode BMP to a single <tt>char</tt> with value equal to
+<tt>'?'</tt>, but translates unrepresentable characters from outside the
+Unicode BMP to <tt>int</tt> with value equal to the multicharacter literal
+<tt>'??'</tt>.  This seems unlikely to be intended behavior.  It would be
+conforming if, for the Unicode BMP case, an <tt>int</tt> with value equal
+to <tt>'?'</tt> was produced.
+</p>
+
+<p>
+Gcc and Clang both reject the above code regardless of whether those Unicode
+characters have representation in the execution character set.  If they are
+representable, then the code is rejected (as permitted) because the characters
+cannot be encoded in a single code unit.  If they are not representable (which
+only happens for gcc since Clang always targets UTF-8), then the code is
+rejected because the redeclaration of <tt>c1</tt> as <tt>char</tt> does not
+match the deduced <tt>int</tt> type for its first declaration.
+</p>
+
+
+<h1 id="ack">Acknowledgements</h1>
 
 <p>Thank you to Jens Maurer and Steve Downey for providing feedback on initial
 drafts of this paper!
 </p>
 
 
-<h1>Proposed resolution</h1>
+<h1 id="pr">Proposed resolution</h1>
 
 <p>These changes are relative to
 <a title="Working Draft, Standard for Programming Language C++"
