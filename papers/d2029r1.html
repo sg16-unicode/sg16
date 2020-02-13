@@ -298,6 +298,11 @@ encoding of the source file to the execution character set.
       <li>[lex.ccon]p7: Moved the contents of footnote 19 (explaining why
           <tt>\?</tt> is recognized as a simple escape sequence) into a
           note.</li>
+      <li>[lex.string]: Modified ordinary and wide string literals that specify
+          characters that are not representable in the applicable character
+          encoding to be conditionally supported.</li>
+      <li>[lex.string]p6,7,9-11: Replaced these paragraphs with a table that
+          defines the kinds of string literals and their properties.</li>
     </ul>
   </li>
   <li>Updated the implementation impact section to note Visual C++'s current
@@ -342,6 +347,9 @@ Additionally, the wording updates are intended to:
       (Wording was previously missing)</li>
   <li>Specify that wide multicharacter literals are conditionally
       supported.</li>
+  <li>Specify that ordinary and wide string literals that specify characters
+      that are not representable in the applicable character encoding are
+      conditionally supported.</li>
   <li>Specify that wide character literals that have a <tt>c-char-sequence</tt>
       that specifies a character that is not representable in the execution
       wide-character set or that cannot be encoded in a single code unit are
@@ -1386,7 +1394,7 @@ and their properties.
   <td>array of <em>n</em> <tt>const char8_t</tt></td>
   <td>UTF-8</td>
   <td>
-    <tt>u8""</tt>
+    <tt>u8""</tt><br/>
     <tt>u8"a UTF-8 string"</tt><br/>
     <tt>u8R"x(a UTF-8 raw string)x"</tt>
   </td>
@@ -1397,7 +1405,7 @@ and their properties.
   <td>array of <em>n</em> <tt>const char16_t</tt></td>
   <td>UTF-16</td>
   <td>
-    <tt>u""</tt>
+    <tt>u""</tt><br/>
     <tt>u"a UTF-16 string"</tt><br/>
     <tt>uR"y(a UTF-16 raw string)y"</tt>
   </td>
@@ -1408,7 +1416,7 @@ and their properties.
   <td>array of <em>n</em> <tt>const char32_t</tt></td>
   <td>UTF-32</td>
   <td>
-    <tt>U""</tt>
+    <tt>U""</tt><br/>
     <tt>U"A UTF-32 string"</tt><br/>
     <tt>UR"z(a UTF-32 raw string)z"</tt>
   </td>
@@ -1795,67 +1803,57 @@ effect of attempting to modify a string literal is undefined.
 <a href="http://eel.is/c++draft/lex.string#15">
 5.13.5 [lex.string] paragraph 15</a>:
 <blockquote class="stdins">
-String literal objects are initialized with a sequence of code unit values
-corresponding to the sequence of
+String literal objects are initialized with the sequence of code unit values
+corresponding to the
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
+sequence of
 <a href="http://eel.is/c++draft/lex.string#nt:s-char"><em>s-char</em></a>s
 (for a non-raw string literal) and
 <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>s
-(for a raw string literal) in the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
-after
+(for a raw string literal) after
 <a href="http://eel.is/c++draft/lex.phases#1.7">translation phase 7</a>
-(<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>).
-The characters denoted by each
-<a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>,
-<a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>,
-<a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>
-(<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>), and
-<a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
-(<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
-are encoded to a code unit sequence using the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
-associated character encoding.  If a character lacks representation in the
-associated character encoding, then:
+(<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>) as follows.
 <table>
   <tr>
     <td>(X.1) &mdash;</td>
-    <td>for an ordinary string literal, an implementation-defined character
-        other than the null character is substituted.</td>
+    <td>
+      The characters denoted by each
+      <a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>,
+      <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>,
+      <a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>
+      (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>), and
+      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
+      (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
+      are encoded to a code unit sequence using the
+      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
+      associated character encoding.  If a character lacks representation in the
+      associated character encoding, then, for an
+      <em>ordinary string literal</em> or a <em>wide string literal</em>, the
+      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
+      is conditionally-supported and an implementation defined code unit
+      sequence is encoded; otherwise, the
+      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
+      is ill-formed.
+    </td>
   </tr>
   <tr>
     <td>(X.2) &mdash;</td>
-    <td>for a wide string literal, an implementation-defined character
-        other than the null wide character is substituted.</td>
-  </tr>
-  <tr>
-    <td>(X.3) &mdash;</td>
-    <td>for a UTF-8, UTF-16, or UTF-32 string literal, the literal is
-        ill-formed.</td>
-  </tr>
-</table>
-Each
-<a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
-(<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
-contributes a single code unit value with the numeric value of the octal or
-hexadecimal number.  There is no limit to the number of digits in a hexadecimal
-sequence.  A sequence of octal or hexadecimal digits is terminated by the first
-character that is not an octal digit or a hexadecimal digit, respectively. If
-the numeric value exceeds the range of the code unit type, then:
-<table>
-  <tr>
-    <td>(X.4) &mdash;</td>
-    <td>for an ordinary string literal, an implementation-defined value is
-        substituted.</td>
-  </tr>
-  <tr>
-    <td>(X.5) &mdash;</td>
-    <td>for a wide string literal, an implementation-defined value is
-        substituted.</td>
-  </tr>
-  <tr>
-    <td>(X.6) &mdash;</td>
-    <td>for a UTF-8, UTF-16, or UTF-32 string literal, the literal is
-        ill-formed.</td>
+    <td>
+      Each
+      <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
+      (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
+      contributes a single code unit value with the numeric value of the octal or
+      hexadecimal number.  There is no limit to the number of digits in a hexadecimal
+      sequence.  A sequence of octal or hexadecimal digits is terminated by the first
+      character that is not an octal digit or a hexadecimal digit, respectively. If
+      the numeric value exceeds the range of the
+      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
+      code unit type, then, for an <em>ordinary string literal</em> or a
+      <em>wide string literal</em>, an implementation-defined code unit value
+      is encoded; otherwise, the
+      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
+      is ill-formed.
+    </td>
   </tr>
 </table>
 </blockquote>
