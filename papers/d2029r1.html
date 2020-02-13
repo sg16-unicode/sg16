@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-02-12</td>
+    <td>2020-02-13</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -1307,13 +1307,14 @@ representing horizontal tab, vertical tab, form feed, and newline.
 </blockquote>
 </p>
 
-<p>Change in
+
+<p>Delete
 <a href="http://eel.is/c++draft/lex.string#1">
 5.13.5 [lex.string] paragraph 1</a>:
-<blockquote>
+<blockquote class="stddel">
 A
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
-<del>is a sequence of characters (as defined in
+is a sequence of characters (as defined in
 <a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
 surrounded by double quotes, optionally prefixed by
 <tt>R</tt>,
@@ -1325,31 +1326,96 @@ surrounded by double quotes, optionally prefixed by
 <tt>R"(...)"</tt>, <tt>u8"..."</tt>,
 <tt>u8R"**(...)**"</tt>, <tt>u"..."</tt>,
 <tt>uR"*~(...)*~"</tt>, <tt>U"..."</tt>,
-<tt>UR"zzz(...)zzz"</tt>, <tt>L"..."</tt>, or <tt>LR"(...)"</tt>, respectively.</del><ins>is
-one of the following optionally preceded by an
-<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>:
-<table>
-  <tr>
-    <td>(1.1) &mdash;</td>
-    <td>an optional
-        <a href="http://eel.is/c++draft/lex.string#nt:s-char-sequence"><em>s-char-sequence</em></a>
-        enclosed in double quotes as in <tt>""</tt>, <tt>"abc"</tt>,
-        <tt>u8"def"</tt>, <tt>u"ghi"</tt>, <tt>U"jkl"</tt>, or <tt>L"mno"</tt>.
-    </td>
-  </tr>
-  <tr>
-    <td>(1.2) &mdash;</td>
-    <td>a
-        <a href="http://eel.is/c++draft/lex.string#nt:raw-string"><em>raw-string</em></a>
-        preceded by <tt>R</tt> as in <tt>R"()"</tt>, <tt>R"(ABC)"</tt>,
-        <tt>u8R"**(DEF)**"</tt>, <tt>uR"*~(GHI)*~"</tt>,
-        <tt>UR"zzz(JKL)zzz"</tt>, or <tt>LR"(MNO)"</tt>.
-    </td>
-  </tr>
-</table>
-</ins>
+<tt>UR"zzz(...)zzz"</tt>, <tt>L"..."</tt>, or <tt>LR"(...)"</tt>, respectively.
 </blockquote>
 </p>
+
+<p>Add a new paragraph and table (X) after
+<a href="http://eel.is/c++draft/lex.string#1">
+5.13.5 [lex.string] paragraph 1</a>:
+<blockquote class="stdins">
+Table X specifies the kinds of
+<a href="http://eel.is/c++draft/lex.ccon#nt:string-literal"><em>string-literal</em></a>s
+and their properties.
+</blockquote>
+</p>
+
+<blockquote class="stdins">
+<div align="center">
+<table border="0">
+<tr>
+<td align="left">Table X: String literals
+<td/>
+<td align="right">[tab:lex.string.literals]</td>
+</tr>
+</table>
+<br/>
+<table border="1">
+<tr>
+  <th>Kind</th>
+  <th>Encoding<br/>prefix</th>
+  <th>Type</th>
+  <th>Associated<br/>character encoding</th>
+  <th>Examples</th>
+</tr>
+<tr>
+  <td><em>ordinary string literal</em></td>
+  <td>none</td>
+  <td>array of <em>n</em> <tt>const char</tt></td>
+  <td>encoding of the execution character set</td>
+  <td>
+    <tt>""</tt><br/>
+    <tt>"an ordinary string"</tt><br/>
+    <tt>R"(an ordinary raw string)"</tt>
+  </td>
+</tr>
+<tr>
+  <td><em>wide string literal</em></td>
+  <td><tt>L</tt></td>
+  <td>array of <em>n</em> <tt>const wchar_t</tt></td>
+  <td>encoding of the execution wide-character set</td>
+  <td>
+    <tt>L""</tt><br/>
+    <tt>L"a wide string"</tt><br/>
+    <tt>LR"w(a wide raw string)w"</tt>
+  </td>
+</tr>
+<tr>
+  <td><em>UTF-8 string literal</em></td>
+  <td><tt>u8</tt></td>
+  <td>array of <em>n</em> <tt>const char8_t</tt></td>
+  <td>UTF-8</td>
+  <td>
+    <tt>u8""</tt>
+    <tt>u8"a UTF-8 string"</tt><br/>
+    <tt>u8R"x(a UTF-8 raw string)x"</tt>
+  </td>
+</tr>
+<tr>
+  <td><em>UTF-16 string literal</em></td>
+  <td><tt>u</tt></td>
+  <td>array of <em>n</em> <tt>const char16_t</tt></td>
+  <td>UTF-16</td>
+  <td>
+    <tt>u""</tt>
+    <tt>u"a UTF-16 string"</tt><br/>
+    <tt>uR"y(a UTF-16 raw string)y"</tt>
+  </td>
+</tr>
+<tr>
+  <td><em>UTF-32 string literal</em></td>
+  <td><tt>U</tt></td>
+  <td>array of <em>n</em> <tt>const char32_t</tt></td>
+  <td>UTF-32</td>
+  <td>
+    <tt>U""</tt>
+    <tt>U"A UTF-32 string"</tt><br/>
+    <tt>UR"z(a UTF-32 raw string)z"</tt>
+  </td>
+</tr>
+</table>
+</div>
+</blockquote>
 
 <p><em>No</em> changes to
 <a href="http://eel.is/c++draft/lex.string#2">
@@ -1421,66 +1487,40 @@ is equivalent to <tt>"x = \"\\\"y\\\"\""</tt>.
 </blockquote>
 </p>
 
-<p>Add a new paragraph after
-<a href="http://eel.is/c++draft/lex.string#5">
-5.13.5 [lex.string] paragraph 5</a>:
-<blockquote class="stdins">
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>s
-have type "array of <em>n</em> <tt>const</tt> <em>CHAR_T</em>" where
-<em>CHAR_T</em> is the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
-associated code unit type, and
-<em>n</em>
-is the number of code units required to represent the contents of the string
-after
-<a href="http://eel.is/c++draft/lex.phases#1.7">translation phase 7</a>
-(<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>)
-in the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
-associated character encoding.
-</blockquote>
-</p>
-
-<p>Change in
+<p>Delete
 <a href="http://eel.is/c++draft/lex.string#6">
 5.13.5 [lex.string] paragraph 6</a>:<br/>
-<em>Drafting note:</em> The wording regarding translation phase 6 has been
-removed as inaccurate; string contents are not fully known until after phase 7.
-Wording regarding the translation phase dependency and the literal's type has
-been moved to the new paragraph above.  Wording for storage duration and
-string literal initialization has been moved to a new paragraph.
-<blockquote>
-<del>After translation phase 6, a</del><ins>A</ins>
+<em>Drafting Note:</em> The contents of paragraphs 6, 7, 9, 10, and 11 were
+incorporated into new paragraphs.
+The wording regarding translation phase 6 has been 1496 removed as inaccurate;
+string contents are not fully known until after phase 7.
+<blockquote class="stddel">
+After translation phase 6, a
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that does not begin with an
 <a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>
-is an <em>ordinary string literal</em><ins>, has type <tt>char</tt> as its
-associated code unit type, and has the encoding of the execution character set
-(<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
-as its associated character encoding</ins>.<del>  An ordinary string literal
+is an <em>ordinary string literal</em>.  An ordinary string literal
 has type "array of <em>n</em> const char" where <em>n</em> is the size of the
 string as defined below, has static storage duration
 (<a href="http://eel.is/c++draft/basic.stc">[basic.stc]</a>),
-and is initialized with the given characters.</del>
+and is initialized with the given characters.
 </blockquote>
 </p>
 
-<p>Change in
+<p>Delete
 <a href="http://eel.is/c++draft/lex.string#7">
 5.13.5 [lex.string] paragraph 7</a>:<br/>
-<em>Drafting note:</em> Wording regarding the literal's type and initialization
-has been moved to new paragraphs.
-<blockquote>
+<em>Drafting Note:</em> The contents of paragraphs 6, 7, 9, 10, and 11 were
+incorporated into new paragraphs.
+<blockquote class="stddel">
 A
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that begins with <tt>u8</tt>, such as <tt>u8"asdf"</tt>, is a
-<em>UTF-8 string literal</em><ins>, has type <tt>char8_t</tt> as its
-associated code unit type, and has UTF-8 as its associated character
-encoding</ins>.<del>  A UTF-8 string literal has type "array of
+<em>UTF-8 string literal</em>.  A UTF-8 string literal has type "array of
 <em>n</em> const char8_t", where <em>n</em> is the size of the string as
 defined below; each successive element of the object representation
 (<a href="http://eel.is/c++draft/basic.types">[basic.types]</a>) has the value
-of the corresponding code unit of the UTF-8 encoding of the string.</del>
+of the corresponding code unit of the UTF-8 encoding of the string.
 </blockquote>
 </p>
 
@@ -1492,19 +1532,18 @@ Ordinary string literals and UTF-8 string literals are also referred to as narro
 </blockquote>
 </p>
 
-<p>Change in
+<p>Delete
 <a href="http://eel.is/c++draft/lex.string#9">
 5.13.5 [lex.string] paragraph 9</a>:<br/>
-<em>Drafting note:</em> Wording regarding the literal's type and initialization
-has been moved to new paragraphs.  The note has been deleted as redundant; the
-use of surrogate pairs is explicit in the UTF-16 encoding.
-<blockquote>
+<em>Drafting Note:</em> The contents of paragraphs 6, 7, 9, 10, and 11 were
+incorporated into new paragraphs.
+The note has been deleted as redundant; the use of surrogate pairs is explicit
+in the UTF-16 encoding.
+<blockquote class="stddel">
 A
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that begins with <tt>u</tt>, such as <tt>u"asdf"</tt>, is a
-<em>UTF-16 string literal</em><ins>, has type <tt>char16_t</tt> as its
-associated code unit type, and has UTF-16 as its associated character
-encoding</ins>.<del>  A UTF-16 string literal has type "array of
+<em>UTF-16 string literal</em>.  A UTF-16 string literal has type "array of
 <em>n</em> const char16_t", where <em>n</em> is the size of the string as
 defined below; each successive element of the array has the value of the
 corresponding code unit of the UTF-16 encoding of the string.
@@ -1512,44 +1551,39 @@ corresponding code unit of the UTF-16 encoding of the string.
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 may produce more than one char16_t character in the form of surrogate pairs.
 A surrogate pair is a representation for a single code point as a sequence of
-two 16-bit code units.  &mdash; <em>end note</em> ]</del>
+two 16-bit code units.  &mdash; <em>end note</em> ]
 </blockquote>
 </p>
 
-<p>Change in
+<p>Delete
 <a href="http://eel.is/c++draft/lex.string#10">
 5.13.5 [lex.string] paragraph 10</a>:<br/>
-<em>Drafting note:</em> Wording regarding the literal's type and initialization
-has been moved to new paragraphs.
-<blockquote>
+<em>Drafting Note:</em> The contents of paragraphs 6, 7, 9, 10, and 11 were
+incorporated into new paragraphs.
+<blockquote class="stddel">
 A
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that begins with <tt>U</tt>, such as <tt>U"asdf"</tt>, is a
-<em>UTF-32 string literal</em><ins>, has type <tt>char32_t</tt> as its
-associated code unit type, and has UTF-32 as its associated character
-encoding</ins>.<del>  A UTF-32 string literal has type "array of
+<em>UTF-32 string literal</em>.  A UTF-32 string literal has type "array of
 <em>n</em> const char32_t", where <em>n</em> is the size of the string as
 defined below; each successive element of the array has the value of the
-corresponding code unit of the UTF-32 encoding of the string.</del>
+corresponding code unit of the UTF-32 encoding of the string.
 </blockquote>
 </p>
 
-<p>Change in
+<p>Delete
 <a href="http://eel.is/c++draft/lex.string#11">
 5.13.5 [lex.string] paragraph 11</a>:<br/>
 <em>Drafting note:</em> Wording regarding the literal's type and initialization
 has been moved to new paragraphs.
-<blockquote>
+<blockquote class="stddel">
 A
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
 that begins with <tt>L</tt>, such as <tt>L"asdf"</tt>, is a
-<em>wide string literal</em><ins>, has type <tt>wchar_t</tt> as its
-associated code unit type, and has the encoding of the execution wide-character
-set
-(<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
-as its associated character encoding</ins>.<del>  A wide string literal has
-type "array of <em>n</em> const wchar_t", where <em>n</em> is the size of the
-string as defined below; it is initialized with the given characters.</del>
+<em>wide string literal</em> as its associated character encoding.  A wide
+string literal has type "array of <em>n</em> const wchar_t", where <em>n</em>
+is the size of the string as defined below; it is initialized with the given
+characters.
 </blockquote>
 </p>
 
@@ -1767,7 +1801,10 @@ corresponding to the sequence of
 (for a non-raw string literal) and
 <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>s
 (for a raw string literal) in the
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>.
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
+after
+<a href="http://eel.is/c++draft/lex.phases#1.7">translation phase 7</a>
+(<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>).
 The characters denoted by each
 <a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>,
 <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>,
