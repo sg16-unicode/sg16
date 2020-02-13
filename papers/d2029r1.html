@@ -113,7 +113,14 @@ character escapes in character and string literals
     </ul>
   </li>
   <li><a href="#ack">Acknowledgements</a></li>
-  <li><a href="#pr">Proposed resolution</a></li>
+  <li>
+    <a href="#pr">Proposed resolution</a>
+    <ul>
+      <li><a href="#lex.phases">[lex.phases]</a></li>
+      <li><a href="#lex.ccon">[lex.ccon]</a></li>
+      <li><a href="#lex.string">[lex.string]</a></li>
+    </ul>
+  </li>
 </ul>
 
 
@@ -519,6 +526,8 @@ merge conflict resolution will be required.
 <input type="checkbox" id="hideins">Hide inserted text</input><br/>
 <input type="checkbox" id="hidedel">Hide deleted text</input>
 
+<h2 id="lex.phases">[lex.phases]</h2>
+
 <p>Change in
 <a href="http://eel.is/c++draft/lex.phases#1.5">
 5.2 [lex.phases] paragraph 5</a>:<br/>
@@ -583,6 +592,8 @@ external representation.  The description is conceptual only, and does not
 specify any particular implementation. &mdash; <em>end note</em> ]
 </blockquote>
 </p>
+
+<h2 id="lex.ccon">[lex.ccon]</h2>
 
 <p>Change in
 <a href="http://eel.is/c++draft/lex.ccon">
@@ -1191,6 +1202,8 @@ However, the actual compiler implementation may use its own native character
 set, so long as the same results are obtained.  &mdash; <em>end note</em> ]
 </blockquote>
 </p>
+
+<h2 id="lex.string">[lex.string]</h2>
 
 <p>Change in
 <a href="http://eel.is/c++draft/lex.string">
