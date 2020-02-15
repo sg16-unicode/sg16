@@ -100,6 +100,7 @@ Named universal character escapes
 <ul>
   <li><a href="#introduction">Introduction</a></li>
   <li><a href="#changes">Changes since P2071R0</a></li>
+  <li><a href="#history">History</a></li>
   <li><a href="#motivation">Motivation</a></li>
   <li><a href="#design">Design considerations</a>
     <ul>
@@ -133,16 +134,11 @@ culminated in
 P1097R2</a><sup><a title="Named character escapes"
                    href="#ref_p1097r2">[P1097R2]</a></sup>.
 This proposal does not deviate from the general design intent in Fernandes'
-work, but does deviate in the following specific details:
-<ul>
-  <li>This proposal uses 
-      <a href="https://www.unicode.org/reports/tr44/tr44-24.html#UAX44-LM2">UAX44-LM2</a>
-      for matching names rather than just case-insensitive matching.  This is
-      primarily motivated by implementation concerns; ignoring spaces allows
-      for a more efficient implementation.
-  </li>
-  <li>This proposal includes a feature test macro.</li>
-</ul>
+work, but does deviate in a few details.  See the
+<a href="#history">History</a>
+and
+<a href="#proposal">Proposal</a>
+sections for more information.
 </p>
 
 <p>
@@ -166,37 +162,101 @@ u8"\N{LATIN CAPITAL LETTER A WITH MACRON}\N{COMBINING GRAVE ACCENT" // Equivalen
 </p>
 
 <p>
-Prior presentations of P1097 to EWG-I and EWG received strong encouragement:
+This paper discusses and links to work completed by Corentin Jabot that
+investigates implementation impact, though an implementation has not yet been
+completed in an existing compiler.  This paper also includes discussion
+regarding alternative design possibilities.
+</p>
+
+
+<h1 id="changes">Changes since <a href="https://wg21.link/p2071r0">P2071R0</a></h1>
+
 <ul>
-  <li>Poll of
-      <a title="P1097R1: Named character escapes"
-         href="https://wg21.link/p1097r1">
-      P1097R1</a><sup><a title="P1097R1: Named character escapes"
-                         href="#ref_p1097r1">[P1097R1]</a></sup>
-      in
-      <a href="http://wiki.edg.com/bin/view/Wg21sandiego2018/P1097R1">EWG-I in San Diego, 2018</a>:
-      <div style="margin-left: 1em;">
-        Do we want named escape sequences?
-        <table border="1" style="border-collapse: collapse">
-          <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
-          <tr><td>5</td><td>9</td><td>7</td><td>0</td><td>0</td></tr>
-        </table>
-      </div>
+  <li>Moved some content previously in the introduction section into a new
+      history section.</li>
+  <li>Added results of SG16 and EWG polls taken in Prague.</li>
+  <li>Updated uses of <tt>U+NNNN</tt> to correctly follow Unicode notational
+      conventions.</li>
+</ul>
+
+
+<h1 id="history">History</h1>
+
+<p>
+Prior presentations of P1097 to EWG-I and EWG received strong encouragement
+and useful design feedback:
+<ul>
+  <li>
+    Review of
+    <a href="https://wg21.link/p1097r1">P1097R1</a>
+    by
+    <a href="http://wiki.edg.com/bin/view/Wg21sandiego2018/P1097R1">EWG-I in San Diego, 2018</a>:
+    <ul>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Do we want named escape sequences?</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>5</td><td>9</td><td>7</td><td>0</td><td>0</td></tr>
+          </table>
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Do we want to support name aliases?</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>12</td><td>8</td><td>1</td><td>0</td><td>0</td></tr>
+          </table>
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Do we want case-insensitive matching?</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>5</td><td>7</td><td>4</td><td>4</td><td>1</td></tr>
+          </table>
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Do we want full UAX #44 LM2 name matching?</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>0</td><td>0</td><td>7</td><td>7</td><td>7</td></tr>
+          </table>
+        </div>
+      </li>
+    </ul>
   </li>
-  <li>Poll of
-      <a title="P1097R2: Named character escapes"
-         href="https://wg21.link/p1097r2">
-      P1097R2</a><sup><a title="P1097R2: Named character escapes"
-                         href="#ref_p1097r2">[P1097R2]</a></sup>
-      in
-      <a href="http://wiki.edg.com/bin/view/Wg21belfast/P1097-EWG">EWG in Belfast, 2019</a>:
-      <div style="margin-left: 1em;">
-        EWG wants to encourage further work in this area 
-        <table border="1" style="border-collapse: collapse">
-          <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
-          <tr><td>8</td><td>16</td><td>8</td><td>1</td><td>1</td></tr>
-        </table>
-      </div>
+  <li>
+    Review of
+    <a href="https://wg21.link/p1097r2">P1097R2</a>
+    by
+    <a href="http://wiki.edg.com/bin/view/Wg21belfast/P1097-EWG">EWG in Belfast, 2019</a>:
+    <ul>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>EWG wants to encourage further work in this area</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>8</td><td>16</td><td>8</td><td>1</td><td>1</td></tr>
+          </table>
+          Motion passes
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Accept P1097 as presented for C++23</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>2</td><td>9</td><td>13</td><td>5</td><td>1</td></tr>
+          </table>
+          No consensus. Author encouraged to do further work
+        </div>
+      </li>
+    </ul>
   </li>
 </ul>
 </p>
@@ -217,20 +277,175 @@ Two areas of concern were raised during
       interpolation based design.
   </li>
 </ul>
-This paper discusses and links to work completed by Corentin Jabot that
-investigates implementation impact, though an implementation has not yet been
-completed.  This paper also includes discussion regarding alternative design
-possibilities.
+
+<p>
+The implementation concerns prompted Corentin Jabot to explore implementation
+strategies as described in the
+<a href="#implementation_exp">Implementation experience</a> section.
 </p>
 
+<p>
+Despite the clear negative feedback from EWG-I with regard to use of
+<a href="https://www.unicode.org/reports/tr44/tr44-24.html#UAX44-LM2">UAX44-LM2</a>
+to match character names,
+<a href="https://wg21.link/p2071r0">P2071R0</a>
+proposed using
+<a href="https://www.unicode.org/reports/tr44/tr44-24.html#UAX44-LM2">UAX44-LM2</a>.
+This was motivated solely by Corentin Jabot's use of that algorithm in
+his implementation experiments.
+</p>
 
-<h1 id="changes">Changes since <a href="https://wg21.link/p2071r0">P2071R0</a></h1>
+<p>
+Presentation of
+<a href="https://wg21.link/p2071r0">P2071R0</a>
+to SG16 and EWG in Prague received strong encouragement and consensus for
+design direction.
+</p>
+
+<ul>
+  <li>
+    <a href="http://wiki.edg.com/bin/view/Wg21prague/SG16P2071R0">SG16 in Prague, 2020</a>:
+    <ul>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>What is our preferred name matching algorithm?</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>In favor</th><th>Name match algorithm</th></tr>
+            <tr><td>6</td><td>Exact match.</td></tr>
+            <tr><td>6</td><td>Case insensitive</td></tr>
+            <tr><td>4</td><td>Full UAX44-LM2</td></tr>
+          </table>
+          No consensus for the UAX44-LM2 algorithm.
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>We should support case-insensitive matching as opposed to exact match?</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>2</td><td>3</td><td>2</td><td>1</td><td>2</td></tr>
+          </table>
+          Consensus? No<br/>
+          SF: Matches implementations in other languages.<br/>
+          SF: Mixed case is more legible than UPPERCASE.<br/>
+          SA: This is an identifier in a case-sensitive language.<br/>
+          SA: Increases maintenance in large code bases due to different style preferences; want one way to spell things.<br/>
+          N: Want UAX44-LM2 because I'll constantly have to lookup correct names.
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Preferred syntax: (vote for 1)</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>In favor</th><th>Syntax</th></tr>
+            <tr><td>8</td><td>Use "\N{XXX}"</td></tr>
+            <tr><td>0</td><td>Use "\u{XXX}" and "\U{XXX}"</td></tr>
+          </table>
+          Strong consensus for the originally proposed syntax.<br/>
+          F: Want to reserve \u for other potential extensions<br/>
+          F: Matches other languages like Python.
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Match name aliases?</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>8</td><td>2</td><td>0</td><td>0</td><td>0</td></tr>
+          </table>
+          Consensus? Yes
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Include support for ISO/IEC 10646 named sequences?</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>0</td><td>0</td><td>1</td><td>6</td><td>1</td></tr>
+          </table>
+          Consensus? No<br/>
+          SA: Adds implementation complexity for little benefit.<br/>
+          A: Can be added later.
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>Forward to EWG with: no UAX44-LM2 matching, no support for named
+             sequences, use of \N, and no recommendation regarding
+             case-sensitivity.</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>7</td><td>3</td><td>0</td><td>0</td><td>0</td></tr>
+          </table>
+          Consensus? Yes
+        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href="http://wiki.edg.com/bin/view/Wg21prague/P2071R0-EWG">EWG in Prague, 2020</a>:
+    <ul>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>We are interesting in supporting named universal character escapes</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>14</td><td>5</td><td>0</td><td>0</td><td>0</td></tr>
+          </table>
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>This should further support aliases</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>18</td><td>2</td><td>1</td><td>0</td><td>0</td></tr>
+          </table>
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>It should further be case insensitive</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>0</td><td>6</td><td>6</td><td>9</td><td>2</td></tr>
+          </table>
+        </div>
+      </li>
+      <li>
+        <div style="margin-left: 1em;">
+          <b>It should further support UAX44-LM2 with arbitrary spaces and
+             dadhes</b>
+          <table border="1" style="border-collapse: collapse">
+            <tr><th>SF</th><th>F</th><th>N</th><th>A</th><th>SA</th></tr>
+            <tr><td>1</td><td>4</td><td>5</td><td>8</td><td>5</td></tr>
+          </table>
+        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+</p>
+
+<p>
+Here again, clear negative feedback was provided with regard to use of the
+<a href="https://www.unicode.org/reports/tr44/tr44-24.html#UAX44-LM2">UAX44-LM2</a>
+name matching algorithm.  Additionally, the clearest guidance obtained so far
+was provided with regard to case-insensitivity.
+Corentin Jabot experimented and found that use of
+<a href="https://www.unicode.org/reports/tr44/tr44-24.html#UAX44-LM2">UAX44-LM2</a>
+only reduced data size by about 9K; this delta is not significant.
+Revision
+<a href="https://wg21.link/p2071r1">P2071R1</a>
+was therefore modified to match the EWG consensus to require exact name matches
+only.
+</p>
 
 
 <h1 id="motivation">Motivation</h1>
 
 <p>
-The introduction of 
+The introduction of
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s
 in C++11 benefitted programmers by allowing them to portably encode characters
 outside of the basic source character set without having to resort to use of
@@ -779,7 +994,7 @@ be <tt>\n</tt>).
 
 <p>
 Another option would be to reuse the <tt>\u</tt> and/or <tt>\U</tt> introducer
-used for 
+used for
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s.
 Gcc and Clang both reject code like <tt>"\u{xxx}"</tt> and <tt>"\U{xxx}"</tt>
 as containing ill-formed
@@ -949,7 +1164,7 @@ The following options are <em>not</em> currently proposed but could be considere
 for future extension.
 <ol>
   <li>Allow named character escapes to be used outside of character and string
-      literals (e.g., in identifiers) analogously to 
+      literals (e.g., in identifiers) analogously to
       <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s.
   </li>
   <li>Allow comma separated names.  For example:
@@ -1233,7 +1448,7 @@ character
 <br/>
 <a href="http://eel.is/c++draft/lex.ccon#nt:named-escape-sequence">named-escape-sequence:</a>
 <div style="margin-left: 1em;">
-<tt>\N{</tt> 
+<tt>\N{</tt>
 <a href="http://eel.is/c++draft/lex.ccon#nt:n-char-sequence">n-char-sequence</a>
 <tt>}</tt>
 </div>
@@ -1415,7 +1630,7 @@ characters, plus at least one for the multibyte encoding of each
 15.11 [cpp.predefined] paragraph 1.8</a>:<br/>
 <em>Drafting note:</em> the final value for the
 <tt>__cpp_named_character_escapes</tt> feature test macro will be selected by
-the project editor to reflect the date of approval. 
+the project editor to reflect the date of approval.
 <blockquote>
 <div style="margin-left: 1em;">
 <table>
