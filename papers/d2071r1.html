@@ -743,8 +743,8 @@ an alias.  Aliases come in five varieties:
       (note the typo correction).
   </li>
   <li><b>control</b><br/>
-      Aliases for various control characters.  For example, U+0000 as a
-      control alias of <tt>NULL</tt>.
+      Aliases for various control characters.  For example, <tt>NULL</tt>
+      for U+0000.
   </li>
   <li><b>alternate</b><br/>
       Aliases for widely used alternate names.  For example,
@@ -852,8 +852,7 @@ versions of ISO/IEC 10646 as they are published.
 <p>
 Support for named escape sequences exists in several programming languages.
 The following details of existing practice were obtained from these
-documentation sources.  The author has not verified the accuracy of this
-information.
+documentation sources.
 <table style="border:1px solid black">
   <tr><th>Language</th><th>Documentation link</th></tr>
   <tr>
@@ -889,7 +888,7 @@ Capabilities vary across languages:
     <td>D</td>
     <td>HTML 5</td>
     <td>No</td>
-    <td>Exact match?</td>
+    <td>Case-sensitive and whitespace-sensitive.</td>
     <td>No</td>
   </tr>
   <tr>
@@ -901,8 +900,12 @@ Capabilities vary across languages:
     </td>
     <td>No</td>
     <td>
-      Optionally, script qualified short names<br/>
-      Optionally, loose matching (case insensitive, ignore underscore, most spaces, and most non-medial hyphens)
+      By default, case-sensitive and whitespace-sensitive exact match.<br/>
+      Optionally, script qualified short names with <tt>use charnames ':short';</tt>.<br/>
+      Optionally,
+      <a href="https://www.unicode.org/reports/tr44/tr44-24.html#UAX44-LM2">UAX44-LM2</a>
+      with <tt>use charnames ':loose';</tt>.
+      (case insensitive, ignore underscore, most spaces, and most non-medial hyphens)
     </td>
     <td>Yes</td>
   </tr>
@@ -912,7 +915,7 @@ Capabilities vary across languages:
         Unicode name aliases<br/>
     </td>
     <td>No</td>
-    <td>Case-insensitive</td>
+    <td>Case-insensitive, but whitespace-sensitive</td>
     <td>No</td>
   </tr>
   <tr>
@@ -924,7 +927,7 @@ Capabilities vary across languages:
         emoji sequences<br/>
     </td>
     <td>Yes</td>
-    <td>Exact match?</td>
+    <td>Case-insensitive, but whitespace-sensitive</td>
     <td>Yes</td>
   </tr>
 </table>
