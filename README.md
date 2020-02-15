@@ -5,7 +5,9 @@ If you would like to contribute to the discussion, please join us on [<img src="
 
 Meetings are generally held twice a month; invitations are sent to the mailing list.  Summaries of past meetings are available at https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md.
 
-The following are papers and projects currently under our purview.  Additionally, we provide input to proposals that originate elsewhere that target EWG, LEWG, or other study groups when those proposals touch on topics listed in [P1253 - Guidelines for when a WG21 proposal should be reviewed by SG16][P1253].
+A standing paper that describes our intended scope, directives, guidelines and constraints is available at [P1238 - SG16: Unicode Direction][P1238].  Anyone wanting to follow or contribute to SG16 should become familiar with it.
+
+The following sections list papers and projects currently under our purview.  Additionally, we provide input to proposals that originate elsewhere within WG21 when those proposals touch on topics listed in [P1253 - Guidelines for when a WG21 proposal should be reviewed by SG16][P1253].
 
 # WG21 (C++) Papers
 
@@ -80,6 +82,7 @@ WG Number     | Status      | Title/Notes/Links
 [P1628]: http://wg21.link/p1628
 [P1423]: http://wg21.link/p1423
 [P1253]: http://wg21.link/p1253
+[P1238]: http://wg21.link/p1238
 [P1139]: http://wg21.link/p1139
 [P1097]: http://wg21.link/p1097
 [P1041]: http://wg21.link/p1041
