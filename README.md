@@ -67,7 +67,7 @@ WG Number     | Status      | Title/Notes/Links
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [P2071]: https://wg21.link/p2071
 [P2029]: https://wg21.link/p2029
-[P2020]: https://wg21.link/p2071
+[P2020]: https://wg21.link/p2020
 [P1953]: https://wg21.link/p1953
 [P1949]: https://wg21.link/p1949
 [P1892]: https://wg21.link/p1892
