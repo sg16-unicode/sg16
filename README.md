@@ -14,17 +14,18 @@ The following are papers and projects currently under our purview.  Additionally
 WG Number     | Title/Notes/Links
 ------------- | -----
 \<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
+[P2071][]     | Named universal character escapes
+[P2029][]     | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
+[P2020][]     | Locales, Encodings and Unicode
+[P1953][]     | Unicode Identifiers And Reflection
 [P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
 [P1892][]     | Extended locale-specific presentation specifiers for std::format
 [P1885][]     | Naming Text Encodings to Demystify Them
 [P1880][]     | uNstring Arguments Shall Be UTF-N Encoded
-[P1868][]     | 🦄 width: clarifying units of width and precision in std::format
 [P1859][]     | Standard terminology for execution character set encodings
 [P1854][]     | Conversion to execution encoding should not lead to loss of meaning
-[P1844][]     | Enhancement of regex
 [P1629][]     | Standard Text Encoding
 [P1628][]     | Unicode character properties
-[P1097][]     | Named character escapes
 [P0244][]     | Text_view: A C++ concepts and range based character encoding and code point enumeration library
 
 ## Accepted Papers
@@ -33,6 +34,7 @@ The following papers have been adopted for an ISO standard.
 
 WG Number     | Standard    | Title/Notes/Links
 ------------- | --------    | -----
+[P1868][]     | C++20       | 🦄 width: clarifying units of width and precision in std::format
 [P1423][]     | C++20       | char8_t backward compatibility remediation
 [P1139][]     | C++20       | Address wording issues related to ISO 10646
 [P1041][]     | C++20       | Make char16_t/char32_t string literals be UTF-16/32
@@ -46,7 +48,9 @@ The following papers are no longer being pursued.
 
 WG Number     | Title/Notes/Links
 ------------- | -----
+~~[P1097][]~~ | ~~Named character escapes~~<br/>(Superceded by P2071)
 ~~[P1879][]~~ | ~~Please Don't Rewrite My String Literals~~<br/>(This proposal was withdrawn by the author)
+~~[P1844][]~~ | ~~Enhancement of regex~~<br/>(Severe ABI concerns prevent updating `std::regex`.  We will explore deprecating and replacing it)
 ~~[P0353][]~~ | ~~Unicode Friendly Encoding Conversions for the Standard Library~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 ~~[P0169][]~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 
@@ -59,6 +63,10 @@ WG Number     | Status      | Title/Notes/Links
 [N2231][]     |             | char8_t: A type for UTF-8 characters and strings
 
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
+[P2071]: http://wg21.link/p2071
+[P2029]: http://wg21.link/p2029
+[P2020]: http://wg21.link/p2071
+[P1953]: http://wg21.link/p1953
 [P1949]: http://wg21.link/p1949
 [P1892]: http://wg21.link/p1892
 [P1885]: http://wg21.link/p1885
