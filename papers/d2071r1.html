@@ -115,7 +115,6 @@ Named universal character escapes
     </ul>
   </li>
   <li><a href="#proposal">Proposal</a></li>
-  <li><a href="#proposal_opts">Proposal options</a></li>
   <li><a href="#future">Possible future extensions</a></li>
   <li><a href="#implementation_exp">Implementation experience</a></li>
   <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -172,6 +171,8 @@ regarding alternative design possibilities.
 <h1 id="changes">Changes since <a href="https://wg21.link/p2071r0">P2071R0</a></h1>
 
 <ul>
+  <li>Updated the proposal to match the EWG design consensus reached in
+      Prague.  Removed the proposal options section.</li>
   <li>Moved some content previously in the introduction section into a new
       history section.</li>
   <li>Added results of SG16 and EWG polls taken in Prague.</li>
@@ -604,9 +605,7 @@ escape introducer followed by a name enclosed in curly brackets.  For example:
 Other choices for the escape introducer are possible; the
 <a href="#design_compat">Backward compatibility</a>
 section discusses some possible motivation for preferring
-<tt>\u</tt> and/or <tt>\U</tt> and the
-<a href="#proposal_opts">Proposal options</a>
-section includes this alternate syntax as an option.
+<tt>\u</tt> and/or <tt>\U</tt>.
 </p>
 
 <p>
@@ -632,17 +631,17 @@ option to a future extension; see the
 
 <p>
 Perl and Raku both allow Unicode code point numbers to be specified as character
-names and could enable a syntax that avoids the strict 4 or 8 number
+names.  Following suit would enable a syntax that avoids the strict 4 or 8 digit
 requirements of
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name">universal-character-name</a>s
-as well as the natural <tt>U+NNNN</tt> style frequently used to identify
+and could allow the natural <tt>U+NNNN</tt> style frequently used to identify
 Unicode characters.  The following could all be equivalent.  This proposal
 also leaves this option for a future extension as discussed in the
 <a href="#future">Possible future extensions</a> section.
 <div style="margin-left: 1em;">
 <pre><code class="c++">"\N{U+0100}"
 "\N{U+100}"
-"\N{U+00000100}"
+"\N{U+000100}"
 "\N{0x0100}"
 "\N{256}"
 "\u0100"
@@ -1006,9 +1005,10 @@ respectively.
 
 <p>
 The implementation divergence that occurs for the <tt>\u</tt> and <tt>\U</tt>
-cases above suggests that repurposing them may result in less backward
-compatibility.  Use of <tt>\u</tt> and/or <tt>\U</tt> would potentially
-require more wording changes to distinguish named character escapes from
+cases above suggests that repurposing them may reduce the potential for
+backward compatibility impact.  Use of <tt>\u</tt> and/or <tt>\U</tt> would
+potentially require more wording changes to distinguish named character escapes
+from
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s,
 but would be unlikely to pose a significant additional impact to implementors.
 </p>
@@ -1091,13 +1091,13 @@ The wording included in this proposal is for the following design:
   <li>Context:
     <ul>
       <li>Named character escapes are valid only in character and string
-          literals.
+          literals (not in identifiers).
       </li>
     </ul>
   </li>
   <li>Syntax:
     <ul>
-      <li><tt>\N{xxx}</tt> where the name is substituted for <tt>xxx</tt>.</li>
+      <li><tt>\N{xxx}</tt> where <tt>xxx</tt> is the name of the character.</li>
     </ul>
   </li>
   <li>Name sources:
@@ -1109,14 +1109,7 @@ The wording included in this proposal is for the following design:
   </li>
   <li>Name matching:
     <ul>
-      <li>As specified by rule
-          <a href="https://www.unicode.org/reports/tr44/tr44-24.html#UAX44-LM2">UAX44-LM2</a>
-          in
-          <a title="Unicode Standard Annex #44 - Unicode Character Database"
-             href="https://www.unicode.org/reports/tr44/tr44-24.html">
-          UAX#44</a><sup><a title="Unicode Standard Annex #44 - Unicode Character Database"
-                            href="#ref_uax44">[UAX#44]</a></sup>.
-      </li>
+      <li>case-sensitive and whitespace-sensitive exact matches.</li>
     </ul>
   </li>
   <li>Feature test macro:
@@ -1128,22 +1121,23 @@ The wording included in this proposal is for the following design:
 </p>
 
 
-<h1 id="proposal_opts">Proposal options</h1>
+<h1 id="future">Possible future extensions</h1>
 
 <p>
-The following options are <em>not</em> currently proposed, but could be adopted
-as modifications of the current proposal.
+The following options are <em>not</em> currently proposed but could be considered
+for future extension.
 <ol>
-  <li>Instead of <tt>\N</tt>, reuse the <tt>\u</tt> and/or <tt>\U</tt> introducers from
-      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s
-      to introduce a named character escape.  For example:
+  <li>Allow comma separated names.  For example:
     <ul>
-      <li><tt>"\u{LATIN CAPITAL LETTER A WITH GRAVE}"</tt></li>
-      <li><tt>"\U{LATIN CAPITAL LETTER A WITH GRAVE}"</tt></li>
+      <li><tt>"\N{LATIN CAPITAL LETTER A WITH MACRON, COMBINING GRAVE ACCENT}" // Equivalent to "\u0100\u0300"</tt></li>
     </ul>
-    See the
-    <a href="#design_compat">Backward compatibility</a>
-    section for more discussion of this option.
+  </li>
+  <li>Allow code point numbers as names.  For example:
+    <ul>
+      <li><tt>"\N{U+00C0}" // Equivalent to "\u00C0"</tt></li>
+      <li><tt>"\N{0x00C0}" // Equivalent to "\u00C0"</tt></li>
+      <li><tt>"\N{192}" &nbsp;&nbsp; // Equivalent to "\u00C0"</tt></li>
+    </ul>
   </li>
   <li>Allow names to match ISO/IEC 10646 named sequences such that the
       following would be equivalent:
@@ -1153,38 +1147,23 @@ as modifications of the current proposal.
       <li><tt>"\u0100\u0300"</tt></li>
     </ul>
   </li>
-</ol>
-</p>
-
-
-<h1 id="future">Possible future extensions</h1>
-
-<p>
-The following options are <em>not</em> currently proposed but could be considered
-for future extension.
-<ol>
-  <li>Allow named character escapes to be used outside of character and string
-      literals (e.g., in identifiers) analogously to
-      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s.
-  </li>
-  <li>Allow comma separated names.  For example:
+  <li>Allow names to match Unicode emoji named sequences.  For example:
     <ul>
-      <li><tt>"\N{LATIN CAPITAL LETTER A WITH MACRON, COMBINING GRAVE ACCENT}" // Equivalent to "\u0100\u0300"</tt></li>
+      <li><tt>"\N{keycap: #}" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Equivalent to "\u0023\uFE0F\u20E3"</tt></li>
+      <li><tt>"\N{Czech Republic}" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Equivalent to "\U0001F1E8\U0001F1FF"</tt></li>
+      <li><tt>"\N{waving hand: medium skin tone}" // Equivalent to "\U0001F1E8\U0001F1FF"</tt></li>
     </ul>
   </li>
-  <li>Allow code point numbers as names.  For example:
+  <li>Allow names to match Unicode emoji ZWJ named sequences.  For example:
     <ul>
-      <li><tt>"\N{U+00C0}" // U+00C0 {LATIN CAPITAL LETTER A WITH GRAVE}</tt></li>
-      <li><tt>"\N{0x00C0}" // U+00C0 {LATIN CAPITAL LETTER A WITH GRAVE}</tt></li>
-      <li><tt>"\N{192}"    // U+00C0 {LATIN CAPITAL LETTER A WITH GRAVE}</tt></li>
+      <li><tt>"\N{man shrugging: medium skin tone}" // Equivalent to "\U0001F937\U0001F3FD\u200D\u2642\uFE0F"</tt></li>
+      <li><tt>"\N{rainbow flag}" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Equivalent to "\U0001F3F3\uFE0F\u200D\U0001F308"</tt></li>
     </ul>
   </li>
-  <li>Allow names to match Unicode emoji named sequences</li>
-  <li>Allow names to match Unicode emoji ZWJ named sequences</li>
   <li>Allow names to match HTML 5 named character references by surrounding
       them with <tt>&amp;</tt> and <tt>;</tt>.  For example:
     <ul>
-      <li><tt>"\N{&amp;Agrave;}" // U+00C0 {LATIN CAPITAL LETTER A WITH GRAVE}</tt></li>
+      <li><tt>"\N{&amp;Agrave;}" // Equivalent to "\u00C0"</tt></li>
     </ul>
   </li>
 </ol>
@@ -1231,7 +1210,7 @@ available at this time, thereby delaying further progress on this proposal.
 
 <p>
 Thank you to Peter Bindels and Corentin Jabot for providing feedback on an
-initial draft that I delivered to then less than two hours before the Prague
+initial draft that I delivered to them less than two hours before the Prague
 pre-meeting mailing deadline!
 </p>
 
@@ -1335,7 +1314,7 @@ If
 <a title="Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals"
    href="https://wg21.link/p2029r0">P2029R0</a><sup><a title="Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals"
                                                        href="#ref_p2029r0">[P2029R0]</a></sup>
-were to be adopted, substantial wording updates will be required.
+is adopted, substantial wording updates will be required.
 </p>
 
 <input type="checkbox" id="hideins">Hide inserted text</input><br/>
@@ -1480,7 +1459,7 @@ character
 <tt>5</tt> <tt>6</tt> <tt>7</tt> <tt>8</tt> <tt>9</tt>
 </div>
 <div style="margin-left: 1em;">
-<tt>_</tt> <tt>-</tt> space
+<tt>-</tt> space
 </div>
 </ins>
 </blockquote>
@@ -1539,40 +1518,18 @@ Escape sequences</td>
 <a href="http://eel.is/c++draft/lex.ccon#9">
 5.13.3 [lex.ccon] paragraph 9</a>:<br/>
 <em>Drafting Note:</em> Associated character names and character
-name aliases are listed in section 33 of ISO/IEC 10646:2017.  Named UCS
-sequence identifiers are listed in section 27.
+name aliases are listed in section 33 of ISO/IEC 10646:2017.
 <blockquote class="stdins">
 A
 <a href="http://eel.is/c++draft/lex.ccon#nt:named-escape-sequence"><em>named-escape-sequence</em></a>
 is translated to the encoding, in the appropriate execution character set, of
-the character or character sequence associated with the ISO/IEC 10646
+the character associated with the ISO/IEC 10646
 <tt>associated character name</tt> or
 <tt>character name alias</tt>
 that matches the name specified by the
 <a href="http://eel.is/c++draft/lex.ccon#nt:n-char-sequence"><em>n-char-sequence</em></a>.
-Matching of names is performed by:
-<table>
-  <tr>
-    <td>(X.1) &mdash;</td>
-    <td>removing all medial hyphens.</td>
-  </tr>
-  <tr>
-    <td>(X.2) &mdash;</td>
-    <td>removing all space and underscore characters.</td>
-  </tr>
-  <tr>
-    <td>(X.3) &mdash;</td>
-    <td>lowercasing all capital letters.</td>
-  </tr>
-</table>
-If no name is matched, then the program is ill-formed.  If the matched name is
-<tt>HANGUL JUNGSEONG OE</tt>, then steps 2 and 3 are performed against the name
-<tt>HANGUL JUNGSEONG O-E</tt> and, if the names match, U+1180
-{HANGUL JUNGSEONG O-E} is encoded, otherwise U+116C {HANGUL JUNGSEONG OE} is
-encoded.  Otherwise, the character associated with the matched name is encoded.
-[ <em>Note:</em> The special handling of U+1180
-{HANGUL JUNGSEONG O-E} resolves an ambiguity in the matching algorithm; this
-is the only case of ambiguity. &mdash; <em>end note</em> ]
+Matching of names is case-sensitive and whitespace-sensitive.
+If no name is matched, then the program is ill-formed.
 </blockquote>
 </p>
 
