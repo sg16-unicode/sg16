@@ -21,7 +21,6 @@ WG Number     | Title/Notes/Links
 [P2020][]     | Locales, Encodings and Unicode
 [P1953][]     | Unicode Identifiers And Reflection
 [P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
-[P1892][]     | Extended locale-specific presentation specifiers for std::format
 [P1885][]     | Naming Text Encodings to Demystify Them
 [P1880][]     | uNstring Arguments Shall Be UTF-N Encoded
 [P1859][]     | Standard terminology for execution character set encodings
@@ -36,6 +35,7 @@ The following papers have been adopted for an ISO standard.
 
 WG Number     | Standard    | Title/Notes/Links
 ------------- | --------    | -----
+[P1892][]     | C++20       | Extended locale-specific presentation specifiers for std::format
 [P1868][]     | C++20       | 🦄 width: clarifying units of width and precision in std::format
 [P1423][]     | C++20       | char8_t backward compatibility remediation
 [P1139][]     | C++20       | Address wording issues related to ISO 10646
