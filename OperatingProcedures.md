@@ -19,8 +19,9 @@ SG16 follows the WG21 code of conduct described in
 
 # Collaboration
 
-SG16 welcomes participation from anyone with applicable C++, Unicode, and/or text processing expertise
-from around the globe.  The following resources are available to accommodate such participation.
+SG16 welcomes participation from anyone with applicable C++, Unicode, and/or text processing interest
+or expertise from around the globe.  The following resources are available to accommodate such
+participation.
 
 ## Mailing list
 
