@@ -34,7 +34,9 @@ organizational use, technical discussion, and dissemination of other relevant in
 Most informal discussion occurs on Slack in the
 [sg16_unicode channel within the Cpplang workspace](https://cpplang.slack.com/messages/sg16_unicode).
 Participants will require an invitation to the Cpplang workspace to join the channel.  An invitation
-can be requested by contacting the SG16 chair via the contact information listed above.
+can be requested by contacting the SG16 chair via the contact information listed above.  Another option
+is self-invitation by using [this link](https://cpplang.now.sh/).
+
 
 ## Meetings
 
