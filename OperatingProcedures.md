@@ -44,7 +44,8 @@ Two forms of meetings take place:
   [P1666](https://wg21.link/p1666).  Meeting times and draft agendas are posted to the SG16 Slack channel
   and at https://github.com/sg16-unicode/sg16-meetings.  Invitations are sent to the mailing list and to
   prior attendees.  An invitation can be requested by contacting the SG16 chair via the contact information
-  listed above.
+  listed above.  Reminders of telecons will be sent to the mailing list with agenda updates, connection
+  information, and anticipated decisions to be made the day before the telecon.
 - **Face to face** meetings are held at WG21 meetings.  Attendees must follow the normal WG21 procedures
   to attend.  Remote access may be made available for recognized experts at the SG16 chair's discretion
   pending available technical equipment.  Summaries of these meetings are **not** made public in accordance
