@@ -1,5 +1,3 @@
-# **DRAFT**
-
 # SG16 Operating Procedures
 
 This document details the operating procedures that govern collaboration in SG16.  Specifically, it details
