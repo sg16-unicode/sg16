@@ -52,6 +52,16 @@ Two forms of meetings take place:
   pending available technical equipment.  Summaries of these meetings are **not** made public in accordance
   with WG21 procedures, but anonymized poll questions and results may be quoted in public facing documents.
 
+Proposals and non-proposal topics may be discussed at any meeting.  The chair may schedule topics based
+on discussion observed outside of meetings (e.g., on the mailing list or in Slack) or on request. 
+
+# Proposal Review
+
+Proposals require a WG21 paper (See https://isocpp.org/std/submit-a-proposal) or a WG14 paper.  Proposal
+polling will only be conducted on P-numbered papers and paper revisions.  Proposals will only be discussed
+if an author or appropriate surrogate is present.  Draft proposals or revisions may be discussed, but
+will not be polled.
+
 # Polling and Decision Making
 
 Consensus requires a quorum of regular attendees and acknowledged experts.  Both quorum and consensus are
