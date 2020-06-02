@@ -5,9 +5,10 @@ ISO JTC1/SC22 WG21 and WG14 papers:
 
 WG21 Number     | Title | Revisions
 --------------- | ----- | ----
+[P2179R0][]     | SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27 | [DR0][D2179R0]
 [P2071R0][]     | Named universal character escapes | [DR1][D2071R1] [R0][P2071R0]
 [P2029R1][]     | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals | [R1][P2029R1] [R0][P2029R0]
-[P2009R0][]     | SG16: Unicode meeting summaries 2019/10/09 - 2019/12/11 | [R0][P2009R0]
+[P2009R0][]     | SG16: Unicode meeting summaries 2019/10/09 through 2019/12/11 | [R0][P2009R0]
 [P1896R0][]     | SG16: Unicode meeting summaries 2019/06/12 - 2019/09/25 | [R0][P1896R0]
 [P1666R0][]     | SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22 | [R0][P1666R0]
 [P1423R3][]     | char8_t backward compatibility remediation | [R3][P1423R3] [R2][P1423R2] [R1][P1423R1] [R0][P1423R0]
@@ -66,3 +67,4 @@ WG14 Number     | Title
 [P2029R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p2029r1.html
 [P2071R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p2071r0.html
 [D2071R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/d2071r1.html
+[D2179R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/d2179r0.html
