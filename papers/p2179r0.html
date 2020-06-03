@@ -1,0 +1,3518 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27</title>
+</head>
+
+<style type="text/css">
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+
+tt {
+    font-family: monospace;
+}
+
+/* Thanks to Elias Kosunen for the following CSS suggestions! */
+
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    line-height: 125%;
+}
+
+html, body {
+    background-color: #eee;
+}
+
+h1, h2, h3, h4, h5, p, span, li, dt, dd {
+    color: #333;
+}
+
+p, li {
+    line-height: 140%;
+}
+
+body {
+    padding: 1em;
+    max-width: 1600px;
+}
+
+p, li {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-font-smoothing: antialiased !important;
+    text-rendering: optimizelegibility !important;
+    letter-spacing: .01em;
+}
+
+h1, h2, h3 {
+    margin-bottom: 1em;
+    letter-spacing: .03em;
+}
+
+</style>
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>P2179R0</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2020-06-02</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2020_01_08">
+      January 8th, 2020</a></li>
+  <li><a href="#2020_01_22">
+      January 22nd, 2020</a></li>
+  <li><a href="#2020_02_05">
+      February 5th, 2020</a></li>
+  <li><a href="#2020_02_16">
+      February 26th, 2020</a></li>
+  <li><a href="#2020_03_11">
+      March 11th, 2020</a></li>
+  <li><a href="#2020_03_25">
+      March 25th, 2020</a></li>
+  <li><a href="#2020_04_08">
+      April 8th, 2020</a></li>
+  <li><a href="#2020_04_22">
+      April 22nd, 2020</a></li>
+  <li><a href="#2020_05_13">
+      May 13th, 2020</a></li>
+  <li><a href="#2020_05_27">
+      May 27th, 2020</a></li>
+</ul>
+
+<p>
+Previously published SG16 meeting summary papers:
+<ul>
+  <li><a href="https://wg21.link/p1080">P1080: SG16: Unicode meeting summaries 2018/03/28 - 2018/04/25</a></li>
+  <li><a href="https://wg21.link/p1137">P1137: SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20</a></li>
+  <li><a href="https://wg21.link/p1237">P1237: SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03</a></li>
+  <li><a href="https://wg21.link/p1422">P1422: SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09</a></li>
+  <li><a href="https://wg21.link/p1666">P1666: SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22</a></li>
+  <li><a href="https://wg21.link/p1896">P1896: SG16: Unicode meeting summaries 2019/06/12 - 2019/09/25</a></li>
+  <li><a href="https://wg21.link/p2009">P2009: SG16: Unicode meeting summaries 2019-10-09 through 2019-12-11</a></li>
+</ul>
+</p>
+
+
+<h1 id="2020_01_08">January 8th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>LWG issue 3341: basic_regex range constructor: Missing requirements for iterator types
+    <ul>
+      <li><a href="https://cplusplus.github.io/LWG/issue3341">https://cplusplus.github.io/LWG/issue3341</a></li>
+      <li>Billy O'Neal copied SG16 on this issue; see
+          <a href="https://lists.isocpp.org/sg16/2019/12/0990.php">https://lists.isocpp.org/sg16/2019/12/0990.php</a>
+      </li>
+      <li>What should be the proposed resolution?</li>
+    </ul>
+  </li>
+  <li>P1949: C++ Identifier Syntax using Unicode Standard Annex 31:
+    <ul>
+      <li><a href="https://wg21.link/p1949">https://wg21.link/p1949</a></li>
+      <li>Which UAX #31 requirements do we intend to satisfy
+          (see section 2)?</li>
+      <li>Which UAX #31 specific character adjustments do we want
+          (see section2.4)?</li>
+      <li>Which UAX #31 NFKC modifications we we want (see section 5.1)?</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Amanda Kornoushenko</li>
+  <li>David Wendt</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>LWG issue 3341: basic_regex range constructor: Missing requirements for iterator types
+    <ul>
+      <li><a href="https://cplusplus.github.io/LWG/issue3341">https://cplusplus.github.io/LWG/issue3341</a></li>
+      <li>Tom introduced the topic:
+        <ul>
+          <li>Billy O'Neal copied SG16 on this issue.  His email is available
+              in the SG16 mailing list archives at
+              <a href="https://lists.isocpp.org/sg16/2019/12/0990.php">https://lists.isocpp.org/sg16/2019/12/0990.php</a>.</li>
+          <li>What should be the proposed resolution?</li>
+        </ul>
+      </li>
+      <li>Zach asked why we should be concerned about this issue.</li>
+      <li>Tom responded that Billy copied us on it, presumably seeking our
+          input.</li>
+      <li>Zach stated that implicit transcoding should not occur; The safest
+          thing to do would be to require
+          <tt>ForwardIterator::value_type</tt> to be exactly
+              <tt>charT</tt>.</li>
+      <li>JeanHeyd agreed with the no implicit transcoding stance; that would
+          make <tt>std:regex</tt> even slower!</li>
+      <li>Peter chimed in via chat agreeing with an exact type requirement and
+          the following constraint:
+        <ul>
+        <li><tt>std::is_same_t&lt;value_type, decltype(*std::declval&lt;ForwardIterator&gt;()&gt;</tt></li>
+        </ul>
+      </li>
+      <li>Peter asked if we should enable views to be used as inputs.</li>
+      <li>Steve stated that would be a more difficult challenge given the
+          recent difficulties faced when attempting to add range constructors
+          for standard containers.</li>
+      <li>Zach agreed that adding range support could be difficult and is out
+          of scope for this issue anyway.</li>
+      <li>Peter concurred and noted that view support can always be added
+          later.</li>
+      <li>Tom observed that if a same type constraint is added, then SFINAE
+          will kick in, but it might be preferred to make it a hard error if
+          the iterator value type doesn't match.</li>
+      <li>Zach suggested leaving that for LWG to decide.</li>
+      <li>Tom agreed and stated he would respond to Billy's email and LWG with
+          our thoughts.</li>
+    </ul>
+  </li>
+  <li>P1949: C++ Identifier Syntax using Unicode Standard Annex 31:
+    <ul>
+      <li><a href="https://wg21.link/p1949">https://wg21.link/p1949</a></li>
+      <li><a href="https://github.com/cplusplus/nbballot/issues/28">https://github.com/cplusplus/nbballot/issues/28</a></li>
+      <li>Tom introduced the topic.
+        <ul>
+          <li>In Belfast, EWG did not accept
+              <a href="http://wiki.edg.com/bin/view/Wg21belfast/SG16NBNL029">
+              SG16's recommended resolution for NL029</a>
+              for C++20.</li>
+          <li>Tom volunteered to submit a core issue for C++20 in order to allow us to resolve the concern as a defect, but he doesn't have a PR to propose.</li>
+          <li>Tom is thinking about bailing on submitting that core issue, but
+              thought he would check if SG16 might have consensus on what
+              solution we would want.  In particular, if we were to adopt
+              <a href="https://www.unicode.org/reports/tr31/tr31-31.html">UAX #31</a>,
+              what would be our answers to these questions?
+            <ul>
+              <li>Which UAX #31 requirements do we intend to satisfy
+                  (see section 2)?</li>
+              <li>Which UAX #31 specific character adjustments do we want
+                  (see section 2.4)?</li>
+              <li>Which UAX #31 NFKC modifications we we want
+                  (see section 5.1)?</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Zach suggested we skip C++20 and just proceed with addressing this
+          for C++23.</li>
+      <li>Steve provided motivation for dealing with this as a DR; some
+          compilers are just starting to allow extended characters in
+          identifiers.  Previously, programmers had to go out of their way to
+          create weird identifiers.  Clang has allowed extended characters
+          forever (since Clang 3.3 or so), gcc support was added for gcc 10.
+          The window for changing behavior is shrinking.</li>
+      <li>Zach asked if the concern was about breaking existing code given that
+          this isn't the kind of break we usually worry too much about.</li>
+      <li>Tom replied that the breakage could be silent if Unicode
+          normalization affects whether two identifiers match.</li>
+      <li>Steve added that breakage could occur due to excluded characters like
+          the poop emoji.  Compilers could provide backward compatibility
+          options; Hyrum's law.</li>
+      <li>Steve continued stating that, if we don't get this nailed down for
+          C++23, we could probably still do it because it probably won't affect
+          that much code.</li>
+      <li>Zach observed that the impact would mostly be due to banning
+          emoji.</li>
+      <li>Steve agreed; emoji is the only case people are likely to notice.
+          Programmers aren't likely to want right-to-left characters in
+          identifiers for example.</li>
+      <li>Which UAX #31 requirements do we intend to satisfy (see section 2)?
+        <ul>
+          <li>Tom stated that we need to choose whether to use the
+              <tt>ID_Start</tt>/<tt>ID_Continue</tt> or
+              <tt>XID_Start</tt>/<tt>XID_Continue</tt> properties to define
+              identifier syntax.  P1949 suggests using the
+              <tt>XID_Start</tt>/<tt>XID_Continue</tt> variants and doing so is
+              necessary to meet the requirements for
+              <a href="https://www.unicode.org/reports/tr31/tr31-31.html#R1">UAX31-R1</a>
+              without defining a profile; though, we'll need a profile to add
+              <tt>_</tt> as a start character.</li>
+          <li>Steve recommended we adopt the XID variants and add <tt>_</tt> as
+              a start character.  However, this doesn't suffice to guarantee
+              identifier stability.</li>
+          <li>Tom stated that, in order to meet requirement
+              <a href="https://www.unicode.org/reports/tr31/tr31-31.html#R1a">UAX31-R1a</a>,
+              that he thinks we'll need to specify additional characters to
+              exclude.  The NL029 NB comment specified a particular range to
+              exclude, but he is not sure if or how that matches UAX #31.</li>
+          <li>Steve corrected Tom's interpretation; that requirement allows
+              opting in to characters that are disallowed by default.</li>
+          <li>Peter stated that section 2.3 explains that some character that
+              are restricted by default are needed in some cases for some
+              scripts.</li>
+          <li>Peter continued stating that he thinks we lack the experience to
+              make choices in this regard and suggested we proceed with more
+              restrictions now and relax them later based on experience and
+              motivation.</li>
+          <li>Tom asked about meeting the requirements for
+              <a href="https://www.unicode.org/reports/tr31/tr31-31.html#R1b">UAX31-R1b</a>;
+              assuming we want to meet that requirement, how would we do
+              so?</li>
+          <li>Steve responded that, given ABI issues, we should commit to
+              meeting this requirement.  In practice, that means that, for
+              example, if a future Unicode standard were to remove characters
+              from <tt>XID_CONTINUE</tt>, that we would update our profile to
+              add them back in.</li>
+          <li>Peter asked if the <tt>XID_Start</tt>/<tt>XID_Continue</tt>
+              properties are stable.</li>
+          <li>Zach responded that he understood them to be stable.</li>
+          <li>Steve responded that they are derived properties and are not
+              guaranteed to be stable, but probably will be in practice.</li>
+          <li><em>[ Editor's note: in later email discussion, Steve offered a
+              correction to this statement: <tt>XID_Start</tt> and
+              <tt>XID_Continue</tt> are guaranteed stable, just not immutable.
+              Immutability is the property that things that are not identifiers
+              remain not identifiers. ]</em></li>
+          <li>Zach mentioned that he wasn't previously aware that UAX #31 had
+              options, but it seems our goal now needs to be to identify the
+              options, select them, and then make sure proposed wording reflects
+              our intent.</li>
+          <li>Tom agreed.</li>
+        </ul>
+      </li>
+      <li>Which UAX #31 specific character adjustments do we want
+          (see section 2.4)?
+        <ul>
+          <li>Peter, reviewing section 2.4, stated no observed need for
+              exceptions other than for <tt>_</tt> in the start position; a
+              choice that is already explicitly listed as an option.
+        </ul>
+      </li>
+      <li>Which UAX #31 NFKC modifications we we want (see section 5.1)?
+        <ul>
+          <li>Tom stated that we need to figure out how to deal with
+              normalization if we want stable identifiers.</li>
+          <li>Zach provided some background on NFC, NFD, compatibility,
+              comparisons, and conversions.</li>
+          <li>Zach professed support for standardizing on NFC; NFD is not really
+              usable since combining marks don't tend to be represented by
+              themselves in identifiers.</li>
+          <li>Tom asked if standardizing on NFC commits implementors to perform
+              normalization.</li>
+          <li>Steve responded that gcc 10 already emits a warning for identifiers
+              that are written in non-NFC forms in source code.</li>
+          <li>Zach stated that checking for NFC is fast, at least for common
+              cases, so diagnosing is reasonable, but stating that non-NFC
+              identifiers are IFNDR (ill-formed no diagnostic required) is also
+              a possibility.</li>
+          <li>Tom observed that conversions from other character sets like
+              Windows-1252 probably always result in NFC.</li>
+          <li>Zach agreed noting that such conversion is probably done via the
+              compiler's internal encoding.</li>
+          <li>Peter stated that there are other character sets that have
+              combining marks, but none of those are probably supported by
+              compilers.</li>
+          <li>Tom, considering source code that is encoded as UTF-8 in NFD,
+              asked if requiring NFC could be problematic for existing editors
+              and tools.</li>
+          <li>Steve observed that this issue already exists and that tools today
+              already expect NFC.</li>
+          <li>Peter recommended that we make use of non-NFC normalized source
+              code IFNDR and encourage tools to diagnose violations.</li>
+          <li>Zach responded that IFNDR is generally reserved for cases where
+              something can't be reasonably diagnosed; since diagnosis is
+              reasonable here, non-NFC forms should be considered
+              ill-formed.</li>
+          <li>Steve added that compiler implementors can support options to
+              relax NFC checking.</li>
+          <li>Tom noted that this creates a specification issue since, if
+              source encoding is not UTF-8, it needs to be transcoded to NFC,
+              but if it is UTF-8, source code needs to already be in NFC.</li>
+          <li>Zach responded that we don't have to; we just specify the
+              characters that are valid based on
+              <tt>XID_Start</tt>/<tt>XID_Continue</tt>.</li>
+          <li>Steve added that the NFC check has to be done after conversion
+              from source encoding to internal encoding and that he is unaware
+              of any encoding that does not naturally transcode to NFC.</li>
+          <li>Peter observed that combining diacritics are part of
+              <tt>XID_Continue</tt> and that there are therefore two spellings
+              of café; a 4 code point variant using
+              U+00E9 {LATIN SMALL LETTER E WITH ACUTE}
+              and a 5 code point variant using
+              U+0301 {COMBINING ACUTE ACCENT}.</li>
+          <li>Zach stated that this feature requires the compiler's internal
+              encoding to be Unicode.</li>
+          <li>Tom responded that, since C++11, the internal encoding must
+              already be isomorphic to Unicode.</li>
+          <li>Zach suggested that both forms of café should not be allowed; that
+              NFC should be required, and that use of combining characters
+              should be disallowed in our profile.</li>
+          <li>Steve responded that disallowing all combining characters probably
+              isn't feasible; there aren't precomposed forms of all characters;
+              in NFC, combining characters will still appear, but only when they
+              are actually required.</li>
+          <li>Zach suggested this is a restriction that could be relaxed
+              later.</li>
+          <li>Steve observed that this would make specification of the profile
+              more difficult.</li>
+          <li>Zach agreed and suggested just specifying a list of start and
+              continue characters; this avoids implementors having to do hard
+              things.</li>
+          <li>Peter noticed a problem with that approach; new Unicode characters
+              could not be used unless and until the standard is updated with a
+              new list of start/continue characters.</li>
+          <li>Tom added that this is why we want to defer to the
+              implementation-defined Unicode version.</li>
+          <li>Steve added this is also why we want the identifier stability
+              guarantee; otherwise we get linkage problems.</li>
+          <li>Peter suggested it should be ok to define a profile with
+              <tt>&lt;Start&gt;</tt> defined as <tt>XID_Start</tt> + <tt>_</tt>,
+              and <tt>&lt;Continue&gt;</tt> defined as <tt>XID_Continue</tt> -
+              &lt;all_combining_characters&gt;.</li>
+          <li>Steve noted that we have a floating Unicode reference today.</li>
+          <li>Tom agreed but noted that we have not yet required implementors to
+              state which version of Unicode they conform to.</li>
+          <li>Steve agreed and added that, technically, we only have a floating
+              reference to ISO/IEC 10646; this may not cover the normalization
+              algorithm.</li>
+          <li>Steve summarized some options; there are two ways to deal with NFC:
+              1) source must be NFC normalized, and
+              2) the compiler internal encoding must be NFC.  Not allowing
+              combining characters gives us the stability that we need without
+              having to distinguish between those options.</li>
+          <li>Steve continued that omitting combining characters avoids the
+              problem of Unicode introducing new precomposed characters that
+              previously had to be represented with a combining character
+              thereby changing NFC.</li>
+          <li>Tom responded that he thought the Unicode standard has a stability
+              guarantee that new precomposed characters will not be
+              introduced.</li>
+          <li>Peter observed that allowing combining characters is therefore
+              required for new characters.</li>
+          <li>Tom suggested we need to do some more research.</li>
+          <li>Steve, after checking the Unicode standard, reported that
+              normalization forms are guaranteed to be stable.</li>
+          <li>Zach quoted from section 3 of
+              <a href="https://www.unicode.org/reports/tr15/tr15-48.html">UAX #15</a>:
+            <ul>
+              <li>"It is crucial that Normalization Forms remain stable over
+                  time. That is, if a string that does not have any unassigned
+                  characters is normalized under one version of Unicode, it
+                  must remain normalized under all future versions of
+                  Unicode."</li>
+            </ul>
+          </li>
+          <li>Peter repeated his guidance that combining characters must be
+              allowed in order to support some scripts.</li>
+          <li>Tom agreed and acknowledged that we probably therefore need to
+              require NFC.</li>
+          <li>Tom summarized options identified so far:
+            <ul>
+              <li>1) The compiler converts to NFC internally.  This could
+                  technically break some existing code.</li>
+              <li>2) Require UTF encoded source files to be NFC and that non-UTF
+                  encoded source files be transcoded (noting that we believe
+                  that transcoding from any existing character sets will
+                  produce NFC).</li>
+            </ul>
+          </li>
+          <li>Zach observed that the implementation effort is equivalent for
+              those cases since an NFC check can bail out early if the check
+              fails, but is otherwise same amount of work so that the
+              complexity cost is the same.</li>
+          <li>Steve stated that he may not be in Prague, but that others can
+              champion the paper as needed.</li>
+          <li>Peter and Zach both volunteered to champion.</li>
+          <li>Steve stated he would try to get an updated revision submitted
+              for the Prague pre-meeting mailing.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be January 22nd.</li>
+</ul>
+
+
+<h1 id="2020_01_22">January 22nd, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1885r0">P1885R0: Naming Text Encodings to Demystify Them</a>
+    <ul>
+      <li>Follow up on recent mailing list discussions.</li>
+      <li>Identify and discuss intended use cases.</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/P2020R0.pdf">P2020R0: Locales, Encodings and Unicode</a>
+    <ul>
+      <li>General discussion, corrections, suggestions, etc...</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>David Wendt</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1885r1">P1885R1: Naming Text Encodings to Demystify Them</a>
+    <ul>
+      <li>Tom introduced the topic for discussion:
+        <ul>
+          <li>SG16 approved P1885R0 to forward to LEWG in Belfast.
+            <ul>
+              <li><a href="http://wiki.edg.com/bin/view/Wg21belfast/SG16P1885R0">http://wiki.edg.com/bin/view/Wg21belfast/SG16P1885R0</a></li>
+            </ul>
+          <li>Corentin has now provided an R1 with minor updates.</li>
+          <li>Since then, concerns were raised on the SG16 mailing list:
+            <ul>
+              <li><a href="https://lists.isocpp.org/sg16/2019/12/0993.php">https://lists.isocpp.org/sg16/2019/12/0993.php</a></li>
+              <li>(See email thread continuation in January as well)</li>
+            </ul>
+          <li>Questions of use cases have been raised.</li>
+        </ul>
+      <li>Corentin stated that use cases haven't changed from his perspective
+          and that the discussion on the mailing list went off on a
+          tangent.</li>
+      <li>Tom replied that the discussion suggested a lack of consensus on the
+          importance of a name vs a MIB ID.</li>
+      <li>Corentin stated that what is proposed is just a name intended to
+          resolve issues with names not being portable across platforms.  The
+          proposal relies on MIB IDs to correlate names for use with third
+          party products.  The proposal does not allow dynamically adding
+          names so as to avoid the possibility of inconsistent results.</li>
+      <li>Tom asked what the motivation was for not including enumerators for
+          all MIB IDs in <tt>text_encoding::id</tt>, but to require the
+          implementation to support all names and aliases from the
+          <a href="https://www.iana.org/assignments/character-sets/character-sets.xml">IANA Character Set Registry</a>.</li>
+      <li>Corentin replied that the requirements were changed in R1.  Hosted
+          implementations are now required to support all of the names, but
+          freestanding implementations need not.</li>
+      <li>Tom asked for clarification regarding omission of enumerator IDs.</li>
+      <li>Corentin replied that, if we specify enumerator names for all
+          registered character sets, then we'll have to maintain that list.
+          Additionally, if implementors can add names, that could lead to
+          portability or compatibility issues.  Discussion with others prior to
+          Belfast suggested more names were not needed.</li>
+      <li>Jens summarized the concern; the RFC has ~150 names and we would have
+          to put all 150 names into the enumeration and deal with the
+          maintenance.  If we select just a few names, then we don't have a
+          maintenance burden.</li>
+      <li>Tom countered that use of the <tt>cs</tt> prefixed identifiers
+          described in section 2.3 of
+          <a href="https://tools.ietf.org/html/rfc2978">RFC 2978</a>
+          and maintained in the
+          <a href="https://www.iana.org/assignments/character-sets/character-sets.xml">IANA Character Set Registry</a>
+          would avoid the portability and compatibility concerns and provide a
+          specification we can defer to.</li>
+      <li>Corentin replied that it isn't quite that simple because of version
+          skew and that exposing MIB IDs to programmers has limited value to
+          begin with.</li>
+      <li>Tom countered that, in the example use case provided in Belfast, you
+          don't necessarily know what the name is.</li>
+      <li><em>[ Editor's note: That example use case is:</em>
+<pre>
+    template&lt;class traits, class Rep, class Period&gt;
+    void print_fancy_suffix(basic_ostream&lt;char, traits&gt;&amp; os, const duration&lt;Rep, Period&gt;&amp; d)
+    {
+      if constexpr (text_encoding::literal().mib == UTF-8) {
+        os &lt;&lt; d.count() &lt;&lt; "\u00B5s";
+      } else {
+        os &lt;&lt; d.count() &lt;&lt; "us";
+      }
+    }
+</pre>
+        <em>]</em>
+      </li>
+      <li>Corentin replied that the use case could still be covered by
+          comparing the implementation provided <tt>text_encoding</tt> object
+          with one constructed by the programmer with a name.</li>
+      <li><em>[ Editor's note: Presumably something like:</em>
+<pre>
+    template&lt;class traits, class Rep, class Period&gt;
+    void print_fancy_suffix(basic_ostream&lt;char, traits&gt;&amp; os, const duration&lt;Rep, Period&gt;&amp; d)
+    {
+      if constexpr (text_encoding::literal() == text_encoding("UTF-8")) {
+        os &lt;&lt; d.count() &lt;&lt; "\u00B5s";
+      } else {
+        os &lt;&lt; d.count() &lt;&lt; "us";
+      }
+    }
+</pre>
+        <em>]</em>
+      </li>
+      <li>Tom opined that string names are good for interaction with current
+          third party libraries, but IDs are preferred for the example
+          provided</li>
+      <li>Corentin replied that adding more enumerators is ok, but expressed
+          discomfort with deferring to the IANA registry due to the possibility
+          of incompatibilities arising from version skew.</li>
+      <li>Steve noted that the proposal only intends to provide portable names;
+          there is no requirement for encoders and decoders to be provided.</li>
+      <li>Zach observed that no enumerator is provided for Windows-1252 and
+          asked how an implementor that frequently traffics in that encoding
+          would provide support.</li>
+      <li>Corentin responded that a <tt>text_encoding</tt> object can be
+          constructed by name or that the fixed numeric value from the IANA
+          registry can be used.</li>
+      <li>JeanHeyd asked if we could reserve a range of MIB IDs for use by
+          implementations similar to the Private Use Area in Unicode.</li>
+      <li>Corentin replied that he is strongly opposed to doing so.</li>
+      <li>Corentin asked if we really want all of these names to be available
+          as identifiers when we can just use strings.</li>
+      <li>Zach responded that he thinks it makes sense for cases where we know
+          compilers default to certain encodings.</li>
+      <li>Corentin repeated that he doesn't want implementors to add their
+          own names.</li>
+      <li>Jens asked about the source for the names whether as strings or
+          identifiers.
+          <a href="https://tools.ietf.org/html/rfc3808">RFC 3808</a>
+          lists the MIB names with interesting spellings, and
+          <a href="https://tools.ietf.org/html/rfc2978">RFC 2978</a>
+          defines a registration process, but neither provides the latest
+          names.</li>
+      <li>Steve provided the URL to the IANA registry and explained that the RFCs don't change, but specify the URL for the registry; which doesn't change often.
+        <ul>
+          <li><a href="https://www.iana.org/assignments/character-sets/character-sets.xhtml">https://www.iana.org/assignments/character-sets/character-sets.xhtml</a>
+        </ul>
+      </li>
+      <li>Tom added that the IANA registry mostly changes for administrative
+          reasons, not because of new character set registrations.</li>
+      <li>Jens asked how it is determined which names are good for
+          enumerators.</li>
+      <li>Tom replied that
+          <a href="https://tools.ietf.org/html/rfc2978">RFC 2978</a>
+          specifies that each registered character set have an associated name
+          prefixed with "cs" that is appropriate for use as an identifier.</li>
+      <li>Jens asked why the names in the proposal do not match the "cs" names.</li>
+      <li>Corentin responded that he picked names that he preferred.</li>
+      <li>Jens asserted that, in that case, implementors cannot extend the
+          list.</li>
+      <li>Zach stated that there isn't much cost in taking the list of "cs"
+          prefixed names, removing dashes, and dumping that list in the wording
+          and asked again for motivation for omitting them.</li>
+      <li>Corentin replied that he thought they were not needed.</li>
+      <li>Zach agreed that many would not be used much, but determining which
+          ones are important would be difficult where as just including them
+          all would be easy.</li>
+      <li>Tom asked Corentin, why he felt comfortable deferring to the IANA
+          registry for string names, but not for enumerator names</li>
+      <li>Corentin replied that he felt that the names and alias names were
+          definitive, but that the enumerator names seemed more fuzzy.</li>
+      <li>Corentin asked Jens if there are concerns regarding the use of
+          trademark names in the standard; many of the character set names
+          include trademark names.</li>
+      <li>Jens replied that we already use trademarked names like Windows and
+          POSIX in the filesystem specification.</li>
+      <li>Steve added that these names have already been vetted by their
+          respective owners, if necessary, for inclusion in the registry.</li>
+      <li>Jens asked if the names in the IANA registry might already be
+          reflected in an ISO standard that we could reference instead.</li>
+      <li>Corentin replied that he was unaware of such an ISO standard.</li>
+      <li>Tom asked Jens how a search for such an ISO standard could be
+          conducted.</li>
+      <li>Jens suggested searching for "character set" in the ISO list.</li>
+      <li>Steve noted that the RFC describing the IANA registration process
+          does mention ISO standards such as ISO 10646, ISO 8859, and
+          ISO 2022.</li>
+      <li>Corentin stated that web browsers, iconv, ICU, etc... all use the
+          IANA registry; it is the defacto standard.</li>
+      <li>Jens expressed some uncertainty with regard to how to refer to these
+          RFCs from the standard, but mentioned that we did similarly for the
+          time zone database which is even less regulated.</li>
+      <li>Jens raised a concern about impact to small/embedded implementations.
+          As proposed, they would have to include an instance of the string
+          name table with every instance of the program and that could be
+          problematic even for some hosted implementations.</li>
+      <li>Tom suggested that, if the string table is not referenced; e.g., if
+          none of the <tt>text_encoding</tt> factory functions is referenced
+          or if the <tt>&lt;text_encoding&gt;</tt> header is not included, that
+          the implementation might be able to omit it.</li>
+      <li>Jens suggested that it would be helpful if the paper addressed cost
+          of implementation and anticipated impact to deployments.</li>
+      <li>JeanHeyd suggested that the guarantee we make should be that if only
+          <tt>text_encoding::system()</tt> or <tt>text_encoding::literal()</tt>
+          are called, then there should be no string table overhead.</li>
+      <li>Jens asked if an implementation could provide support for a reduced
+          set of names.  If not, the discussion of how to reduce deployment
+          cost is warranted since, as proposed, this is not a zero-cost of
+          zero-overhead solution.</li>
+      <li>Jens also stated a preference for the <tt>system()</tt> and
+          <tt>wide_system()</tt> functions to return a MIB ID rather than a
+          <tt>text_encoding</tt> object.</li>
+      <li>Corentin responded that there may be cases where the system encoding
+          is not registered with IANA.  In that case, the MIB ID would be
+          "unknown"; and a different interface would have to be used to retrieve
+          the string name of the encoding anyway.</li>
+      <li>JeanHeyd provided WTF-8 and Modified UTF-8 as examples of encodings
+          that are not registered with IANA but that are known to be in use on
+          Android and elsewhere on the web.</li>
+      <li>Jens suggested that, in such cases, the implementation register their
+          encoding.</li>
+      <li>Zach asked to clarify what the motivation is for supporting string
+          names at all.</li>
+      <li>Tom responded that third party products like iconv and ICU have
+          interfaces that require use of string names.</li>
+      <li>Corentin confirmed.</li>
+      <li>Tom added that the IANA registry is effectively a common subset of
+          recognized names.</li>
+      <li>Zach stated a preference for omitting string names and just relying
+          on MIB IDs.</li>
+      <li>Corentin responded that doing so would complicate use of iconv.</li>
+      <li>Hubert expressed a lack of motivation for an interface that relies
+          on numeric values that no one knows; the string names make sense.</li>
+      <li>Jens pondered if string name to MIB ID lookup was an orthogonal
+          feature.</li>
+      <li>Tom stated that question was posed in the mailing list discussion
+          as well.</li>
+      <li>Corentin mentioned existing host system interfaces.  Windows provides
+          a code page with an ID.  POSIX systems provide a name and no ID.</li>
+      <li>Jens suggested that an interface that provides a string name does not
+          suit all use cases.  For example, a programmer might desire to assert
+          a specific system encoding; that shouldn't require a full string
+          table.</li>
+      <li>Zach expressed a desire for the interface to provide more safety and
+          that he would prefer a list of identifiers over a list of string
+          names.</li>
+      <li>Hubert suggested other benefits of the string names, 1) useful for
+          interaction with the system and third party libraries, and 2) useful
+          for interchange or serialization.</li>
+      <li>Hubert expressed concern about use of a string interface for looking
+          up an encoding name and asked what name is provided in response to a
+          lookup of a MIB ID.</li>
+      <li>Corentin replied that there is no proposed lookup interface that
+          accepts a MIB ID.  The factory interfaces like
+          <tt>text_encoding::system()</tt> return a preferred name, but
+          otherwise, the name provided when constructing a
+          <tt>text_encoding</tt> object is preserved.</li>
+      <li>Jens expressed a desire for a low-level interface that just returns
+          an integer that could be used to assert the environment is UTF-8
+          without having to compare with a bunch of strings; that could be a
+          zero overhead facility.</li>
+      <li>Hubert asked if there is overhead if neither of
+          <tt>text_encoding::system()</tt> or
+          <tt>text_encoding::wide_system()</tt> is called.</li>
+      <li>Corentin responded that yes, there is, but it is low.</li>
+      <li>Hubert cautioned that some standard library implementors are likely
+          to oppose anything that increases startup cost or requires
+          "static constructors".</li>
+      <li>Tom asked why the interface couldn't perform a lazy lookup.</li>
+      <li>Corentin responded that calls to <tt>setlocale()</tt> could interfere;
+          <tt>text_encoding::system()</tt> is intended to return the locale
+          dependent encoding known at program startup time.</li>
+      <li><em>[ Editor's note: Later discussion on the SG16 mailing list
+          revealed that it is possible on POSIX systems to retrieve the locale
+          dependent encoding known at program startup time regardless of
+          intervening calls to <tt>setlocale()</tt> with code like:</em>
+<pre>
+     locale_t loc = newlocale(LC_CTYPE_MASK, "", (locale_t)0);
+     const char* name = nl_langinfo_l(CODESET, loc);
+     ...
+     freelocale(loc); 
+</pre>
+          </em>]</em>
+      </li>
+      <li>Hubert suggested that programmers can collect this information on
+          their own and that they should be aware if some library is calling
+          <tt>setlocale()</tt> before <tt>main()</tt> is invoked.</li>
+      <li>Tom agreed, but stated that doing so is hard in practice,
+          particularly for library authors.</li>
+      <li>JeanHeyd observed that the C library behavior depends on the
+          currently set locale and asked what benefit is provided by
+          <tt>text_encoding::system()</tt> if it's not in sync with the C and
+          C++ libraries.</li>
+      <li>Tom responded that it indicates what encoding is expected for I/O
+          outside of the process.</li>
+    </ul>
+  <li>Tom confirmed that the next meeting will be on February 5th and that it
+      will be the last meeting before we meet in Prague.</li>
+</ul>
+
+
+<h1 id="2020_02_05">February 5th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Preparations for Prague.</li>
+  <li><a href="https://wg21.link/p2020r0">P2020R0: Locales, Encodings and Unicode</a>
+    <ul>
+      <li>General discussion, corrections, suggestions, etc...</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1629r0">P1629R0: Standard Text Encoding</a>
+    <ul>
+      <li>Status update from JeanHeyd.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Amanda Kornoushenko</li>
+  <li>Corentin Jabot</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Preparations for Prague.
+    <ul>
+      <li>PeterBr asked if it would be possible to attend the SG16 meeting in
+          Prague remotely.</li>
+      <li>Jens provided some background:
+        <ul>
+          <li>Historically, remote attendance has not been allowed for a
+              variety of reasons including but not limited to:
+            <ul>
+              <li>voting concerns</li>
+              <li>confidientiality concerns</li>
+              <li>attendance by people not familiar with our processes</li>
+            </ul>
+          </li>
+          <li>SG and WG chairs have facilitated remote attendance on occasion
+              for paper authors or well known experts.</li>
+          <li>For Prague, the Corona virus outbreak has prompted an exception
+              for this meeting for paper authors.</li>
+          <li>SG chairs can choose to facilitate remote attendance subject to
+              technology support.</li>
+        </ul>
+      </li>
+      <li>PeterBr stated that the UK national body is considering making a
+          request to enable remote access for people facing attendance
+          challenges due to issues like VISA access and child care
+          responsibilities.</li>
+      <li>Tom indicated that a member of the UK national body had reached out
+          to him to ask how SG16 conducts our telecons.</li>
+      <li>Jens stated that the number of meeting attendees is raising logistial
+          and hosting challenges.</li>
+      <li>Jens added that hotel wifi may not suffice for video
+          conferencing.</li>
+      <li>Tom asked if Jens could provide audio gear that SG16 could use to
+          facilitate remote attendance.</li>
+      <li>Jens confirmed he could.</li>
+      <li>Tom confirmed that a best effort approach will be made to facilitate
+          remote attendance via BlueJeans.</li>
+      <li>Tom asked everyone to review the tentative schedule</li>
+        <ul>
+          <li><a href="http://wiki.edg.com/bin/view/Wg21prague/SG16">http://wiki.edg.com/bin/view/Wg21prague/SG16</a></li>
+        </ul>
+      </li>
+      <li>Jens suggested removing the Wednesday afternoon time slots since we
+          don't have a room reserved for that time.</li>
+      <li>Tom agreed to do so.  <em>[ Editor's note: and did so. ]</em></li>
+    </ul>
+  </li>
+  <li>Tom announced that the newly formed Message Formatting Unicode Working
+      Group has been invited to attend the SG16 meeting planned for March 11th.
+    <ul>
+      <li><a href="https://github.com/unicode-org/message-format-wg">https://github.com/unicode-org/message-format-wg</a></li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2020r0">P2020R0: Locales, Encodings and Unicode</a>
+    <ul>
+      <li>Corentin introduces:
+        <ul>
+          <li>The paper chould be updated to include additional motivation for
+              support of localization in the standard library.  However, since
+              locale support is already present in the standard library, there
+              is a desire not to distract from other topics and attempt to
+              motivate unnecessarily.</li>
+          <li>The intent of the paper is to provide guidance and establish
+              direction.</li>
+          <li>The existing locale support in the standard library is deficient,
+              but in use regardless.  We could seek to deprecate it in favor of
+              new facilities, though actually marking these interfaces
+              <tt>[[deprecated]]</tt> could be problematic for some projects due
+              to compiler warnings.</li>
+          <li>A primary point in this paper is that character encodings and
+              locales are distinct concerns, though they have been historically
+              conflated, particularly in POSIX.</li>
+          <li>High quality locale support depends on Unicode algorithms.</li>
+          <li>Attempting to provide locale support for non-UTF encodings is not
+              realistic.</li>
+          <li>Whether a character is an uppercase or lowercase letter is not
+              locale dependent.  However, case conversion is locale
+              dependent.</li>
+          <li>The existing character classification functions are deficient
+              since they operate on code units as opposed to sequences of code
+              units or code points.</li>
+          <li>New locale facilities must be Unicode based.  For support of
+              legacy encodings, conversion to Unicode and back will
+              suffice.</li>
+          <li>Iostreams and locale are closely tied and operate on individual
+              code units.  Proper localization cannot be provided using code
+              unit based operations.</li>
+          <li>Linux and macOS deployments nearly exclusively use a UTF-8 locale.
+              At program startup, the program locale is set to "C".  Setting it
+              to "C" is desirable; programs should opt-in to localization
+              behavior.  However, setting it to "C" also has the effect of
+              changing the encoding and that is not desirable.</li>
+        </ul>
+      </li>
+      <li>PeterBr stated that support for multiple encodings is not required for
+          locale support.</li>
+      <li>Corentin agreed with a caveat; that is true for Unicode encodings, but
+          when not using Unicode encodings, switching locales requires switching
+          encodings.</li>
+      <li>Steve stated that, for one of their internal facilities, encoding is
+          important for understanding what is provided by the locale library
+          since the library provides <tt>char</tt> based interfaces and the
+          localization data is encoding dependent.  It would be possible to
+          retranslate all existing messages, but would be a large undertaking
+          and getting localization wrong is expensive.  We need to enable
+          bridges to the past.</li>
+      <li>PeterBr noted that we can't expect UTF-8 locale support on Windows;
+          it will be UTF-16.</li>
+      <li>Corentin responded stating that is ok so long as it is Unicode since
+          conversion to UTF-8 doesn't lose data.</li>
+      <li>Steve remarked that it is impressive how much locale related code
+          works by accident.</li>
+      <li>Corentin supplied a list of operations affected by locale: case
+          mapping, collation, search.  Search was surprising; it depends on
+          locale because matching base characters is desired for some locales,
+          but not for others.  The break algorithms are also locale
+          dependent.</li>
+      <li>Corentin added that, thanks to Han unification, text rendering is
+          locale dependent.</li>
+      <li>Jens observed that section 4 omits some items; number formatting
+          for example.</li>
+      <li>PeterBr stated it would be helpful to have some Japanese contributors
+          in SG16 to answer questions about formatting in their locales.</li>
+      <li>Corentin opined that it is best to just follow Unicode; it specifies
+          how to handle locales.</li>
+      <li>Corentin added that, in some locales, multiple numeric formats may be
+          used.  For example, in India.</li>
+      <li>PeterBr asked if the character classification functions could be
+          deprecated if replacements were made available.</li>
+      <li>Corentin replied that they tend to be used in cases where programmers
+          explicitly expect ASCII.</li>
+      <li>Jens stated that we all likely agree that the current character
+          classification functions are defficient and that new facilities are
+          required in order to deprecate them.</li>
+      <li>PeterBr asked how likely implementors are to be willing to ship a
+          Unicode DB.</li>
+      <li>Corentin suggested that discussion of that be postponed to discussion
+          of
+          <a href="https://wg21.link/p1628r0">P1628 -  Unicode character properties</a>.</li>
+      <li>Jens objected to the idea of defaulting the program's startup encoding
+          to UTF-8 if the environment specifies a UTF-8 encoding.  The "C"
+          locale only supports the basic execution character set, e.g., ASCII.
+          Programs that want to support extended characters should call
+          <tt>setlocale(..., "")</tt> at program startup to opt-in.</li>
+      <li>Corentin stated that the choice C made to default the locale to "C"
+          was a good choice for formatting facilities; many programs aren't
+          intended to produce locale dependent formatting.  But encoding is
+          different.</li>
+      <li>Steve stated that the as-if rule is leaned on here as implementations
+          don't actually call <tt>setlocale(..., "C")</tt> during startup;
+          adding a call to <tt>setlocale(..., "")</tt> would be a major
+          change.</li>
+      <li>Tom clarified that Corentin's intent is only to adopt the encoding
+          from the environment locale on program startup, not the locale
+          formatting settings.  The proposal states that if, for example, the
+          locale specified an encoding of UTF-8, then the as-if call on program
+          startup would be something like
+          <tt>setlocale(LC_ALL, "C.UTF-8")</tt>.</li>
+      <li>Corentin acknowledged that the way C and C++ are tied is a valid
+          concern and that implementors depend on the underlying OS for locale
+          support.</li>
+      <li>Jens expressed skepticism regarding the ability to change the program
+          startup behavior, suggested that a new interface to retrieve the
+          environment specified encoding be provided, and that
+          <tt>setlocale</tt> be left alone.</li>
+      <li>Tom agreed that new functionality doesn't have to follow current
+          behaviors.</li>
+      <li>Jens continued; new functionality can be provided that is independent
+          of <tt>setlocale</tt>.</li>
+      <li>Jens opined that "C.UTF-8" doesn't make sense.</li>
+      <li>Tom stated that Python made a change to assume UTF-8 for the "C"
+          locale and that the Python
+          <a href="https://www.python.org/dev/peps/pep-0538">PEP-538: Coercing the legacy C locale to a UTF-8 based locale</a>
+          and
+          <a href="https://www.python.org/dev/peps/pep-0540">PEP-540: Add a new UTF-8 Mode</a>
+          documents are informative for motivation.</li>
+      <li>PeterBr asked if use of the "C" locale implies use of the encoding of
+          the execution character set.</li>
+      <li>Jens replied that, effectively, yes, but wording could make that more
+          clear.</li>
+      <li>Tom stated his goal for this paper in Prague; to poll a subset of the
+          possible future directions listed in section 6 to establish priorities
+          for them; we can then identify tasks and papers to write.</li>
+      <li>Jens expressed a desire for a road map for the future before moving
+          forward with deprecation.</li>
+      <li>PeterBr agreed and stated that a desire for a road map underscored the
+          need for good motivation.</li>
+      <li>Corentin stated that we need to identify all of the current implicit
+          and explicit locale dependencies.</li>
+      <li>PeterBr suggested incremental improvements may be made by adding
+          overloads with explicit locale parameters.</li>
+      <li>Tom suggested that we spend an evening in Prague going through the
+          paper in more detail with the intent to improve presentation and fill
+          in gaps.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1629r0">P1629R0: Standard Text Encoding</a>
+    <ul>
+      <li>JeanHeyd introduced:
+        <ul>
+          <li><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2440.pdf">N2440</a>
+              and
+              <a href="https://wg21.link/p1629">P1629</a>
+              are intended to provide text decoding, encoding, and transcoding
+              interfaces.</li>
+          <li>These replace <tt>wstring_convert</tt> and friends.</li>
+          <li>UTF-8 is difficult to enforce in <tt>char</tt> because non-UTF-8
+              data arrives in <tt>char</tt> based strings.</li>
+          <li>C provides few useful interfaces in this area.</li>
+          <li>WG14 approved parts of N2440 and an implementation is available
+              in a standalone library.</li>
+          <li>Plans to submit implementations of N2440 to glibc and musl libc
+              are pending.</li>
+          <li>P1629 provides extensible encoding objects.</li>
+          <li>There is an implementation of P1629 that provides encoding,
+              decoding, transcoding, validation, and code point counting
+              services.</li>
+        </ul>
+      </li>
+      <li>Corentin asked what the motivation is for contributing new interfaces
+          to C.</li>
+      <li>JeanHeyd responded that it makes sense to do so and that WG14 has
+          already approved direction to add the mbs to UTF conversion
+          variants.</li>
+      <li>Tom expressed his motivation for contributing to C; doing so reduces
+          friction between the languages.</li>
+      <li>PeterBr asked if the implementation of N2440 uses SIMD
+          instructions.</li>
+      <li>JeanHeyd replied that it does not yet, partially because the musl
+          maintainers will want straight C implementations.</li>
+      <li>Jens asked why the single-character interfaces are not proposed.</li>
+      <li>JeanHeyd replied that only the restartable variants are being
+          proposed.</li>
+      <li>Jens stated that WG14 will consider a WG21 approved proposal to
+          qualify as implementation experience.</li>
+      <li>PeterBr asked about <tt>replacement_code_unit</tt> and how a
+          replacement character that requires multiple code units would be
+          specified; it seems like the replacement character should be provided
+          as a string.</li>
+      <li>Tom expressed confusion about the existence of
+          <tt>replacement_code_unit</tt> as he expected a replacement code point
+          to be specified.</li>
+      <li><em>[ Editor's note: Tom later started an email thread on the SG16
+          mailing list regarding this:
+          <a href="https://lists.isocpp.org/sg16/2020/02/1101.php">https://lists.isocpp.org/sg16/2020/02/1101.php.</a>
+          ]</em></li>
+      <li>JeanHeyd replied that a replacement code point is preferred and that
+          the replacement code unit is a fall back.</li>
+      <li>Corentin stated that he didn't think <tt>replacement_code_unit</tt>
+          is needed at all.</li>
+      <li>JeanHeyd replied that it is used to distinguish between errors
+          happening in different encode/decode directions.</li>
+      <li>Steve suggested that, perhaps, better names are needed to communicate
+          their intent.</li>
+      <li>JeanHeyd replied that he will update the replacement names and make
+          them ranges or strings.</li>
+      <li>Jens observed that the design appears to be all compile-time based and
+          asked how run-time dependent encoding is handled.</li>
+      <li>JeanHeyd replied that the compile-time implementation can be wrapped
+          in a run-time design.</li>
+      <li>Jens expressed a desire to see the design specified in terms of
+          concepts.</li>
+      <li>JeanHeyd replied that the proposal will use concepts, but that the
+          current implementation is intended to work with pre-C++20
+          compilers.</li>
+      <li>Tom asked how much of the proposal is implemented.</li>
+      <li>JeanHeyd replied that interfaces have been implemented for decoding,
+          encoding, transcoding, validation, and code point counting.</li>
+      <li>JeanHeyd added that support for normalization hasn't been completed,
+          but normalization can be done later.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be February 26th and the focus will
+      be on post-Prague follow up.</li>
+</ul>
+
+
+<h1 id="2020_02_16">February 16th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Post-Prague follow up.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>David Wendt</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2071r0">P2071R0: Named universal character escapes</a>:
+    <ul>
+      <li>Tom provided a status update.  Waiting on a response to add an
+          additional co-author.  Working on updates to address EWG feedback.
+          Wording will need to be re-done for P2029.  On track for review by
+          EWG again in Varna; will hopefully be made tentatively ready then.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2029r0">P2029R0: Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals</a>:
+    <ul>
+      <li>Tom stated an update will be submitted for the Prague post-meeting
+          mailing with the intent that it be discussed at the next core issues
+          processing meeting.</li>
+      <li>Jens stated that the next core issues processing meetings are planned
+          for March 23rd and April 20th.</li>
+    </ul>
+  </li>
+  <li>Renaming <em>universal-character-name</em>:
+    <ul>
+      <li>Corentin brought up an
+          <a href="https://lists.isocpp.org/sg16/2020/02/1152.php">email</a>
+          that he had sent to the SG16 and core mailing lists regarding a
+          desire to rename <em>universal-character-name</em> to
+          <em>universal-character-codepoint</em> since no names are actually
+          used in these productions (code point values are).</li>
+      <li>Jens stated that it can be difficult to get consensus on a change
+          via the core reflector; such a change needs core buy in.</li>
+      <li>Corentin asked how he should proceed.</li>
+      <li>Jens replied that the issue could be discussed in the next core
+          issues processing meeting.  The process to get an item on the agenda
+          for those meetings is to get it on the CWG wiki page for Varna, but
+          the Varna wiki hasn't been populated yet.  Jens said that he would
+          poke at someone to get the wiki structure in place.</li>
+      <li>Tom asked for more details about this process and whether it is really
+          ok to get changes like this initiated without a paper or core
+          issue.</li>
+      <li>Jens replied that a paper is best to ensure proper attention and
+          progress.</li>
+      <li>Jens added that an updated core issues list hasn't been published for
+          some time now.</li>
+      <li><em>[ Editor's note: The last published core issues list is revision
+          100 and has a date of 2018-04-11. ]</em></li>
+      <li>Jens asked if <em>universal-character-codepoint</em> is what we want
+          and suggested <em>unicode-code-point</em> as an alternative.</li>
+      <li>Tom expressed support for Jen's suggested alternative.</li>
+      <li>Zach expressed a preference for something more specific since this
+          production is for one particular way to express a code point.</li>
+      <li>Jens responded that this is a grammar term and asked if the grammar
+          term for P2071 should also be named <em>something-codepoint</em>
+          because it designates one.</li>
+      <li>Corentin expressed support for that sentiment.</li>
+      <li>Zach asked if the implication is that both <tt>\uNNNN</tt> and
+          <tt>\N{...}</tt> would fall under <em>unicode-code-point</em>.</li>
+      <li>Jens replied that they are distinct because <tt>\uNNNN</tt> can be
+          generated from characters not in the basic source character set that
+          appear in identifiers in the source code.  <tt>\N{...}</tt> likely
+          gets effectively quickly translated to <tt>\uNNNN</tt>.</li>
+      <li>Jens opined that the name isn't super important since this is just a
+          grammar term and people should expect to have to look up exactly what
+          it means.</li>
+      <li>Zach stated that <em>unicode-code-point</em> seems like the right
+          choice then.</li>
+      <li>Tom asked about using the names <em>unicode-code-point</em> for
+          <tt>\uNNNN</tt> and <em>unicode-code-point-name</em> for
+          <tt>\N{...}</tt>.</li>
+      <li>Corentin suggested that, in P2071, <em>named-escape-sequence</em> be
+          renamed to <em>unicode-named-escape-sequence</em> for the
+          <tt>\N{...}</tt> case.</li>
+      <li>Jens asked if <tt>\N{...}</tt> is allowed in identifiers.</li>
+      <li>Tom replied that it is not.</li>
+      <li>Jens noted that being a significant difference from
+          <tt>\uNNNN</tt>.</li>
+      <li>Tom expressed some hesitation with regard to adding "unicode" to
+          <em>named-escape-sequence</em> since, in theory, we could support
+          non-Unicode names like D does.</li>
+      <li><em>[ Editor's note: D uses HTML 5 entity names for its named
+          character escapes. ]</em></li>
+      <li>Jens expressed a preference for <em>named-escape-sequence</em> as it
+          is simple and matches nearby grammar terms like
+          <em>octal-escape-sequence</em> and
+          <em>hexadecimal-escape-sequence</em>.</li>
+      <li>PBindels asked about just using <em>code-point</em> for
+          <tt>\uNNNN</tt>.</li>
+      <li>Corentin stated that Unicode is needed in this case.</li>
+      <li>Jens agreed noting that the syntax is specific to Unicode code
+          points.</li>
+      <li>Jens asked to confirm that there is no requirement for an
+          implementation to have a list of acceptable or unacceptable code
+          points for <tt>\uNNNN</tt> other than for surrogate code points and
+          the range of code point values (0-0x1FFFF).</li>
+      <li>Tom confirmed; implementations are not required or allowed to map an
+          unrecognized code point to a replacement code point.</li>
+      <li>Jens acknowledged and added that programs that specify an unassigned
+          code point will not be rejected either.</li>
+      <li>Jens asked if naming this <em>unicode-code-point</em> implies a valid
+          character.</li>
+      <li>Steve suggested that, perhaps, the right name is
+          <em>unicode-scalar-value</em>.</li>
+      <li>Everyone expressed profound distate for the scalar value term.</li>
+      <li>Jens suggested that P2071 be updated to add editorial direction to
+          rename <em>universal-character-name</em> to
+          <em>unicode-code-point</em>.</li>
+      <li>Tom agreed to do so.</li>
+      <li><em>[ Editor's note: concurrent with this meeting, a prominent core
+          member replied to Corentin's email and requested that we retain the
+          <em>unversal-character-name</em> name since it has been in use in C99
+          and C++23 for 20 years now and is referenced in existing literature.
+          Due to there being opposition to the name change, Tom then decided
+          not to pursue the editorial rename via P2071.  Anyone wishing to
+          pursue the rename should therefore write a separate paper. ]</em></li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p0592r4">P0592R4: To boldly suggest an overall plan for C++23</a>:
+    <ul>
+      <li>Tom introduced the topic.  At plenary in Prague, Peter Bindels asked
+          what the process would be to amend P0592.  Tom was approached by
+          several committee members arguing that Unicode support should be added
+          as a priority for C++23.  Tom is concerned about spending committee
+          time addressing a problem that might not exist and is worried that
+          attempting to add our favorite topic to the priority list might
+          inspire other groups to argue for adding theirs potentially consuming
+          significant amounts of committee time.</li>
+      <li>Jens asked what papers aren't making progress.</li>
+      <li>Tom replied that, right now, SG16 is the bottleneck for SG16 work.
+          The EWG and LEWG chairs have been quite supportive of making progress
+          on Unicode matters.</li>
+      <li>PBindels stated that he raised this in plenary partially to encourage
+          people to write papers; we want to ensure that EWG and LEWG are
+          prepared for additional work that builds on the ground work we've been
+          laying.</li>
+      <li>Steve suggested a potential bad scenario.  Two years from now, there
+          could be a glut of pattern matching papers consuming lots of committee
+          time just as C++23 is wrapping up.</li>
+      <li>Tom agreed that is a possible concern, but added that he doesn't think
+          we can preempt it.</li>
+      <li>PBindels stated that P0592 is meant as a general guideline and that we
+          need a plan for ourselves so that we know what we are aiming for in
+          C++23.</li>
+      <li>PBrett agreed and added that knowing what we want, when we want it by,
+          and who is responsible would be helpful.</li>
+      <li>Tom responded that the SG16 github site has issues tracking the SG16
+          work currently in motion as well as other tentative ideas.  Many of
+          those issues are marked as "help wanted" and are available for
+          volunteers to take on.</li>
+      <li>Tom added that
+          <a href="https://wg21.link/p1238">P1238</a>
+          is due for an update.  That paper could be updated to list items that
+          we want help with.  Perhaps we need to do more outreach to enlist
+          additional help.  We could post help wanted tweets or ask more people
+          to get involved when giving talks.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1949r1">P1949R1: C++ Identifier Syntax using Unicode Standard Annex 31</a>:
+    <ul>
+      <li>Tom summarized the current status; Steve has been preparing a revision
+          following EWG review in Prague.</li>
+      <li>Steve stated that the paper is ready for the post-meeting
+          mailing.</li>
+      <li>Tom stated that we lost the tentatively ready status in EWG for this
+          paper following
+          <a href="https://lists.isocpp.org/sg16/2020/02/1122.php">additional email discussion</a>
+          that raised concerns about possible undefined behavior in conjunction
+          with token pasting.</li>
+      <li>Tom asked if the paper needs to address token syntax as well as
+          identifier syntax.</li>
+      <li>Corentin replied that NFC checking should happen after
+          preprocessing.</li>
+      <li>Tom asked if the grammar for identifiers is relevant for tokens.</li>
+      <li>Jens replied that <em>preprocessing-token</em> is distinct and that
+          they get converted into identifiers, keywords, etc... at a particular
+          translation phase.</li>
+      <li>Jens added that this occurs in translation phase 7 per
+          <a href="http://eel.is/c++draft/lex.phases#1.7">[lex.phases]p1.7</a>
+          and
+          <a href="http://eel.is/c++draft/lex.token#1">[lex.token]p1</a>.
+          Core language wording should be added here to state that an identifier
+          shall be in NFC form.</li>
+      <li><em>[ Editor's note: In the draft wording, this is added to
+          <a href="http://eel.is/c++draft/lex.name">[lex.name]</a>. ]</em></li>
+      <li>Steve asked if this is a "shall" or "must" situation.</li>
+      <li>Jens replied that "shall" is correct because a diagnostic is required
+          and that "must" is a forbidden term in normative wording.</li>
+      <li>Tom mentioned that Peter Bindels has drafted a paper arguing for P1949
+          to be designated as a DR for C++20.</li>
+      <li>Jens stated that the DR process would be to get P1949 adopted for
+          C++23, and then get a plenary straw poll to apply it as a DR against
+          C++20.</li>
+      <li>Steve agreed to add content to the paper arguing for treating the
+          matter as a DR.</li>
+      <li>PBindels told Steve to take whatever content he wanted from his DR
+          draft and that he will abandon it.
+        <ul>
+          <li><a href="https://github.com/dascandy/fiets/blob/master/papers/DxxxxR0_P1949_as_DR.fiets">Peter's draft</a></li>
+        </ul>
+      </li>
+      <li>Jens suggested putting content directly in both the paper's front
+          matter and at the beginning of the core wording that this be
+          considered a DR.</li>
+      <li>Jens added that to ensure this is highlighted in core discussion.</li>
+      <li>Tom asked if there would then be two core motions.  One to accept the
+          paper for C++23 and another to accept it as a DR for C++20.</li>
+      <li>Jens replied that it could be one motion: "adopt for C++23 and
+          consider as a DR for C++20"</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1844r1">P1844R1: Enhancement of regex</a>:
+    <ul>
+      <li>Tom summarized the Prague outcome.  We declined to forward this paper
+          on and Peter Bindels has authored a draft paper to deprecate
+          <tt>std::regex</tt>.</li>
+      <li>Tom aplogized for not yet reviewing Peter's deprecation paper.</li>
+      <li>PBindels stated he is waiting for review feedback from a select group
+          of reviewers before sharing the draft more widely.</li>
+      <li>PBindels summarized the paper; it includes rationale for why
+          programmers shouldn't use <tt>std::regex</tt>, performance numbers,
+          ABI issues, votes in Prague, etc...</li>
+      <li>PBindels added that he would like to add more details on why the
+          Visual C++ implementation is presumably so heavily impacted by ABI
+          concerns.</li>
+      <li>Tom replied that the Visual C++ implementation exposes the entire
+          state machine in template instantiations, so no changes can be made
+          that affect the state machine.</li>
+      <li>Corentin suggested additional content stating that the design is
+          overly complicated because it supports so many regex languages and
+          that the requirement to do so impacts performance.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1885r1">P1885R1: Naming Text Encodings to Demystify Them</a>:
+    <ul>
+      <li>Tom suggested adding a list of encodings that are supported by ICU,
+          iconv, Windows, etc..., but that are not present in the IANA
+          database.</li>
+      <li>Corentin replied that he would try to do so.</li>
+      <li>Tom suggested that we try to register an encoding to see how
+          burdensome doing so is to assuage fears about support for
+          unrepresented encodings.</li>
+      <li>Corentin replied that he didn't think that would be a good use of our
+          time.</li>
+      <li>PBrett added that doing so would be an abuse of process; the IANA
+          registration process should only be used to register encodings for
+          which there is a demonstrable need.</li>
+      <li>Tom acknowledged and agreed.</li>
+      <li>Tom suggested adding additional use cases to the paper to make it more
+          evident to LEWG(I) how this functionality is expected to be used.</li>
+      <li>Tom added that such use cases should include intended future direction
+          as well; e.g., interaction with
+          <a href="https://wg21.link/p1629">P1629: Standard Text Encoding</a>.</li>
+      <li>Corentin agreed to do so.</li>
+      <li>JeanHeyd stated that he would look into prototyping integration
+          between P1885 and P1629 and making it available on godbolt.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1953r0">P1953R0: Unicode Identifiers And Reflection</a>:
+    <ul>
+      <li>Tom expressed uncertainty as to what the next steps are.</li>
+      <li>Corentin stated that we need to get P1949 accepted first.  We can then
+          revisit reflection and provide our recommendations to SG7.</li>
+      <li>Corentin added that we do need to keep on top of what SG7 is targeting
+          for C++23.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1040r5">P1040R5: std::embed</a>:
+    <ul>
+      <li>Tom summarized the Prague outcome.  EWG expressed support for a
+          file/directory handle <tt>#depend</tt> based solution.  That solves
+          SG16 concerns; unless there is still a need to support paths that are
+          relative to a handle at translation phase 7.</li>
+      <li>JeanHeyd stated that there are lots of issues with the VFS/node/handle
+          approach.  But regardless, the SG16 recommendation to use
+          <tt>char8_t</tt> and UTF-8 resolves any SG16 related concerns.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be March 11th and that we'll be
+      meeting with the new Unicode Message Format Working Group.</li>
+</ul>
+
+
+<h1 id="2020_03_11">March 11th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Meet and greet for SG16 and the new Unicode Message Format Working Group (MFWG)
+    <ul>
+      <li>Individual introductions.</li>
+      <li>A brief history of each group.</li>
+      <li>Current efforts and plans for each group.</li>
+      <li>General discussion of message formatting.</li>
+      <li>Discussion of how we might work together to mutual benefit.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Amanda Kornoushenko</li>
+  <li>Corentin Jabot</li>
+  <li>Elango Cheran</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Markus Scherer</li>
+  <li>Mihai Nita</li>
+  <li>Peter Brett</li>
+  <li>Romulo Cintra</li>
+  <li>Shane Carr</li>
+  <li>Steve Downey</li>
+  <li>Steven R. Loomis</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>The meeting started off with a round of introductions.</li>
+  <li>Tom provided a brief history of SG16 and changes championed for C++20.
+    <ul>
+      <li>Tom mentioned the work that went into <tt>std::format</tt> via
+          <a href="https://wg21.link/p1868">P1868</a>
+          in order to produce correctly aligned text for monospaced presentation
+          formats.</li>
+      <li>SLoomis stated that character display width is an important problem
+          that is deserving of its own project.</li>
+      <li>PBrett asked if there were plans to enable <tt>std::format</tt> to
+          handle text translation.</li>
+      <li>Tom stated that our current direction is captured in
+          <a href="https://wg21.link/p1238">P1238: SG16 Unicode Direction</a>.</li>
+      <li>Markus provided some references for work being done in ICU to address
+          C++20 incompatibilities:
+        <ul>
+          <li><a href="https://github.com/unicode-org/icu/pull/979">https://github.com/unicode-org/icu/pull/979</a>
+              (a pull request providing minimal changes to allow ICU to compile
+              with C++20; basically a bunch of added <tt>reinterpret_cast</tt>
+              casts for uses of <tt>u8</tt> string literals to continue using
+              them as arrays of <tt>const char</tt>)</li>
+          <li><a href="https://unicode-org.atlassian.net/browse/ICU-20984">https://unicode-org.atlassian.net/browse/ICU-20984</a>
+              (a proposal for a more principled change that avoids the need for
+              many of the <tt>reinterpret_cast</tt> casts)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Members of the MFWG provided an introduction and current status summary.
+    <ul>
+      <li>Romulo gave a general introduction:
+        <ul>
+          <li>The initial impetus for the group was the observed demand for
+              client side message formatting and a lack of browser features
+              needed to effectively enable it two years ago.</li>
+          <li>There are currently a number of libraries available that
+              cumulatively account for millions of weekly downloads:
+            <ul>
+              <li>NPM trends:<br/>
+                  <a href="https://www.npmtrends.com/i18n-vs-i18next-vs-messageformat-vs-polyglot-vs-intl-messageformat-vs-fluent-vs-fbt-vs-format-message">
+                  https://www.npmtrends.com/i18n-vs-i18next-vs-messageformat-vs-polyglot-vs-intl-messageformat-vs-fluent-vs-fbt-vs-format-message</a></li>
+              <li>Overview and analysis of various libraries:<br/>
+                  <a href="https://docs.google.com/presentation/d/1RujNFCq3gH9TUEKDB_uFdKWNG1A1j2_NBCdnTmnEqv0/edit#slide=id.g4af2a8f783_0_210">
+                  https://docs.google.com/presentation/d/1RujNFCq3gH9TUEKDB_uFdKWNG1A1j2_NBCdnTmnEqv0/edit#slide=id.g4af2a8f783_0_210</a></li>
+            </ul>
+          </li>
+          <li>A recommendation was provided to join
+              <a href="https://tc39.es">ECMA TC39</a>
+              and contribute to the group chaired by Shane Carr that is
+              responsible for
+              <a href="https://tc39.es/ecma402">ECMA-402</a>.</li>
+          <li>Discussed the idea of a new group with Shane focused on message
+              formatting last year.</li>
+          <li>Shane brought lots of new people, got them talking, and worked
+              with the Unicode consortium to create the new group.</li>
+        </ul>
+      </li>
+      <li>Shane continued:
+        <ul>
+          <li>Message formatting was already recognized as an item to focus on
+              for ECMAScript.</li>
+          <li>The problem isn't unique to ECMAScript; it is a big problem
+              space.</li>
+          <li>A big question is, how much of the localization stack is to be
+              covered?</li>
+          <li>The Unicode consortium formed the new group in January, 2020 as a
+              Unicode subcommittee.</li>
+          <li>Romulo was named chair of the new group.</li>
+        </ul>
+      </li>
+      <li>Mihai continued with an overview of the scope and design direction:
+        <ul>
+          <li>Think of message formatting like a locale aware implementation of
+              <tt>printf</tt>.</li>
+          <li>But one that can handle plurals.</li>
+          <li>The idea is to separate the string from the localization data
+              model.</li>
+          <li>For <tt>printf</tt>, the format is a sequence of parts, each of
+              which contributes raw text or a placeholder with formatting
+              data.</li>
+          <li>Proper internationalization requires a more complicated data
+              model.</li>
+          <li>There are three major pieces needed:
+            <ul>
+              <li>The data model.</li>
+              <li>A serialization form.</li>
+              <li>A message store.</li>
+            </ul>
+          </li>
+          <li>A goal is to provide a standard data model that can be mapped to
+              various localization interchange formats; not to produce yet
+              another message format.</li>
+        </ul>
+      </li>
+      <li>Romulo wrapped up:
+        <ul>
+          <li>Have had 5 meetings so far.</li>
+          <li>Are still in the design and requirements discovery phase.</li>
+          <li>Are still working on design processes to ensure efficient
+              operation.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>General discussion ensued:
+    <ul>
+      <li>PBrett asked about challenges faced where ICU is currently
+          deficient.</li>
+      <li>Mihai responded that he has a document he can share:
+        <ul>
+          <li>A major challenge is that ICU has the only widely deployed
+              formatting implementation.</li>
+          <li>There are some ECMAScript libraries.</li>
+          <li>ICU does not support inflections well.  For example, in English,
+              one might say "the book", but in other languages, instead of
+              inserting "the", the word "book" is changed.</li>
+          <li>ICU also doesn't handle combinations of plurals well.  For
+              example, a statement like "I bought 5 books and 2 posters"
+              requires a complext nested switch format due to combinatorial
+              explosion and the syntax is clunky.</li>
+        </ul>
+      </li>
+      <li>Markus provided an example of plural complexities.  Arabic has six
+          different plural forms and more may be added to say "exactly one"
+          or for "none".  Two instances of pluralization in a message can
+          lead to dozens of possibilities.</li>
+      <li>Shane stated that the ICU message format is the defacto standard
+          right now, but there is no specification for it.</li>
+      <li>Elango responded that there are different defacto standards across
+          different language ecosystems.  Data literals in ECMAScript provide
+          flexibility.  Many programmers roll their own solutions and this
+          results in inconsistency.  The goal is to create a specification to
+          encourage normalizing behavior across disparate implementations.</li>
+      <li>Jens commented on the complication of language bindings and extensive
+          behavioral options.</li>
+      <li>Mihai agreed; message formatters congregate lots of
+          functionality.</li>
+      <li>Mihai mentioned his prototype of a formatter that uses
+          <a href="https://developers.google.com/protocol-buffers">Protocol Buffers</a>
+          to translate syntax between different formatters.  A comprehensive
+          core data model is essential to be able to do so.</li>
+      <li>Elango stated that the general facility has just one output for
+          message formatting; date formatting is provided by a plugin.</li>
+      <li>Mihai opined that it would be useful to have support for ranges as
+          well.</li>
+      <li>PBrett stated that the ability to stream output is important for C++
+          and that this covers several orthogonal areas of concern:
+        <ul>
+          <li>The data model.</li>
+          <li>The abstract representation.</li>
+          <li>The concrete representation.</li>
+          <li>The sinks that messages go to.</li>
+          <li>Authoring of the translation database.</li>
+        </ul>
+      </li>
+      <li>PBrett added that the above raises an important question for the MFWG
+          to address: what are you trying to solve and what is the
+          abstraction?</li>
+      <li>Jens observed that there appears to be little overlap between SG16 and
+          the MFWG; when the MFWG specification is complete, SG16 will consume
+          it.</li>
+      <li>Tom provided some of his perceptions of the benefits of working
+          together.  First, we ensure that the output of the MFWG works for
+          purposes that we envision.  Second, we get informed about
+          infrastructure requirements that may require new facilities to meet in
+          order to adopt the MFGW output.  For example, enhancements to locale
+          support.</li>
+      <li>Jens noted that, for <tt>std::format</tt> to be able to provide
+          message formatting, it would have to be able to access the message
+          catalog.</li>
+      <li>PBrett observed that adding that complexty to <tt>std::format</tt> may
+          be challenging; it may be difficult to separate dependencies.</li>
+      <li>Markus noted that the mechanism used to pluralize a message is
+          distinct from the source of the pluralization data.</li>
+      <li>Tom asked for clarification; pluralization is more of an algorithm
+          than a lookup?</li>
+      <li>Markus responded that the way ICU has worked for the last 25 years is
+          to parcel out strings or states, and then combine them according to
+          specific rules.</li>
+      <li>Jens stated that WG21 has shied away from localization isseus because
+          the C++ story is so poor; serious work is needed here.</li>
+      <li>Mihai explained that, in the data model the MFWG is working on, a
+          place holder is a cross reference to another string.  If the mapping
+          is generic, then a generic binding can be used, but loading can be
+          customized.</li>
+      <li>Jens expressed caution; we're wary of costs for features that are not
+          used.  Paying such costs is fine when needed, but should not pose
+          overhead when not being used.</li>
+      <li>Tom asked if the design can avoid such costs when such features aren't
+          used.</li>
+      <li>Jens responded that that isn't a fair question for a data model.  A
+          more appropriate question would be what the impact is to the tables
+          used for pluralization data.</li>
+      <li>Mihai responded that pluralization is not a large data set.  The
+          question is more relevant for inflection.  Some languages are regular,
+          but others are quite unregular and sorting requires a lot of
+          data.</li>
+      <li>Mihai added that message formatting brings algorithms together, but
+          the information needed to guide the formatter is distinct.</li>
+      <li>Jens asked if support for pluralization and inflections is in
+          scope.</li>
+      <li>Elango responded that pluralization is, but that inflections may not
+          be; this is work in progress.</li>
+      <li>Shane further responded that support for inflections is in scope as
+          part of the effort to make a standard interface that enables plugging
+          in extensions.</li>
+      <li>Shane added that the focus is to provide a solution that does not
+          require an implementor to implement everything.  Implementors should
+          be able to provide only the subset of features needed for a particular
+          deployment.</li>
+      <li>Markus elaborated on ICU's pluralization support.  ICU doesn't attempt
+          to determine the plural form for any word in any language.  Rather, it
+          identifies ranges of numbers for 100+ languages where things must be
+          done differently.  Translators are then required to author different
+          messages.  Translation tools are designed to prompt translators for
+          each translation form that is needed.  The pluralization form is then
+          used for message selection.</li>
+      <li>Jens observed that the ICU design is exactly what causes the
+          combinatorial explosion.</li>
+      <li>Mihai noted that the goal is to simplify the syntax, not to reduce the
+          number of translations required.</li>
+      <li>PBrett asked how translators can provide translations conveniently in
+          those cases.</li>
+      <li>Mihai responded that translation tools can do fuzzy matches and offer
+          suggestions.</li>
+      <li>PBrett asked about the MFWG road map; is it a goal to produce a
+          Unicode TS?</li>
+      <li>SLoomis responded, yes.</li>
+      <li>PBrett asked if there is a tentative time line.</li>
+      <li>Romulo responded that they are still in the design phase, so there is
+          no clear road map right now.</li>
+      <li>Mihai added that they have been focused on collecting use cases and
+          feature requests; the rate of additions is decreasing.</li>
+      <li>Mihai elaborated that getting consensus on a data model being a goal
+          took some time.</li>
+      <li>Corentin stated that it would be great to support a common syntax in
+          C++ and ECMAScript so that translators have consistent experiences.
+          For <tt>std::format</tt>, Python's syntax was adopted thereby enabling
+          developers to switch easily.</li>
+      <li>Mihai responded that a common format is anticipated for translators,
+          but that does not necessarily correspond to what a programmer
+          writes.</li>
+      <li>PBrett hypothesized that a C++ implementation could have a
+          <tt>constexpr</tt> solution that uses C++, but that can be translated
+          to some other syntax.</li>
+      <li>PBrett added that we need to think of how to deprecate and replace
+          <tt>std::message</tt>.</li>
+      <li>Jens noted that understanding the data model is important to envision
+          how the various parts fit together and asked if a draft data model
+          exists.</li>
+      <li>Mihai responded that there are currently two documents on the data
+          model.  Elango provided a document that argues for a data model, and
+          Mihai provided one that maps a model to one of several implementations
+          and discusses how it can be modified to add features.  There is no
+          final draft.
+        <ul>
+          <li>Elango's doc:<br/>
+              <a href="https://docs.google.com/presentation/d/1fBfawWNfniCFox-PltCMyVtbcVwYGYkk78GUbWzas5o/edit#slide=id.g8254abe56c_0_0">
+              https://docs.google.com/presentation/d/1fBfawWNfniCFox-PltCMyVtbcVwYGYkk78GUbWzas5o/edit#slide=id.g8254abe56c_0_0</a></li>
+          <li>Mihai's doc:<br/>
+              <A href="https://docs.google.com/presentation/d/1dyW29SlqjPRZVScobqEXjnP29fhbqMkCfgxPOWj3Tnw">
+              https://docs.google.com/presentation/d/1dyW29SlqjPRZVScobqEXjnP29fhbqMkCfgxPOWj3Tnw</a><br/>
+              (currently requires permission to access)</li>
+        </ul>
+      </li>
+      <li>Corentin asked if there is a reference syntax available and noted that
+          none of us our linguistics experts.</li>
+      <li>Mihai responded that a syntax for ECMAScript is anticipated along with
+          a language independent form in a structured data format like
+          JSON.</li>
+      <li>Markus suggested that SG16 should consider whether it wants to do
+          something in this area or whether this functionality should be left to
+          non-standard libraries.</li>
+      <li>Tom responded that the design direction would allow for a standard
+          implementation, but doesn't restrict the use of non-standard
+          implementations.</li>
+      <li>Jens suggested that it would be good to appoint someone from SG16 to
+          be a liazon to attend MFWG meetings and keep tabs on things.</li>
+      <li>Shane agreed with that approach; it would help to maximize utility to
+          consumers.</li>
+      <li>Jens commented that what the committee needs is a standard that we can
+          defer to that was produced by experts since, if left to our own
+          devices, we'd probably produce a poor design.  Dependence on such a
+          standard needs to be figured into our road map.</li>
+      <li>PBrett asked about the
+          <a href="https://groups.google.com/a/chromium.org/forum/#!forum/message-format-wg">MFWG mailing list</a>
+          and
+          <a href="https://github.com/unicode-org/message-format-wg">MFWG github site</a>;
+          neither looks particularly active.</li>
+      <li>SLoomis replied that most activity is happening in github issues.</li>
+      <li>Shane added that there is a
+          <a href="https://unicode-org.slack.com">Slack Unicode channel</a>.</li>
+      <li>PBrett suggested that SG16 should discuss more, reflect, and
+          contemplate how we want to move forward.</li>
+      <li>PBrett asked what SG16 can do to help facilitate work by the
+          MFWG.</li>
+      <li>Mihai responded; try not to invent something new.</li>
+      <li>Corentin noted that we need to re-design our locale facilities before
+          we can take on message localization and that we need to implement
+          facilities matching those in
+          <a href="https://www.ecma-international.org/publications/standards/Ecma-402.htm">ECMA-402</a>.</li>
+      <li>Tom returned to the subject of requirements and asked if there are
+          cases where multiple locales need to be consulted for the same
+          message.</li>
+      <li>Markus responded that mixtures of locales appear in cases where a
+          placeholder refers to, for example, a name.</li>
+      <li>Steve stated that such scenarios are common with currency; it is
+          common, for example, to use USD outside of US locales.</li>
+      <li>Mihai added that this also happens with dates.  Dates may be
+          presented in multiple formats.</li>
+      <li>Steve added that use of a locale independent date format might be
+          consistently used regardless of locale.</li>
+      <li>Mihai stated that these scenarios should be possible to address, but
+          not optimized for.</li>
+      <li>Tom asked if the notion of locale independent message formatting is
+          relevant to the MFWG.</li>
+      <li>Markus replied that there are good use cases for locale independent
+          formatting; logging for example.</li>
+      <li>Steve added that JSON output should not be localized.</li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2020_03_25">March 25th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Follow up on our meeting with the Unicode Message Format Working Group
+    <ul>
+      <li>Draft volunteers to function as liaisons between our groups.</li>
+    </ul>
+  </li>
+  <li>Plans to acquire implementation experience for:
+    <ul>
+      <li><a href="https://wg21.link/p1949r1">P1949R1: C++ Identifier Syntax using Unicode Standard Annex 31</a></li>
+      <li><a href="https://wg21.link/p2071r0">P2071R0: Named universal character escapes</a></li>
+    </ul>
+  </li>
+  <li><a href="https://htmlpreview.github.io/?https://github.com/dascandy/fiets/blob/master/html/D2124R0_Deprecate_std_regex.html">D2124R0: std::regex should be deprecated starting in C++23</a>
+    <ul>
+      <li>Initial SG16 review.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Amanda Kornoushenko</li>
+  <li>David Wendt</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Summer plans in lieu of the Varna meeting.
+    <ul>
+      <li>Tom introduced the topic.
+        <ul>
+          <li>With the cancellation of the Varna meeting, the library and
+              language subgroups are going to start hosting telecons.  This
+              raises two concerns:
+            <ul>
+              <li>We'll face increased competition for our respective telecon
+                  time budgets.</li>
+              <li>We traditionally have not conducted polls during telecons,
+                  but we'll need to start doing so if we are to get papers
+                  forwarded to the subgroups for review during their
+                  telecons.</li>
+            </ul>
+          </li>
+          <li>Tom also mentioned that mailings will now occur monthly.</li>
+        </ul>
+      </li>
+      <li>Tom asked if anyone had concerns about continuing to attend SG16
+          telecons due to potentially having to choose between SG16 or other
+          subgroup telecons.  No concerns were reported.</li>
+      <li>PBrett asked how polling will be conducted.</li>
+      <li>Tom explained his current thoughts; we can adopt a tentatively ready
+          approach and affirm decisions at the next face-to-face meeting.</li>
+      <li>PBrett suggested providing some method of async polling for those
+          that are unable to attend telecons due to time zone or other
+          challenges.</li>
+      <li>Tom replied that it is important that those voting are present for
+          discussion leading up to a poll.</li>
+      <li>Mark stated that the current schedule is ok, but that we could
+          consider setting aside two time slots favorable to different time
+          zones and swap between them.</li>
+      <li>PBrett suggested that having a tentatively ready queue provides an
+          opportunity for a two tier approach to decision making.</li>
+      <li>JeanHeyd suggested adopting the LWG approach of monday emails
+          preceding a meeting; that would invite more participation from those
+          that cannot attend a telecon.</li>
+      <li>Tom expressed support for that suggestion.</li>
+      <li>Mark opined that polling should not occur without an author present
+          as we'd be unlikely to converge on consensus.</li>
+      <li>Mark suggested that, perhaps, we could record discussion.</li>
+      <li>Tom replied that he could follow up with Herb regarding that
+          possibility.</li>
+      <li>PBrett suggested that we can publicize tentatively ready decisions,
+          request feedback, and revisit based on new information.</li>
+      <li>Hubert stated that meeting minutes are useful, but that he would
+          object to sharing recordings since this group is open.  Trust between
+          committee members is built over time and we have to trust people to
+          understand mis-statements.</li>
+      <li>Tom asked Hubert that, if Herb were to approve some kind of recording,
+          if this is something he could potentially be open to.</li>
+      <li>Hubert responded with maybe, but only if a demonstrable need is
+          recognized that can't be addressed in another way.</li>
+      <li>Tom agreed with that criteria; recordings are sensitive, we can
+          revisit this if need arises.</li>
+      <li>Steve stated that more frequent mailings will help give us notice of
+          poor responses to previous decisions.  Writing a short paper with new
+          information should not be a high bar.</li>
+      <li>Hubert replied that mailings are a heavy weight way of providing
+          feedback.  During face to face meetings, we accept and address
+          feedback in real-time; sometimes including in plenary.</li>
+      <li>Tom agreed, but added that writing a paper is always an option.</li>
+      <li>Steve expressed a preference that there be a relatively high bar for
+          reopening discussions.</li>
+      <li>Tom agreed and provided an example case where discussion was
+          reopened.  SG16 approved
+          <a href="http://wg21.link/p1885r0">P1885R0</a>
+          in Belfast, discussion afterwards resulted in the paper being
+          revisited in Prague where
+          <a href="http://wg21.link/p1885r2">P1885R2</a>
+          was approved.</li>
+      <li>Hubert stated that, since SG16 is a study group, objections can always
+          be raised with EWG, LEWG, or in plenary.</li>
+      <li>Tom returned to the mechanics of polling.  Bluejeans doesn't have
+          polling features built in.  We could switch to Zoom so that we could
+          make use of its "raise hand" feature.  Otherwise, we'll have to figure
+          out another way to conduct polls.</li>
+      <li>Tom stated that he would document a process to use and we can evaluate
+          consensus on it at an upcoming telecon.</li>
+    </ul>
+  </li>
+  <li>Follow up on the prior meeting with the Unicode Message Format Working
+      Group
+    <ul>
+      <li>Tom asked if there were any volunteers to function as a liaison
+          between our groups.</li>
+      <li>PBrett volunteered to do so.</li>
+    </ul>
+  </li>
+  <li>Plans to acquire implementation experience for:
+    <ul>
+      <li><a href="https://wg21.link/p1949">P1949: C++ Identifier Syntax using Unicode Standard Annex 31</a>:
+        <ul>
+          <li>Tom asked Steve if he had any thoughts on implementation.</li>
+          <li>Steve responded that he had not strongly considered it, but that
+              he didn't think it should be too difficult, at least for gcc where
+              warnings are already emitted.</li>
+          <li>Steve added that the immediate priority is to free up time to
+              answer new questions raised since the Prague meeting.</li>
+          <li>Tom suggested that it may suffice to audit the warnings that gcc
+              provides and, if they closely match the proposal, to consider that
+              sufficient implementation experience.</li>
+          <li>Steve stated that the complicated part is the filter for what
+              characters are allowed.</li>
+          <li>Tom suggested another approach might be to analyze the gcc tests
+              and add more as necessary to cover edge cases.</li>
+          <li>Steve responded that there is a table for allowed characters
+              already and that he could probably evaluate that prior to the New
+              York meeting.</li>
+        </ul>
+      </li>
+      <li><a href="https://wg21.link/p2071">P2071: Named universal character escapes</a>:
+        <ul>
+          <li>Tom stated that he has not started on an implementation yet; he
+              is currently focused on getting implementations of
+              <tt>mbrtoc8</tt> and <tt>c8rtomb</tt> ready to submit to
+              glibc.</li>
+          <li>Tom added that he might start an implementation after that, but
+              if anyone else wants to work on it, that would be great.</li>
+          <li>JeanHeyd asked if an implementation was needed given the prior
+              work that Corentin did.</li>
+          <li>Tom responded that, technically no, but having an implementation
+              available helps with consensus; it means we're standardizing an
+              existing practice.</li>
+          <li>PBrett agreed; an implementation increases confidence in a
+              design.</li>
+          <li>Hubert stated that the implementation impact for C vs C++ may be
+              much higher; WG14 may object.</li>
+          <li>Jens noted that WG14 will want two implementations, but that
+              acceptance in C++ counts as one.</li>
+          <li>JeanHeyd asked if anyone was aware of a simple C compiler that
+              would be good for experimentation.</li>
+          <li>PBrett replied that
+              <a href="https://bellard.org/tcc">TCC</a>
+              might be a good choice, but that it appears to be
+              unmaintained.</li>
+          <li>Jens noted that the implementation doesn't require a modern C
+              compiler.</li>
+          <li>JeanHeyd suggested that
+              <a href="http://sdcc.sourceforge.net">SDCC</a>
+              may be another option.</li>
+          <li>Steve stated that he would be surprised if there was significant
+              code size impact as opposed to data size.</li>
+          <li>Jens responded that it doesn't much matter; growth is growth and
+              potentially impactful for constrained use cases.  Even 300K could
+              be significant.</li>
+          <li>Steve provided an example impact; the compiler may no longer fit
+              on a floppy disk.</li>
+          <li>Jens suggested it may make sense for this feature to be optional
+              for C.</li>
+          <li>Jens noted that Richard Smith had asked about allowing <tt>\N</tt>
+              in identifiers and suggested they should be allowed there.</li>
+          <li>Tom responded that it is on his todo list to address that in a
+              revision.  We'll then want to discuss that option at a future
+              telecon.</li>
+          <li>Jens added that, from a core wording perspective, it would be
+              simpler to specify these as <em>universal-character-name</em>;
+              allowed uses could still be differentiated.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://htmlpreview.github.io/?https://github.com/dascandy/fiets/blob/master/html/D2124R0_Deprecate_std_regex.html">D2124R0: std::regex should be deprecated starting in C++23</a>:
+    <ul>
+      <li>PBindels introduced the draft:
+        <ul>
+          <li><tt>std::regex</tt> doesn't work with variable length
+              encodings.</li>
+          <li>Performance is poor to the point it is faster to fork and exec
+              a process to do the regex in another language.</li>
+          <li>We can't fix the problems due to ABI concerns.</li>
+          <li>There is no plan to remove; just to deprecate until a suitable
+              replacement is provided, as was done for
+              <tt>std::auto_ptr<tt>.</li>
+          <li>We don't want to spend more committee time on
+              <tt>std::regex</tt>.</li>
+        </ul>
+      </li>
+      <li>PBrett added that he has drafted additional changes that discuss what
+          a new regex implementation could provide and had planned to target
+          those changes to the Varna pre-meeting mailing.</li>
+      <li>Hubert noted that we now have monthly meetings.</li>
+      <li>Tom noted that the next mailing deadline is now April 15th.</li>
+      <li>Hubert stated that the relatively large set of supported RE grammars
+          is a problem; we should avoid POSIX ones that require
+          implementation-defined behavior.</li>
+      <li>PBrett noted that this concern is mentioned in the paper, but needs
+          more detail.</li>
+      <li>PBrett also noted that the paper would benefit from a reference to
+          <a href="http://www.unicode.org/reports/tr18/tr18-19.html">UTS #18</a>.</li>
+      <li>Tom suggested that, perhaps, a separate paper listing requirements
+          for a <tt>std::regex</tt> replacement would be useful.</li>
+      <li>JeanHeyd responded that is useful to have that information in this
+          paper to guide authors who might like to propose a replacement.</li>
+      <li>PBrett suggested that a requirements paper could be provided
+          later.</li>
+      <li>PBindels opined that direction for a replacement should be documented
+          in a new paper.</li>
+      <li>Steve suggested that inability to handle Unicode is reason enough to
+          deprecate <tt>std::regex</tt>.</li>
+      <li>PBrett noted that <tt>std::regex</tt> can be used for UTF-8 if the
+          regular expression author is very careful and text is normalized.</li>
+      <li>PBrett also noted that <tt>std::regex</tt> can be used on strings that
+          are not text.</li>
+      <li>PBindels aded a comparison; just like <tt>std::string</tt> can be used
+          for non-text.</li>
+      <li>Mark gently steered the group back to the topic of deprecation.</li>
+      <li>PBrett asked if anyone that regularly attends LEWG or LWG has
+          additional guidance.</li>
+      <li>Hubert responded that including relevant LWG issues would be
+          helpful.</li>
+      <li>Mark responded that it would be useful to include links to relevant
+          papers that discussed issues with <tt>std::regex</tt> in the past and
+          provided a list of such papers going back to 2005:
+        <ul>
+          <li><a href="https://wg21.link/p0169r0">P0169R0: regex and Unicode character types</a></li>
+          <li><a href="https://wg21.link/p0014r1">P0014R1: Proposal to add the multiline option to std::regex for its ECMAScript engine</a></li>
+          <li><a href="https://wg21.link/p0757r0">P0757R0: regex_iterator should be iterable</a></li>
+          <li><a href="https://wg21.link/p1149r0">P1149R0: Constexpr regex</a></li>
+          <li><a href="https://wg21.link/p1844r1">P1844R1: Enhancement of regex</a></li>
+        </ul>
+      </li>
+      <li>Mark added that references to closed LWG issues would also be
+          useful.</li>
+      <li>Hubert agreed; the existence of significant issues may be sufficient
+          motivation for removal.</li>
+      <li>PBrett noted that relevant LWG issues can be found by searching for
+          "regex" on the
+          <a href="https://cplusplus.github.io/LWG/lwg-active.html">LWG active issues list</a>.</li>
+      <li>Hubert provided a link to such an issue:
+          <a href="https://cplusplus.github.io/LWG/issue2546">https://cplusplus.github.io/LWG/issue2546</a>.</li>
+      <li>Jens noted that <tt>export</tt> was removed, so there is precedent for
+          removal without replacement.</li>
+      <li>Jens suggested that someone follow up with Peter Dimov since he was
+          involved with <tt>boost::regex</tt> and the introduction of
+          <tt>std::regex</tt> in C++11.</li>
+      <li>PBrett suggested that, perhaps, the paper should include an option for
+          removal.</li>
+      <li>Jens cautioned against doing so.</li>
+      <li>PBindels opined that there is plenty to gain by deprecation, but that
+          noting the possibility of removal is an option.</li>
+      <li>Jens added another prior deprecation example;
+          <tt>&lt;strstream&gt;</tt> deprecation was not particularly difficult
+          despite there still not being a full replacement for all use
+          cases.</li>
+      <li>JeanHeyd commented that
+          <a href="https://wg21.link/p0448">P0448</a>
+          provides a span that is a full replacement for
+          <tt>&lt;strstream&gt;</tt>, so removal may be possible relatively
+          soon.</li>
+      <li>Jens expressed a desire for an analysis of how a replacement could be
+          evolved without running into the same ABI issues.</li>
+      <li>PBindels agreed with that desire, but opined that should be done in a
+          different paper.</li>
+      <li>Tom provided a list of suggestions:
+        <ul>
+          <li>Drop all uses of "very", "much", "bad", "many", "entirely",
+              "large", etc...</li>
+          <li>In 3.1.1, the example is good, but confusing.  It may be worth
+              emphasizing that use of braces denotes a set of individual code
+              units (not characters!) to be matched.  It may be helpful to
+              explain the intent and the observed behavior separately.</li>
+          <li>In 3.1.2, it may be worth mentioning explicitly that Unicode has
+              multiple ways to represent some characters.</li>
+          <li>In 3.1.3, it isn't stated what character is used as a space
+              character in the example string.</li>
+          <li>Explicitly list the signatures of interfaces in
+              <tt>std:regex_traits</tt> that are problematic.  Having the
+              signatures available makes some of the issues very clear.  For
+              example, what does it mean to translate a standalone code unit?
+            <ul>
+              <li><tt>CharT std::regex_traits&lt;CharT&gt;::translate(CharT c) const</tt></li>
+            </ul>
+          </li>
+          <li>Explain why a replacement for <tt>std::regex_traits</tt> wouldn't
+              suffice to address significant problems; the interfaces provided
+              by <tt>std::regex</tt> are not problematic by themselves.</li>
+          <li>Reference failed papers.</li>
+        </ul>
+      </li>
+      <li>PBrett stated that people reading the paper should be aware of
+          normalization.</li>
+      <li>Jens responded that some won't and that they will form an opinion and
+          vote on the paper regardless.</li>
+      <li>Hubert asserted that the paper does not need to focus on details of
+          Unicode; an additional problem is that <tt>std::regex</tt> doesn't
+          differentiate between the encoding of the pattern and the
+          subject.</li>
+      <li>Hubert provided a link to a
+          <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81200">gcc bug report</a>
+          demonstrating that WG21 didn't understand the <tt>std::regex</tt>
+          functionality when they standardized it.</li>
+      <li>PBrett asked if anyone has major concerns about deprecating
+          <tt>std::regex</tt>.</li>
+      <li>Mark responded that, when his organization moved to C++11,
+          <tt>std:regex</tt> was the only new feature programmers were told not
+          to use.</li>
+      <li>PBindels responded that he once tried to use <tt>std::regex</tt> to do
+          an alternation on a few patterns and performance made it clear this
+          wasn't going to work out.</li>
+      <li>PBrett responded that his organization usees <tt>std::regex</tt> in
+          production, in limited cases, with known Latin1 text.</li>
+      <li>Hubert responded that he has come across cases where
+          <tt>std::regex</tt> matching behavior is sensitive to compiler
+          language dialect options.</li>
+      <li>Steve responded that deprecating it would make code reviews easier
+          since all uses of it could be rejected on the basis that deprecated
+          features shouldn't be used.</li>
+      <li>PBrett noted that <tt>-Wno-deprecated</tt> is ubiquitous in their
+          code base.</li>
+    </ul>
+  </li>
+  <li>Tom confirmed that the next meeting will be Wednesday, April 8th.</li>
+</ul>
+
+
+<h1 id="2020_04_08">April 8th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss whether to hold telecons at the current UTC time year round and
+      discontinue observing day light savings time.</li>
+  <li>Discuss and poll to adopt the proposed SG16 operational plan:
+    <ul>
+      <li><a href="https://github.com/sg16-unicode/sg16/blob/78d6b4052ed561a6f5d384d6b5a4c7f30ac523c6/OperatingProcedures.md">https://github.com/sg16-unicode/sg16/blob/78d6b4052ed561a6f5d384d6b5a4c7f30ac523c6/OperatingProcedures.md</a></li>
+    </ul>
+  </li>
+  <li>Discuss whether to switch from Bluejeans to Zoom for future meetings.
+    <ul>
+      <li>WG21 is encouraging (but not requiring) all SGs to use Zoom for
+          consistency and for polling features.</li>
+    </ul>
+  </li>
+  <li>Unicode Message Format Working Group liaison report.</li>
+  <li><a href="https://isocpp.org/files/papers/D1949R3.html">D1949R3: C++ Identifier Syntax using Unicode Standard Annex 31</a>:
+    <ul>
+      <li>New draft revision review.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>David Wendt</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Discussion of telecons and daylight savings time:
+    <ul>
+      <li>Tom introduced the topic.
+        <ul>
+          <li>We've historically observed daylight savings time as observed
+              in the EST5EDT4 timezone.</li>
+          <li>Adjustments to meeting times due to timezone changes are a cause
+              for confusion.</li>
+          <li>Proposing to keep telecon times at the same UTC time year
+              round.</li>
+          <li>Any concerns?</li>
+        </ul>
+      </li>
+      <li>Everyone tried to work out what local telecon times would be when
+          timezone adjustments next occur.  As might be expected, there was
+          some initial confusion.</li>
+      <li>Jens cleared up the confusion; when timezone changes are made in the
+          fall, telecons will start one hour earlier for locales that observe
+          daylight savings time.</li>
+      <li>Mark indicated that the earlier time might make for some tight
+          scheduled for him, but probably ok.</li>
+      <li>Tom stated that we'll try this and can always adjust if
+          necessary.</li>
+    </ul>
+  </li>
+  <li>Discussion and polls to adopt the proposed SG16 operational plan:
+    <ul>
+      <li>Tom introduced the topic.
+        <ul>
+          <li>As discussed during our last telecon, changes happening in WG21
+              in response to the COVID-19 crisis will require that we begin
+              polling papers during telecons.</li>
+          <li>Tom circulated a draft document with proposed procedures for SG16
+              telecons and meetings:
+            <ul>
+              <li><a href="https://github.com/sg16-unicode/sg16/blob/78d6b4052ed561a6f5d384d6b5a4c7f30ac523c6/OperatingProcedures.md">https://github.com/sg16-unicode/sg16/blob/78d6b4052ed561a6f5d384d6b5a4c7f30ac523c6/OperatingProcedures.md</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>PBrett asked for clarification regarding forwarding of papers and
+          whether a requested change means that we'll need to wait for an
+          updated revision and re-poll.</li>
+      <li>Tom responded, no; we can approve with feedback and audit the next
+          revision to ensure that our feedback was addressed.  Such auditing may
+          require naming a delegate to follow up in some cases.</li>
+      <li>Steve noted that the isocpp.org paper management system allows for
+          P-numbered papers that have not yet appeared in a mailing to be
+          updated.  Such updates should be avoided for P-numbered papers that
+          have been shared prior to appearance in a mailing.</li>
+      <li>Jens stated that we should strive to avoid revision inflation but that
+          it is probably beneficial to have a P-numbered revision when polling
+          to forwarding a paper to an upstream subgroup.</li>
+      <li><b>Poll: Adopt the proposed document as SG16's operating procedures</b>
+        <ul>
+          <li><b>Attendees: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Discussion of whether to switch from Bluejeans to Zoom for future
+      meetings.
+    <ul>
+      <li>Tom introduced the topic:
+        <ul>
+          <li>WG21 leadership has suggested that all subgroups and study groups
+              adopt Zoom for their telecons for consistency, familiarity, and
+              polling features.</li>
+          <li>SG16 has been using Bluejeans successfully for the last two
+              years.</li>
+          <li>We haven't encountered many technical issues with Bluejeans.</li>
+          <li>Bluejeans doesn't provide polling features.  Now that we'll need
+              to be polling in telecons, such features could prove helpful.</li>
+          <li>Should we switch to Zoom?</li>
+        </ul>
+      </li>
+      <li>PBrett noted that there have been reports of serious privacy and
+          security issues with Zoom.</li>
+      <li>Tom responded that Herb has provided guidance on how to configure Zoom
+          to address some of these issues.</li>
+      <li>PBrett added that there are also concerns regarding how Zoom makes
+          money.</li>
+      <li>Tom responded that the ISO funds accounts for chairs that need them.
+          In my case, my ISO registration is via my work email address and I
+          have a Zoom account funded by my employer.</li>
+      <li>PBrett noted that WebEx doesn't monetize usage monitoring; Zoom seems
+          to have a we-can-do-whatever-we-want approach to usage
+          monitoring.</li>
+      <li>Jens responded that eavesdropping concerns are probably not a strong
+          concern for the ISO.  And SG16 is a public group.</li>
+      <li>Tom agreed.</li>
+      <li>Jens stated that he has been having technical issues with Bluejeans;
+          it fails to populate the participant list and chat.  No such issues
+          have been experienced with the Zoom client.</li>
+      <li>Tom asked if there were any strong objections to switching to
+          Zoom.</li>
+      <li>PBrett responded that, if the question was phrased as, would I stop
+          attending SG16 telecons if we switched to Zoom, then the answer is
+          no.</li>
+      <li>Tom restated the question to just ask for preferences.</li>
+      <li>Zach responded that he has no preference; both Bluejeans and Zoom work
+          for him.</li>
+      <li>Mark responded likewise.</li>
+      <li>Steve responded that he has both installed and noted that the
+          moderation features are better in Zoom.  If SG16 were a larger group,
+          we would need such features, but Bluejeans works fine for the size of
+          our group.</li>
+      <li>Zach stated that the LEWG telecon hosted with Zoom this week worked
+          pretty well.  There were some challenges getting everything on the
+          screen; chat was pretty active, the raise hand feature was being used
+          and that required the participant list.  He had to tile windows to
+          make everything fit.  The hand raise feature was nice.  The LEWG chair
+          struggled a little bit keeping tabs on chat, hands, screen.</li>
+      <li>Zach added that he wasn't sure the raise hands feature is needed for
+          groups of our size.</li>
+      <li>PBrett reported having had a similar experience; it can be challenging
+          to use Zoom without using multiple monitors.</li>
+      <li>Mark noted additional issues with the Zoom UI layout; widgets may
+          obscure the main window.</li>
+      <li>PBrett stated that we should have more motivation for switching.</li>
+      <li>Jens reminded the group that Bluejeans is not working correctly for
+          him.</li>
+      <li>Tom suggested that we wait a month or so to evaluate how things go
+          with other groups and then revisit.</li>
+    </ul>
+  </li>
+  <li>Unicode Message Format Working Group liaison report.</li>
+    <ul>
+      <li>PBrett reported that, like everyone, they have been impacted by the
+          COVID-19 pandemic, but they have worked out a system for rotating
+          chairs for meetings.</li>
+      <li>PBrett added that, if anything interesting happens, that he will
+          notify Tom to put an item on the agenda; there is no reason to have
+          a liaison report at each of our meetings at this time.</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/D1949R3.html">D1949R3: C++ Identifier Syntax using Unicode Standard Annex 31</a>
+    <ul>
+      <li>Steve introduced changes since
+          <a href="https://wg21.link/p1949r2">P1949R2</a>:
+        <ul>
+          <li>The most significant changes relate to when normalization
+              occurs.</li>
+          <li>There is implementation divergence with regard to preprocessor
+              identifiers.</li>
+          <li>gcc requires that preprocessor identifiers meet the general
+              identifier requirements, but Clang and Visual C++ do not.  gcc
+              rejects the following code because <tt>\u0300</tt> is not a valid
+              initial character for an identifier.
+<pre>
+    #define accent(x) x##\u0300
+    constexpr int accent(A) = 2;
+    constexpr int gv2 = A\u0300;
+    static_assert(gv2 == 2, "whatever");
+</pre>
+          </li>
+        </ul>
+      </li>
+      <li>PBrett expressed a preference for gcc's behavior.</li>
+      <li>Tom stated that the operands to the <tt>##</tt> operator are not
+          identifiers.</li>
+      <li>Jens agreed; they are preprocessing tokens.</li>
+      <li>Steve responded that the grammar for preprocessing tokens includes
+          identifier.</li>
+      <li>Hubert agreed; the grammar for preprocessing tokens is stated in
+          terms of identifiers.</li>
+      <li>PBrett: provided a link to the grammar for
+          <em>preprocessing-token</em> showing identifier.
+        <ul>
+          <li><a href="http://eel.is/c++draft/lex.pptoken#nt:preprocessing-token">http://eel.is/c++draft/lex.pptoken#nt:preprocessing-token</a></li>
+        </ul>
+      </li>
+      <li>PBrett asked if it would be reasonable to modify the preprocessing
+          grammar to require adherence to
+          <a href="https://unicode.org/reports/tr31">UAX #31</a>.</li>
+      <li>Hubert responded that the question previously raised on the mailing
+          list was, after token pasting, is it required to check that a
+          resulting preprocessor token that is ostensibly an identifier is in
+          NFC and, if not, is the result undefined-behavior (UB); in other
+          words, is a non-NFC identifier a valid preprocessing token?</li>
+      <li><em>[ Editor's note: that question was raised in the email thread
+          that started at
+          <a href="https://lists.isocpp.org/sg16/2020/02/1122.php">https://lists.isocpp.org/sg16/2020/02/1122.php</a>.
+          ]</em></li>
+      <li>Zach stated that, in general, yes, checking is required because
+          combining two NFC sequences doesn't necessarily produce an NFC
+          sequence.  If we're going to diagnose ill-formedness, we need to
+          check for that.  Otherwise we end up with
+          ill-formed-no-diagnostic-required (IFNDR) and that should be
+          avoided.</li>
+      <li>PBrett mentioned that the draft paper doesn't have an example of
+          pasting two NFC tokens that produce a non-NFC result.</li>
+      <li>Steve responded that the example in the paper is such an example.</li>
+      <li><em>[ Editor's note: The example in the paper is such an example,
+          though not necessarily the kind of example that Zach and Peter had in
+          mind.  Including an example from the
+          <a href="https://unicode.org/reports/tr15/#Concatenation">UAX #15 section on concatenation of normalized strings</a>
+          might be helpful. ]</em></li>
+      <li>Jens noted that the second operand is not a valid UAX #31
+          identifier.</li>
+      <li>Steve acknowledged that, but noted that a digit is not an identifier,
+          but can be concatentated to a valid identifier to produce a different
+          one.</li>
+      <li>PBrett asked if a bare combining character can be a valid
+          preprocessing token; whether, in C++20, <tt>\u0300</tt> is a valid
+          preprocessor token.</li>
+      <li>Jens responded, no;
+          <a href="http://eel.is/c++draft/lex.name#tab:lex.name.disallowed">[lex.name]p1 table 3</a>
+          lists U+0300 in the list of combining characters that are not
+          permitted to start an identifier.</li>
+      <li>PBrett summarized; Clang and Visual C++ are non-conformant because
+          they allow <tt>\u0300</tt> as a preprocessing token, but gcc handles
+          this correctly.  This is the status quo.</li>
+      <li>Jens stated that the lexer permits much undefined behavior, so we need
+          to be careful.</li>
+      <li>PBrett agreed and added that, for cases of existing UB, we can change
+          behavior.</li>
+      <li>Jens opined that the example ought to be ill-formed, but that there
+          are oddities in the lexer and preprocessor specifications.  For
+          example there is wording that if the result of a concatenated token is
+          not a valid preprocessor token, then the result is UB; would like this
+          example to be ill-formed.</li>
+      <li>PBrett asked if this issue should be reviewed by SG12.</li>
+      <li>Jens responded, no; so long as we're not removing allowances for UB or
+          adding new UB, SG12 doesn't need to be involved.  The example appears
+          to be ill-formed.</li>
+      <li>Tom asked for clarification; Clang and Visual C++ are missing a
+          diagnostic?</li>
+      <li>Jens responded, yes.</li>
+      <li>Zach stated that this suggests that the NFC check should be performed
+          later in translation as opposed to checking that each operand of the
+          <tt>##</tt> operator is in NFC.</li>
+      <li>Jens disagreed with that approach.</li>
+      <li>Steve observed that there are interesting interactions with header
+          units since they externalize preprocessor macros and require
+          comparisons of them.</li>
+      <li>Tom opined that the issue applies equally for headers since different
+          header files can have different source encodings.</li>
+      <li>Jens suggested that implementations could convert to NFC as part of
+          translation phase 1.</li>
+      <li>Hubert reported having investigated implementation divergence and
+          found that there seems to be confusion regarding how max munch works
+          for identifiers.
+          <a href="http://eel.is/c++draft/lex.pptoken#nt:preprocessing-token">preprocessing-token</a>
+          has a rule to match non-white-space characters that don't otherwise
+          fit in the grammar.  Max munch fails to consume a <tt>\u0300</tt>, so
+          <tt>\u0300</tt> is a valid preprocessing token.</li>
+      <li>Jens noted the change in perspective; so the example is well-formed
+          and gcc is wrong to reject it.</li>
+      <li>PBrett concluded that, if <tt>\u0300</tt> is a non-white-space
+          preprocessing token and is therefore a valid operand for the
+          <tt>##</tt> operator, then that means that the earliest we can
+          diagnose non-NFC identifiers is after token pasting.</li>
+      <li>Steve summarized that the diagnostic options are translation phases 4
+          and 7.</li>
+      <li>Hubert stated that there is a difference between writing
+          <tt>\u0300</tt> and the actual U+0300 character in the physical
+          file.</li>
+      <li><em>[ Editor's note: Hubert clarified after the call that he was
+          speaking to a need to consider the user expectations in both cases.
+          The conversation got away before this point could be clarified.
+          ]</em></li>
+      <li>Jens responded that, in translation phase 1, all extended characters
+          are converted to <em>universal-character-name</em>; bare character
+          don't exist afterwards.</li>
+      <li>Tom noted that differences are observeable in raw literals.</li>
+      <li>Steve acknowledged, but noted that isn't relevant for
+          identifiers.</li>
+      <li>Zach stated that Hubert's point is important; macros need to be NFC
+          checked.  But we want to make things easy for implementors.  In the
+          example, if we wanted to check the result of the concatenation in
+          translation phase 7, is there a simple rule to just check for macro
+          names?  Or a simple rule to check all identifiers in translation
+          phases 4 and 7?  It may be worth asking implementors for
+          opinions.</li>
+      <li>PBrett stated that the check should be performed at the point that
+          something becomes an identifier.  That solves the problem for
+          <tt>#define</tt> since it requires an identifier.</li>
+      <li>Hubert responded that he is ok with the lexing portion of that.  The
+          question is, when you try forming a preprocessing token and it is
+          supposed to be an identifier, do you need to check again?  If not,
+          then further checking is needed when converting preprocessing tokens
+          to tokens.  Deferral would be preferred in order to avoid interaction
+          with the UB that Jens pointed out regarding token pasting producing
+          invalid preprocessing tokens.</li>
+      <li>Zach summarized; we do need to check that preprocessing tokens used as
+          identifiers are NFC.  And we need to check that the result of token
+          pasting is a NFC preprocessing token if used as an identifier.  And we
+          need to check identifiers at translation phase 7.</li>
+      <li>Jens replied that the wording we have is already what we want; it
+          doesn't differentiate between preprocessor or translation phase 7
+          identifiers.  The result of token pasting is just a preprocessing
+          token, so there is no need to perform an NFC check since it isn't an
+          identifier yet.</li>
+      <li>Hubert clarfied his understanding of Zach's description; Jens stated
+          that the result of token concatenation is just a preprocessing token,
+          but it can be any of the preprocessing token possibilities.  If it
+          matches an identifier, than we can check if it is NFC.</li>
+      <li>PBrett stated that, in
+          <a href="http://eel.is/c++draft/cpp.concat#3">[cpp.concat]p3</a>,
+          if the result is not a preprocessing token, then the behavior is UB.
+          So we don't have to check for NFC because it is already UB.</li>
+      <li>Hubert responded that the question is then whether we care for this
+          use case.</li>
+      <li>Jens noted that caring for this use case is more expensive.</li>
+      <li>PBrett stated that the case he is concerned about is where token
+          pasting produces a name that is then used to define a macro; a
+          diagnostic should be issued in such cases.</li>
+      <li>Jens responded that UB has already occurred at that point, so a
+          diagnostic doesn't apply.</li>
+      <li>Jens noted that the only use cases we have for producing non-NFC
+          preprocessing tokens are for use with the stringize operator</li>
+      <li>Hubert added, or for discarding tokens.  The stringize case isn't
+          too compelling because regular string concatenation suffices.</li>
+      <li>Hubert brought up another concern that had been previously raised;
+          <em>preprocessing-token</em> includes <em>pp-number</em>.  For
+          user defined literals (UDLs), if we only check the identifier
+          grammar, then we only check at phase 7 when these tokens become
+          UDL suffixes.</li>
+      <li>Steve observed that this is where the discussion regarding use of
+          currency characters in UDLs comes into play.</li>
+      <li>Jens stated that the current rules for
+          <a href="http://eel.is/c++draft/lex.name">[lex.name]</a>
+          are reasonable and good enough since they restrict what identifiers
+          can be.</li>
+      <li>Zach asked if the implication is that we need to check for NFC at
+          translation phases 4 and 7.</li>
+      <li>Jens responded, yes.</li>
+      <li>PBrett added that the example is then ill-formed because substituting
+          the accent in the first <tt>constexpr</tt> line produces UB, and the
+          second <tt>constexpr</tt> is ill-formed because <tt>A\u0300</tt> is
+          not in NFC.</li>
+      <li>Steve stated that he will try to update the paper to clarify
+          this.</li>
+      <li><em>[ Editor's note: Several minutes of discussion were not recorded
+          because the editor was having a hard time following it. ]</em></li>
+      <li>Jens stated that we may need to introduce a <em>pp-identifier</em>
+          preprocessing token kind to replace use of <em>identifier</em>; the
+          NFC check would then happen when converting a <em>pp-identifier</em>
+          to an <em>identifier</em>.</li>
+      <li>PBrett expressed support for this direction as it avoids the UB and
+          difficulties with lexing the source code.</li>
+      <li>Jens asked Hubert if he is content with the introduction of a new
+          <em>pp-identifier</em> term.</li>
+      <li>Hubert responded that he is.</li>
+      <li>Steve summarized the direction.  A new <em>pp-identifier</em> will be
+          introduced that matches the preprocessor notion of an identifier and
+          for which an NFC check will be performed at the point that it is
+          converted to an identifier.  This avoids potentially needing to
+          perform incremental NFC analysis during lexing.</li>
+      <li>PBrett asked if the new <em>pp-identifier</em> could require
+          conformance with UAC#31, but just not be in NFC.</li>
+      <li>Zach replied, yes.</li>
+      <li>PBrett asked for confirmation that a <em>pp-identifier</em> will
+          never need to be compared.</li>
+      <li>Jens replied, correct.</li>
+      <li>Hubert added that this retains the case where a lone <tt>\u0300</tt>
+          is neither a <em>pp-identifier</em> nor an <em>identifier</em>; it is
+          one of those lone non-white-space preprocessing tokens.</li>
+      <li>Jens confirmed; right, because a <em>pp-identifier</em> must start
+          with an <tt>XID_Start</tt> character.</li>
+      <li>Steve asked for confirmation that <em>pp-identifier</em> will appear
+          in the grammar roughly like <em>pp-number</em> does.</li>
+      <li>Jens confirmed, yes.</li>
+      <li>Tom asked Steve if additional feedback is needed.</li>
+      <li>Hubert asked if there is any further question about how to apply the
+          UAX #31 conformance statmeents.</li>
+      <li>Steve replied that he would welcome recommendations on how to present
+          that.  At present, the paper documents a profile for conformance with
+          R1, and an NFC requirement for conform to R4.  The remaining
+          requirements are intentionally unmet or not applicable.</li>
+      <li>Jens replied that the phrasing doesn't seem right.  The intent of
+          UAX #31 is to require documentation stating what requirements apply
+          and why or why not; the paper is lacking some introductory text.</li>
+      <li>Steve acknowledged, something along the lines "profile is, ..., and
+          the others are not applicable".</li>
+      <li>Jens requested that the paper be updated to use complete
+          sentences.</li>
+      <li>Steve agreed to do so.</li>
+      <li>Tom noted that, in section 9.3.1, there appears to be a formatting
+          issue.</li>
+      <li>Steve acknowledged and stated he would correct it.</li>
+      <li>Jens volunteered to follow up with suggested wording on the mailing
+          list.</li>
+      <li><em>[ Editor's note: Jens did so; the email thread is available at
+          <a href="https://lists.isocpp.org/sg16/2020/04/1235.php">https://lists.isocpp.org/sg16/2020/04/1235.php</a>.
+          ]</em></li>
+      <li><em>[ Editor's note: After the meeting, Hubert sent a message to the
+          mailing list arguing that attempted concatenation of <tt>\u0300</tt>
+          concatenates only the <tt>\</tt> character because the lexer observes
+          <tt>\</tt>, <tt>u</tt>, <tt>0</tt>, <tt>3</tt>, <tt>0</tt>,
+          <tt>0</tt>, not the single <em>universal-character-name</em>.  The
+          result is UB because the concatenation doesn't produce a valid
+          preprocessing token.  The email thread is available at
+          <a href="https://lists.isocpp.org/sg16/2020/04/1229.php">https://lists.isocpp.org/sg16/2020/04/1229.php</a>.
+          ]</em></li>
+    </ul>
+  </li>
+  <li>Tom reminded the group that WG21 is moving to monthly mailings and that
+      the next mailing deadline is April 15th.</li>
+  <li>Tom confirmed that the next meeting will be on April 22nd.</li>
+</ul>
+
+
+<h1 id="2020_04_22">April 22nd, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/cwg1871">Core issue 1871: Non-identifier characters in ud-suffix</a>:
+    <ul>
+      <li><a href="https://github.com/sg16-unicode/sg16/issues/61">SG16 github issue #61</a></li>
+      <li>Core decreed that this issue is evolutionary. JF requested that SG16
+          review and provide a recommendation.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1949r3">P1949R3: C++ Identifier Syntax using Unicode Standard Annex 31</a>
+    <ul>
+      <li>Review updates since the April 8th review.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/cwg1871">Core issue 1871: Non-identifier characters in ud-suffix</a>
+    <ul>
+      <li>Tom introduced the topic.
+        <ul>
+          <li>This is a Core issue that has been deemed evolutionary and sent to
+              EWG to handle.</li>
+          <li>JF requested that SG16 provide a recommendation.</li>
+        </ul>
+      </li>
+      <li>PBrett expressed distaste for the idea and that it should be rejected.
+          ISO 4217 provides a standardized set of currency identifiers that
+          avoid challenges imposed by symbols.  We could instead define a
+          currency language or library facility.</li>
+      <li>PBindels agreed.</li>
+      <li>Jens agreed as well and noted that the ISO 4217 specification is what
+          the finance community depends on.</li>
+      <li>PBrett stated that we don't want to allow use of symbols that we might
+          want to use for non-identifier things like operators in the
+          future.</li>
+      <li>PBindels noted that some currency symbols already serve other
+          purposes.  For example, some compilers support an extension allowing
+          use of <tt>$</tt> in identifiers.</li>
+      <li>Tom added that some currency symbols are overloaded; <tt>$</tt>
+          doesn't mean USD.</li>
+      <li>Steve added that there may be aliasing issues with legacy character
+          sets.</li>
+      <li>Mark suggested it might be worth getting input from Mateusz Pusz given
+          his work on
+          <a href="https://wg21.link/p1935">P1935</a>
+          and strong types and UDLs for physical units.</li>
+      <li>Jens responded that we need not spend further time soliciting input
+          from non-SG16 attendees.  EWG will handle this; our responsibility is
+          to provide the SG16 consensus.</li>
+      <li><b>Poll: Is there any objection to unanimous consent for recommending
+          rejection of this proposal?</b>
+        <ul>
+          <li><b>Attendees: 7</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1949r3">P1949R3: C++ Identifier Syntax using Unicode Standard Annex 31</a>:
+    <ul>
+      <li>Tom introduced the topic:
+        <ul>
+          <li>Steve submitted an updated revision for the April mailing that
+              addresses the feedback provided in our
+              <a href="https://github.com/sg16-unicode/sg16-meetings#april-8th-2020">April 8th review</a>.</li>
+        </ul>
+      </li>
+      <li>Steve summarized the changes:
+        <ul>
+          <li><em>pp-identifier</em> was introduced to allow preprocessing
+              tokens that are ostensibly identifiers to be non-NFC until
+              converted to an identifier.  At that time, a well defined event
+              during translation, NFC would be checked.</li>
+          <li>This approach allows non-NFC identifier-like tokens to be used in
+              locations that aren't used as identifiers; for example, when
+              stringizing tokens.</li>
+          <li>This approach does permit the possibility of aliasing in some
+              scenarios, but those cases should be handled as
+              don't-do-that.</li>
+        </ul>
+      </li>
+      <li>Hubert objected that, with respect to macro invocations, aliasing can
+          lead to surprising behavior.</li>
+      <li>PBrett asked if the paper didn't already address that.</li>
+      <li>Jens clarified Hubert's objection; it is undisputed that a macro
+          definition requires an NFC identifier, but when scanning macro text,
+          a non-NFC <em>pp-identifier</em> intended to name a macro can't be
+          diagnosed.</li>
+      <li>Steve stated that Hubert provided a good example on the SG16 mailing
+          list.</li>
+      <li><em>[ Editor's note: That example is in
+          <a href="https://lists.isocpp.org/sg16/2020/04/1259.php">https://lists.isocpp.org/sg16/2020/04/1259.php</a>.
+          ]</em></li>
+      <li>Jens summarized the behavior of that code.  Depending on
+          normalization, the result is either the stringized form of the macro
+          replacement text or something else.</li>
+      <li>PBrett noted that, in this case, the check for NFC was evaded by use
+          of the stringize operator.</li>
+      <li>Steve stated that he won't claim that there aren't other ways that
+          this can happen, but in most cases, this will eventually result in a
+          syntax error.</li>
+      <li>Jens noted that lone combining marks might cause odd editor behavior
+          depending on what precedes them.</li>
+      <li>Tom stated that there are two ways to attack this problem.  Either we
+          require <em>pp-identifier</em> tokens to be NFC, or we delay the check
+          until they are used as identifiers.</li>
+      <li>PBrett responded that the second approach leads to the problems we
+          discussed at the last telecon.</li>
+      <li>Jens noted that, for <tt>\u0300</tt>, since it doesn't constitute a
+          valid identifier due to U+0300 not being in the set of characters
+          allowed initially according to
+          <a href="http://eel.is/c++draft/lex.name#1">[lex.name]p1</a>,
+          <tt>\</tt> is one token and <tt>u300</tt> is another.  This is the
+          status quo and can lead to tearing of combining characters.</li>
+      <li>PBrett asked if this issue can be dodged by changing stringization
+          such that <em>pp-identifier</em> cannot be stringized unless it is
+          also an identifier.</li>
+      <li>Hubert responded that a narrow approach probably isn't desired.  The
+          rationale is that, if you take <em>pp-identifier</em> and don't
+          enforce NFC, <tt>XID_Start</tt>, or <tt>XID_Continue</tt> on it, if
+          lexing happens a certain way, then we won't be able to adopt any
+          Unicode characters as new operators without impacting backward
+          compatibility.</li>
+      <li>Jens added, for example, the sigma character.</li>
+      <li>Hubert opined that infix operators are more compelling.  For example
+          instead of the <tt>|&gt;</tt> operator currently being discussed.</li>
+      <li>Jens summarized the problem Hubert indicated; in the paper as worded,
+          symbols can be lexed into single tokens that can then be concatenated.
+          That's bad.</li>
+      <li>Jens added that this suggests the proposed <em>pp-identifier</em>
+          approach fails in the long term and that a more narrow fix is needed;
+          <tt>XID_Start</tt> and <tt>XID_Continue</tt> should be enforced for
+          <em>pp-identifier</em>.</li>
+      <li>Steve noted that there are combining marks in <tt>XID_Continue</tt>,
+          even in NFC.</li>
+      <li>Jens stated that we don't want to enforce NFC during
+          character-by-character lexing.</li>
+      <li>Jens suggested another approach.  The idea is to require
+          <tt>XID_Start</tt> and <tt>XID_Continue</tt> for lexing of
+          <em>pp-identifier</em> and then to do the NFC check on the resulting
+          token.  That addresses the case where a <em>pp-identifier</em> in
+          macro replacement text might name a macro or macro parameter.</li>
+      <li>Jens continued; the case that must be avoided is the lone combining
+          mark.  That can be addressed by adding a <em>pp-lone-ucn</em> to
+          <em>preprocessing-token</em> and that can be used with the concat
+          operator with the result that doing so will lead to a diagnosable
+          error later if used as an identifier.  The max munch rule would apply
+          first so that <em>universal-character-name</em>s that specify a
+          combining character in <tt>XID_Continue</tt> and are preceded by a
+          valid identifier are incorporated into the identifier.</li>
+      <li>Hubert asked if production of such a token would be diagnosed
+          immediately.</li>
+      <li>Mark asked for clarification; whether <em>pp-lone-ucn</em> could
+          begin with a character not in <tt>XID_Start</tt>.</li>
+      <li>Hubert followed up with an additional question; in the case of two
+          consecutive not visibly separated UAX #31 identifiers; is that two
+          preprocessing-tokens?</li>
+      <li>Jens responded that a sequence of characters that are only in
+          <tt>XID_Continue</tt> would each be individual tokens.</li>
+      <li>Jens directed the group to wording provided on the wiki; there is a
+          preexisting defect that we should not try to fix in this effort, but
+          which I think we can.</li>
+      <li><em>[ Editor's note: For those with access to the WG21 wiki site,
+          that wording is
+          <a href="http://wiki.edg.com/pub/Wg21summer2020/SG16/uax31.html">an attached file on the summer 2020 SG16 project page</a>.
+          ]</em></li>
+      <li>Steve asked if this design would prohibit stringizing a lone combining
+          character.</li>
+      <li>Jens responded that it would and that lone combining characters in
+          source code are bad.</li>
+      <li>Steve agreed; if you want to combine a combining character, use a
+          string literal.</li>
+      <li>PBrett agreed as well and stated he would have serious questions about
+          such a use case.</li>
+      <li>Tom asked for confirmation that this approach applies equally
+          regardless of whether the combining character appears in the source
+          file as an extended character or as a
+          <em>universal-character-name</em> escape.</li>
+      <li>Steve confirmed.</li>
+      <li>Jens stated that there is a remaining issue that his proposed wording
+          removed <em>identifier-non-digit</em> but that there are now dangling
+          references to it in the definition of <em>pp-number</em>.</li>
+      <li>Hubert stated that the usual characteristic of <em>pp-number</em> that
+          is of interest here is for UDLs; <em>pp-number</em> describes how you
+          get UDL suffixes as identifiers.</li>
+      <li>Steve stated that <em>identifier-non-digit</em> is <em>non-digit</em>
+          or <em>universal-character-name</em>, but
+          <em>universal-character-name</em>s in identifiers can not specify a
+          character from the basic source character set.</li>
+      <li>PBrett asked if Hubert is more comfortable with Jens proposed changes
+          and whether we'll need to discuss this again.</li>
+      <li>Hubert responded that he is happy with this and confirmed the presence
+          of wording that makes lone UCNs ill-formed, the wording that enforces
+          <tt>XID_Start</tt> and <tt>XID_Continue</tt> for
+          <em>pp-identifier</em>, that the basic source character details are
+          handled by the existing non-terminals, and that tokens look perfectly
+          safe.</li>
+      <li>Jens indicated that the wording edits to <em>pp-number</em> are now
+          present and for viewers to reload the wiki page.</li>
+      <li>Hubert stated that, as wording goes, this is pretty natural.  It
+          covers corner cases, but doesn't require that the wording call them
+          out.</li>
+      <li>Jens suggested that it may be worth noting in the annex how our
+          grammar relates to the UAX #31 grammar; that our non-digit terminals
+          are all in <tt>XID_Start</tt>.</li>
+      <li>Hubert suggested adding wording to explicitly avoid UB on token
+          concatenation by ensuring that the program is ill-formed if token
+          concatenation produces a non-NFC token.</li>
+      <li>Mark asked about an update to 5.4p2 and whether "single" was stripped
+          from "non-whitespace" character.</li>
+      <li>Jens indicated it should apply to both.</li>
+      <li>Mark acknowledged.</li>
+      <li>Hubert stated that "the last category" wording in 5.4 should be
+          updated since it doesn't apply to just the last category any
+          longer.</li>
+      <li>Jens updated the wording and indicated to reload the page.</li>
+      <li>PBrett asked whether, in Jen's new wording, if the reference to
+          UAX #44 for <tt>XID_Start</tt> and <tt>XID_Continue</tt> should be to
+          UAX #31?</li>
+      <li>Steve responded, no.</li>
+      <li>Jens explained that the <tt>XID_Start</tt> and <tt>XID_Continue</tt>
+          properties are defined in UAX #44; UAX #31 specifies the
+          requirements for how to use them.</li>
+      <li>Hubert expressed sympathy for trying to name these categories;
+          e.g., <em>stray-universal-character-name</em>.</li>
+      <li>Jens indicated he presumes the wording is generally ok with folks
+          now.</li>
+      <li>Jens stated that he sent around an email with other comments.</li>
+      <li><em>[ Editor's note: That email can be found at
+          <a href="https://lists.isocpp.org/sg16/2020/04/1256.php">https://lists.isocpp.org/sg16/2020/04/1256.php</a>.
+          ]</em></li>
+      <li>Steve acknowledged and stated that he would respond and that he agreed
+          with the suggestions.</li>
+      <li>Jens noted that some of those concerns have been addressed by
+          discussion today.</li>
+      <li>Jens stated that there should be a statement about the difficulty of
+          checking for NFC and asked if we can qualify the difficulty for
+          matching <tt>XID_Start</tt> and <tt>XID_Continue</tt>;
+          "gcc already does this" doesn't provide much assurances.</li>
+      <li>Hubert suggested that Steve may want to ask Hal about fixing the paper
+          submitted for the mailing to remove the draft indicator in the paper's
+          header.</li>
+      <li>PBrett asked if we will poll the paper today.</li>
+      <li>Tom responded, no; given discussion and new wording, that he would
+          like discussion from today to sit in our minds for a few weeks and be
+          incorporated in a new revision before we poll.</li>
+      <li>Jens noted that his wording avoids adding a normative reference to
+          UAX #31; only a normative reference to UAX #44 is actually
+          needed.</li>
+      <li>Steve acknowledged; the non-normative reference and annex just
+          provides rationale for the design intent.</li>
+      <li>Tom presented some additional suggestions for the paper:
+        <ul>
+          <li>Additional rationale:
+            <ul>
+              <li>Motivation: Note potential security concerns; that misbehaving
+                  code may pass code review.</li>
+              <li>Legacy encodings convert naturally to NFC.</li>
+              <li>Programmer and text editors tend to produce NFC; can that
+                  claim be backed up with some data?</li>
+              <li>Discuss translation phase 1; since this is
+                  implementation-defined, implementations can convert to NFC.
+                  However, doing so may interfere with author intent since
+                  non-NFC is permitted in string literals.</li>
+            </ul>
+          </li>
+          <li>Wording:
+            <ul>
+              <li>Include removed wording so that readers can see what is
+                  removed without having to go look it up.</li>
+              <li>Typo in X.3 R2, Immutable Identifiers; "idenfiers".</li>
+              <li>Typo in X.4 R3, Pattern_White_Space and Pattern_Syntax
+                  Characters; "properites"</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Hubert asked if we want to discourage implementors from doing NFC
+          conversion in translation phase 1.</li>
+      <li>Jens responded that doing anything to phase 1 will impact code
+          compatibility.  It would be ok to discuss this in front matter; that
+          if you do NFC conversion in translation phase 1, that you may want
+          to consider string literals.</li>
+      <li>Mark observed that if one compiler does NFC conversion in translation
+          phase 1 and another one doesn't, then the source file is
+          non-portable.</li>
+      <li>Steve responded that source encoding is always non-portable.</li>
+      <li>Jens stated that he just doesn't want any normative wording changes
+          for translation phase 1.</li>
+      <li>Steve asked if we'll plan to discuss this again.</li>
+      <li>Tom responded, yes.</li>
+      <li>Mark suggested the next discussion of it should be relatively short;
+          unless Hubert finds more interesting examples!</li>
+      <li>Steve stated that he will proceed with making changes and asked Jens
+          if he is satisfied with the wording currently in the wiki.</li>
+      <li>Jens replied that he is.</li>
+    </ul>
+  </li>
+  <li>Tom indicated that the next telecon will by May 13th; three weeks from
+      now.</li>
+  <li>Steve noted that will be just in time for the next mailing.</li>
+</ul>
+
+
+<h1 id="2020_05_13">May 13th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Review the queue for C++23:
+    <ul>
+      <li>How are we doing relative to the directives in
+          <a href="https://wg21.link/p1238r1">P1238R1</a>?</li>
+      <li>What is our vision for C++23? (What would be our elevator pitch?)</li>
+      <li>What features are we on track to deliver?</li>
+      <li>What features need additional prioritization?</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Review the queue for C++23:
+    <ul>
+      <li>Tom introduced the topic.  Now that C++20 is complete, we have about
+          two years until feature freeze for C++23.  This is a good time to step
+          back, review our projects in flight, determine which projects are on
+          track for adoption in C++23, which ones we would like to get in C++23
+          but may be at risk of being ready in time, and which ones are not
+          likely candidates for C++23.</li>
+      <li>PBrett asked where our queue of C++23 proposals can be found.</li>
+      <li>Tom replied that it is an ethereal container.</li>
+      <li>PBrett asked if it should be made more corporeal.</li>
+      <li>Tom replied that it should be.</li>
+      <li>Tom shared that he had reviewed
+          <a href="https://wg21.link/p1238r1">P1238R1</a>,
+          mapped active SG16 papers to each of its directives, and posted it to
+          the SG16 Slack channel.</li>
+      <li><em>[ Editor's note: That map is below augmented with additional
+          entries discussed during the telecon.</em>
+        <ul>
+          <li>5.1: Standardize new encoding aware text container and view types
+            <ul>
+              <li><a href="https://wg21.link/p1629">P1629: Standard Text Encoding</a></li>
+            </ul>
+          </li>
+          <li>5.2: Standardize generic interfaces for Unicode algorithms
+            <ul>
+              <li><a href="https://wg21.link/p1628">P1628: Unicode character properties</a></li>
+            </ul>
+          </li>
+          <li>5.3: Standarize useful features from other languages
+            <ul>
+              <li><a href="https://wg21.link/p2071">P2071: Named universal character escapes</a></li>
+            </ul>
+          </li>
+          <li>5.4: Improve support for transcoding at program boundaries
+            <ul>
+              <li><a href="https://wg21.link/p1275">P1275: Desert Sessions: Improving hostile environment interactions</a></li>
+              <li><a href="https://wg21.link/p1885">P1885: Naming Text Encodings to Demystify Them</a></li>
+            </ul>
+          </li>
+          <li>5.5: Propose resolutions for existing issues and wording
+              improvements opportunistically
+            <ul>
+              <li><a href="https://wg21.link/p1949">P1949: C++ Identifier Syntax using Unicode Standard Annex 31</a></li>
+              <li><a href="https://wg21.link/p1854">P1854: Conversion to execution encoding should not lead to loss of meaning</a></li>
+              <li><a href="https://wg21.link/p1859">P1859: Standard terminology for execution character set encodings</a></li>
+              <li><a href="https://wg21.link/p1880">P1880: uNstring Arguments Shall Be UTF-N Encoded</a></li>
+              <li><a href="https://wg21.link/p2029">P2029: Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals</a></li>
+            </ul>
+          </li>
+        </ul>
+        <em>]</em>
+      </li>
+      <li>Tom continued; this provides some perspective regarding where we have
+          been spending our time.  Interestingly, the place we seem to be
+          spending the most time, at least by paper count, is addressing
+          existing core and wording issues.  We have previously discussed those
+          being lower priority objectives relative to adding new features.</li>
+      <li>Tom started walking through the directives and associated papers.</li>
+      <li>5.1: Standardize new encoding aware text container and view types
+        <ul>
+          <li><a href="https://wg21.link/p1629">P1629: Standard Text Encoding</a>:
+            <ul>
+              <li>Tom stated that he is feeling some concern about getting this
+                  through the committee process with just two years until
+                  feature freeze.</li>
+              <li>Corentin continued that thought; we don't have implementation
+                  experience yet.  Getting this through the committee in two
+                  years seems possible.  Getting it through in two years with
+                  everyone happy about it doesn't seem possible.</li>
+              <li>PBrett noted that JeanHeyd has been working on an
+                  implementation.</li>
+              <li>Tom added that JeanHeyd has been laying groundwork for the
+                  feature, particularly in WG14 for C.</li>
+              <li>Zach stated that his primary concern is collecting user
+                  experience feedback.</li>
+              <li>JeanHeyd described the current state of his work.  He is
+                  working on new <tt>mc</tt> and <tt>mwc</tt> interfaces for
+                  WG14 for conversion between UTF-8, UTF-16, UTF-32, and the
+                  locale dependent narrow and wide character sets.  These
+                  interfaces are designed similarly to <tt>iconv</tt> with hooks
+                  for accommodating private encodings and would be used to
+                  implement the fast path conversion implementations.</li>
+              <li>JeanHeyd stated that the implementation is working and the
+                  next step is wording for WG14.</li>
+              <li>PBrett expressed uncertainty regarding what the expectation is
+                  for C++23.</li>
+              <li>JeanHeyd responded that the bare minimum is support for
+                  encoding concepts and objects.
+                  <a href="https://wg21.link/p1629">P1629</a>
+                  reflects this bare minimum; the encoding objects and
+                  associated free functions.</li>
+              <li>PBrett asked if there are dependencies between P1629 and the
+                  WG14 focused work.</li>
+              <li>JeanHeyd replied, no, they are distinct.  </li>
+              <li>PBrett asked if it is practical to implement P1629 without the
+                  WG14 interfaces in place.</li>
+              <li>JeanHeyd replied yes, the implementor would just have to use
+                  non-standard encoding, decoding, and conversion routines.</li>
+              <li>Mark asked if implementors could provide an implementation
+                  bused on <tt>iconv</tt>.</li>
+              <li>JeanHeyd replied, yes, but with the caveat that it would
+                  perform well for contiguous ranges, but not for highly
+                  segmented sequence containers like <tt>std::list</tt>.</li>
+              <li>Jens re-phrased Mark's question; the question was whether an
+                  <tt>iconv</tt> based implementation can handle something
+                  terrible like <tt>std::list&lt;char&gt;</tt>.</li>
+              <li>JeanHeyd responded, yes, but a temporary buffer would be
+                  needed.  The buffer could be stack allocated.</li>
+              <li>Jens asked for verification that <tt>iconv</tt> can support
+                  code unit at a time conversions.</li>
+              <li>JeanHeyd replied that <tt>iconv</tt> takes pointers to in and
+                  out buffers and updates them to reflect the conversion state;
+                  unused code units can be cached.</li>
+              <li>Zach stated that <tt>iconv</tt> is only interesting as a proof
+                  of concept; users won't accept it due to poor performance.
+                  Bob Steagal showed that <tt>iconv</tt> can be badly beat by
+                  optimized conversion facilities.</li>
+              <li>Mark noted his intention in asking the question; whether
+                  implementors can reasonably provide a non-performant
+                  implementation to start with.</li>
+              <li>Tom observed that doing so could result in an implementor
+                  being stuck with a non-performant implemention due to ABI
+                  concerns.</li>
+              <li>JeanHeyd responded that, so long as state representation
+                  doesn't change, ABI shouldn't be an issue.</li>
+              <li>Tom noted that calls to <tt>iconv</tt> would appear in
+                  instantiated templates, so any changes to definitions of
+                  function templates or templated member function would raise
+                  ABI concerns; we don't want another <tt>std::regex</tt>
+                  debacle.</li>
+              <li>Zach re-iterated his desire to gather user experience.</li>
+              <li>JeanHeyd responded that getting an implementation in front
+                  of users is the goal of his current efforts, but that it will
+                  likely take until November to get the implementation fully in
+                  place.</li>
+              <li>Zach stated that implementation experience is great, but what
+                  he really wants is feedback from users since that is how we'll
+                  find the usability problems.</li>
+              <li>Mark stated that it would be great to replicate the evolution
+                  that the {fmt} and chrono libraries followed, but acknowledged
+                  that this feature doesn't have quite the same kind of broad
+                  applicability.</li>
+              <li>JeanHeyd responded that he has been contacted by programmers
+                  that are interested in using this.</li>
+              <li>PBrett exppressed skepticism that we'll be able to get this in
+                  for C++23 this way and that the best approach might be to get
+                  it accepted into Boost first.</li>
+              <li>Mark suggested that Boost may not be the right vehicle for
+                  this.</li>
+              <li>Zach opined that a standalone library with a couple of hundred
+                  stars would suffice; getting a library accepted in Boost takes
+                  time.</li>
+              <li>Tom expressed a desire to get an implementation in front of
+                  users sooner than that.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>5.2: Standardize generic interfaces for Unicode algorithms
+        <ul>
+          <li><a href="https://wg21.link/p1628">P1628: Unicode character properties</a>:
+            <ul>
+              <li>Tom noted that we haven't talked about this proposal for a
+                  while.</li>
+            </ul>
+          </li>
+          <li>Tom stated that he was hoping Zach, as one of few programmers that
+              has actually implemented the Unicode algorithms, might be able to
+              help make progress here.</li>
+          <li>Zach responded that he is hoping to get the ball moving on
+              Boost.text again soon with a goal of getting more input and
+              hopefully starting on papers by the end of the year.</li>
+          <li>Zach noted that <tt>text</tt> and <tt>text_view</tt> are somewhat
+              novel, so that makes them risky for C++23.</li>
+          <li>Zach added that he did make some changes recently and that the
+              algorithms are now faster than ICU except for tailored
+              collation.</li>
+        </ul>
+      </li>
+      <li>5.3: Standarize useful features from other languages
+        <ul>
+          <li><a href="https://wg21.link/p2071">P2071: Named universal character escapes</a>:
+            <ul>
+              <li>Tom noted that this paper was received well by EWG in Prague
+                  and seems on track for C++23.</li>
+              <li>Tom stated that he has some minor updates to do to the paper
+                  before getting it back in front of EWG again.</li>
+            </ul>
+          </li>
+          <li>Tom asked if there are other features we should be focusing
+              on.</li>
+          <li>PBrett responded that he is aware of other features, but that they
+              don't really fit into the C++ standard library.</li>
+          <li>Zach asked what features Peter had in mind.</li>
+          <li>PBrett responded that some languages have distinct string types
+              for different kinds of strings.  For example, Rust has OS
+              strings.</li>
+          <li>Tom mentioned the encoding pragma paper that he has yet to
+              write.</li>
+        </ul>
+      </li>
+      <li>5.4: Improve support for transcoding at program boundaries
+        <ul>
+          <li><a href="https://wg21.link/p1885">P1885: Naming Text Encodings to Demystify Them</a>:
+            <ul>
+              <li>Tom noted that this one has been making progress and that he
+                  would follow up with Corentin to inquire about next
+                  steps.</li>
+              <li><em>[ Editor's note: Tom reached out and Corentin responded
+                  that he is concerned about the relatively weak support for
+                  the paper as is within SG16 and has some uncertainty regarding
+                  next steps.  Tom encouraged updating the paper to document use
+                  cases and to compare IANA encoding representation with
+                  encodings supported by ICU, Microsoft, and the Encoding
+                  Standard to quantify representational deficiencies.
+                  ]</em></li>
+            </ul>
+          </li>
+          <li><a href="https://wg21.link/p1275">P1275: Desert Sessions: Improving hostile environment interactions</a>:
+            <ul>
+              <li>Tom noted that this paper has languished and asked if anyone
+                  would like to champion moving something forward with respect
+                  to environment variables and command lines.</li>
+              <li>JeanHeyd stated that he will reach out to Isabella to find
+                  out what the status is.</li>
+              <li>PBrett noted that this is relevant for the
+                  <a href="https://wg21.link/p1750">P1750</a>
+                  process invocation paper.</li>
+              <li>Tom agreed and remembered that Jeff mentioned in Prague that
+                  he and/or Elias were planning to split this functionality out
+                  to a new paper.  Tom stated he would follow up with them.</li>
+              <li><em>[ Editor's note: Tom reached out and Jeff confirmed intent
+                  to work on this, possibly within the next couple of months.
+                  ]</em></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>5.5: Propose resolutions for existing issues and wording improvements
+          opportunistically
+        <ul>
+          <li><a href="https://wg21.link/p1949">P1949: C++ Identifier Syntax using Unicode Standard Annex 31</a>:
+            <ul>
+              <li>Tom noted that this paper is on track for C++23.</li>
+            </ul>
+          </li>
+          <li><a href="https://wg21.link/p1854">P1854: Conversion to execution encoding should not lead to loss of meaning</a>:
+            <ul>
+              <li>Tom stated that this paper was last
+                  <a href="http://wiki.edg.com/bin/view/Wg21belfast/SG16P1854R0">discussed in Belfast</a>
+                  and there are some conerns to be discussed and/or
+                  addressed.</li>
+              <li>Tom stated that he is not sure what Corentin's intentions
+                  are.</li>
+              <li><em>[ Editor's note: Tom reached out and Corentin responded
+                  that, per the Belfast discussion, progress on this paper is
+                  blocked by dependence on P1885.  Corentin is interested in
+                  revisiting the decision to take that dependency. ]</em></li>
+            </ul>
+          </li>
+          <li><a href="https://wg21.link/p1859">P1859: Standard terminology for execution character set encodings</a>:
+            <ul>
+              <li>Tom noted that there hasn't been any movement on this paper
+                  since it was
+                  <a href="http://wiki.edg.com/bin/view/Wg21belfast/SG16P1859R0">discussed in Belfast</a>.</li>
+              <li>PBrett expressed support for making this a top priority item
+                  to address.</li>
+            </ul>
+          </li>
+          <li><a href="https://wg21.link/p1880">P1880: uNstring Arguments Shall Be UTF-N Encoded</a>:
+            <ul>
+              <li>Zach stated that this paper is DOA; an audit of wording
+                  revealed 250 places where we would have to note an exception
+                  to front matter wording and having to do so makes this effort
+                  not worthwhile.</li>
+              <li>JeanHeyd asked if there are many interfaces that accept a
+                  <tt>std::u8string</tt>.</li>
+              <li>Zach responded that yes, there are due to many interfaces that
+                  accept a <tt>std::basic_string</tt>.</li>
+              <li>Jens elaborated; these are cases where the character type is
+                  determined by a distinct template parameter.</li>
+              <li>Jens stated that he would like to see an example where the
+                  encoding is relevant.</li>
+              <li>Zach replied that one of the places is the entire interface of
+                  <tt>std::basic_string</tt> itself; many such member functions
+                  accept a <tt>std::basic_string</tt>.</li>
+              <li>Jens noted that <tt>char8_t</tt> was invented to ensure a
+                  specific encoding.</li>
+              <li>Mark noted that many of these interfaces don't lend themselves
+                  to enforcing encoding invariants; <tt>std::basic_string</tt>
+                  wasn't designed to do so.</li>
+              <li>Jens observed that the general provision that is desired is
+                  that <tt>std::basic_string</tt> objects used elsewhere meet
+                  such variants.</li>
+              <li>Jens stated that hooks are needed in EWG and LEWG to get SG16
+                  involved when certain topics come up.</li>
+              <li>Tom replied that those hooks are in place, but with recent
+                  chair changes, should be re-iterated.  Tom stated he would
+                  follow up.</li>
+              <li><em>[ Editor's note: Tom did so and the EWG and LEWG chairs
+                  confirmed their intent to abide by
+                  <a href="https://wg21.link/p1253">P1253</a>.
+                  <a href="https://lists.isocpp.org/sg16/2020/05/1292.php">https://lists.isocpp.org/sg16/2020/05/1292.php</a>
+                  ]</em></li>
+            </ul>
+          </li>
+          <li><a href="https://wg21.link/p2029">P2029: Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals</a>:
+            <ul>
+              <li>Tom stated that this is on track and making its way through
+                  Core.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom asked the group for opinions on what we should focus on for C++23.
+    <ul>
+      <li>PBrett opined that the papers under 5.5, and terminology updates
+          specifically, should be top priority.</li>
+      <li>Zach agreed regarding terminology and added Unicode algorithms.</li>
+      <li>Mark opined that having text in Boost would be a big deal.</li>
+      <li>PBrett stated that SG16 needs to stay involved with
+          <a href="https://wg21.link/p1750">P1750</a>,
+          the process management paper.  And we need to address how programs
+          receive command line arguments.</li>
+      <li>Tom stated that, if these are our top priorities, then it sounds like
+          our vision for C++23 is building foundations and addressing long
+          standing issues.</li>
+      <li>Jens commented that such a vision fits in well with C++23 in
+          general.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next telecon will be held on 5/27.</li>
+</ul>
+
+
+<h1 id="2020_05_27">May 27th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>D1949R4: C++ Identifier Syntax using Unicode Standard Annex 31 
+    <ul>
+      <li>Review updates since the April 22nd review.</li>
+    </ul>
+  </li>
+  <li>Discuss terminology updates to strive for in C++23
+      <li><a href="https://wg21.link/p1859r0">P1859R0: Standard terminology character sets and encodings</a></li>
+      <li>Establish priorities for terms to address.</li>
+      <li>Establish a methodology for drafting wording updates.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Martinho Fernandes</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>D1949R4: C++ Identifier Syntax using Unicode Standard Annex 31
+    <ul>
+      <li><a href="https://lists.isocpp.org/sg16/att-1315/p1949.html">Draft revision under discussion</a></li>
+      <li>Steve summarized the changes since R3 and some additional
+          perspectives on the history.
+        <ul>
+          <li>The most significant change is new wording provided by
+              Jens.</li>
+          <li>This wording better matches the
+              <a href="https://unicode.org/reports/tr31">UAX #31</a>
+              design.</li>
+          <li>The wording changes introduce new <em>identifier-start</em> and
+              <em>identifier-continue</em> grammar terms.</li>
+          <li>More motivation, history, and other editorial changes have been
+              added.</li>
+          <li>Per recent discussion on the SG16 mailing list, Steve noted that
+              <tt>XID_Start</tt> and <tt>XID_Continue</tt> were made stable
+              some time after Unicode 5.2 and C++11.</li>
+          <li>At the time that C++11 was standardized, ISO recommendations were
+              to define allowable identifiers as ranges of code points.</li>
+          <li>The C++11 design was based on the "Aternate Identifier Syntax"
+              specified in the Unicode 5.2 version of UAX #31 and that was a
+              reasonable choice at the time.
+          <li><em>[ Editor's note: "Alternate Identifier Syntax" was renamed to
+              "Immutable Identifiers" in Unicode 9. ]</em></li>
+          <li>Checking for non-NFC strings is significantly faster than actually
+              normalizing; there are short cuts supported by Unicode.</li>
+        </ul>
+      </li>
+      <li>Zach provided some details regarding the NFC checking algorithm he
+          implemented in Boost.Text.  It was inspired by ICU and consists of
+          four checking levels; the first of which is very fast and the the rest
+          are progressively slower to handle different edge cases.</li>
+      <li>PBrett opined that we're all probably pretty comfortable with
+          implementability of the proposal.</li>
+      <li>Zach agreed, but noted that we need to be able to explain the
+          complexity to EWG.</li>
+      <li>Steve noted that the real question from implementors is about having
+          to compare against the <tt>XID_Start</tt> and <tt>XID_Continue</tt>
+          classes; fortunately we have implementation experience.</li>
+      <li>Jens responded that implementation experience is not necessarily
+          convincing.  For example, EDG implemented support for C++98 exported
+          templates, but that was an ill-designed feature.  Describing an
+          algorithm would be more useful.</li>
+      <li>Steve noted that the paper contains links to
+          <a href="https://unicode.org/reports/tr15">UAX #15</a>
+          and the algorithms that it describes for detecting normalization
+          form.</li>
+      <li>PBrett commented that experience in other languages helps to
+          illustrate viability.</li>
+      <li>Steve stated that it is worth noting that the Unicode character
+          database is not needed for implementation purposes.</li>
+      <li>Tom asked if that is stated in the paper.</li>
+      <li>Steve replied that it isn't.</li>
+      <li>Tom asked Steve if we would be willing to add that.</li>
+      <li>Steve replied, will do.</li>
+      <li>Zack noted that the data needed for NFC normalization easily fits in
+          a header and that the <tt>XID_Start</tt> and <tt>XID_Continue</tt>
+          ranges are smaller.</li>
+      <li>Steve noted that all of the needed data is listed in a verbose form
+          in an appendix of the paper.</li>
+      <li>PBrett asked if there are examples of script specific identifiers
+          that are allowed today that will cease to be valid.</li>
+      <li>Steve responded that there are examples in UAX #31.</li>
+      <li>Tom asked if the change to <em>pp-number</em> should perhaps be
+          <em>pp-number identifier</em> instead of
+          <em>pp-number identifier-continue</em> since the non-numeric portion
+          corresponding to <em>ud-suffix</em> needs to be a valid identifier
+          for declaration of a user-defined literal function.</li>
+      <li>Jens replied that such a change would work, but we currently use a
+          max munch approach that allows, for example, <tt>1x1x1x</tt> to be a
+          valid <em>pp-number</em>.</li>
+      <li>Hubert observed that better diagnostic messages could be produced
+          with such a change.</li>
+      <li>Jens responded that the proposed changes are a consequence of other
+          changes in the paper and are not intended to change the lexing
+          behavior of <em>pp-number</em>.  Tom's suggested change would be an
+          unnecessary design change.</li>
+      <li>Tom suggested the currently proposed wording sounds like what we
+          want then.</li>
+      <li>Corentin noted that the <em>identifier-start</em> and
+          <em>identifier-continue</em> productions both include
+          <em>nondigit</em>, but <em>nondigit</em> is a subset of
+          <em>universal-character-name</em>.</li>
+      <li>Steve responded that <em><universal-character-name</em> corresponds
+          to <tt>\uXXXX</tt> where as <em>nondigit</em> selects characters from
+          the basic source character set.</li>
+      <li>Corentin asked what the intent was in creating a new kind of
+          <em>preprocessing-token</em> that, when matched, always means the
+          program is ill-formed.</li>
+      <li>Tom responded that Corentin missed the meeting where this was
+          discussed and that the previous meeting notes may be helpful.
+          Basically, this allows rejecting lone combining characters.</li>
+      <li>PBrett suggested that Corentin's question may suggest that this is
+          too subtle.</li>
+      <li>Jens responded that there are two levels of interpretation here.
+          The first is the lexer grammar and it is only concerned with munging
+          characters.  The second is the formation of tokens.  The new
+          production allows issuance of nice diagnostics.</li>
+      <li>PBrett asked if the last two sentences in that paragraph
+          ([lex.pptoken]p2) could be swapped as that would better match the
+          order of the grammar productions.</li>
+      <li>Jens replied that they could be.</li>
+      <li>Jens noted that italics were missing for three instances of
+          <em>universal-character-name</em> and that, in the plural form, the
+          ending "s" should not be italicized.</li>
+      <li>Jens further noted that italics were missing for the use of
+          "identifier" in the new wording in [lex.name]; italics are needed
+          because this is a reference to the grammar term.</li>
+      <li>Hubert stated that some implementations of markup make it difficult
+          to not italicize plural suffixes, but that it is sometimes possible
+          by using a ZWJ.</li>
+      <li>Jens suggested that Steve not worry about it if removing italics for
+          the plural suffix is difficult.</li>
+      <li>Corentin observed that the existing reference to ISO/IEC 10646 and
+          the new reference to UAX #44 are for distinct publications that may
+          be out of sync.</li>
+      <li>Jens responded that the existing reference to ISO/IEC 10646 is
+          undated.  Implementors should therefore use the latest available thus
+          implying a moving target.  New ISO/IEC 10646 versions become available
+          more frequently than ISO C++ releases.  This then requires
+          implementors to update to newer ISO/IEC 10646 revisions in between
+          ISO C++ releases.</li>
+      <li>Jens stated a preference for a dated ISO/IEC 10646 reference that is
+          updated with each ISO C++ release.</li>
+      <li>Tom asked if a dated reference would allow implementors to adopt newer
+          versions of ISO/IEC 10646 than the corresponding ISO C++ release
+          references.</li>
+      <li>Jens replied that they shouldn't in their pedantic modes.</li>
+      <li>Hubert agreed.</li>
+      <li>Zach added that Jens preference matches the guidance provided by LWG
+          for
+          <a href="https://wg21.link/p1868">P1868</a>
+          and the reference to
+          <a href="https://unicode.org/reports/tr29">UAX #29</a>.</li>
+      <li>Corentin reiterated his claim that the various references require
+          version correspondence.</li>
+      <li>Hubert responded that, with respect to the characters made available,
+          the intersection of characters available in the various specifications
+          is what would matter; other characters would be rejected.   </li>
+      <li>Hubert observed that the reference to
+          <a href="https://unicode.org/reports/tr44">UAX #44</a>
+          should actually be a reference to the
+          <tt>DerivedCoreProperties.txt</tt> file from the Unicode character
+          database.</li>
+      <li>Jens agreed that the normative reference we actually need is to
+          <tt>DerivedCoreProperties.txt</tt> since UAX #44 does not contain its
+          contents.</li>
+      <li>Martinho clarified that UAX #44 describes the semantics for the
+          contents of <tt>DerivedCoreProperties.txt</tt>, but not its
+          syntax.</li>
+      <li>Tom stated that it sounds like we need a normative reference to both
+          then.</li>
+      <li>Steve added that the versions of UAX #44 and
+          <tt>DerivedCoreProperties.txt</tt> must be consistent.</li>
+      <li>PBrett returned to the subject of dated vs undated references.  The
+          current reference to ISO/IEC 10646 is undated and these other
+          references must match since they are dependent references on the
+          version of ISO/IEC 10646.</li>
+      <li>Tom asked if that implies that this paper must change the reference
+          to ISO/IEC 10646 to a dated reference.</li>
+      <li>Hubert responded that we can deal with that separately.</li>
+      <li>Jens asked if a dated reference for UAX #44 and
+          <tt>DerivedCoreProperties.txt</tt> is needed for this paper.</li>
+      <li>Hubert responded that ISO/IEC 10646 version 5 does refer to Unicode
+          character databse files without reference to UAX #44.</li>
+      <li>Steve noted that means transitive references exist.</li>
+      <li>Hubert agreed, but noted that transitive references don't exist for
+          all of the references needed.</li>
+      <li>Corentin asked Steve which Unicode version the source of the XID
+          data in the paper came from.</li>
+      <li>Steve responded that it was probably Unicode 12.</li>
+      <li>PBrett stated that, if we're going to pin down any one of these
+          references, then we must pin down all of them.  Otherwise, the
+          correspondence doesn't make sense.</li>
+      <li>Zach opined that these new references don't need to be in sync with
+          ISO/IEC 10646, but that it would be nice if they were.  We only need
+          the normalization algorithm and XID data for this paper.</li>
+      <li>Martinho asserted that the base line will be whatever is available at
+          publication time.</li>
+      <li>Hubert observed that we seem to have distinct needs.  As far as
+          UAX #31 is concerned, since it is only needed to satisfy references in
+          the new informative annex, a dated reference should be used for
+          it.</li>
+      <li>Steve added that, since it is informative, the reference to UAX #31 is
+          only needed in the bibliography.</li>
+      <li>Hubert continued stating that, for UAX #44 and
+          <tt>DerivedCoreProperties.txt</tt>, that a dated match to
+          ISO/IEC 10646 is unnecessary and would be challenging for reasons of
+          timing; ISO/IEC 10646 is currently in DIS status.</li>
+      <li>Hubert summarized; the reference to UAX #31 should be dated, and the
+          references to UAX #44 and <tt>DerivedCoreProperties.txt</tt> should be
+          undated.</li>
+      <li>Steve noted that leaving them undated might be helpful for applying
+          these changes as a defect report for prior standards.</li>
+      <li>Jens asked Hubert to confirm that a normative reference to
+          <tt>DerivedCoreProperties.txt</tt> is required.</li>
+      <li>Hubert confirmed that it is.</li>
+      <li>Jens asked Steve to please add such a normative reference.</li>
+      <li>Jens asked Hubert to confirm his opinion that the references to
+          UAX #44 and <tt>DerivedCoreProperties.txt</tt> should be undated.</li>
+      <li>Hubert confirmed and added that adding a date now would be
+          counterproductive since there will be new publications of them before
+          the next ISO C++ publication.</li>
+      <li>Martinho provided a link for an undated reference to
+          <tt>DerivedCoreProperties.txt</tt>.</li>
+      <li>Tom reported being unable to find the wording updates to add UAX #31
+          to the bibliography.</li>
+      <li>Steve reported that there had been a markdown issue that has since
+          been fixed.  The reference can be found by searching for "::add".</li>
+      <li>Hubert suggested that the reference to
+          <tt>DerivedCoreProperties.txt</tt> should specify "as interpreted by
+          UAX #44".</li>
+      <li><em>[ Editor's note:
+          <a href="https://lists.isocpp.org/sg16/2020/05/1326.php">later discussion on the SG16 mailing list</a>
+          proposed "The character classes XID_Start and XID_Continue are Derived
+          Core Properties as described by UAX #44". ]</em></li>
+      <li>Tom confirmed an intent to poll forwarding the paper to EWG with the
+          discussed changes and asked for volunteers to validate that the
+          updates are consistent with the discussion.</li>
+      <li>Zach and Jens agreed to do so.</li>
+      <li><b>Poll: D1949R4: Forward to EWG with changes as discussed pending validation that updates reflect SG16 intent</b>
+        <ul>
+          <li><b>Attendees: 11</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom confirmed that the next meeting will be June 10th and that the topic
+      will be terminology.</li>
+</ul>
+
+
+</body>
