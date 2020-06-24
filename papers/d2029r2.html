@@ -257,6 +257,9 @@ encoding of the source file to the execution character set.
   <li>Addressed core wording changes requested during the
       <a href="http://wiki.edg.com/bin/view/Wg21summer2020/IssuesProcessingTeleconference2020-03-23">March 23rd, 2020 core issues processing teleconference</a>.
     <ul>
+      <li>Removed italics for uses of defined terms.  Ialics are now
+          consistently used when defining terms or when defining or using
+          grammar terms.</li>
       <li>[lex.ccon]p1: Corrected sentence capitalization.</li>
       <li>[lex.string]p1: Removed the empty string literal examples.</li>
       <li>[lex.string]p1: Corrected a link to the <em>string-literal</em>
@@ -733,11 +736,11 @@ The type of a
 <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
 is the associated code unit type.
 
-<em>Conditional character literal</em>s and
-<em>conditional wide character literal</em>s
+Conditional character literals and
+conditional wide character literals
 are distinguished from
-<em>ordinary character literal</em>s and
-<em>wide character literal</em>s
+ordinary character literals and
+wide character literals
 respectively by the presence of a
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
 that contains a single
@@ -748,11 +751,11 @@ and that specifies a character that either lacks representation in the
 applicable associated character encoding or that cannot be encoded
 in a single code unit.
 
-<em>Multicharacter literal</em>s and
-<em>wide multicharacter literal</em>s
+Multicharacter literals and
+wide multicharacter literals
 are distinguished from
-<em>ordinary character literal</em>s and
-<em>wide character literal</em>s
+ordinary character literals and
+wide character literals
 respectively by the presence of a
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
 that contains more than one
@@ -762,10 +765,10 @@ the
 of all other character literals contains exactly one
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>.
 
-<em>Conditional character literal</em>s,
-<em>multicharacter literal</em>s,
-<em>conditional wide character literal</em>s, and
-<em>wide multicharacter literal</em>s
+Conditional character literals,
+multicharacter literals,
+conditional wide character literals, and
+wide multicharacter literals
 are conditionally supported.
 </blockquote>
 </p>
@@ -1000,10 +1003,10 @@ The value of a character literal is as follows.
     <td>(X.1)&nbsp;&mdash;</td>
     <td>
       The value of a
-      <em>conditional character literal</em>,
-      <em>multicharacter literal</em>,
-      <em>conditional wide character literal</em>, or
-      <em>wide multicharacter literal</em>
+      conditional character literal,
+      multicharacter literal,
+      conditional wide character literal, or
+      wide multicharacter literal
       is implementation-defined.
     </td>
   </tr>
@@ -1018,8 +1021,8 @@ The value of a character literal is as follows.
       character literal's associated character encoding.
       If the character cannot be encoded in a single code unit, then
       the character literal is either a
-      <em>conditional character literal</em>, a
-      <em>conditional wide character literal</em>,
+      conditional character literal, a
+      conditional wide character literal,
       or is ill-formed.
     </td>
   </tr>
@@ -1033,8 +1036,8 @@ The value of a character literal is as follows.
       hexadecimal digits is terminated by the first character that is not an octal
       digit or a hexadecimal digit, respectively.  If the numeric value exceeds the
       range of the character literal's associated code unit type, then, for an
-      <em>ordinary character literal</em> or a
-      <em>wide character literal</em>, the value is implementation-defined and, for
+      ordinary character literal or a
+      wide character literal, the value is implementation-defined and, for
       all other character literals, the character literal is ill-formed.
     </td>
   </tr>
@@ -1780,7 +1783,7 @@ sequence of
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
       associated character encoding.  If a character lacks representation in the
       associated character encoding, then, for an
-      <em>ordinary string literal</em> or a <em>wide string literal</em>, the
+      ordinary string literal or a wide string literal, the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
       is conditionally-supported and an implementation defined code unit
       sequence is encoded; otherwise, the
@@ -1800,8 +1803,8 @@ sequence of
       character that is not an octal digit or a hexadecimal digit, respectively. If
       the numeric value exceeds the range of the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
-      code unit type, then, for an <em>ordinary string literal</em> or a
-      <em>wide string literal</em>, an implementation-defined code unit value
+      code unit type, then, for an ordinary string literal or a
+      wide string literal, an implementation-defined code unit value
       is encoded; otherwise, the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
       is ill-formed.
