@@ -258,6 +258,7 @@ encoding of the source file to the execution character set.
       <a href="http://wiki.edg.com/bin/view/Wg21summer2020/IssuesProcessingTeleconference2020-03-23">March 23rd, 2020 core issues processing teleconference</a>.
     <ul>
       <li>[lex.ccon]p1: Corrected sentence capitalization.</li>
+      <li>[lex.string]p1: Removed the empty string literal examples.</li>
     </ul>
   </li>
 </ul>
@@ -1326,7 +1327,6 @@ and their properties.
   <td>array of <em>n</em> <tt>const char</tt></td>
   <td>encoding of the execution character set</td>
   <td>
-    <tt>""</tt><br/>
     <tt>"an ordinary string"</tt><br/>
     <tt>R"(an ordinary raw string)"</tt>
   </td>
@@ -1337,7 +1337,6 @@ and their properties.
   <td>array of <em>n</em> <tt>const wchar_t</tt></td>
   <td>encoding of the execution wide-character set</td>
   <td>
-    <tt>L""</tt><br/>
     <tt>L"a wide string"</tt><br/>
     <tt>LR"w(a wide raw string)w"</tt>
   </td>
@@ -1348,7 +1347,6 @@ and their properties.
   <td>array of <em>n</em> <tt>const char8_t</tt></td>
   <td>UTF-8</td>
   <td>
-    <tt>u8""</tt><br/>
     <tt>u8"a UTF-8 string"</tt><br/>
     <tt>u8R"x(a UTF-8 raw string)x"</tt>
   </td>
@@ -1359,7 +1357,6 @@ and their properties.
   <td>array of <em>n</em> <tt>const char16_t</tt></td>
   <td>UTF-16</td>
   <td>
-    <tt>u""</tt><br/>
     <tt>u"a UTF-16 string"</tt><br/>
     <tt>uR"y(a UTF-16 raw string)y"</tt>
   </td>
@@ -1370,7 +1367,6 @@ and their properties.
   <td>array of <em>n</em> <tt>const char32_t</tt></td>
   <td>UTF-32</td>
   <td>
-    <tt>U""</tt><br/>
     <tt>U"A UTF-32 string"</tt><br/>
     <tt>UR"z(a UTF-32 raw string)z"</tt>
   </td>
