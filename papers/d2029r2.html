@@ -260,6 +260,8 @@ encoding of the source file to the execution character set.
       <li>Removed italics for uses of defined terms.  Ialics are now
           consistently used when defining terms or when defining or using
           grammar terms.</li>
+      <li>[lex.phases]p6: Moved appending of a null character to string
+          literals to translation phase 6.</li>
       <li>[lex.phases]p5: Inlined the referenced footnote and removed the
           external link.</li>
       <li>[lex.ccon]p1: Corrected sentence capitalization.</li>
@@ -276,8 +278,13 @@ encoding of the source file to the execution character set.
           grammar term.</li>
       <li>[lex.string]pX: Corrected the list introduction text to end with a
           colon rather than a period.</li>
+      <li>[lex.phases]p13: Moved appending of a null character to string
+          literals to translation phase 6.</li>
       <li>[lex.string]pX: Corrected the subparagraph numbers to align with the
           top of their associated text.</li>
+      <li>[lex.string]pX: Removed the reference to translation phase 7 now
+          that appending a null character to string literals has been moved to
+          translation phase 6.</li>
     </ul>
   </li>
   <li>[lex.phases]p5: Removed the pre-existing footnote.
@@ -331,6 +338,8 @@ Additionally, the wording updates are intended to:
       represent all members of the execution wide-character set as this
       contradicts long standing existing practice for some implementations.
   <li>Modernize the wording with current style preferences and terminology.</li>
+  <li>Move appending of a null character to string literals from translation
+      phase 7 to translation phase 6.</li>
 </ul>
 </p>
 
@@ -551,37 +560,9 @@ implementation-defined character or the literal is ill-formed
 <em>Drafting note:</em> This addition duplicates wording in [lex.string], but
 seems important to include here.
 <blockquote>
-Adjacent string literal tokens are concatenated.
-</blockquote>
-</p>
-
-<p>Change in
-<a href="http://eel.is/c++draft/lex.phases#1.7">
-5.2 [lex.phases] paragraph 7</a>:<br/>
-<em>Drafting note:</em> This addition duplicates wording in [lex.string], but
-seems important to include here.
-<blockquote>
-<ins>A null character is appended to every
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>.
-</ins>White-space
-characters separating tokens are no longer significant. Each
-preprocessing token is converted into a token
-(<a href="http://eel.is/c++draft/lex.token">[lex.token]</a>).  The resulting
-tokens are syntactically and semantically analyzed and translated as a
-translation unit.  [ <em>Note:</em> The process of analyzing and translating
-the tokens may occasionally result in one token being replaced by a sequence
-of other tokens
-(<a href="http://eel.is/c++draft/temp.names">[temp.names]</a>).
-&mdash; <em>end note</em> ]  It is implementation-defined whether the sources
-for module units and header units on which the current translation unit has an
-interface dependency
-(<a href="http://eel.is/c++draft/module.unit">[module.unit]</a>,
-<a href="http://eel.is/c++draft/module.import">[module.import]</a>)
-are required to be available. [ <em>Note:</em> Source files, translation units
-and translated translation units need not necessarily be stored as files, nor
-need there be any one-to-one correspondence between these entities and any
-external representation.  The description is conceptual only, and does not
-specify any particular implementation. &mdash; <em>end note</em> ]
+Adjacent string literal tokens are concatenated.<ins>  A null character is
+appended to each string literal (after concatenation of adjacent string literal
+tokens).</ins>
 </blockquote>
 </p>
 
@@ -1465,8 +1446,6 @@ is equivalent to <tt>"x = \"\\\"y\\\"\""</tt>.
 5.13.5 [lex.string] paragraph 6</a>:<br/>
 <em>Drafting Note:</em> The contents of paragraphs 6, 7, 9, 10, and 11 were
 incorporated into new paragraphs.
-The wording regarding translation phase 6 has been removed as inaccurate;
-string contents are not fully known until after phase 7.
 <blockquote class="stddel">
 After translation phase 6, a
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
@@ -1693,7 +1672,7 @@ contains the two characters <tt>'\xA'</tt> and <tt>'B'</tt> after concatenation
 5.13.5 [lex.string] paragraph 13</a>:
 <blockquote>
 After any necessary concatenation, in
-<a href="http://eel.is/c++draft/lex.phases">translation phase 7</a>
+<a href="http://eel.is/c++draft/lex.phases">translation phase <del>7</del><ins>6</ins></a>
 (<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>),
 <del><tt>'\0'</tt></del><ins>a null character</ins> is appended to every
 string literal so that programs that scan a string can find its end.
@@ -1775,9 +1754,7 @@ sequence of
 <a href="http://eel.is/c++draft/lex.string#nt:s-char"><em>s-char</em></a>s
 (for a non-raw string literal) and
 <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>s
-(for a raw string literal) after
-<a href="http://eel.is/c++draft/lex.phases#1.7">translation phase 7</a>
-(<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>) as follows:
+(for a raw string literal) as follows:
 <table>
   <tr>
     <td style="vertical-align:top">(X.1)&nbsp;&mdash;</td>
