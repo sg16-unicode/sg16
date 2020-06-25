@@ -264,6 +264,10 @@ encoding of the source file to the execution character set.
           literals to translation phase 6.</li>
       <li>[lex.phases]p5: Inlined the referenced footnote and removed the
           external link.</li>
+      <li>[lex.ccon]: Modified <em>conditional-escape-sequence-char</em> to
+          avoid ambiguity with <em>universal-character-name</em>,
+          <em>octal-escape-sequence</em>, and
+          <em>hexadecimal-escape-sequence</em>.
       <li>[lex.ccon]p1: Corrected sentence capitalization.</li>
       <li>[lex.ccon]p6: Inlined the referenced footnote and removed the
           external link.</li>
@@ -675,7 +679,12 @@ character
 <ins>
 <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence-char">conditional-escape-sequence-char</a>:
 <div style="margin-left: 1em;">
-any member of the basic source character set that is not in
+any member of the basic source character set other than
+<tt>u</tt>,
+<tt>U</tt>,
+<tt>x</tt>,
+and the members of
+<a href="http://eel.is/c++draft/lex.icon#nt:octal-digit">octal-digit</a> and
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>
 </div>
 </ins>
