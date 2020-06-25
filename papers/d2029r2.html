@@ -296,6 +296,9 @@ encoding of the source file to the execution character set.
     </ul>
   </li>
   <li>[lex.phases]p5: Removed the pre-existing footnote.
+  <li>[lex.string]pX: Removed redundant wording for behavior that is
+      implicit in the grammar for octal and hexadecimal escape
+      sequences.</li>
 </ul>
 </p>
 
@@ -1803,10 +1806,7 @@ sequence of
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
       (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
       contributes a single code unit value with the numeric value of the octal or
-      hexadecimal number.  There is no limit to the number of digits in a hexadecimal
-      sequence.  A sequence of octal or hexadecimal digits is terminated by the first
-      character that is not an octal digit or a hexadecimal digit, respectively. If
-      the numeric value exceeds the range of the
+      hexadecimal number.  If the numeric value exceeds the range of the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
       code unit type, then, for an ordinary string literal or a
       wide string literal, an implementation-defined code unit value
