@@ -289,6 +289,8 @@ encoding of the source file to the execution character set.
       <li>[lex.string]pX: Removed the reference to translation phase 7 now
           that appending a null character to string literals has been moved to
           translation phase 6.</li>
+      <li>[lex.string]pX.1: Updated wording to clarify that a sequence of
+          characters is encoded as a group rather than one at a time.</li>
     </ul>
   </li>
   <li>[lex.phases]p5: Removed the pre-existing footnote.
@@ -1768,14 +1770,14 @@ sequence of
   <tr>
     <td style="vertical-align:top">(X.1)&nbsp;&mdash;</td>
     <td>
-      The characters denoted by each
+      The sequence of characters denoted by each
       <a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>,
       <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>,
       <a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>
       (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>), and
       <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
       (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
-      are encoded to a code unit sequence using the
+      is encoded to a code unit sequence using the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
       associated character encoding.  If a character lacks representation in the
       associated character encoding, then, for an
