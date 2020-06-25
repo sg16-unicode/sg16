@@ -260,9 +260,15 @@ encoding of the source file to the execution character set.
       <li>Removed italics for uses of defined terms.  Ialics are now
           consistently used when defining terms or when defining or using
           grammar terms.</li>
+      <li>[lex.phases]p5: Inlined the referenced footnote and removed the
+          external link.</li>
       <li>[lex.ccon]p1: Corrected sentence capitalization.</li>
+      <li>[lex.ccon]p6: Inlined the referenced footnote and removed the
+          external link.</li>
       <li>[lex.ccon]pX: Corrected the list introduction text to end with a
           colon rather than a period.</li>
+      <li>[lex.ccon]p7: Inlined the referenced footnote and removed the
+          external link.</li>
       <li>[lex.string]p1: Removed the empty string literal examples.</li>
       <li>[lex.string]p1: Corrected a link to the <em>string-literal</em>
           grammar term.</li>
@@ -270,6 +276,7 @@ encoding of the source file to the execution character set.
           colon rather than a period.</li>
     </ul>
   </li>
+  <li>[lex.phases]p5: Removed the pre-existing footnote.
 </ul>
 </p>
 
@@ -318,9 +325,7 @@ Additionally, the wording updates are intended to:
       conditionally supported.</li>
   <li>Remove non-normative wording that states that <tt>wchar_t</tt> is able to
       represent all members of the execution wide-character set as this
-      contradicts wide spread existing practice (SG16 has an issue tracking
-      this at
-      <a href="https://github.com/sg16-unicode/sg16/issues/9">https://github.com/sg16-unicode/sg16/issues/9</a>).
+      contradicts long standing existing practice for some implementations.
   <li>Modernize the wording with current style preferences and terminology.</li>
 </ul>
 </p>
@@ -529,7 +534,10 @@ implementation-defined character or the literal is ill-formed
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>,
 <a href="http://eel.is/c++draft/lex.string">[lex.string]</a>)
 &mdash; <em>end note</em> ]</ins>.
-<sup><a href="http://eel.is/c++draft/lex.phases#footnote-8">8</a></sup>
+<del><sup>
+[ Footnote: An implementation need not convert all non-corresponding source
+characters to the same execution character. ]
+</sup></del>
 </blockquote>
 </p>
 
@@ -964,13 +972,15 @@ ill-formed.
 new paragraphs.
 The note regarding the ability for <tt>wchar_t</tt> to store all
 values of the execution wide-character set is intentionally removed as it
-conflicts with long standing existing practice
-(<a href="https://github.com/sg16-unicode/sg16/issues/9">https://github.com/sg16-unicode/sg16/issues/9</a>).
-The reference to footnote 18 and the footnote itself are also removed.
+conflicts with long standing existing practice for some implementations.
 <blockquote class="stddel">
 A character literal that begins with the letter <tt>L</tt>, such as
 <tt>L'z'</tt>, is a <em>wide-character literal</em>.  A wide-character literal
-has type <tt>wchar_t</tt>.<sup><a href="http://eel.is/c++draft/lex.ccon#footnote-18">18</a></sup>
+has type <tt>wchar_t</tt>.
+<sup>
+[ Footnote: They are intended for character sets where a character does not
+fit into a single byte. ]
+</sup>
 The value of a wide-character literal containing a single
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
 has value equal to the numerical value of the encoding of the
@@ -986,16 +996,6 @@ the execution wide-character set (see
 The value of a wide-character literal containing multiple
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>s
 is implementation-defined.
-</blockquote>
-</p>
-
-<p>Delete
-<a href="http://eel.is/c++draft/lex.ccon#footnote-18">footnote 18</a><br/>
-<em>Drafting Note:</em> The reference to this footnote was removed and the note
-itself found to have too little value to retain elsewhere.
-<blockquote class="stddel">
-18) They are intended for character sets where a character does not fit into a
-single byte.
 </blockquote>
 </p>
 
@@ -1052,10 +1052,10 @@ The value of a character literal is as follows:
 <p>Change in
 <a href="http://eel.is/c++draft/lex.ccon#7">
 5.13.3 [lex.ccon] paragraph 7</a>:<br/>
-<em>Drafting Note:</em> The added note is content moved from
-<a href="http://eel.is/c++draft/lex.ccon#footnote-19">footnote 19</a>.
+<em>Drafting Note:</em>
 The deleted text has been removed as redundant since it repeats information
 implicit in the grammar.
+The added note is content moved from the deleted footnote.
 <blockquote>
 <ins>The character specified by a
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>
@@ -1068,7 +1068,11 @@ are conditionally-supported and specify an implementation-defined
 character.</ins>
 <del>Certain non-graphic characters, the single quote <tt>'</tt>, the double quote
 <tt>"</tt>, the question mark
-<tt>?</tt>,<sup><a href="http://eel.is/c++draft/lex.ccon#footnote-19">19</a></sup>
+<tt>?</tt>,
+<sup>
+[ Footnote: Using an escape sequence for a question mark is supported for
+compatibility with ISO C++ 2014 and ISO C. ]
+</sup>
 and the backslash <tt>\</tt>, can be represented according to Table
 <a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.
 The double quote <tt>"</tt> and the question mark <tt>?</tt>, can be
@@ -1108,18 +1112,6 @@ sequence specifies a single character.
 <tr><td><del>hex number</del></td>     <td><del>hhh</del></td>   <td><tt><del>\xhhh</del></tt></td></tr>
 </table>
 </div>
-</blockquote>
-</p>
-
-<p>Delete
-<a href="http://eel.is/c++draft/lex.ccon#footnote-19">footnote 19</a>
-referenced from
-<a href="http://eel.is/c++draft/lex.ccon#7">
-5.13.3 [lex.ccon] paragraph 7</a>:<br/>
-<em>Drafting Note:</em> The footnote text was moved into a note in
-<a href="http://eel.is/c++draft/lex.ccon#7">[lex.ccon] paragraph 7</a>.
-<blockquote class="stddel">
-19) Using an escape sequence for a question mark is supported for compatibility with ISO C++ 2014 and ISO C.
 </blockquote>
 </p>
 
