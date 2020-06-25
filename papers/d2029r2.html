@@ -289,8 +289,10 @@ encoding of the source file to the execution character set.
       <li>[lex.string]pX: Removed the reference to translation phase 7 now
           that appending a null character to string literals has been moved to
           translation phase 6.</li>
-      <li>[lex.string]pX.1: Updated wording to clarify that a sequence of
+      <li>[lex.string]pX: Updated wording to clarify that a sequence of
           characters is encoded as a group rather than one at a time.</li>
+      <li>[lex.string]pX: Updated wording to clarify the expected behavior
+          for stateful character encodings.</li>
     </ul>
   </li>
   <li>[lex.phases]p5: Removed the pre-existing footnote.
@@ -1765,17 +1767,17 @@ sequence of
 <a href="http://eel.is/c++draft/lex.string#nt:s-char"><em>s-char</em></a>s
 (for a non-raw string literal) and
 <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>s
-(for a raw string literal) as follows:
+(for a raw string literal) in order as follows:
 <table>
   <tr>
     <td style="vertical-align:top">(X.1)&nbsp;&mdash;</td>
     <td>
-      The sequence of characters denoted by each
-      <a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>,
-      <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>,
-      <a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>
+      The sequence of characters denoted by each contiguous sequence of
+      <a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>s,
+      <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>s,
+      <a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>s
       (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>), and
-      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
+      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s
       (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
       is encoded to a code unit sequence using the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
@@ -1787,6 +1789,11 @@ sequence of
       sequence is encoded; otherwise, the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
       is ill-formed.
+      [ <em>Note:</em> For stateful character encodings, encoding of the first
+      such sequence should begin with the initial encoding state; encoding of
+      subsequent sequences should begin with the final encoding state of the
+      prior sequence.
+      &mdash; <em>end note</em> ]
     </td>
   </tr>
   <tr>
@@ -1806,6 +1813,9 @@ sequence of
       is encoded; otherwise, the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
       is ill-formed.
+      [ <em>Note:</em> These sequences should have no effect on encoding
+      state for stateful character encodings.
+      &mdash; <em>end note</em> ]
     </td>
   </tr>
 </table>
