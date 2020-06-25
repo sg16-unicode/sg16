@@ -531,17 +531,27 @@ associated character encoding as specified in
 <a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a> and
 <a href="http://eel.is/c++draft/lex.string">[lex.string]</a>.</ins>
 <del>if there is no corresponding member, it is converted to an implementation
-defined member other than the null (wide) character</del>
+defined member other than the null (wide) character.
+<sup>
+[ Footnote: An implementation need not convert all non-corresponding source
+characters to the same execution character. ]
+</sup></del>
 <ins>[ <em>Note:</em> If a character lacks representation in the associated
 character encoding, then the character is converted to an
 implementation-defined character or the literal is ill-formed
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>,
 <a href="http://eel.is/c++draft/lex.string">[lex.string]</a>)
-&mdash; <em>end note</em> ]</ins>.
-<del><sup>
-[ Footnote: An implementation need not convert all non-corresponding source
-characters to the same execution character. ]
-</sup></del>
+&mdash; <em>end note</em> ].</ins>
+</blockquote>
+</p>
+
+<p>Change in
+<a href="http://eel.is/c++draft/lex.phases#1.6">
+5.2 [lex.phases] paragraph 6</a>:<br/>
+<em>Drafting note:</em> This addition duplicates wording in [lex.string], but
+seems important to include here.
+<blockquote>
+Adjacent string literal tokens are concatenated.
 </blockquote>
 </p>
 
