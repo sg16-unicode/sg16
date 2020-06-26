@@ -287,6 +287,7 @@ encoding of the source file to the execution character set.
           values.</li>
       <li>[lex.ccon]pX: Swapped the order of the encoding prefix and kind
           columns in the table.</li>
+      <li>[lex.ccon]pX: Moved example qualification text to a footnote.</li>
       <li>[lex.ccon]p7: Inlined the referenced footnote and removed the
           external link.</li>
       <li>[lex.ccon]p7: Moved wording for <em>conditional-escape-sequence</em>s
@@ -831,9 +832,7 @@ are conditionally supported.
   <td><tt>int</tt></td>
   <td>implementation-defined</td>
   <td>
-    <tt>'\U0001F525'</tt><br/>
-    (assuming lack of representation in the execution character set,<br/>
-    or that representation would require more than one code unit.)
+    <tt>'\U0001F525'</tt><sup>[ Footnote X1: <em>see below</em> ]</sup>
   </td>
 </tr>
 <tr>
@@ -854,9 +853,7 @@ are conditionally supported.
   <td><tt>wchar_t</tt></td>
   <td>implementation-defined</td>
   <td>
-    <tt>L'\U0001F32A'</tt><br/>
-    (assuming lack of representation in the execution wide-character set,<br/>
-    or that representation would require more than one code unit.)
+    <tt>L'\U0001F32A'</tt><sup>[ Footnote X2: <em>see below</em> ]</sup>
   </td>
 </tr>
 <tr>
@@ -888,6 +885,16 @@ are conditionally supported.
 </tr>
 </table>
 </div>
+</blockquote>
+</p>
+
+<blockquote class="stdins">
+X1) The example assumes that the specified character lacks representation in
+    the execution character set, or that representation would require more than
+    one code unit.<br/>
+X2) The example assumes that the specified character lacks representation in the
+    execution wide-character set, or that representation would require more than
+    one code unit.<br/>
 </blockquote>
 
 <p>Delete
