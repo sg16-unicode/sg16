@@ -287,6 +287,8 @@ encoding of the source file to the execution character set.
           values.</li>
       <li>[lex.ccon]pX: Swapped the order of the encoding prefix and kind
           columns in the table.</li>
+      <li>[lex.ccon]pX: Reworded to eliminate ambiguous subparagraph
+          applicability.</li>
       <li>[lex.ccon]pX: Moved example qualification text to a footnote.</li>
       <li>[lex.ccon]p7: Inlined the referenced footnote and removed the
           external link.</li>
@@ -1027,28 +1029,27 @@ The value of a character literal is as follows:
   <tr>
     <td style="vertical-align:top">(X.1)&nbsp;&mdash;</td>
     <td>
-      The value of a
-      conditional character literal,
-      multicharacter literal,
-      conditional wide character literal, or
-      wide multicharacter literal
-      is implementation-defined.
+      The value of a character literal consisting of a single
+      <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
+      <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
+      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
+      that specifies a character that can be encoded in the applicable
+      associated character encoding as a single code unit is the value of
+      that code unit.
     </td>
   </tr>
   <tr>
     <td style="vertical-align:top">(X.2)&nbsp;&mdash;</td>
     <td>
-      The value of a character literal consisting of a single
+      A character literal consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
       <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
       <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
-      is the code unit value of the specified character encoded with the
-      character literal's associated character encoding.
-      If the character cannot be encoded in a single code unit, then
-      the character literal is either a
-      conditional character literal, a
-      conditional wide character literal,
-      or is ill-formed.
+      that specifies a character that either lacks representation in the
+      applicable associated character encoding, or that can not be encoded
+      as a single code unit, is conditionally-supported and has an
+      implementation-defined value if its encoding prefix is absent or is
+      <tt>L</tt> and is ill-formed otherwise.
     </td>
   </tr>
   <tr>
@@ -1056,22 +1057,37 @@ The value of a character literal is as follows:
     <td>
       The value of a character literal consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
-      is the numeric value of the octal or hexadecimal number.  There is no limit
-      to the number of digits in a hexadecimal sequence.  A sequence of octal or
-      hexadecimal digits is terminated by the first character that is not an octal
-      digit or a hexadecimal digit, respectively.  If the numeric value exceeds the
-      range of the character literal's associated code unit type, then, for an
-      ordinary character literal or a
-      wide character literal, the value is implementation-defined and, for
-      all other character literals, the character literal is ill-formed.
+      that specifies a numeric value that does not exceed the range of the
+      applicable associated code unit type is that numeric value.
     </td>
   </tr>
   <tr>
     <td style="vertical-align:top">(X.4)&nbsp;&mdash;</td>
     <td>
-      Character literals consisting of a single
+      A character literal consisting of a single
+      <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
+      that specifies a numeric value that exceeds the range of the applicable
+      associated code unit type has an implementation-defined value if the
+      literal's encoding prefix is absent or is <tt>L</tt> and is ill-formed
+      otherwise.
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(X.5)&nbsp;&mdash;</td>
+    <td>
+      A character literal consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>
-      are conditionally-supported and have an implementation-defined value.
+      is conditionally-supported and has an implementation-defined value.
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(X.6)&nbsp;&mdash;</td>
+    <td>
+      A character literal consisting of multiple
+      <a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>s
+      is conditionally-supported and has an implementation-defined value if
+      its encoding prefix is absent or is <tt>L</tt> and is ill-formed
+      otherwise.
     </td>
   </tr>
 </table>
