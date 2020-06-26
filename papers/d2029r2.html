@@ -289,6 +289,8 @@ encoding of the source file to the execution character set.
           columns in the table.</li>
       <li>[lex.ccon]p7: Inlined the referenced footnote and removed the
           external link.</li>
+      <li>[lex.ccon]p7: Moved wording for <em>conditional-escape-sequence</em>s
+          to [lex.ccon]pX.</li>
       <li>[lex.string]p1: Removed the empty string literal examples.</li>
       <li>[lex.string]p1: Corrected a link to the <em>string-literal</em>
           grammar term.</li>
@@ -1058,9 +1060,9 @@ The value of a character literal is as follows:
   <tr>
     <td style="vertical-align:top">(X.4)&nbsp;&mdash;</td>
     <td>
-      The value of a character literal consisting of a single
+      Character literals consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>
-      is implementation-defined.
+      are conditionally-supported and have an implementation-defined value.
     </td>
   </tr>
 </table>
@@ -1080,10 +1082,7 @@ The added note is content moved from the deleted footnote.
 is specified in table
 <a href="http://eel.is/c++draft/lex.ccon#tab:lex.ccon.esc">8</a>.
 [ <em>Note:</em> Using an escape sequence for a question mark is supported for
-compatibility with ISO C++ 2014 and ISO C.  &mdash; <em>end note</em> ]
-<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>s
-are conditionally-supported and specify an implementation-defined
-character.</ins>
+compatibility with ISO C++ 2014 and ISO C.  &mdash; <em>end note</em> ]</ins>
 <del>Certain non-graphic characters, the single quote <tt>'</tt>, the double quote
 <tt>"</tt>, the question mark
 <tt>?</tt>,
