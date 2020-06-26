@@ -260,14 +260,20 @@ encoding of the source file to the execution character set.
       <li>Removed italics for uses of defined terms.  Ialics are now
           consistently used when defining terms or when defining or using
           grammar terms.</li>
-      <li>[lex.phases]p6: Moved appending of a null character to string
-          literals to translation phase 6.</li>
       <li>[lex.phases]p5: Inlined the referenced footnote and removed the
           external link.</li>
+      <li>[lex.phases]p5: Updated for removal of
+          <em>character-escape-sequence</em>.</li>
+      <li>[lex.phases]p6: Moved appending of a null character to string
+          literals to translation phase 6.</li>
       <li>[lex.ccon]: Modified <em>conditional-escape-sequence-char</em> to
           avoid ambiguity with <em>universal-character-name</em>,
           <em>octal-escape-sequence</em>, and
-          <em>hexadecimal-escape-sequence</em>.
+          <em>hexadecimal-escape-sequence</em>.</li>
+      <li>[lex.ccon]: Removed <em>character-escape-sequence</em> by making
+          <em>conditional-escape-sequence</em> a peer of
+          <em>simple-escape-sequence</em> and
+          <em>numeric-escape-sequence</em>.</li>
       <li>[lex.ccon]p1: Corrected sentence capitalization.</li>
       <li>[lex.ccon]p6: Inlined the referenced footnote and removed the
           external link.</li>
@@ -275,6 +281,10 @@ encoding of the source file to the execution character set.
           colon rather than a period.</li>
       <li>[lex.ccon]pX: Corrected the subparagraph numbers to align with the
           top of their associated text.</li>
+      <li>[lex.ccon]pX: Updated for removal of
+          <em>character-escape-sequence</em> and to allow
+          <em>conditional-escape-sequence</em>s to specify non-character
+          values.</li>
       <li>[lex.ccon]p7: Inlined the referenced footnote and removed the
           external link.</li>
       <li>[lex.string]p1: Removed the empty string literal examples.</li>
@@ -293,6 +303,10 @@ encoding of the source file to the execution character set.
           characters is encoded as a group rather than one at a time.</li>
       <li>[lex.string]pX: Updated wording to clarify the expected behavior
           for stateful character encodings.</li>
+      <li>[lex.string]pX: Updated for removal of
+          <em>character-escape-sequence</em> and to allow
+          <em>conditional-escape-sequence</em>s to specify non-character
+          values.</li>
     </ul>
   </li>
   <li>[lex.phases]p5: Removed the pre-existing footnote.
@@ -361,8 +375,9 @@ kind of literal (ordinary, wide or Unicode).
 </p>
 
 <p>
-New <tt>basic-c-char</tt>, <tt>basic-s-char</tt>,
-<tt>character-escape-sequence</tt>, <tt>numeric-escape-sequence</tt>, and
+New <tt>basic-c-char</tt>,
+<tt>basic-s-char</tt>,
+<tt>numeric-escape-sequence</tt>, and
 <tt>simple-escape-sequence-char</tt> grammar productions are proposed in order
 to simplify wording.  The <tt>c-char</tt>, <tt>s-char</tt>, and
 <tt>escape-sequence</tt> grammar productions are updated to define them in
@@ -371,7 +386,7 @@ terms of the new grammar productions.
 
 <p>
 New <tt>conditional-escape-sequence</tt> and
-<tt>conditional-escape-sequence-char</tt> grammar production are proposed to
+<tt>conditional-escape-sequence-char</tt> grammar productions are proposed to
 address previously missing grammar support for conditionally-supported
 implementation-defined escape sequences.
 </p>
@@ -530,23 +545,21 @@ merge conflict resolution will be required.
 <p>Change in
 <a href="http://eel.is/c++draft/lex.phases#1.5">
 5.2 [lex.phases] paragraph 5</a>:<br/>
-<em>Drafting Note:</em> The change of "escape sequence" to
-"<tt>character-escape-sequence</tt>" addresses
-<a href="http://wg21.link/cwg1656">CWG 1656</a>.
 <blockquote>
 Each <del>basic source character set member</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
 <a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>, and
 <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>
 </ins>
 in a character literal or a string literal, as well as each
-<del>escape sequence</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a></ins>
+<del>escape sequence</del><ins><a href="http://eel.is/c++draft/lex.ccon#nt:escape-sequence"><em>escape-sequence</em></a></ins>
 and
 <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
-in a character literal or a non-raw string literal, is converted to the
-<del>corresponding member of the execution character set
+in a character literal or a non-raw string literal,
+<del>is converted to the
+corresponding member of the execution character set
 (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>,
 <a href="http://eel.is/c++draft/lex.string">[lex.string]</a>);
-</del><ins>literal's
+</del><ins>is encoded in the literal's
 associated character encoding as specified in
 <a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a> and
 <a href="http://eel.is/c++draft/lex.string">[lex.string]</a>.</ins>
@@ -556,12 +569,6 @@ defined member other than the null (wide) character.
 [ Footnote: An implementation need not convert all non-corresponding source
 characters to the same execution character. ]
 </sup></del>
-<ins>[ <em>Note:</em> If a character lacks representation in the associated
-character encoding, then the character is converted to an
-implementation-defined character or the literal is ill-formed
-(<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>,
-<a href="http://eel.is/c++draft/lex.string">[lex.string]</a>)
-&mdash; <em>end note</em> ].</ins>
 </blockquote>
 </p>
 
@@ -631,29 +638,20 @@ character
 </div>
 <br/></ins>
 <a href="http://eel.is/c++draft/lex.ccon#nt:escape-sequence">escape-sequence:</a>
-<del><div style="margin-left: 1em;">
+<div style="margin-left: 1em;">
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>
 </div>
-<div style="margin-left: 1em;">
+<del><div style="margin-left: 1em;">
 <a href="http://eel.is/c++draft/lex.ccon#nt:octal-escape-sequence">octal-escape-sequence</a>
 </div></del>
 <del><div style="margin-left: 1em;">
 <a href="http://eel.is/c++draft/lex.ccon#nt:hexadecimal-escape-sequence">hexadecimal-escape-sequence</a>
 </div></del>
 <div style="margin-left: 1em;">
-<ins><a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence">character-escape-sequence</a></ins>
-</div>
-<div style="margin-left: 1em;">
 <ins><a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence">numeric-escape-sequence</a></ins>
 </div>
-<br/>
-<ins>
-<a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence">character-escape-sequence</a>:
 <div style="margin-left: 1em;">
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence">simple-escape-sequence</a>
-</div>
-<div style="margin-left: 1em;">
-<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence">conditional-escape-sequence</a>
+<ins><a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence">conditional-escape-sequence</a></ins>
 </div>
 <br/>
 </ins>
@@ -667,7 +665,7 @@ character
 <tt>\</tt> <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>
 </ins>
 </div>
-<ins><br/></ins>
+<br/>
 <ins>
 <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>: one of
 <div style="margin-left: 1em;">
@@ -676,26 +674,6 @@ character
 </div>
 <br/>
 </ins>
-<ins>
-<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence">conditional-escape-sequence</a>:
-<div style="margin-left: 1em;">
-<tt>\</tt> <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence-char">conditional-escape-sequence-char</a>
-</div>
-<br/>
-</ins>
-<ins>
-<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence-char">conditional-escape-sequence-char</a>:
-<div style="margin-left: 1em;">
-any member of the basic source character set other than
-<tt>u</tt>,
-<tt>U</tt>,
-<tt>x</tt>,
-and the members of
-<a href="http://eel.is/c++draft/lex.icon#nt:octal-digit">octal-digit</a> and
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>
-</div>
-</ins>
-<br/>
 <ins>
 <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence">numeric-escape-sequence</a>:
 <div style="margin-left: 1em;">
@@ -728,6 +706,27 @@ and the members of
 <a href="http://eel.is/c++draft/lex.ccon#nt:hexadecimal-escape-sequence">hexadecimal-escape-sequence</a>
 <a href="http://eel.is/c++draft/lex.icon#nt:hexadecimal-digit">hexadecimal-digit</a>
 </div>
+<ins>
+<br/>
+<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence">conditional-escape-sequence</a>:
+<div style="margin-left: 1em;">
+<tt>\</tt> <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence-char">conditional-escape-sequence-char</a>
+</div>
+<br/>
+</ins>
+<ins>
+<a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence-char">conditional-escape-sequence-char</a>:
+<div style="margin-left: 1em;">
+any member of the basic source character set other than
+<tt>u</tt>,
+<tt>U</tt>,
+<tt>x</tt>,
+and the members of
+<a href="http://eel.is/c++draft/lex.icon#nt:octal-digit">octal-digit</a> and
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>
+</div>
+</ins>
+<br/>
 </blockquote>
 </p>
 
@@ -1030,7 +1029,7 @@ The value of a character literal is as follows:
     <td>
       The value of a character literal consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
-      <a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>, or
+      <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
       <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
       is the code unit value of the specified character encoded with the
       character literal's associated character encoding.
@@ -1054,6 +1053,14 @@ The value of a character literal is as follows:
       ordinary character literal or a
       wide character literal, the value is implementation-defined and, for
       all other character literals, the character literal is ill-formed.
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(X.4)&nbsp;&mdash;</td>
+    <td>
+      The value of a character literal consisting of a single
+      <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>
+      is implementation-defined.
     </td>
   </tr>
 </table>
@@ -1155,7 +1162,7 @@ outside the range defined for its type, the program is ill-formed.
 <a href="http://eel.is/c++draft/lex.ccon#9">
 5.13.3 [lex.ccon] paragraph 9</a>:<br/>
 <em>Drafting Note:</em> The normative text was combined with wording for
-<tt>basic-c-char</tt> and <tt>character-escape-sequence</tt> above.  The deleted
+<tt>basic-c-char</tt> and <tt>simple-escape-sequence</tt> above.  The deleted
 note duplicates normative text in
 <a href="http://eel.is/c++draft/lex.phases#1.1">
 5.2 [lex.phases] paragraph 1</a>.
@@ -1778,7 +1785,7 @@ sequence of
       The sequence of characters denoted by each contiguous sequence of
       <a href="http://eel.is/c++draft/lex.string#nt:basic-s-char"><em>basic-s-char</em></a>s,
       <a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>s,
-      <a href="http://eel.is/c++draft/lex.ccon#nt:character-escape-sequence"><em>character-escape-sequence</em></a>s
+      <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>s
       (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>), and
       <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>s
       (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
@@ -1815,6 +1822,18 @@ sequence of
       is ill-formed.
       [ <em>Note:</em> These sequences should have no effect on encoding
       state for stateful character encodings.
+      &mdash; <em>end note</em> ]
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(X.3)&nbsp;&mdash;</td>
+    <td>
+      Each
+      <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>
+      (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
+      contributes an implementation-defined code unit sequence.
+      [ <em>Note:</em> Whether these sequences have an effect on encoding
+      state for stateful character encodings is implementation-defined.
       &mdash; <em>end note</em> ]
     </td>
   </tr>
