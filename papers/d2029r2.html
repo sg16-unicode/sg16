@@ -285,6 +285,8 @@ encoding of the source file to the execution character set.
           <em>character-escape-sequence</em> and to allow
           <em>conditional-escape-sequence</em>s to specify non-character
           values.</li>
+      <li>[lex.ccon]pX: Swapped the order of the encoding prefix and kind
+          columns in the table.</li>
       <li>[lex.ccon]p7: Inlined the referenced footnote and removed the
           external link.</li>
       <li>[lex.string]p1: Removed the empty string literal examples.</li>
@@ -307,6 +309,8 @@ encoding of the source file to the execution character set.
           <em>character-escape-sequence</em> and to allow
           <em>conditional-escape-sequence</em>s to specify non-character
           values.</li>
+      <li>[lex.string]pX: Swapped the order of the encoding prefix and kind
+          columns in the table.</li>
     </ul>
   </li>
   <li>[lex.phases]p5: Removed the pre-existing footnote.
@@ -807,22 +811,21 @@ are conditionally supported.
 <br/>
 <table border="1">
 <tr>
-  <th>Kind</th>
   <th>Encoding<br/>prefix</th>
+  <th>Kind</th>
   <th>Associated<br/>code unit type</th>
   <th>Associated<br/>character encoding</th>
   <th>Example</th>
 </tr>
 <tr>
+  <td rowspan="3">none</td>
   <td><em>ordinary character literal</em></td>
-  <td>none</td>
   <td><tt>char</tt></td>
   <td>encoding of the execution character set</td>
   <td><tt>'v'</tt></td>
 </tr>
 <tr>
   <td><em>conditional character literal</em></td>
-  <td>none</td>
   <td><tt>int</tt></td>
   <td>implementation-defined</td>
   <td>
@@ -833,21 +836,19 @@ are conditionally supported.
 </tr>
 <tr>
   <td><em>multicharacter literal</em></td>
-  <td>none</td>
   <td><tt>int</tt></td>
   <td>implementation-defined</td>
   <td><tt>'abcd'</tt></td>
 </tr>
 <tr>
+  <td rowspan="3"><tt>L</tt></td>
   <td><em>wide character literal</em></td>
-  <td><tt>L</tt></td>
   <td><tt>wchar_t</tt></td>
   <td>encoding of the execution wide-character set</td>
   <td><tt>L'w'</tt></td>
 </tr>
 <tr>
   <td><em>conditional wide character literal</em></td>
-  <td><tt>L</tt></td>
   <td><tt>wchar_t</tt></td>
   <td>implementation-defined</td>
   <td>
@@ -858,28 +859,27 @@ are conditionally supported.
 </tr>
 <tr>
   <td><em>wide multicharacter literal</em></td>
-  <td><tt>L</tt></td>
   <td><tt>wchar_t</tt></td>
   <td>implementation-defined</td>
   <td><tt>L'abcd'</tt></td>
 </tr>
 <tr>
-  <td><em>UTF-8 character literal</em></td>
   <td><tt>u8</tt></td>
+  <td><em>UTF-8 character literal</em></td>
   <td><tt>char8_t</tt></td>
   <td>UTF-8</td>
   <td><tt>u8'x'</tt></td>
 </tr>
 <tr>
-  <td><em>UTF-16 character literal</em></td>
   <td><tt>u</tt></td>
+  <td><em>UTF-16 character literal</em></td>
   <td><tt>char16_t</tt></td>
   <td>UTF-16</td>
   <td><tt>u'y'</tt></td>
 </tr>
 <tr>
-  <td><em>UTF-32 character literal</em></td>
   <td><tt>U</tt></td>
+  <td><em>UTF-32 character literal</em></td>
   <td><tt>char32_t</tt></td>
   <td>UTF-32</td>
   <td><tt>U'z'</tt></td>
@@ -1334,15 +1334,15 @@ and their properties.
 <br/>
 <table border="1">
 <tr>
-  <th>Kind</th>
   <th>Encoding<br/>prefix</th>
+  <th>Kind</th>
   <th>Type</th>
   <th>Associated<br/>character encoding</th>
   <th>Examples</th>
 </tr>
 <tr>
-  <td><em>ordinary string literal</em></td>
   <td>none</td>
+  <td><em>ordinary string literal</em></td>
   <td>array of <em>n</em> <tt>const char</tt></td>
   <td>encoding of the execution character set</td>
   <td>
@@ -1351,8 +1351,8 @@ and their properties.
   </td>
 </tr>
 <tr>
-  <td><em>wide string literal</em></td>
   <td><tt>L</tt></td>
+  <td><em>wide string literal</em></td>
   <td>array of <em>n</em> <tt>const wchar_t</tt></td>
   <td>encoding of the execution wide-character set</td>
   <td>
@@ -1361,8 +1361,8 @@ and their properties.
   </td>
 </tr>
 <tr>
-  <td><em>UTF-8 string literal</em></td>
   <td><tt>u8</tt></td>
+  <td><em>UTF-8 string literal</em></td>
   <td>array of <em>n</em> <tt>const char8_t</tt></td>
   <td>UTF-8</td>
   <td>
@@ -1371,8 +1371,8 @@ and their properties.
   </td>
 </tr>
 <tr>
-  <td><em>UTF-16 string literal</em></td>
   <td><tt>u</tt></td>
+  <td><em>UTF-16 string literal</em></td>
   <td>array of <em>n</em> <tt>const char16_t</tt></td>
   <td>UTF-16</td>
   <td>
@@ -1381,8 +1381,8 @@ and their properties.
   </td>
 </tr>
 <tr>
-  <td><em>UTF-32 string literal</em></td>
   <td><tt>U</tt></td>
+  <td><em>UTF-32 string literal</em></td>
   <td>array of <em>n</em> <tt>const char32_t</tt></td>
   <td>UTF-32</td>
   <td>
