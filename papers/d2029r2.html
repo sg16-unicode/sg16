@@ -295,10 +295,14 @@ encoding of the source file to the execution character set.
       <li>[lex.string]p1: Removed the empty string literal examples.</li>
       <li>[lex.string]p1: Corrected a link to the <em>string-literal</em>
           grammar term.</li>
+      <li>[lex.string]pX: Swapped the order of the encoding prefix and kind
+          columns in the table.</li>
+      <li>[lex.string]pX: Added additional introductory text for the table of
+          string literal kinds.</li>
+      <li>[lex.string]p13: Moved appending of a null character to string
+          literals to translation phase 6.</li>
       <li>[lex.string]pX: Corrected the list introduction text to end with a
           colon rather than a period.</li>
-      <li>[lex.phases]p13: Moved appending of a null character to string
-          literals to translation phase 6.</li>
       <li>[lex.string]pX: Corrected the subparagraph numbers to align with the
           top of their associated text.</li>
       <li>[lex.string]pX: Removed the reference to translation phase 7 now
@@ -312,8 +316,6 @@ encoding of the source file to the execution character set.
           <em>character-escape-sequence</em> and to allow
           <em>conditional-escape-sequence</em>s to specify non-character
           values.</li>
-      <li>[lex.string]pX: Swapped the order of the encoding prefix and kind
-          columns in the table.</li>
     </ul>
   </li>
   <li>[lex.phases]p5: Removed the pre-existing footnote.
@@ -1322,9 +1324,10 @@ surrounded by double quotes, optionally prefixed by
 <a href="http://eel.is/c++draft/lex.string#1">
 5.13.5 [lex.string] paragraph 1</a>:
 <blockquote class="stdins">
-Table X specifies the kinds of
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>s
-and their properties.
+The kind of a
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>,
+its type, and its associated character encoding is determined by its encoding
+prefix as defined by table X.
 </blockquote>
 </p>
 
