@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-06-27</td>
+    <td>2020-06-28</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -875,17 +875,18 @@ is implementation-defined.
 </blockquote>
 </p>
 
-<p>Add a new paragraph (X) and table (Y) after
-<a href="http://eel.is/c++draft/lex.ccon#5">
-5.13.3 [lex.ccon] paragraph 5</a>:
+<p>Add a new paragraph (X) and table (Y) before
+<a href="http://eel.is/c++draft/lex.ccon#6">
+5.13.3 [lex.ccon] paragraph 6</a>:
 <blockquote class="stdins">
-Table Y specifies the kinds of
-<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>s
-and their properties.
-
-The type of a
+The kind of a
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>,
+its type, and its associated character encoding is primarily determined by its
+encoding prefix as defined by table Y.  For a
 <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
-is the associated code unit type.
+with an encoding prefix that is either absent or <tt>L</tt>, these properties
+are also determined by its
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>.
 
 Conditional character literals and
 conditional wide character literals
@@ -902,12 +903,9 @@ and that specifies a character that either lacks representation in the
 applicable associated character encoding or that cannot be encoded
 in a single code unit.
 
-Multicharacter literals and
-wide multicharacter literals
-are distinguished from
-ordinary character literals and
-wide character literals
-respectively by the presence of a
+Multicharacter literals and wide multicharacter literals are distinguished
+from ordinary character literals and wide character literals respectively by
+the presence of a
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
 that contains more than one
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>;
@@ -938,7 +936,7 @@ are conditionally supported.
 <tr>
   <th>Encoding<br/>prefix</th>
   <th>Kind</th>
-  <th>Associated<br/>code unit type</th>
+  <th>Type</th>
   <th>Associated<br/>character encoding</th>
   <th>Example</th>
 </tr>
@@ -1021,7 +1019,9 @@ Y2) The example assumes that the specified character lacks representation in the
 
 <p>Add a new paragraph (Z):
 <blockquote class="stdins">
-The value of a character literal is as follows:
+The value of a character literal is determined by its
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
+as follows:
 <table>
   <tr>
     <td style="vertical-align:top">(Z.1)&nbsp;&mdash;</td>
@@ -1054,8 +1054,8 @@ The value of a character literal is as follows:
     <td>
       The value of a character literal consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
-      that specifies a numeric value that does not exceed the range of the
-      applicable associated code unit type is that numeric value.
+      that specifies a numeric value that does not exceed the range of its
+      type is that numeric value.
     </td>
   </tr>
   <tr>
@@ -1063,10 +1063,9 @@ The value of a character literal is as follows:
     <td>
       A character literal consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
-      that specifies a numeric value that exceeds the range of the applicable
-      associated code unit type has an implementation-defined value if the
-      literal's encoding prefix is absent or is <tt>L</tt> and is ill-formed
-      otherwise.
+      that specifies a numeric value that exceeds the range of its type
+      has an implementation-defined value if the literal's encoding prefix
+      is absent or is <tt>L</tt> and is ill-formed otherwise.
     </td>
   </tr>
   <tr>
