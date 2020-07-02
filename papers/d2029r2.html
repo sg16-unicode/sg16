@@ -334,7 +334,6 @@ encoding of the source file to the execution character set.
 <li>FIXME: [lex.ccon]pZ: Rewrite suggested by Jens.
 <li>FIXME: Add front matter regarding TP5 and TP6 confusion; get a CWG issue and reference it.
 <li>FIXME: [lex.string]: Address encoding as a group vs encoding 1 by 1; see Jens' rewrite suggestion.
-<li>FIXME: Remove uses of "should".
 <li>FIXME: Rename "conditional character literal" to "non-encodable character literal".
     </ul>
   </li>
@@ -343,6 +342,8 @@ encoding of the source file to the execution character set.
     <ul>
       <li>[lex.ccon]pX, [lex.ccon]pZ: Replaced "applicable associated character
           encoding" with "literal's associated character encoding".</li>
+      <li>[lex.string]pZ: Removed uses of "should" from the notes regarding
+          handling of stateful encodings.</li>
     </ul>
   </li>
   <li>[lex.phases]p1.5: Removed the pre-existing footnote.
@@ -1836,9 +1837,9 @@ sequence of
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
       is ill-formed.
       [ <em>Note:</em> For stateful character encodings, encoding of the first
-      such sequence should begin with the initial encoding state; encoding of
-      subsequent sequences should begin with the final encoding state of the
-      prior sequence.
+      such sequence is assumed to begin with the initial encoding state;
+      encoding of subsequent sequences is then assumed to begin with the final
+      encoding state of the prior sequence.
       &mdash; <em>end note</em> ]
     </td>
   </tr>
@@ -1856,7 +1857,7 @@ sequence of
       is encoded; otherwise, the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
       is ill-formed.
-      [ <em>Note:</em> These sequences should have no effect on encoding
+      [ <em>Note:</em> These sequences are assumed to have no effect on encoding
       state for stateful character encodings.
       &mdash; <em>end note</em> ]
     </td>
