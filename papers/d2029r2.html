@@ -334,12 +334,13 @@ encoding of the source file to the execution character set.
 <li>FIXME: [lex.ccon]pZ: Rewrite suggested by Jens.
 <li>FIXME: Add front matter regarding TP5 and TP6 confusion; get a CWG issue and reference it.
 <li>FIXME: [lex.string]: Address encoding as a group vs encoding 1 by 1; see Jens' rewrite suggestion.
-<li>FIXME: Rename "conditional character literal" to "non-encodable character literal".
     </ul>
   </li>
   <li>Addressed changes requested during
       <a href="https://lists.isocpp.org/core/2020/06/9455.php">discussion on the core mailing list</a>:
     <ul>
+      <li>[lex.ccon]pX: Renamed <em>conditional character literal</em> to
+          <em>non-encodable character literal</em>.</li>
       <li>[lex.ccon]pX, [lex.ccon]pZ: Replaced "applicable associated character
           encoding" with "literal's associated character encoding".</li>
       <li>[lex.string]pZ: Removed uses of "should" from the notes regarding
@@ -432,8 +433,8 @@ The wording changes introduce the following:
       provides a name for conditionally-supported implementation-defined
       wide character literals that have a <tt>c-char-sequence</tt> containing
       more than one <tt>c-char</tt>.</li>
-  <li>New <tt>conditional character literal</tt> and
-      <tt>conditional wide character literal</tt>
+  <li>New <tt>non-encodable character literal</tt> and
+      <tt>non-encodable wide character literal</tt>
       character literal kinds; these provide names for conditionally-supported
       implementation-defined ordinary and wide character literals that have
       <tt>c-char-sequence</tt>s that specify characters that either lack
@@ -911,8 +912,8 @@ with an encoding prefix that is either absent or <tt>L</tt>, these properties
 are also determined by its
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>.
 
-Conditional character literals and
-conditional wide character literals
+non-encodable character literals and
+non-encodable wide character literals
 are distinguished from
 ordinary character literals and
 wide character literals
@@ -937,9 +938,9 @@ the
 of all other character literals contains exactly one
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>.
 
-Conditional character literals,
+non-encodable character literals,
 multicharacter literals,
-conditional wide character literals, and
+non-encodable wide character literals, and
 wide multicharacter literals
 are conditionally supported.
 </blockquote>
@@ -971,7 +972,7 @@ are conditionally supported.
   <td><tt>'v'</tt></td>
 </tr>
 <tr>
-  <td><em>conditional character literal</em></td>
+  <td><em>non-encodable character literal</em></td>
   <td><tt>int</tt></td>
   <td>implementation-defined</td>
   <td>
@@ -992,7 +993,7 @@ are conditionally supported.
   <td><tt>L'w'</tt></td>
 </tr>
 <tr>
-  <td><em>conditional wide character literal</em></td>
+  <td><em>non-encodable wide character literal</em></td>
   <td><tt>wchar_t</tt></td>
   <td>implementation-defined</td>
   <td>
