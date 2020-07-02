@@ -330,7 +330,6 @@ encoding of the source file to the execution character set.
   </li>
   <li>FIXMEs:
     <ul>
-<li>FIXME: consider replacing "applicable associated character encoding" with "the literal's associated character encoding".
 <li>FIXME: [lex.ccon]pX: Rewrite suggested by Jens.
 <li>FIXME: [lex.ccon]pZ: Rewrite suggested by Jens.
 <li>FIXME: Add front matter regarding TP5 and TP6 confusion; get a CWG issue and reference it.
@@ -342,6 +341,8 @@ encoding of the source file to the execution character set.
   <li>Addressed changes requested during
       <a href="https://lists.isocpp.org/core/2020/06/9455.php">discussion on the core mailing list</a>:
     <ul>
+      <li>[lex.ccon]pX, [lex.ccon]pZ: Replaced "applicable associated character
+          encoding" with "literal's associated character encoding".</li>
     </ul>
   </li>
   <li>[lex.phases]p1.5: Removed the pre-existing footnote.
@@ -365,17 +366,20 @@ The proposed wording changes are intended to resolve
       <li>are valid in <tt>u8</tt>, <tt>u</tt>, and <tt>U</tt> character
           literals.  (CWG 2333)</li>
       <li>specify values that need not correspond to valid code unit
-          values for the applicable character encoding.  (CWG 2333)</li>
+          values for the literal's associated character encoding.
+          (CWG 2333)</li>
       <li>specify the execution-time value of character literals or individual
           code unit values of string literals; that the value expressed is not
-          subject to conversion to the applicable execution character set.
+          subject to conversion to the literal's associated character encoding.
           (CWG 1656)</li>
       <li>specify values that may result in string literals that are ill-formed
-          according to their applicable character encoding (CWG 2333).</li>
+          according to the literal's associated character encoding.
+          (CWG 2333)</li>
     </ul>
   <li>Clarifying that characters that cannot be specified in a character
-      literal because they require more than one code unit in the applicable
-      character encoding may be specified in string literals.  (CWG 411)</li>
+      literal because they require more than one code unit in the literal's
+      associated character encoding may be specified in string literals.
+      (CWG 411)</li>
 </ul>
 </p>
 
@@ -383,13 +387,13 @@ The proposed wording changes are intended to resolve
 Additionally, the wording updates are intended to:
 <ul>
   <li>Specify behavior for non-ordinary character and string literals when a
-      character lacks representation in the applicable character encoding
-      (wording was previously missing).</li>
+      character lacks representation in the literal's associated character
+      encoding (wording was previously missing).</li>
   <li>Specify that wide multicharacter literals are conditionally
       supported (consistent with multicharacter literals).</li>
   <li>Specify that ordinary and wide string literals that specify characters
-      that are not representable in the applicable character encoding are
-      conditionally supported (gcc 10 rejects).</li>
+      that are not representable in the literal's associated character encoding
+      are conditionally supported (gcc 10 rejects).</li>
   <li>Specify that wide character literals that have a <tt>c-char-sequence</tt>
       that specifies a character that is not representable in the execution
       wide-character set or that cannot be encoded in a single code unit are
@@ -432,8 +436,8 @@ The wording changes introduce the following:
       character literal kinds; these provide names for conditionally-supported
       implementation-defined ordinary and wide character literals that have
       <tt>c-char-sequence</tt>s that specify characters that either lack
-      representation in the applicable execution character set or that cannot
-      be encoded as a single code unit.</li>
+      representation in the literal's associated character encoding or that
+      cannot be encoded as a single code unit.</li>
 </ul>
 </p>
 
@@ -918,7 +922,7 @@ that contains a single
 that is not a
 <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
 and that specifies a character that either lacks representation in the
-applicable associated character encoding or that cannot be encoded
+literal's associated character encoding or that cannot be encoded
 in a single code unit.
 
 Multicharacter literals and wide multicharacter literals are distinguished
@@ -1048,7 +1052,7 @@ as follows:
       <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
       <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
       <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
-      that specifies a character that can be encoded in the applicable
+      that specifies a character that can be encoded in the literal's
       associated character encoding as a single code unit is the value of
       that code unit.
     </td>
@@ -1061,7 +1065,7 @@ as follows:
       <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
       <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
       that specifies a character that either lacks representation in the
-      applicable associated character encoding, or that cannot be encoded
+      literal's associated character encoding, or that cannot be encoded
       as a single code unit, is conditionally-supported and has an
       implementation-defined value if its encoding prefix is absent or is
       <tt>L</tt> and is ill-formed otherwise.
