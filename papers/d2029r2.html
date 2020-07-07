@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-07-02</td>
+    <td>2020-07-07</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -330,8 +330,6 @@ encoding of the source file to the execution character set.
   </li>
   <li>FIXMEs:
     <ul>
-<li>FIXME: [lex.ccon]pX: Rewrite suggested by Jens.
-<li>FIXME: [lex.ccon]pZ: Rewrite suggested by Jens.
 <li>FIXME: Add front matter regarding TP5 and TP6 confusion; get a CWG issue and reference it.
 <li>FIXME: [lex.string]: Address encoding as a group vs encoding 1 by 1; see Jens' rewrite suggestion.
     </ul>
@@ -339,10 +337,23 @@ encoding of the source file to the execution character set.
   <li>Addressed changes requested during
       <a href="https://lists.isocpp.org/core/2020/06/9455.php">discussion on the core mailing list</a>:
     <ul>
-      <li>[lex.ccon]pX: Renamed <em>conditional character literal</em> to
-          <em>non-encodable character literal</em>.</li>
+      <li>[lex.ccon]pW, [lex.ccon]pX, [lex.ccon]pZ: Added the new paragraph
+          W and reworded the others based on suggestions by Jens.  These changes
+          removed the need to define separate character literal kinds for
+          ordinary vs wide non-encodable and multicharacter literals.  This
+          also restores the ability for a character literal to be both an
+          ordinary character literal and a multicharacter literal.</li>
       <li>[lex.ccon]pX, [lex.ccon]pZ: Replaced "applicable associated character
           encoding" with "literal's associated character encoding".</li>
+      <li>[lex.ccon]pX: Renamed <em>conditional character literal</em> to
+          <em>non-encodable character literal</em>.</li>
+      <li>[lex.ccon]pX: Changed the associated character encoding for the
+          non-encodable and multicharacter literal kinds from
+          implementation-defined to match the encoding of the applicable
+          execution character set.  This avoided some otherwise ambiguous
+          or incorrect references to associated character encodings.</li>
+      <li>[lex.ccon]pX: In table Y, merged adjacent cells that had the same
+          contents.</li>
       <li>[lex.string]pZ: Removed uses of "should" from the notes regarding
           handling of stateful encodings.</li>
     </ul>
@@ -391,6 +402,8 @@ Additionally, the wording updates are intended to:
   <li>Specify behavior for non-ordinary character and string literals when a
       character lacks representation in the literal's associated character
       encoding (wording was previously missing).</li>
+  <li>Broaden use of the term multicharacter literal to allow it to be
+      applicable to both ordinary and wide character literals.</li>
   <li>Specify that wide multicharacter literals are conditionally
       supported (consistent with multicharacter literals).</li>
   <li>Specify that ordinary and wide string literals that specify characters
@@ -429,17 +442,11 @@ The wording changes introduce the following:
       <tt>conditional-escape-sequence-char</tt> grammar non-terminals; these
       address previously missing grammar support for conditionally-supported
       implementation-defined escape sequences.</li>
-  <li>A new <tt>wide multicharacter literal</tt> character literal kind; this
-      provides a name for conditionally-supported implementation-defined
-      wide character literals that have a <tt>c-char-sequence</tt> containing
-      more than one <tt>c-char</tt>.</li>
-  <li>New <tt>non-encodable character literal</tt> and
-      <tt>non-encodable wide character literal</tt>
-      character literal kinds; these provide names for conditionally-supported
-      implementation-defined ordinary and wide character literals that have
-      <tt>c-char-sequence</tt>s that specify characters that either lack
-      representation in the literal's associated character encoding or that
-      cannot be encoded as a single code unit.</li>
+  <li>A new <tt>non-encodable character literal</tt> kind; this provides a name
+      for conditionally-supported implementation-defined ordinary and wide
+      character literals that have <tt>c-char-sequence</tt>s that specify
+      characters that either lack representation in the literal's associated
+      character encoding or that cannot be encoded as a single code unit.</li>
 </ul>
 </p>
 
@@ -899,50 +906,50 @@ is implementation-defined.
 </blockquote>
 </p>
 
-<p>Add a new paragraph (X) and table (Y) before
+<p>Add a new paragraph (W) before
+<a href="http://eel.is/c++draft/lex.ccon#6">
+5.13.3 [lex.ccon] paragraph 6</a>:
+<blockquote class="stdins">
+A <em>non-encodable character literal</em> is a
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+whose
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
+consists of a single
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
+that is not a
+<a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
+and that specifies a character that either
+lacks representation in the literal's associated character encoding or that
+cannot be encoded as a single code unit.
+A <em>multicharacter literal</em> is a
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+whose
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
+consists of more than one
+<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>.
+The
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>
+of a non-encodable character literal or a multicharacter literal shall be
+absent or <tt>L</tt>.
+Such
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>s
+are conditionally-supported.
+</blockquote>
+</p>
+
+<p>Add another new paragraph (X) and table (Y) before
 <a href="http://eel.is/c++draft/lex.ccon#6">
 5.13.3 [lex.ccon] paragraph 6</a>:
 <blockquote class="stdins">
 The kind of a
 <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>,
-its type, and its associated character encoding is primarily determined by its
-encoding prefix as defined by table Y.  For a
-<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
-with an encoding prefix that is either absent or <tt>L</tt>, these properties
-are also determined by its
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>.
-
-non-encodable character literals and
-non-encodable wide character literals
-are distinguished from
-ordinary character literals and
-wide character literals
-respectively by the presence of a
+its type, and its associated character encoding is determined by its
+<a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>
+and its
 <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
-that contains a single
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>
-that is not a
-<a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
-and that specifies a character that either lacks representation in the
-literal's associated character encoding or that cannot be encoded
-in a single code unit.
-
-Multicharacter literals and wide multicharacter literals are distinguished
-from ordinary character literals and wide character literals respectively by
-the presence of a
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
-that contains more than one
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>;
-the
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
-of all other character literals contains exactly one
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>.
-
-non-encodable character literals,
-multicharacter literals,
-non-encodable wide character literals, and
-wide multicharacter literals
-are conditionally supported.
+as defined by table Y.
+The special cases for non-encodable character literals and multicharacter
+literals take precedence over their respective base kinds.
 </blockquote>
 </p>
 
@@ -968,42 +975,35 @@ are conditionally supported.
   <td rowspan="3">none</td>
   <td><em>ordinary character literal</em></td>
   <td><tt>char</tt></td>
-  <td>encoding of the execution character set</td>
+  <td rowspan="3">encoding of the execution character set</td>
   <td><tt>'v'</tt></td>
 </tr>
 <tr>
-  <td><em>non-encodable character literal</em></td>
-  <td><tt>int</tt></td>
-  <td>implementation-defined</td>
+  <td>&mdash; non-encodable ordinary character literal</td>
+  <td rowspan="2"><tt>int</tt></td>
   <td>
     <tt>'\U0001F525'</tt><sup>[ Footnote Y1: <em>see below</em> ]</sup>
   </td>
 </tr>
 <tr>
-  <td><em>multicharacter literal</em></td>
-  <td><tt>int</tt></td>
-  <td>implementation-defined</td>
+  <td>&mdash; ordinary multicharacter literal</td>
   <td><tt>'abcd'</tt></td>
 </tr>
 <tr>
   <td rowspan="3"><tt>L</tt></td>
   <td><em>wide character literal</em></td>
-  <td><tt>wchar_t</tt></td>
-  <td>encoding of the execution wide-character set</td>
+  <td rowspan="3"><tt>wchar_t</tt></td>
+  <td rowspan="3">encoding of the execution wide-character set</td>
   <td><tt>L'w'</tt></td>
 </tr>
 <tr>
-  <td><em>non-encodable wide character literal</em></td>
-  <td><tt>wchar_t</tt></td>
-  <td>implementation-defined</td>
+  <td>&mdash; non-encodable wide character literal</td>
   <td>
     <tt>L'\U0001F32A'</tt><sup>[ Footnote Y2: <em>see below</em> ]</sup>
   </td>
 </tr>
 <tr>
-  <td><em>wide multicharacter literal</em></td>
-  <td><tt>wchar_t</tt></td>
-  <td>implementation-defined</td>
+  <td>&mdash; wide multicharacter literal</td>
   <td><tt>L'abcd'</tt></td>
 </tr>
 <tr>
@@ -1034,80 +1034,81 @@ are conditionally supported.
 
 <blockquote class="stdins">
 Y1) The example assumes that the specified character lacks representation in
-    the execution character set, or that representation would require more than
+    the execution character set, or that encoding it would require more than
     one code unit.<br/>
 Y2) The example assumes that the specified character lacks representation in the
-    execution wide-character set, or that representation would require more than
+    execution wide-character set, or that encoding it would require more than
     one code unit.<br/>
 </blockquote>
 
 <p>Add a new paragraph (Z):
 <blockquote class="stdins">
-The value of a character literal is determined by its
-<a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
-as follows:
+The value of a
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+is determined as follows:
 <table>
   <tr>
     <td style="vertical-align:top">(Z.1)&nbsp;&mdash;</td>
     <td>
-      The value of a character literal consisting of a single
-      <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
-      <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
-      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
-      that specifies a character that can be encoded in the literal's
-      associated character encoding as a single code unit is the value of
-      that code unit.
+      A non-encodable character literal or a multicharacter literal has an
+      implementation-defined value.
     </td>
   </tr>
   <tr>
     <td style="vertical-align:top">(Z.2)&nbsp;&mdash;</td>
     <td>
-      A character literal consisting of a single
-      <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
-      <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
-      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
-      that specifies a character that either lacks representation in the
-      literal's associated character encoding, or that cannot be encoded
-      as a single code unit, is conditionally-supported and has an
-      implementation-defined value if its encoding prefix is absent or is
-      <tt>L</tt> and is ill-formed otherwise.
+      A
+      <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+      with a
+      <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
+      consisting of a single
+      <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
+      that specifies an integer value <tt>v</tt> has a value as follows:
+      <div style="margin-left: 1em;">
+        &mdash; If <tt>v</tt> does not exceed the range of the
+        <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>'s
+        type, then the value is <tt>v</tt>.
+      </div>
+      <div style="margin-left: 1em;">
+        &mdash; Otherwise, if the
+        <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>'s
+        <a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix">encoding-prefix</a>
+        is absent or <tt>L</tt>, then the value is implementation-defined.
+      </div>
+      <div style="margin-left: 1em;">
+        &mdash; Otherwise, the program is ill-formed.
+      </div>
     </td>
   </tr>
   <tr>
     <td style="vertical-align:top">(Z.3)&nbsp;&mdash;</td>
     <td>
-      The value of a character literal consisting of a single
-      <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
-      that specifies a numeric value that does not exceed the range of its
-      type is that numeric value.
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align:top">(Z.4)&nbsp;&mdash;</td>
-    <td>
-      A character literal consisting of a single
-      <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
-      that specifies a numeric value that exceeds the range of its type
-      has an implementation-defined value if the literal's encoding prefix
-      is absent or is <tt>L</tt> and is ill-formed otherwise.
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align:top">(Z.5)&nbsp;&mdash;</td>
-    <td>
-      A character literal consisting of a single
+      A
+      <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+      with a
+      <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
+      consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>
       is conditionally-supported and has an implementation-defined value.
     </td>
   </tr>
   <tr>
-    <td style="vertical-align:top">(Z.6)&nbsp;&mdash;</td>
+    <td style="vertical-align:top">(Z.4)&nbsp;&mdash;</td>
     <td>
-      A character literal consisting of multiple
-      <a href="http://eel.is/c++draft/lex.ccon#nt:c-char"><em>c-char</em></a>s
-      is conditionally-supported and has an implementation-defined value if
-      its encoding prefix is absent or is <tt>L</tt> and is ill-formed
-      otherwise.
+      A
+      <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+      with a
+      <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
+      consisting of a single
+      <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
+      <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
+      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
+      is the code unit value of the specified character as encoded in the
+      literal's associated character encoding.
+      [ <em>Note:</em> If the specified character lacks representation in the
+      literal's associated character encoding or if it cannot be encoded as a
+      single code unit, then the literal is a non-encodable character literal.
+      &mdash; <em>end note</em> ]
     </td>
   </tr>
 </table>
