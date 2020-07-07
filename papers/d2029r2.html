@@ -331,7 +331,6 @@ encoding of the source file to the execution character set.
   <li>FIXMEs:
     <ul>
 <li>FIXME: Add front matter regarding TP5 and TP6 confusion; get a CWG issue and reference it.
-<li>FIXME: [lex.string]: Address encoding as a group vs encoding 1 by 1; see Jens' rewrite suggestion.
     </ul>
   </li>
   <li>Addressed changes requested during
@@ -356,6 +355,10 @@ encoding of the source file to the execution character set.
           contents.</li>
       <li>[lex.string]pZ: Removed uses of "should" from the notes regarding
           handling of stateful encodings.</li>
+      <li>[lex.string]pZ: Added a note to clarify that character sequences may
+          be encoded as a group such that the resulting code unit sequence may
+          differ from the sequence that would be obtained by encoding each
+          character independently.</li>
     </ul>
   </li>
   <li>[lex.phases]p1.5: Removed the pre-existing footnote.
@@ -1838,6 +1841,9 @@ sequence of
       sequence is encoded; otherwise, the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
       is ill-formed.
+      [ <em>Note:</em> The encoded code unit sequence may differ from the sequence
+      of code units that would be obtained by encoding each character
+      independently. &mdash; <em>end note</em> ]
       [ <em>Note:</em> For stateful character encodings, encoding of the first
       such sequence is assumed to begin with the initial encoding state;
       encoding of subsequent sequences is then assumed to begin with the final
