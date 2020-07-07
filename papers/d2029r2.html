@@ -254,6 +254,13 @@ character set; that the values are not subject to conversion from the
 encoding of the source file to the execution character set.
 </p>
 
+<p>
+This paper does not attempt to address the existing issue concerning the
+order in which adjacent string literals are encoded and concatenated as
+reported at
+<a href="https://lists.isocpp.org/core/2020/07/9537.php">https://lists.isocpp.org/core/2020/07/9537.php</a>
+(as of 2020-07-07, a core issue number has not been assigned for this issue).
+</p>
 
 <h1 id="changes">Changes from <a href="https://wg21.link/p2029r1">P2029R1</a></h1>
 
@@ -328,14 +335,12 @@ encoding of the source file to the execution character set.
           values.</li>
     </ul>
   </li>
-  <li>FIXMEs:
-    <ul>
-<li>FIXME: Add front matter regarding TP5 and TP6 confusion; get a CWG issue and reference it.
-    </ul>
-  </li>
   <li>Addressed changes requested during
       <a href="https://lists.isocpp.org/core/2020/06/9455.php">discussion on the core mailing list</a>:
     <ul>
+      <li>Added content to the introduction stating that this paper does not
+          attempt to address the existing issues concerning the order in which
+          adjacent string literals are encoded and concatenated.</li>
       <li>[lex.ccon]pW, [lex.ccon]pX, [lex.ccon]pZ: Added the new paragraph
           W and reworded the others based on suggestions by Jens.  These changes
           removed the need to define separate character literal kinds for
