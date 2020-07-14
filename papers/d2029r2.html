@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-07-07</td>
+    <td>2020-07-13</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -341,6 +341,9 @@ reported at
       <li>Added content to the introduction stating that this paper does not
           attempt to address the existing issues concerning the order in which
           adjacent string literals are encoded and concatenated.</li>
+      <li>[lex.phases]p6, [lex.string]p12: Adjusted wording to minimize
+          duplicate normative wording regarding string literal null character
+          appendment.</li>
       <li>[lex.ccon]pW, [lex.ccon]pX, [lex.ccon]pZ: Added the new paragraph
           W and reworded the others based on suggestions by Jens.  These changes
           removed the need to define separate character literal kinds for
@@ -370,6 +373,8 @@ reported at
   <li>[lex.string]pZ: Removed redundant wording for behavior that is
       implicit in the grammar for octal and hexadecimal escape
       sequences.</li>
+  <li>Updated the acknowledgements section to recognize additional
+      contributors.</li>
 </ul>
 </p>
 
@@ -558,8 +563,8 @@ match the deduced <tt>int</tt> type for its first declaration.
 
 <h1 id="ack">Acknowledgements</h1>
 
-<p>Thank you to Jens Maurer and Steve Downey for providing feedback on initial
-drafts of this paper!
+<p>Thank you to Jens Maurer, Steve Downey, Alisdair Meredith, and Corentin Jabot
+for their tireless feedback on numerous drafts of this paper!
 </p>
 
 
@@ -627,9 +632,13 @@ characters to the same execution character. ]
 <em>Drafting note:</em> This addition duplicates wording in [lex.string], but
 seems important to include here.
 <blockquote>
-Adjacent string literal tokens are concatenated.<ins>  A null character is
-appended to each string literal (after concatenation of adjacent string literal
-tokens).</ins>
+Adjacent
+<del>string literal tokens</del><ins><a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>s</ins>
+are concatenated<ins> and a null character is
+appended to each
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
+as specified in
+<a href="http://eel.is/c++draft/lex.string">[lex.string]</a></ins>.
 </blockquote>
 </p>
 
@@ -1732,14 +1741,24 @@ contains the two characters <tt>'\xA'</tt> and <tt>'B'</tt> after concatenation
 
 <p>Change in
 <a href="http://eel.is/c++draft/lex.string#12">
-5.13.5 [lex.string] paragraph 12</a>:
+5.13.5 [lex.string] paragraph 12</a>:<br/>
+<em>Drafting note:</em> The literal <tt>'\0'</tt> was replaced with
+"a null character" to avoid an otherwise needed correction to qualify the
+literal to be appended with an encoding prefix matching the kind of the
+string literal.
+The rationale regarding why a null character is appended was removed as
+unnecessary normative text.
+If desired, it could be restored as a note.
 <blockquote>
-After any necessary concatenation, in
+<del>After any necessary concatenation, i</del><ins>I</ins>n
 <a href="http://eel.is/c++draft/lex.phases">translation phase <del>7</del><ins>6</ins></a>
 (<a href="http://eel.is/c++draft/lex.phases">[lex.phases]</a>),
+<ins>after adjacent
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>s
+are concatenated,</ins>
 <del><tt>'\0'</tt></del><ins>a null character</ins> is appended to every
-<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
-so that programs that scan a string can find its end.
+<a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a><del>
+so that programs that scan a string can find its end</del>.
 </blockquote>
 </p>
 
