@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-07-13</td>
+    <td>2020-07-15</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -161,8 +161,9 @@ provided during those discussions and further review at the
 <a href="http://wiki.edg.com/bin/view/Wg21prague/IssuesProcessingTeleconference2020-01-16">January 16th, 2020 core issues processing teleconference</a>,
 the
 <a href="http://wiki.edg.com/bin/view/Wg21summer2020/IssuesProcessingTeleconference2020-03-23">March 23rd, 2020 core issues processing teleconference</a>,
-and later
-<a href="https://lists.isocpp.org/core/2020/06/9455.php">discussions on the core mailing list</a>.
+<a href="https://lists.isocpp.org/core/2020/06/9455.php">discussion on the core mailing list originating on June 28th, 2020</a>,
+and
+<a href="https://lists.isocpp.org/core/2020/07/9545.php">further discussions on the core mailing list originating on July 7th, 2020</a>.
 </p>
 
 <p>
@@ -336,14 +337,11 @@ reported at
     </ul>
   </li>
   <li>Addressed changes requested during
-      <a href="https://lists.isocpp.org/core/2020/06/9455.php">discussion on the core mailing list</a>:
+      <a href="https://lists.isocpp.org/core/2020/06/9455.php">discussion on the core mailing list originating on June 28th, 2020</a>:
     <ul>
       <li>Added content to the introduction stating that this paper does not
           attempt to address the existing issues concerning the order in which
           adjacent string literals are encoded and concatenated.</li>
-      <li>[lex.phases]p6, [lex.string]p12: Adjusted wording to minimize
-          duplicate normative wording regarding string literal null character
-          appendment.</li>
       <li>[lex.ccon]pW, [lex.ccon]pX, [lex.ccon]pZ: Added the new paragraph
           W and reworded the others based on suggestions by Jens.  These changes
           removed the need to define separate character literal kinds for
@@ -367,6 +365,17 @@ reported at
           be encoded as a group such that the resulting code unit sequence may
           differ from the sequence that would be obtained by encoding each
           character independently.</li>
+    </ul>
+  </li>
+  <li>Addressed changes requested during
+      <a href="https://lists.isocpp.org/core/2020/07/9545.php">further discussions on the core mailing list originating on July 7th, 2020</a>:
+    <ul>
+      <li>[lex.phases]p6, [lex.string]p12: Adjusted wording to minimize
+          duplicate normative wording regarding string literal null character
+          appendment.</li>
+      <li>[lex.ccon]: Modified the wording for the
+          <em>conditional-escape-sequence-char</em> grammar production to avoid
+          referring to "members" of grammar productions.</li>
     </ul>
   </li>
   <li>[lex.phases]p1.5: Removed the pre-existing footnote.
@@ -563,8 +572,8 @@ match the deduced <tt>int</tt> type for its first declaration.
 
 <h1 id="ack">Acknowledgements</h1>
 
-<p>Thank you to Jens Maurer, Steve Downey, Alisdair Meredith, and Corentin Jabot
-for their tireless feedback on numerous drafts of this paper!
+<p>Thank you to Jens Maurer, Steve Downey, Alisdair Meredith, Corentin Jabot,
+and Richard Smith for their tireless feedback on numerous drafts of this paper!
 </p>
 
 
@@ -775,13 +784,14 @@ character
 <ins>
 <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence-char">conditional-escape-sequence-char</a>:
 <div style="margin-left: 1em;">
-any member of the basic source character set other than
+any member of the basic source character set that is not an
+<a href="http://eel.is/c++draft/lex.icon#nt:octal-digit">octal-digit</a>,
+a
+<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>,
+or the characters
 <tt>u</tt>,
-<tt>U</tt>,
-<tt>x</tt>,
-and the members of
-<a href="http://eel.is/c++draft/lex.icon#nt:octal-digit">octal-digit</a> and
-<a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence-char">simple-escape-sequence-char</a>
+<tt>U</tt>, or
+<tt>x</tt>
 </div>
 </ins>
 <br/>
