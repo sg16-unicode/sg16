@@ -267,6 +267,15 @@ reported at
 
 <p>
 <ul>
+  <li>Addressed changes requested during
+      <a href="https://lists.isocpp.org/core/2020/07/9545.php">discussion on the core mailing list originating on July 7th, 2020</a>:
+    <ul>
+      <li>[lex.ccon]pZ, [lex.string]pZ: Updated the wording to clarify that the
+          "range of a [code unit] type" refers to the range of that type's
+          representable values (and is not restricted only to code unit values
+          that might appear in well-formed encoded text).</li>
+    </ul>
+  </li>
 </ul>
 </p>
 
@@ -975,7 +984,8 @@ is determined as follows:
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
       that specifies an integer value <tt>v</tt> has a value as follows:
       <div style="margin-left: 1em;">
-        &mdash; If <tt>v</tt> does not exceed the range of the
+        &mdash; If <tt>v</tt> does not exceed the range of representable values
+        of the
         <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>'s
         type, then the value is <tt>v</tt>.
       </div>
@@ -986,7 +996,9 @@ is determined as follows:
         is absent or <tt>L</tt>, then the value is implementation-defined.
       </div>
       <div style="margin-left: 1em;">
-        &mdash; Otherwise, the program is ill-formed.
+        &mdash; Otherwise, the
+        <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+        is ill-formed.
       </div>
     </td>
   </tr>
@@ -1750,17 +1762,26 @@ sequence of
       (<a href="http://eel.is/c++draft/lex.charset">[lex.charset]</a>)
       is encoded to a code unit sequence using the
       <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
-      associated character encoding.  If a character lacks representation in the
-      associated character encoding, then, for an
-      ordinary string literal or a wide string literal, the
-      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
-      is conditionally-supported and an implementation defined code unit
-      sequence is encoded; otherwise, the
-      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
-      is ill-formed.
+      associated character encoding.
+      If a character lacks representation in the associated character encoding,
+      then:
+      <div style="margin-left: 1em;">
+        &mdash; If the
+        <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
+        <a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>
+        is absent or <tt>L</tt>, then the
+        <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
+        is conditionally-supported and an implementation defined code unit
+        sequence is encoded.
+      </div>
+      <div style="margin-left: 1em;">
+        &mdash; Otherwise, the
+        <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
+        is ill-formed.
+      </div>
       [ <em>Note:</em> The encoded code unit sequence may differ from the sequence
       of code units that would be obtained by encoding each character
-      independently. &mdash; <em>end note</em> ]
+      independently. &mdash; <em>end note</em> ]<br/>
       [ <em>Note:</em> For stateful character encodings, encoding of the first
       such sequence is assumed to begin with the initial encoding state;
       encoding of subsequent sequences is then assumed to begin with the final
@@ -1774,14 +1795,25 @@ sequence of
       Each
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
       (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
-      contributes a single code unit value with the numeric value of the octal or
-      hexadecimal number.  If the numeric value exceeds the range of the
-      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
-      code unit type, then, for an ordinary string literal or a
-      wide string literal, an implementation-defined code unit value
-      is encoded; otherwise, the
-      <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
-      is ill-formed.
+      that specifies an integer value <tt>v</tt> contributes a single code unit
+      with a value as follows:
+      <div style="margin-left: 1em;">
+        &mdash; If <tt>v</tt> does not exceed the range of representable values
+        of the
+        <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
+        code unit type, then the value is <tt>v</tt>.
+      </div>
+      <div style="margin-left: 1em;">
+        &mdash; Otherwise, if the
+        <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
+        <a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>
+        is absent or <tt>L</tt>, then the value is implementation-defined.
+      </div>
+      <div style="margin-left: 1em;">
+        &mdash; Otherwise, the
+        <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
+        is ill-formed.
+      </div>
       [ <em>Note:</em> These sequences are assumed to have no effect on encoding
       state for stateful character encodings.
       &mdash; <em>end note</em> ]
@@ -1793,7 +1825,7 @@ sequence of
       Each
       <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>
       (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
-      contributes an implementation-defined code unit sequence.
+      contributes an implementation-defined code unit sequence.<br/>
       [ <em>Note:</em> Whether these sequences have an effect on encoding
       state for stateful character encodings is implementation-defined.
       &mdash; <em>end note</em> ]
