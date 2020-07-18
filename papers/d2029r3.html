@@ -965,7 +965,9 @@ Y2) The example assumes that the specified character lacks representation in the
     one code unit.<br/>
 </blockquote>
 
-<p>Add a new paragraph (Z):
+<p>Add another new paragraph (Z) before
+<a href="http://eel.is/c++draft/lex.ccon#6">
+5.13.3 [lex.ccon] paragraph 6</a>:
 <blockquote class="stdins">
 The value of a
 <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
@@ -1006,12 +1008,12 @@ is determined as follows:
       <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
       consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
-      that specifies an integer value <tt>v</tt> has a value as follows:
+      that specifies an integer value <tt>V</tt> has a value as follows:
       <div style="margin-left: 1em;">
-        &mdash; If <tt>v</tt> does not exceed the range of representable values
+        &mdash; If <tt>V</tt> does not exceed the range of representable values
         of the
         <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>'s
-        type, then the value is <tt>v</tt>.
+        type, then the value is <tt>V</tt>.
       </div>
       <div style="margin-left: 1em;">
         &mdash; Otherwise, if the
@@ -1800,13 +1802,13 @@ sequence of
       Each
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
       (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
-      that specifies an integer value <tt>v</tt> contributes a single code unit
+      that specifies an integer value <tt>V</tt> contributes a single code unit
       with a value as follows:
       <div style="margin-left: 1em;">
-        &mdash; If <tt>v</tt> does not exceed the range of representable values
+        &mdash; If <tt>V</tt> does not exceed the range of representable values
         of the
         <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
-        code unit type, then the value is <tt>v</tt>.
+        code unit type, then the value is <tt>V</tt>.
       </div>
       <div style="margin-left: 1em;">
         &mdash; Otherwise, if the
