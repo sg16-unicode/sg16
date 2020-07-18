@@ -276,6 +276,9 @@ reported at
           that might appear in well-formed encoded text).</li>
     </ul>
   </li>
+  <li>[lex.ccon]pZ: Modified the order of Z.2-Z.4 to match the order of the
+      equivalent presentation in [lex.string]pZ.  This order presents the more
+      common cases first.</li>
 </ul>
 </p>
 
@@ -981,6 +984,25 @@ is determined as follows:
       with a
       <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
       consisting of a single
+      <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
+      <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
+      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
+      is the code unit value of the specified character as encoded in the
+      literal's associated character encoding.
+      [ <em>Note:</em> If the specified character lacks representation in the
+      literal's associated character encoding or if it cannot be encoded as a
+      single code unit, then the literal is a non-encodable character literal.
+      &mdash; <em>end note</em> ]
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top">(Z.3)&nbsp;&mdash;</td>
+    <td>
+      A
+      <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+      with a
+      <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
+      consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:numeric-escape-sequence"><em>numeric-escape-sequence</em></a>
       that specifies an integer value <tt>v</tt> has a value as follows:
       <div style="margin-left: 1em;">
@@ -1003,7 +1025,7 @@ is determined as follows:
     </td>
   </tr>
   <tr>
-    <td style="vertical-align:top">(Z.3)&nbsp;&mdash;</td>
+    <td style="vertical-align:top">(Z.4)&nbsp;&mdash;</td>
     <td>
       A
       <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
@@ -1012,25 +1034,6 @@ is determined as follows:
       consisting of a single
       <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>
       is conditionally-supported and has an implementation-defined value.
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align:top">(Z.4)&nbsp;&mdash;</td>
-    <td>
-      A
-      <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
-      with a
-      <a href="http://eel.is/c++draft/lex.ccon#nt:c-char-sequence"><em>c-char-sequence</em></a>
-      consisting of a single
-      <a href="http://eel.is/c++draft/lex.ccon#nt:basic-c-char"><em>basic-c-char</em></a>,
-      <a href="http://eel.is/c++draft/lex.ccon#nt:simple-escape-sequence"><em>simple-escape-sequence</em></a>, or
-      <a href="http://eel.is/c++draft/lex.charset#nt:universal-character-name"><em>universal-character-name</em></a>
-      is the code unit value of the specified character as encoded in the
-      literal's associated character encoding.
-      [ <em>Note:</em> If the specified character lacks representation in the
-      literal's associated character encoding or if it cannot be encoded as a
-      single code unit, then the literal is a non-encodable character literal.
-      &mdash; <em>end note</em> ]
     </td>
   </tr>
 </table>
