@@ -256,6 +256,20 @@ encoding of the source file to the execution character set.
 </p>
 
 <p>
+Additionally, since integer values are now guaranteed to be represented in
+two's complement following the adoption of
+<a href="https://wg21.link/p1236r1">P1236R1</a>
+in C++20, numeric escape sequences in ordinary and wide character and string
+literals that specify an integer value outside the representable range of the
+code unit type are now handled analogously to narrowing integer conversions if
+the integer value is within the range of representable values of the
+corresponding unsigned type of the code unit type.
+This matches the observed behavior in the gcc 10.1, Clang 10, Microsoft
+Visual C++ 19.24, and Intel 19 compilers.
+Previously such sequences resulted in implementation-defined behavior.
+</p>
+
+<p>
 This paper does not attempt to address the existing issue concerning the
 order in which adjacent string literals are encoded and concatenated as
 reported at
@@ -274,6 +288,13 @@ reported at
           "range of a [code unit] type" refers to the range of that type's
           representable values (and is not restricted only to code unit values
           that might appear in well-formed encoded text).</li>
+      <li>[lex.ccon]pZ, [lex.string]pZ: Updated wording for ordinary and wide
+          character and string literals to specify that a numeric escape
+          sequence that specifies an integer value outside the representable
+          range of the code unit type is handled analogously to a narrowing
+          integer conversion if the integer value is representable by the
+          corresponding unsigned type of the code unit type.
+          Updated the introduction accordingly.</li>
     </ul>
   </li>
   <li>[lex.ccon]pZ: Modified the order of Z.2-Z.4 to match the order of the
@@ -341,6 +362,11 @@ Additionally, the wording updates are intended to:
   <li>Modernize the wording with current style preferences and terminology.</li>
   <li>Move appending of a null character to string literals from translation
       phase 7 to translation phase 6.</li>
+  <li>Specify that a numeric escape sequence in ordinary and wide character and
+      string literals that specifies an integer value outside the representable
+      range of the code unit type is now handled analogously to a narrowing
+      integer conversion if the integer value is representable by the
+      corresponding unsigned type of the code unit type.</li>
 </ul>
 </p>
 
@@ -1019,7 +1045,14 @@ is determined as follows:
         &mdash; Otherwise, if the
         <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>'s
         <a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>
-        is absent or <tt>L</tt>, then the value is implementation-defined.
+        is absent or <tt>L</tt>, and <tt>V</tt> does not exceed the range of
+        representable values of the corresponding unsigned type for the
+        underlying type of the
+        <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>'s
+        type, then the value is the unique value of the
+        <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>'s
+        type <tt>T</tt> that is congruent to <tt>V</tt> modulo
+        2<sup><em>N</em></sup>, where <em>N</em> is the width of <tt>T</tt>.
       </div>
       <div style="margin-left: 1em;">
         &mdash; Otherwise, the
@@ -1814,7 +1847,14 @@ sequence of
         &mdash; Otherwise, if the
         <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
         <a href="http://eel.is/c++draft/lex.ccon#nt:encoding-prefix"><em>encoding-prefix</em></a>
-        is absent or <tt>L</tt>, then the value is implementation-defined.
+        is absent or <tt>L</tt>, and <tt>V</tt> does not exceed the range of
+        representable values of the corresponding unsigned type for the
+        underlying type of the
+        <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
+        code unit type, then the value is the unique value of the
+        <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>'s
+        code unit type <tt>T</tt> that is congruent to <tt>V</tt> modulo
+        2<sup><em>N</em></sup>, where <em>N</em> is the width of <tt>T</tt>.
       </div>
       <div style="margin-left: 1em;">
         &mdash; Otherwise, the
