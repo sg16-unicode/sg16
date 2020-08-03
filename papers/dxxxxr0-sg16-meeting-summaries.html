@@ -103,6 +103,8 @@ snapshot of select meeting summaries from that repository.
       June 17th, 2020</a></li>
   <li><a href="#2020_07_08">
       July 8th, 2020</a></li>
+  <li><a href="#2020_07_22">
+      July 22nd, 2020</a></li>
 </ul>
 
 <p>
@@ -1251,6 +1253,465 @@ Previously published SG16 meeting summary papers:
       for now and that a paper will be needed to make more progress.</li>
   <li>Tom stated that the next meeting will be on July 22nd and will discuss
       <a href="https://wg21.link/p2178">P2178</a>.</li>
+</ul>
+
+
+<h1 id="2020_07_22">July 22nd, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2139r2">P2139R2: Reviewing Deprecated Facilities of C++20 for C++23</a>
+    <ul>
+      <li>Provide recommendations for D.20-D.23.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2201r0">P2201R0: Mixed string literal concatenation</a>
+    <ul>
+      <li>Validate consensus to encourage that this paper be forwarded
+          directly to core.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2178r1">P2178R1: Misc lexing and string handling improvements</a>
+    <ul>
+      <li>Begin discussions on the various proposals.</li>
+      <li>Possibly begin taking direction polls.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Alisdair Meredith</li>
+  <li>Corentin Jabot</li>
+  <li>Jens Maurer</li>
+  <li>Martinho Fernandes</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom provided some administrative updates:
+    <ul>
+      <li>Tom now has a Zoom account setup courtesy of the ISO.</li>
+      <li>SG16 telecons will switch to Zoom starting with the next telecon
+          on August 12th.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2139r2">P2139R2: Reviewing Deprecated Facilities of C++20 for C++23</a>:
+    <ul>
+      <li>Alisdair provided an introduction.
+        <ul>
+          <li>LEWG has already discussed the proposed changes.</li>
+          <li>In general, LEWG is in favor of removal of the deprecated
+              features since implementors can continue to provide them due
+              to the zombie clause
+              (<a href="http://eel.is/c++draft/library#zombie.names">[zombie.names]</a>).</li>
+        </ul>
+      </li>
+      <li>D.20: Deprecated Standard code conversion facets [depr.locale.stdcvt]
+        <ul>
+          <li><em>[ Editor's note: This concerns the <tt>codecvt</tt> facets
+              that convert between UCS-2, UTF-8, UTF-16, and UTF-32;
+              <tt>codecvt_utf8</tt>, <tt>codecvt_utf8_utf16</tt>, and
+              <tt>codecvt_utf16</tt>. ]</em></li>
+          <li>Alisdair stated that these interfaces are all underspecified; the
+              wording was based on Dinkumware's documentation.</li>
+          <li>Alisdair indicated that the reference to UCS-2 in the wording for
+              these facets is all that is preventing us from removing the
+              normative reference to ISO/IEC 10646:1993.  UCS-2 has been
+              deprecated for 20 years and the ISO no longer provides a standard
+              with a definition for it.</li>
+          <li><em>[ Editor's note: According to
+              <a href="https://www.unicode.org/versions/Unicode13.0.0/appC.pdf#I1.7749">chapter 2 of Unicode 13</a>,
+              UCS-2 was removed from ISO/IEC 10646 in ISO/IEC 10646:2011.
+              ]</em></li>
+          <li>Jens agreed that uses of the UCS-2 term and normative reference
+              to an outdated standard should be removed.</li>
+          <li>PBrett directed the group to
+              <a href="https://wg21.link/p0618">P0618</a>,
+              the paper that deprecated these features and noted that there were
+              recent complaints by a few committee members about deprecating
+              these features.  JeanHeyd is now working on a replacement.</li>
+          <li><em>[ Editor's note: The paper trail for P0618 is a little
+              difficult to follow.  The paper was written to address C++17 NB
+              comment GB 57.  LEWG consensus for resolving GB 57 by deprecating
+              the <tt>&lt;codecvt&gt;</tt> header was by unanimous consent at
+              the Issaquah 2016 meeting. ]</em></li>
+          <li>Zach responded that the concerns about deprecation may be
+              abstract; that only features that are actively harmful should be
+              removed.  Disliking a feature is not sufficient grounds for
+              deprecation.</li>
+          <li>PBrett noted that the referenced committee members are under the
+              impression that the <tt>codecvt</tt> facets work; at least for
+              basic uses.</li>
+          <li>Alisdair stated that their concern was deprecation without a
+              replacement.</li>
+          <li>Tom noted that the discussion around those complaints was
+              confusing.  Some of the code posted that worked on one platform
+              but not another was using <tt>std::codecvt</tt> specializations
+              that have never been guaranteed to exist by the standard.  The
+              code in question wasn't using the deprecated facets at all.</li>
+          <li>Steve stated that these facets are an attractive nuisance; we
+              have evidence that people have a hard time using them and that
+              trying to use them for UTF-16 often leads to bad bugs.</li>
+          <li>Jens stated that there are differences of opinion regarding what
+              deprecate means.  For example, comments have been made that
+              deprecating <tt>std::regex</tt> is intended to invite alternate
+              proposals.  But deprecation may lead to the addition of
+              <tt>[[deprecated]]</tt> attributes which may result in warnings
+              which may be elevated to errors which may cause problems for
+              programmers.</li>
+          <li>Jens added that we should have a migration path, but we don't
+              have replacements yet.</li>
+          <li>Jens asked if we can salvage these interfaces, at least the parts
+              that convert between UTF-8 and UTF-16.</li>
+          <li>Alisdair responded that the interfaces don't consistently convert
+              to UCS-2 vs UTF-16.</li>
+          <li>Jens asked if we can just remove the functionality that relates to
+              UCS-2.</li>
+          <li>Corentin commented that the scope of the paper is deprecation or
+              removal and stated that we should not consider other options.</li>
+          <li>PBrett agreed with Corentin.</li>
+          <li>Alisdair replied that the intent of the paper is to find good
+              direction and that he is happy to consider other options.</li>
+          <li>Tom suggested that a poll on other approaches might be
+              useful.</li>
+          <li>PBrett stated that his primary concern with <tt>codecvt</tt> is
+              that error handling is poor.</li>
+          <li>Zach stated that he has only used these facets once and asked if
+              they produce replacement characters for ill-formed code unit
+              sequences.</li>
+          <li>Alisdair responded that we don't know because the feature is so
+              underspecified.</li>
+          <li>Zach stated that removal is preferred if these don't conform to
+              expected Unicode behavior and conformance requirements.</li>
+          <li>Alisdair asked if anyone other than Jens is in favor of trying to
+              remove just the UCS-2 support.</li>
+          <li>Tom indicated weak support.</li>
+          <li>Jens expressed concern about removal without replacement and
+              pondered whether these should have been deprecated at all.</li>
+          <li>PBrett indicated that he was originally surprised by the
+              deprecation, but that the rationale for doing so made sense.</li>
+          <li>PBrett added that people will continue to try to use these
+              features if they are retained.</li>
+          <li>Tom asked what the real life impact is of removal vs
+              deprecation.</li>
+          <li>Alisdair responded that it depends on what implementors choose to
+              do.  Some may hide the interfaces behind macros while others leave
+              them in place.  Similar cases in the past have lead to portability
+              issues.</li>
+          <li>Zach noted that the interfaces might be annotated as removed at
+              cppreference.com.</li>
+          <li>PBrett noted some indications that some systems are built with the
+              deprecated features removed.</li>
+          <li>Tom responded that those may be misunderstandings; libstdc++
+              limits the available <tt>std::codecvt</tt> facets to
+              specializations specified by the standard such that use of unknown
+              specializations leads to linker errors.</li>
+          <li>Victor stated that the choice should be pretty clear here; these
+              features are poorly designed and should be removed.</li>
+          <li>Corentin noted that LEWG has already indicated desire to remove
+              and is just looking for confirmation.</li>
+          <li><b>Poll: The deprecated Standard code conversion facets specified
+              in D.20 [depr.locale.stdcvt] should be removed.</b>
+            <ul>
+              <li>Attendees: 9</li>
+              <li>
+                <table>
+                  <tr>
+                    <th style="text-align:right">SF</th>
+                    <th style="text-align:right">F</th>
+                    <th style="text-align:right">N</th>
+                    <th style="text-align:right">A</th>
+                    <th style="text-align:right">SA</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align:right">3</th>
+                    <th style="text-align:right">3</th>
+                    <th style="text-align:right">1</th>
+                    <th style="text-align:right">2</th>
+                    <th style="text-align:right">0</th>
+                  </tr>
+                </table>
+              </li>
+              <li>Consensus is for removal.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>D.21: Deprecated convenience conversions [depr.conversions]
+        <ul>
+          <li><em>[ Editor's note: This concerns the <tt>wstring_convert</tt>
+              and <tt>wbuffer_convert</tt> class templates. ]</em></li>
+          <li>Alisdair explained that these interfaces were deprecated at the
+              same time as the interfaces in D.20, that the current wording has
+              a dependeny on those interfaces, that the wording could be updated
+              to avoid that dependency (as demonstrated in the paper in the
+              proposed wording for D.20), and that the urgency to remove these
+              is therefore not as strong as for D.20.</li>
+          <li>PBrett observed that the motivation for deprecating these is not
+              explained in the paper that proposed their deprecation,
+              <a href="https://wg21.link/p0618">P0618</a>.</li>
+          <li>Alisdair responded that he does not recall there being strong
+              motivation for deprecation other than their association with the
+              <tt>codecvt_utf8</tt> and <tt>codecvt_utf8_utf16</tt> facets.</li>
+          <li>PBrett expressed some concern about removal given that they can
+              still be used with the non-deprecated <tt>codecvt</tt>
+              facets.</li>
+          <li>Tom noted that there are some locale restrictions; these
+              interfaces can't use a locale managed <tt>codecvt</tt> facet.</li>
+          <li>Jens responded that it looks like it only requires no side
+              effects that impact locale.</li>
+          <li>Corentin agreed with Peter's concerns; these interfaces aren't
+              particularly harmful or confusing.</li>
+          <li>Alisdair asked if un-deprecating these should we considered.</li>
+          <li>Jens replied that a suitable replacement that handles errors
+              properly is likely to have a different interface, so
+              un-deprecating these is probably not the right choice without
+              other motivation.</li>
+          <li>Zach noted that these interfaces don't appear to be an active
+              problem; no one uses them accidentally.</li>
+          <li>Steve asked if the question to SG16 should be whether we object
+              to removal.</li>
+          <li>Alisdair responded that he heard more informed discussion in the
+              last five minutes than he had in LEWG.</li>
+          <li>Jens opined that removal is under-motivated.</li>
+          <li>Alisdair asked if there would be more support for removal if a
+              replacement was available.</li>
+          <li>A chorus of affirmations was heard.</li>
+          <li>Alisdair responded favorably and noted that features should not
+              be left in annex D perpetually.</li>
+          <li><b>Poll: The deprecated convenience conversions specified in D.21
+              [depr.conversions] should be removed.</b>
+            <ul>
+              <li>Attendees: 9</li>
+              <li>
+                <table>
+                  <tr>
+                    <th style="text-align:right">SF</th>
+                    <th style="text-align:right">F</th>
+                    <th style="text-align:right">N</th>
+                    <th style="text-align:right">A</th>
+                    <th style="text-align:right">SA</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align:right">0</th>
+                    <th style="text-align:right">1</th>
+                    <th style="text-align:right">6</th>
+                    <th style="text-align:right">2</th>
+                    <th style="text-align:right">0</th>
+                  </tr>
+                </table>
+              </li>
+              <li>Consensus is for no change to status quo.</li>
+            </ul>
+          </li>
+          <li><b>Poll: Does SG16 object to removal of the deprecated convenience
+              conversions specified in D.21 [depr.conversions]?</b>
+            <ul>
+              <li>Attendees: 9</li>
+              <li>
+                <table>
+                  <tr>
+                    <th style="text-align:right">Yes</th>
+                    <th style="text-align:right">No</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align:right">1</th>
+                    <th style="text-align:right">8</th>
+                  </tr>
+                </table>
+              </li>
+              <li>Consensus is no objection.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>D.22: Deprecated locale category facets [depr.locale.category]
+        <ul>
+          <li><em>[ Editor's note: This concerns the <tt>char</tt>-based UTF-8
+              <tt>codecvt</tt> and <tt>codecvt_byname</tt> specializations.
+              ]</em></li>
+          <li>Alisdair mentioned that this deprecation came from SG16.</li>
+          <li>Tom explained that these facets were deprecated with the
+              introduction of <tt>char8_t</tt>; the deprecated specializations
+              squat on the interfaces that would be desired for conversion
+              between the locale dependent narrow encoding and either UTF-16
+              or UTF-32.</li>
+          <li>Tom stated that we don't know what will happen with
+              <tt>char8_t</tt>, particularly in the Linux community where the
+              narrow locale is dependably UTF-8; projects that build with
+              <tt>char8_t</tt> support disabled may benefit from preserving
+              these.</li>
+          <li>Jens noted that these specializations were just deprecated in
+              C++20.</li>
+          <li>Tom stated that retaining these may be useful for code that needs
+              to be compatible across C++17 and C++23, perhaps in projects that
+              introduce a typedef as conditionally <tt>char</tt> or
+              <tt>char8_t</tt>.</li>
+          <li>Alisdair observed that zombification may not be a good answer in
+              that case.</li>
+          <li>PBrett asked how likely it is that we would want to re-use these
+              specializations.</li>
+          <li>Tom responded that it is not very likely; we want to move away
+              from <tt>std::codecvt</tt>.</li>
+          <li>Zach agreed.</li>
+          <li>Steve predicted that the repurposed specializations would probably
+              only be used with the <tt>wstring_convert</tt> and
+              <tt>wbuffer_convert</tt> interfaces which may be removed soon.</li>
+          <li>Alisdair observed that these specializations don't become zombies
+              because they are just specializations, not names.</li>
+          <li>PBrett asked what LEWG's inclination was.</li>
+          <li>Alisdair responded that it was to remove and depend on the zombie
+              clause.</li>
+          <li><b>Poll: The deprecated locale category facets in D.22
+              [depr.locale.category] should be removed.</b>
+            <ul>
+              <li>Attendees: 9</li>
+              <li>
+                <table>
+                  <tr>
+                    <th style="text-align:right">SF</th>
+                    <th style="text-align:right">F</th>
+                    <th style="text-align:right">N</th>
+                    <th style="text-align:right">A</th>
+                    <th style="text-align:right">SA</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align:right">1</th>
+                    <th style="text-align:right">2</th>
+                    <th style="text-align:right">2</th>
+                    <th style="text-align:right">1</th>
+                    <th style="text-align:right">2</th>
+                  </tr>
+                </table>
+              </li>
+              <li>Consensus is for no change to status quo.</li>
+              <li>SF: I'm not empathetic towards the argument that people may
+                  not use <tt>char8_t</tt> on Linux, nor do I find the typedef
+                  compatibility approach compelling.</li>
+              <li>SA: I'm concerned about ease of writing code that is
+                  compatible across C++17 and C++23.</li>
+            </ul>
+          </li>
+          <li><b>Poll: Does SG16 object to removal of the deprecated locale
+                 category facets in D.22 [depr.locale.category]?</b>
+            <ul>
+              <li>Attendees: 9</li>
+              <li>
+                <table>
+                  <tr>
+                    <th style="text-align:right">Yes</th>
+                    <th style="text-align:right">No</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align:right">1</th>
+                    <th style="text-align:right">8</th>
+                  </tr>
+                </table>
+              </li>
+              <li>Consensus is no objection.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>D.23: Deprecated filesystem path factory functions
+          [depr.fs.path.factory]
+        <ul>
+          <li><em>[ Editor's note: This concerns
+              <tt>std::filesystem::u8path</tt>. ]</em></li>
+          <li>Alisdair explained that <tt>u8path</tt> only existed because
+              <tt>char8_t</tt> wasn't available to differentiate constructor
+              declarations for narrow encoding vs UTF-8; the <tt>char8_t</tt>
+              constructor is now available.</li>
+          <li>Alisdair added that LEWG's inclination is to remove the function
+              and rely on the zombie clause for backward compatibility.</li>
+          <li>Jens asked what the LEWG quorum was for the discussion.</li>
+          <li>Alisdair responded that there were about 30 attendees with good
+              breadth of experience but not necessarily depth.</li>
+          <li>Corentin opined that this removal is not really an SG16 matter
+              and is more traditional LEWG territory.</li>
+          <li>PBrett agreed that this isn't really an SG16 matter.</li>
+          <li>Jens noted that a replacement is available but opined that
+              removal is premature since this was just deprecated in C++20.</li>
+          <li>Alisdair noted that the function was just added in C++17, so
+              hasn't been around much.</li>
+          <li>Tom commented that the same concerns about C++17 and C++23
+              compatibility discussed for the deprecated <tt>codecvt</tt>
+              specializations applies here.</li>
+          <li><b>Poll: Does SG16 object to removal of the deprecated filesystem
+              path factory functions in D.23 [depr.fs.path.factory]?</b>
+            <ul>
+              <li>Attendees: 9</li>
+              <li>
+                <table>
+                  <tr>
+                    <th style="text-align:right">Yes</th>
+                    <th style="text-align:right">No</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align:right">0</th>
+                    <th style="text-align:right">9</th>
+                  </tr>
+                </table>
+              </li>
+              <li>Consensus is no objection.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2201r0">P2201R0: Mixed string literal concatenation</a>:
+    <ul>
+      <li>Jens introduced the paper.</li>
+        <ul>
+          <li>This makes mixed encoding string literal concatenation
+              ill-formed.</li>
+          <li>The only compiler known to implement this conditionally-supported
+              implementation-defined behavior is the
+              <a href="http://sdcc.sourceforge.net">SDCC</a>
+              C compiler.  No C++ compilers are known to support it.</li>
+        </ul>
+      </li>
+      <li>Tom stated that the intent is, assuming consensus, to forward this
+          paper directly to the CWG assuming agreement by the EWG chair.</li>
+      <li><b>Poll: Direct Tom to recommend to the EWG chair that P2201R0 be
+          forwarded directly to the CWG.</b>
+        <ul>
+          <li>Attendees: 9</li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">8</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li>Consensus is to forward to the CWG.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom stated that the next telecon will be held August 12th and will discuss
+      <a href="https://wg21.link/p2178r1">P2178R1</a>.</li>
 </ul>
 
 
