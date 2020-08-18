@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-07-18</td>
+    <td>2020-08-18</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -162,8 +162,9 @@ provided during those discussions and further review at the
 the
 <a href="http://wiki.edg.com/bin/view/Wg21summer2020/IssuesProcessingTeleconference2020-03-23">March 23rd, 2020, core issues processing teleconference</a>,
 <a href="https://lists.isocpp.org/core/2020/06/9455.php">discussion on the core mailing list originating on June 28th, 2020</a>,
-and
-<a href="https://lists.isocpp.org/core/2020/07/9545.php">further discussions on the core mailing list originating on July 7th, 2020</a>.
+<a href="https://lists.isocpp.org/core/2020/07/9545.php">further discussions on the core mailing list originating on July 7th, 2020</a>,
+and the
+<a href="http://wiki.edg.com/bin/view/Wg21summer2020/IssuesProcessingTeleconference2020-07-20">July 20th, 2020, core issues processing teleconference</a>.
 </p>
 
 <p>
@@ -302,6 +303,14 @@ reported at
       common cases first.</li>
   <li>[lex.ccon]p6: Corrected the table number reference to
       [tab:lex.ccon.esc].</li>
+  <li>Adressed changes requested during the
+      <a href="http://wiki.edg.com/bin/view/Wg21summer2020/IssuesProcessingTeleconference2020-07-20">July 20th, 2020, core issues processing teleconference</a>:
+    <ul>
+      <li>[lex.ccon]pZ: Merged Z.1 into the introductory text to make the short
+          circuiting behavior clear and renumbered the remaining
+          subparagraphs.</li>
+    </ul>
+  </li>
 </ul>
 </p>
 
@@ -995,19 +1004,14 @@ Y2) The example assumes that the specified character lacks representation in the
 <a href="http://eel.is/c++draft/lex.ccon#6">
 5.13.3 [lex.ccon] paragraph 6</a>:
 <blockquote class="stdins">
-The value of a
+A non-encodable character literal or a multicharacter literal has an
+implementation-defined value.
+The value of any other kind of
 <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
 is determined as follows:
 <table>
   <tr>
     <td style="vertical-align:top">(Z.1)&nbsp;&mdash;</td>
-    <td>
-      A non-encodable character literal or a multicharacter literal has an
-      implementation-defined value.
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align:top">(Z.2)&nbsp;&mdash;</td>
     <td>
       A
       <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
@@ -1026,7 +1030,7 @@ is determined as follows:
     </td>
   </tr>
   <tr>
-    <td style="vertical-align:top">(Z.3)&nbsp;&mdash;</td>
+    <td style="vertical-align:top">(Z.2)&nbsp;&mdash;</td>
     <td>
       A
       <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
@@ -1062,7 +1066,7 @@ is determined as follows:
     </td>
   </tr>
   <tr>
-    <td style="vertical-align:top">(Z.4)&nbsp;&mdash;</td>
+    <td style="vertical-align:top">(Z.3)&nbsp;&mdash;</td>
     <td>
       A
       <a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
