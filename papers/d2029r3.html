@@ -262,9 +262,10 @@ two's complement following the adoption of
 <a href="https://wg21.link/p1236r1">P1236R1</a>
 in C++20, numeric escape sequences in ordinary and wide character and string
 literals that specify an integer value outside the representable range of the
-code unit type are now handled analogously to narrowing integer conversions if
-the integer value is within the range of representable values of the
-corresponding unsigned type of the code unit type.
+code unit type will now initialize the code unit similarly to an integral
+conversion if the integer value is within the range of representable values of
+the corresponding unsigned type of the code unit type, and are ill-formed
+otherwise.
 This matches the observed behavior in the gcc 10.1, Clang 10, Microsoft
 Visual C++ 19.24, and Intel 19 compilers.
 Previously such sequences resulted in implementation-defined behavior.
@@ -292,9 +293,10 @@ reported at
       <li>[lex.ccon]pZ, [lex.string]pZ: Updated wording for ordinary and wide
           character and string literals to specify that a numeric escape
           sequence that specifies an integer value outside the representable
-          range of the code unit type is handled analogously to a narrowing
-          integer conversion if the integer value is representable by the
-          corresponding unsigned type of the code unit type.
+          range of the code unit type will now initialize the code unit
+          similarly to an integral conversion if the integer value is within
+          the range of representable values of the corresponding unsigned type
+          of the code unit type, and is ill-formed otherwise.
           Updated the introduction accordingly.</li>
     </ul>
   </li>
@@ -306,6 +308,9 @@ reported at
   <li>Adressed changes requested during the
       <a href="http://wiki.edg.com/bin/view/Wg21summer2020/IssuesProcessingTeleconference2020-07-20">July 20th, 2020, core issues processing teleconference</a>:
     <ul>
+      <li>Changed the introductory and proposed resolution overview to remove
+          incorrect uses of "narrowing integer conversion" in prose intended
+          to describe something more like an "integral conversion".</li>
       <li>[lex.ccon]pZ: Merged Z.1 into the introductory text to make the short
           circuiting behavior clear and renumbered the remaining
           subparagraphs.</li>
@@ -376,9 +381,10 @@ Additionally, the wording updates are intended to:
       phase 7 to translation phase 6.</li>
   <li>Specify that a numeric escape sequence in ordinary and wide character and
       string literals that specifies an integer value outside the representable
-      range of the code unit type is now handled analogously to a narrowing
-      integer conversion if the integer value is representable by the
-      corresponding unsigned type of the code unit type.</li>
+      range of the code unit type will now initialize the code unit similarly
+      to an integral conversion if the integer value is within the range of
+      representable values of the corresponding unsigned type of the code unit
+      type, and is ill-formed otherwise.</li>
 </ul>
 </p>
 
