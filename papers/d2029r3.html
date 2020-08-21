@@ -309,6 +309,9 @@ reported at
       <li>[lex.ccon]pZ: Merged Z.1 into the introductory text to make the short
           circuiting behavior clear and renumbered the remaining
           subparagraphs.</li>
+      <li>[lex.ccon]pZ: Specified that the determination of a character literal
+          value during translation phase 4 uses the range of representable
+          values of the character literal's type in translation phase 7.</li>
     </ul>
   </li>
 </ul>
@@ -1004,6 +1007,14 @@ Y2) The example assumes that the specified character lacks representation in the
 <a href="http://eel.is/c++draft/lex.ccon#6">
 5.13.3 [lex.ccon] paragraph 6</a>:
 <blockquote class="stdins">
+In
+<a href="http://eel.is/c++draft/lex.phases">translation phase 4</a>,
+the value of a
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>
+is determined using the range of representable values of the
+<a href="http://eel.is/c++draft/lex.ccon#nt:character-literal"><em>character-literal</em></a>'s
+type in
+<a href="http://eel.is/c++draft/lex.phases">translation phase 7</a>.
 A non-encodable character literal or a multicharacter literal has an
 implementation-defined value.
 The value of any other kind of
