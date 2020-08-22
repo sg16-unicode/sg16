@@ -317,6 +317,8 @@ reported at
       <li>[lex.ccon]pZ: Specified that the determination of a character literal
           value during translation phase 4 uses the range of representable
           values of the character literal's type in translation phase 7.</li>
+      <li>[lex.string]pZ: Elevated notes related to stateful character encodings
+          to normative encouragement.</li>
     </ul>
   </li>
 </ul>
@@ -1840,14 +1842,13 @@ sequence of
         <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
         is ill-formed.
       </div>
+      When encoding a stateful character encoding, implementations should encode
+      the first such sequence beginning with the initial encoding state and
+      encode subsequent sequences beginning with the final encoding state of the
+      prior sequence.<br/>
       [ <em>Note:</em> The encoded code unit sequence may differ from the sequence
       of code units that would be obtained by encoding each character
       independently. &mdash; <em>end note</em> ]<br/>
-      [ <em>Note:</em> For stateful character encodings, encoding of the first
-      such sequence is assumed to begin with the initial encoding state;
-      encoding of subsequent sequences is then assumed to begin with the final
-      encoding state of the prior sequence.
-      &mdash; <em>end note</em> ]
     </td>
   </tr>
   <tr>
@@ -1882,9 +1883,8 @@ sequence of
         <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>
         is ill-formed.
       </div>
-      [ <em>Note:</em> These sequences are assumed to have no effect on encoding
-      state for stateful character encodings.
-      &mdash; <em>end note</em> ]
+      When encoding a stateful character encoding, these sequences should have
+      no effect on encoding state.
     </td>
   </tr>
   <tr>
@@ -1894,9 +1894,8 @@ sequence of
       <a href="http://eel.is/c++draft/lex.ccon#nt:conditional-escape-sequence"><em>conditional-escape-sequence</em></a>
       (<a href="http://eel.is/c++draft/lex.ccon">[lex.ccon]</a>)
       contributes an implementation-defined code unit sequence.<br/>
-      [ <em>Note:</em> Whether these sequences have an effect on encoding
-      state for stateful character encodings is implementation-defined.
-      &mdash; <em>end note</em> ]
+      When encoding a stateful character encoding, it is implementation-defined
+      what effect these sequences have on encoding state.
     </td>
   </tr>
 </table>
