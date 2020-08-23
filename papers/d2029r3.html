@@ -317,6 +317,9 @@ reported at
       <li>[lex.ccon]pZ: Specified that the determination of a character literal
           value during translation phase 4 uses the range of representable
           values of the character literal's type in translation phase 7.</li>
+      <li>[lex.string]pX: Added normative wording stating that the <em>n</em>
+          that appears in the string literal array type corresponds to the
+          number of encoded code units.</li>
       <li>[lex.string]pZ: Elevated notes related to stateful character encodings
           to normative encouragement.</li>
     </ul>
@@ -1330,8 +1333,13 @@ representing horizontal tab, vertical tab, form feed, and newline.
 <blockquote class="stdins">
 The kind of a
 <a href="http://eel.is/c++draft/lex.string#nt:string-literal"><em>string-literal</em></a>,
-its type, and its associated character encoding is determined by its encoding
-prefix as defined by table Y.
+its type, and its associated character encoding are determined by its encoding
+prefix and sequence of
+<a href="http://eel.is/c++draft/lex.string#nt:s-char"><em>s-char</em></a>s
+or
+<a href="http://eel.is/c++draft/lex.string#nt:r-char"><em>r-char</em></a>s
+as defined by table Y where <em>n</em> is the number of encoded code units as
+described below.
 </blockquote>
 </p>
 
