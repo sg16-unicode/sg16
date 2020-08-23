@@ -82,7 +82,7 @@ blockquote.stdnop
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-08-22</td>
+    <td>2020-08-23</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -311,6 +311,10 @@ reported at
       <li>Changed the introductory and proposed resolution overview to remove
           incorrect uses of "narrowing integer conversion" in prose intended
           to describe something more like an "integral conversion".</li>
+      <li>[lex.ccon]pY: Added footnotes explaining that, for nonencodable
+          character literals and multicharacter literals, the associated
+          character encoding may be used solely to determine encodability and
+          not to actually encode values.</li>
       <li>[lex.ccon]pZ: Merged Z.1 into the introductory text to make the short
           circuiting behavior clear and renumbered the remaining
           subparagraphs.</li>
@@ -948,14 +952,14 @@ literals take precedence over their respective base kinds.
   <td rowspan="3">none</td>
   <td><em>ordinary character literal</em></td>
   <td><tt>char</tt></td>
-  <td rowspan="3">encoding of the execution character set</td>
+  <td rowspan="3">encoding of the execution character set <sup>[ Footnote Y1: <em>see below</em> ]</sup></td>
   <td><tt>'v'</tt></td>
 </tr>
 <tr>
   <td>&mdash; non-encodable ordinary character literal</td>
   <td rowspan="2"><tt>int</tt></td>
   <td>
-    <tt>'\U0001F525'</tt><sup>[ Footnote Y1: <em>see below</em> ]</sup>
+    <tt>'\U0001F525'</tt><sup>[ Footnote Y2: <em>see below</em> ]</sup>
   </td>
 </tr>
 <tr>
@@ -966,13 +970,13 @@ literals take precedence over their respective base kinds.
   <td rowspan="3"><tt>L</tt></td>
   <td><em>wide character literal</em></td>
   <td rowspan="3"><tt>wchar_t</tt></td>
-  <td rowspan="3">encoding of the execution wide-character set</td>
+  <td rowspan="3">encoding of the execution wide-character set <sup>[ Footnote Y3: <em>see below</em> ]</sup></td>
   <td><tt>L'w'</tt></td>
 </tr>
 <tr>
   <td>&mdash; non-encodable wide character literal</td>
   <td>
-    <tt>L'\U0001F32A'</tt><sup>[ Footnote Y2: <em>see below</em> ]</sup>
+    <tt>L'\U0001F32A'</tt><sup>[ Footnote Y4: <em>see below</em> ]</sup>
   </td>
 </tr>
 <tr>
@@ -1006,10 +1010,18 @@ literals take precedence over their respective base kinds.
 </p>
 
 <blockquote class="stdins">
-Y1) The example assumes that the specified character lacks representation in
+Y1) For non-encodable ordinary character literals and ordinary multicharacter
+    literals, implementations are not required to use the associated character
+    encoding to encode values; the associated character encoding may be used
+    solely to determine encodability.<br/>
+Y2) The example assumes that the specified character lacks representation in
     the execution character set, or that encoding it would require more than
     one code unit.<br/>
-Y2) The example assumes that the specified character lacks representation in the
+Y3) For non-encodable wide character literals and wide multicharacter
+    literals, implementations are not required to use the associated character
+    encoding to encode values; the associated character encoding may be used
+    solely to determine encodability.<br/>
+Y4) The example assumes that the specified character lacks representation in the
     execution wide-character set, or that encoding it would require more than
     one code unit.<br/>
 </blockquote>
