@@ -1,0 +1,539 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+
+<title>Enabling UTF-8 as a portable source file encoding</title>
+
+<style type="text/css">
+pre {
+    display: inline;
+}
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+table#references th,
+table#references td
+{
+    vertical-align: top;
+}
+
+ins, ins * { text-decoration:none; font-weight:bold; background-color:#A0FFA0 }
+del, del * { text-decoration:line-through; background-color:#FFA0A0 }
+#hidedel:checked ~ * del, #hidedel:checked ~ * del * { display:none; visibility:hidden }
+
+blockquote
+{
+    color: #000000;
+    background-color: #F1F1F1;
+    border: 1px solid #D1D1D1;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+blockquote.stdins
+{
+    text-decoration: underline;
+    color: #000000;
+    background-color: #C8FFC8;
+    border: 1px solid #B3EBB3;
+    padding: 0.5em;
+}
+blockquote.stddel
+{
+    text-decoration: line-through;
+    color: #000000;
+    background-color: #FFEBFF;
+    border: 1px solid #ECD7EC;
+    padding-left: 0.5empadding-right: 0.5em;
+}
+
+blockquote.code
+{
+    margin-left: 0em;
+    border-style: solid;
+    background-color: bisque;
+    color: #000000;
+    border: 1px solid black;
+}
+
+blockquote.quote
+{
+    margin-left: 0em;
+    border-style: solid;
+    background-color: lemonchiffon;
+    color: #000000;
+    border: 1px solid black;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>DXXXXR0 <em>Draft</em></td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2020-09-03</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>Evolution Working Group<br/>
+        SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+<h1>Enabling UTF-8 as a portable source file encoding</h1>
+
+<ul>
+  <li><a href="#introduction">
+      Introduction</a></li>
+  <li><a href="#motivation">
+      Motivation</a></li>
+  <li><a href="#existing_practice">
+      Existing practice</a>
+    <ul>
+      <li><a href="#ep_cxx">
+          C++ compilers</a>
+        <ul>
+          <li><a href="#ep_clang">
+              Clang</a></li>
+          <li><a href="#ep_gcc">
+              GCC</a></li>
+          <li><a href="#ep_msvc">
+              Microsoft Visual C++</a></li>
+          <li><a href="#ep_xlc">
+              IBM z/OS XL C/C++</a></li>
+        </ul>
+      </li>
+      <li><a href="#ep_non_cxx">
+          Other languages</a>
+        <ul>
+          <li><a href="#ep_python">
+              Python</a></li>
+          <li><a href="#ep_html">
+              HTML</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#design">
+      Design considerations</a>
+  <li><a href="#proposal">
+      Proposal</a></li>
+  <li><a href="#implementation_exp">
+      Implementation experience</a>
+  <li><a href="#wording">
+      Wording</a>
+    <ul>
+      <li><a href="#core_wording">
+          Core wording</a></li>
+    </ul>
+  </li>
+  <li><a href="#references">
+      References</a></li>
+</ul>
+
+
+<h1 id="introduction">Introduction</h1>
+
+<p>UTF-8 is a popular choice for the encoding of C++ source files within
+much of the C++ ecosystem, but it is not universally supported, nor is it the
+default source file encoding for some popular implementations.
+</p>
+
+<p>Where UTF-8 is supported as a source file encoding, adoption is hampered by
+lack of support for differently encoded source files within a single
+translation unit.
+For most C++ implementations, migration to UTF-8 as source file encoding
+requires migrating the entire project at one time since, unless all source files
+are limited to ASCII, migration of a subset of source files would cause another
+subset of source files to be misinterpreted.
+Implementations that support multiple source file encodings, but that do not
+provide support for differently encoded source files, must provide system header
+files in an encoding that is compatible across all other supported source file
+encodings.
+</p>
+
+<p>This paper proposes solutions that enable portable UTF-8 encoded source files
+as well as improvements to enable incremental adoption.
+</p>
+
+
+<h1 id="motivation">Motivation</h1>
+
+<p>Source code is typically distributed as a set of source files.  Each source
+file may be differently encoded.  Most compilers today require that all source
+files that make up a translation unit be encoded with compatible encodings.  In
+practice, this means a lowest common denominator approach, typically ASCII.
+</p>
+
+<p>
+<span style="background-color:red">Add Zach's famous example.</span>
+</p>
+
+
+<h1 id="existing_practice">Existing practice</h1>
+
+<p>
+</p>
+
+
+<h2 id="ep_cxx">C++ compilers</h2>
+
+<p>Most, but not all, C++ compilers support UTF-8 encoded source files.  For
+those that do, there are behavioral differences as described in the following
+sections.
+</p>
+
+
+<h3 id="ep_clang">Clang</h3>
+
+<p>LLVM Clang 10.0 only supports UTF-8 for the encoding of source files.  Though
+Clang accepts GCC's <tt>-finput-charset</tt> option, the only accepted value
+for the option is "utf-8".  A UTF-8 BOM at the start of a source file is
+ignored.
+</p>
+
+<p>Warnings are issued for ill-formed UTF-8 present within string literals and
+errors are issued for ill-formed UTF-8 appearing outside of comments in the
+source file otherwise.  No errors or warnings are issued for ill-formed UTF-8
+present in comments.
+</p>
+
+<p>Ports of Clang to IBM's EBCDIC-based z/OS exist.  These ports currently
+limit their support of source file encodings to EBCDIC and ISO-8859-1.  More
+information can be found at
+<a href="https://lists.llvm.org/pipermail/llvm-dev/2020-June/142174.html">https://lists.llvm.org/pipermail/llvm-dev/2020-June/142174.html</a>.
+</p>
+
+
+<h3 id="ep_gcc">GCC</h3>
+
+<p>By default, GCC uses UTF-8 as the source file encoding but the
+<tt>-finput-charset</tt> command line option can be used to select any
+encoding supported by the implementation of <tt>iconv</tt> that GCC is
+linked with.  A UTF-8 BOM at the start of a source file is ignored when the
+selected source file encoding is UTF-8, but is likely to produce an error if
+an encoding other than UTF-8 is used; the presence of a BOM does not override
+the encoding selected by a <tt>-finput-charset</tt> option.
+</p>
+
+<p>No support is available to specify different encodings for different source
+files within a translation unit.
+</p>
+
+<p>Errors are issued for ill-formed UTF-8 appearing in the source file outside
+of string literals and comments.  No warnings or errors are issued for
+ill-formed UTF-8 appearing within string literals unless the
+<tt>-fexec-charset</tt> option is used to select an execution encoding other
+than UTF-8; in this case errors are issued as part of attempted transcoding to
+the execution character set.  No errors or warnings are issued for ill-formed
+UTF-8 present in comments.
+</p>
+
+<p>GCC's
+<a href="https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#index-finput-charset">
+documentation for the <tt>-finput-charset</tt> option</a>
+does not match GCC's actual behavior as reported in
+<a title="Bug 61896 - Wrong documentation for -finput-charset"
+   href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61896">GCC bug 61896</a>
+<sup><a title="Bug 61896 - Wrong documentation for -finput-charset"
+        href="#ref_gccbug61896">[GccBug61896]</a></sup>.
+</p>
+
+
+<h3 id="ep_msvc">Microsoft Visual C++</h3>
+
+<p>By default, Visual C++ uses the Windows Active Code Page (ACP) as the
+encoding for source files.  When a program is compiled on a Windows system
+with region settings configured for "English (United States)", the default
+source file encoding is Windows-1252.  Likewise, on a system with region
+settings configured for "Greek (Greece)", the default source file encoding
+is Windows-1253.
+</p>
+
+<p>Historically, Visual C++ has had no support for UTF-8 as source file
+encoding.  Today, there are three ways in which UTF-8 may be selected.
+<ol>
+  <li>Recent versions of Visual C++ allow the source file encoding to be
+      specified via the <tt>/source-charset</tt> option (The <tt>/utf-8</tt>
+      option implies <tt>/source-charset:utf-8</tt>).</li>
+  <li>Recent Windows 10 builds have a beta option present in the locale
+      region settings that allows setting the ACP to UTF-8 regardless of
+      the selected system locale.</li>
+  <li>A source file that starts with a UTF-8 BOM is processed as UTF-8
+      regardless of the ACP or whether the <tt>/source-charset</tt> option
+      is used to select a different source file encoding.
+</ol>
+</p>
+
+<p>Errors are issued for ill-formed UTF-8 appearing in the source file outside
+of comments.  Warnings are issued for ill-formed UTF-8 present in comments if
+the <tt>/source-charset</tt> option is used to select UTF-8, but not if UTF-8
+is selected due to the presence of a UTF-8 BOM at the start of a source file.
+</p>
+
+
+<h3 id="ep_xlc">IBM z/OS XL C/C++</h3>
+
+<p>By default, xlC uses the EBCDIC code page associated with the current locale
+as the encoding for source files, but the <tt>LOCALE</tt> option can be used to
+select a different EBCDIC based code page or the <tt>NOLOCALE</tt> option can
+be used to select IBM-1047.  No support is available for using UTF-8 as the
+source file encoding.
+</p>
+
+<p>xlC allows source files within a single translation unit to be differently
+encoded by allowing source files to indicate their encoding via a
+<a title="#pragma filetag"
+   href="https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.3.0/com.ibm.zos.v2r3.cbclx01/zos_pragma_filetag.htm">
+<tt>#pragma filetag</tt> directive</a>
+<sup><a title="#pragma filetag"
+        href="#ref_pragmafiletag">
+[PragmaFiletag]</a></sup>.
+If present, this directive must only be preceded by conditional compilation
+or line control directives.
+</p>
+
+<p>The z/OS XL C/C++ 2.3.1 release also contains a Clang based compiler named
+<tt>xlclang</tt>.  The currently available documentation does not state how
+source file encoding is determined or whether support for UTF-8 encoded source
+files is provided.
+</p>
+
+<p>The author does not have access to a z/OS system and is therefore unable
+to directly evaluate behaviors of these compilers.  A future revision of this
+paper will provide more details based on contact with z/OS or xlC users or
+representatives.
+</p>
+
+
+<h2 id="ep_non_cxx">Other languages</h2>
+
+
+<h3 id="ep_python">Python</h3>
+
+<p>The default source file encoding differs by Python version as follows:
+<ul>
+  <li>Python 1 required the source file encoding to be compatible with the
+      system execution character set, commonly ASCII.</li>
+  <li>Python 2.0 changed the default source file encoding to ISO-8859-1.</li>
+  <li>Python 2.3 introduced a new encoding declaration in the form of a comment
+      that allowed a source file to specify its encoding.  This change was
+      proposed and adopted via
+      <a title="PEP 263 -- Defining Python Source Code Encodings"
+         href="https://www.python.org/dev/peps/pep-0263/">PEP 263</a>
+      <sup><a title="PEP 263 -- Defining Python Source Code Encodings"
+              href="#ref_pep_263">[PEP-263]</a></sup>.</li>
+  <li>Python 2.5 changed the default source file encoding to ASCII.  This
+      completed the work started in Python 2.3 via
+      <a title="PEP 263 -- Defining Python Source Code Encodings"
+         href="https://www.python.org/dev/peps/pep-0263/">PEP 263</a>
+      <sup><a title="PEP 263 -- Defining Python Source Code Encodings"
+              href="#ref_pep_263">[PEP-263]</a></sup>.</li>
+  <li>Python 3.0 changed the default source file encoding to UTF-8.  This
+      change was proposed and adopted via
+      <a title="PEP 3120 -- Using UTF-8 as the default source encoding"
+         href="https://www.python.org/dev/peps/pep-3120/">PEP 3120</a>
+      <sup><a title="PEP 3120 -- Using UTF-8 as the default source encoding"
+              href="#ref_pep_3120">[PEP-3120]</a></sup>.</li>
+</ul>
+</p>
+
+<p>The
+<a href="https://docs.python.org/3/reference/lexical_analysis.html#encoding-declarations">Python encoding declaration</a>
+introduced in Python 2.3 must appear on the first or second line of the source
+file, must be preceded only by comments, and is written as a comment that
+matches the regular expression <tt>coding[=:]\s*([-\w.]+)</tt>.  The following
+styles are recommended as they are forms that are recognized by Emacs and Vim
+respectively.
+<blockquote class="code"><pre>
+# -*- coding: &lt;encoding-name&gt; -*-
+# vim:fileencoding=&lt;encoding-name&gt;
+</pre></blockquote>
+</p>
+
+<h3 id="ep_html">HTML</h3>
+
+<p>
+HTML 5.2 allows the source encoding to be specified via a
+<a href="https://www.w3.org/TR/html52/document-metadata.html#specifying-the-documents-character-encoding">
+character encoding declaration</a> subject to the following requirements.
+<ul>
+  <li>The declaration must match, case insensitively, the label for an encoding
+      listed in the W3C Encoding Technical Report.</li>
+  <li>The declaration must not use character references or character
+      escapes.</li>
+  <li>The declaration must be wholly contained within the first 1024 bytes of
+      the source file.</li>
+</ul>
+</p>
+
+
+<h1 id="design">Design considerations</h1>
+
+<p>
+<ul>
+  <li>Why not just mandate UTF-8 as source file encoding?
+    <ul>
+      <li>Henri Sivonen stated it well in
+          <a href="https://hsivonen.fi/label-utf-8/">https://hsivonen.fi/label-utf-8/</a>,
+          <blockquote class="quote">
+          Because HTML didn't support UTF-8 in the very beginning and legacy
+          content can’t be expected to opt out, you need to opt into UTF-8 just
+          like you need to opt into the standards mode (via
+          <tt>&lt;!DOCTYPE html&gt;</tt>) and to mobile-friedly layout (via
+          <tt>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</tt>).
+          (<a href="https://hsivonen.fi/utf-8-detection/">Longer answer</a>)
+          </blockquote>
+          Restated for C++:
+          <blockquote class="quote">
+          Because C and C++ didn't support UTF-8 in the very beginning and
+          legacy content can't be expected to opt out, you need to opt into
+          UTF-8 just like you need to opt into language dialect modes (via
+          <tt>-std=c++20</tt>).
+          </blockquote>
+      </li>
+  </ul>
+  <li>Can't the compiler detect source files encoded as UTF-8?</li>
+  <li>Aren't BOMs bad?</li>
+  <li><code>#pragma encoding</code> directives must appear in the first 4096
+      bytes of the file (4096 is chosen as it is a common memory page size
+      choice).  Some existing coding standards require copyright text to be
+      present as the first part of a source file.  A larger size might be
+      desirable to accommodate large copyright notices.</li>
+  <li><code>#pragma encoding</code> directives may only be preceded by
+      <code>#line</code> control directives, preprocessing conditional
+      compilation directives, comments, and characters from the basic source
+      character set (perhaps the latter can be relaxed in comments to allow
+      preceding comments to contain copyright symbols or text requiring
+      characters outside the basic source character set?)</li>
+  <li>Implementations that use a non-ASCII derived source file encoding by
+      default will need to potentially scan the beginning of each source
+      file multiple times to identify <code>#pragma encoding</code>
+      directives.  For example, a z/OS compiler may first scan the beginning
+      of a source file as ASCII in order to identify a
+      <code>#pragma encoding</code> directive specifying UTF-8 and then,
+      if a directive isn't found, scan the file as EBCDIC.</li>
+  <li>Rather than a <code>#pragma</code> directive, an annotation inside of
+      a comment could be used as Python does.  This could be advantageous
+      for use with existing editors if the same annotation syntax used by
+      other languages is adopted.  On the other hand, semantically
+      significant comments would be a new direction for C++.</li>
+  <li>Perhaps ill-formed UTF-8 in string literals should be allowed as is
+      current practice for GCC and Clang.</li>
+  <li>How files referenced by <code>#include</code> directives are resolved
+      is already implementation-defined, but resolution could be made more
+      compilcated on non-ASCII based systems.</li>
+  <li>If a TU is made up of a set of distinctly encoded source files, how is
+      preprocessed output produced?  What encoding is used?  How do z/OS
+      compilers handle this today?</li>
+</ul>
+</p>
+
+
+<h1 id="proposal">Proposal</h1>
+
+<p>
+<ul>
+  <li>Implementations must provide an implementation-defined mechanism to
+      specify UTF-8 as the default source file encoding.</li>
+  <li>Ill-formed UTF-8 code unit sequences are not allowed in comments, string
+      literals, character literals, or multicharacter literals (though
+      implementations can accept code with such sequences as an extension).</li>
+  <li>A UTF-8 BOM overrides the implementation-defined source file encoding
+      for the source file the BOM appears in.</li>
+  <li>A <code>#pragma encoding("UTF-8")</code> directive can be used to
+      override the implementation-defined source file encoding for the source
+      file the directive appears in.  Implementations can accept additional
+      encoding names indicating other encodings as an extension.</li>
+</ul>
+</p>
+
+
+<h1 id="implementation_exp">Implementation experience</h1>
+
+<p>All proposed features are provided in similar forms in released versions
+of at least one C++ compiler.
+</p>
+
+
+<h1 id="wording">Wording</h1>
+
+<input type="checkbox" id="hidedel">Hide deleted text</input>
+
+<p>These changes are relative to
+<a title="Working Draft, Standard for Programming Language C++"
+   href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4820.pdf">
+N4820</a>
+<sup><a title="Working Draft, Standard for Programming Language C++"
+        href="#ref_n4820">
+[N4820]</a></sup></p>
+
+
+<h2 id="core_wording">Core wording</h2>
+
+
+<h1 id="references">References</h1>
+
+<table id="references">
+  <tr>
+    <td id="ref_n3463"><sup>[N3463]</sup></td>
+    <td>
+      "Portable Program Source Files", N3463, 2012.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3463.html">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3463.html</a></td>
+  </tr>
+  <tr>
+    <td id="ref_n4820"><sup>[N4820]</sup></td>
+    <td>
+      "Working Draft, Standard for Programming Language C++", N4820, 2019.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4820.pdf">
+      http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/n4820.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_gccbug61896"><sup>[GccBug61896]</sup></td>
+    <td>
+      "Bug 61896 - Wrong documentation for -finput-charset"<br/>
+      <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61896">
+      https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61896</a></td>
+  </tr>
+  <tr>
+    <td id="ref_pep_263"><sup>[PEP-263]</sup></td>
+    <td>
+      Marc-André Lemburg and Martin von Löwis,
+      "PEP 263 -- Defining Python Source Code Encodings", 2001.<br/>
+      <a href="https://www.python.org/dev/peps/pep-0263/">
+      https://www.python.org/dev/peps/pep-0263/</a></td>
+  </tr>
+  <tr>
+    <td id="ref_pep_3120"><sup>[PEP-3120]</sup></td>
+    <td>
+      Martin von Löwis,
+      "PEP 3120 -- Using UTF-8 as the default source encoding", 2017.<br/>
+      <a href="https://www.python.org/dev/peps/pep-3120/">
+      https://www.python.org/dev/peps/pep-3120/</a></td>
+  </tr>
+  <tr>
+    <td id="ref_pragmafiletag"><sup>[PragmaFiletag]</sup></td>
+    <td>
+      "#pragma filetag"<br/>
+      <a href="https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.3.0/com.ibm.zos.v2r3.cbclx01/zos_pragma_filetag.htm">
+      https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.3.0/com.ibm.zos.v2r3.cbclx01/zos_pragma_filetag.htm</a></td>
+  </tr>
+</table>
+
+</body>
