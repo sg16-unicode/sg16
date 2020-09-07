@@ -21,6 +21,21 @@ table#references td
     vertical-align: top;
 }
 
+table#compare
+{
+    border-collapse: collapse;
+}
+table#compare th
+{
+    background-color: lightgreen;
+}
+table#compare,
+table#compare th,
+table#compare td
+{
+    border: 1px solid black;
+}
+
 ins, ins * { text-decoration:none; font-weight:bold; background-color:#A0FFA0 }
 del, del * { text-decoration:line-through; background-color:#FFA0A0 }
 #hidedel:checked ~ * del, #hidedel:checked ~ * del * { display:none; visibility:hidden }
@@ -82,7 +97,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-09-03</td>
+    <td>2020-09-06</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -121,20 +136,43 @@ blockquote.quote
       <li><a href="#ep_non_cxx">
           Other languages</a>
         <ul>
-          <li><a href="#ep_python">
-              Python</a></li>
+          <li><a href="#ep_csharp">
+              C#</a></li>
+          <li><a href="#ep_ecmascript">
+              ECMAScript</a></li>
           <li><a href="#ep_html">
               HTML</a></li>
+          <li><a href="#ep_java">
+              Java</a></li>
+          <li><a href="#ep_python">
+              Python</a></li>
+          <li><a href="#ep_rust">
+              Rust</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#design">
-      Design considerations</a>
+  <li><a href="#design_considerations">
+      Design considerations</a></li>
+  <li><a href="#design_choices">
+      Design choices</a>
+    <ul>
+      <li><a href="#dc_mandate">
+          Support for UTF-8; only, opt-in, or opt-out</a></li>
+      <li><a href="#dc_mixed">
+          Support for differently encoded source files</a></li>
+      <li><a href="#dc_bom">
+          Handling of BOMs</a></li>
+      <li><a href="#dc_annotation">
+          In-source annotations</a></li>
+    </ul>
+  </li>
   <li><a href="#proposal">
       Proposal</a></li>
   <li><a href="#implementation_exp">
-      Implementation experience</a>
+      Implementation experience</a></li>
+  <li><a href="#acknowledgements">
+      Acknowledgements</a></li>
   <li><a href="#wording">
       Wording</a>
     <ul>
@@ -187,9 +225,120 @@ practice, this means a lowest common denominator approach, typically ASCII.
 
 <h1 id="existing_practice">Existing practice</h1>
 
-<p>
+<p>The following table summarizes the support, detection, and handling of UTF-8
+encoded source files for various languages and compilers.  More details are
+provided in the following subsections.
 </p>
 
+<table id="compare">
+  <tr>
+    <th>Language</th>
+    <th>Compiler or<br/>specification</th>
+    <th>Supports<br/>UTF-8</th>
+    <th>Default<br/>encoding</th>
+    <th>Command<br/>line<br/>option(s)</th>
+    <th>UTF-8 BOM</th>
+    <th>Supports an in-source<br/>encoding annotation</th>
+    <th>Supports multiple<br/>source files<br/>with different encodings</th>
+  </tr>
+  <tr>
+    <td rowspan="4">C++</td>
+    <td>Clang</td>
+    <td>Yes</td>
+    <td>UTF-8</td>
+    <td><tt>-finput-charset</tt></td>
+    <td>Ignored</td>
+    <td><span style="color:gray">No</span></td>
+    <td><span style="color:gray">No</span></td>
+  </tr>
+  <tr>
+    <td>GCC</td>
+    <td>Yes</td>
+    <td>UTF-8</td>
+    <td><tt>-finput-charset</tt></td>
+    <td>Ignored</td>
+    <td><span style="color:gray">No</span></td>
+    <td><span style="color:gray">No</span></td>
+  </tr>
+  <tr>
+    <td>Microsoft Visual C++</td>
+    <td>Yes</td>
+    <td>Locale dependent</td>
+    <td><tt>/source-charset</tt></td>
+    <td>Used for encoding selection;<br/>overrides command line options</td>
+    <td><span style="color:gray">No</span></td>
+    <td>Yes<br/>(only via UTF-8 BOM)</td>
+  </tr>
+  <tr>
+    <td>IBM z/OS XL C/C++</td>
+    <td><span style="color:red">No</span></td>
+    <td>Locale dependent EBCDIC code page</td>
+    <td><tt>LOCALE</tt><br/><tt>NOLOCALE</tt></td>
+    <td><span style="color:gray">N/A</span></td>
+    <td><tt>#pragma filetag</tt></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>C#</td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td>Yes</td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+  </tr>
+  <tr>
+    <td>ECMAScript</td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+  </tr>
+  <tr>
+    <td>Java</td>
+    <td>OpenJDK</td>
+    <td>Yes</td>
+    <td>Locale dependent</td>
+    <td><tt>-encoding</tt></td>
+    <td>Ignored</td>
+    <td><span style="color:gray">No</span></td>
+    <td><span style="color:gray">N/A</span></td>
+  </tr>
+  <tr>
+    <td>HTML</td>
+    <td>W3C</td>
+    <td>Yes</td>
+    <td>Locale dependent</td>
+    <td><span style="color:gray">N/A</span></td>
+    <td>Used for encoding selection</td>
+    <td><tt>&lt;meta charset="&lt;encoding-name&gt;"&gt;</tt></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Python</td>
+    <td>CPython</td>
+    <td>Yes</td>
+    <td>UTF-8 (as of Python 3)</td>
+    <td><span style="color:gray">None</span></td>
+    <td>Used for encoding selection</td>
+    <td><tt># -*- coding: &lt;encoding-name&gt; -*-</tt></td>
+    <td><span style="color:gray">N/A</span></td>
+  </tr>
+  <tr>
+    <td>Rust</td>
+    <td>Rust</td>
+    <td>Yes</td>
+    <td>UTF-8</td>
+    <td><span style="color:gray">None</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+    <td><span style="background-color:red">FIXME</span></td>
+  </tr>
+</table>
 
 <h2 id="ep_cxx">C++ compilers</h2>
 
@@ -324,6 +473,61 @@ representatives.
 <h2 id="ep_non_cxx">Other languages</h2>
 
 
+<h3 id="ep_csharp">C#</h3>
+
+<p><span style="background-color:red">FIXME</span>
+</p>
+
+
+<h3 id="ep_ecmascript">ECMAScript</h3>
+
+<p><span style="background-color:red">FIXME</span>
+</p>
+
+
+<h3 id="ep_java">Java</h3>
+
+<p>By default, OpenJDK 11 uses the encoding associated with the current locale
+as the encoding for source files.
+On Windows, this is determined by the Active Code Page (ACP), and on POSIX
+systems, by the
+<tt>LC_ALL</tt>,
+<tt>LC_CTYPE</tt>, or
+<tt>LANG</tt>
+environment variable.
+The <tt>javac</tt> <tt>-encoding</tt> command line option can be used to
+override the default source file encoding.
+</p>
+
+<p>A UTF-8 BOM at the start of a source file is ignored when the selected
+source file encoding is UTF-8, but is likely to produce an error otherwise;
+the presence of a BOM does not override either the default encoding as
+determined by the current locale or the encoding selected by a
+<tt>-encoding</tt> option.
+</p>
+
+<p>Errors are issued for ill-formed UTF-8 appearing anywhere within the source
+file.
+</p>
+
+
+<h3 id="ep_html">HTML</h3>
+
+<p>
+HTML 5.2 allows the source encoding to be specified via a
+<a href="https://www.w3.org/TR/html52/document-metadata.html#specifying-the-documents-character-encoding">
+character encoding declaration</a> subject to the following requirements.
+<ul>
+  <li>The declaration must match, case insensitively, the label for an encoding
+      listed in the W3C Encoding Technical Report.</li>
+  <li>The declaration must not use character references or character
+      escapes.</li>
+  <li>The declaration must be wholly contained within the first 1024 bytes of
+      the source file.</li>
+</ul>
+</p>
+
+
 <h3 id="ep_python">Python</h3>
 
 <p>The default source file encoding differs by Python version as follows:
@@ -362,28 +566,18 @@ styles are recommended as they are forms that are recognized by Emacs and Vim
 respectively.
 <blockquote class="code"><pre>
 # -*- coding: &lt;encoding-name&gt; -*-
-# vim:fileencoding=&lt;encoding-name&gt;
+# vim: set fileencoding=&lt;encoding name&gt; :
 </pre></blockquote>
 </p>
 
-<h3 id="ep_html">HTML</h3>
 
-<p>
-HTML 5.2 allows the source encoding to be specified via a
-<a href="https://www.w3.org/TR/html52/document-metadata.html#specifying-the-documents-character-encoding">
-character encoding declaration</a> subject to the following requirements.
-<ul>
-  <li>The declaration must match, case insensitively, the label for an encoding
-      listed in the W3C Encoding Technical Report.</li>
-  <li>The declaration must not use character references or character
-      escapes.</li>
-  <li>The declaration must be wholly contained within the first 1024 bytes of
-      the source file.</li>
-</ul>
+<h3 id="ep_rust">Rust</h3>
+
+<p><span style="background-color:red">FIXME</span>
 </p>
 
 
-<h1 id="design">Design considerations</h1>
+<h1 id="design_considerations">Design considerations</h1>
 
 <p>
 <ul>
@@ -445,6 +639,12 @@ character encoding declaration</a> subject to the following requirements.
 </p>
 
 
+<h1 id="design_choices">Design choices</h1>
+
+<p><span style="background-color:red">FIXME</span>
+</p>
+
+
 <h1 id="proposal">Proposal</h1>
 
 <p>
@@ -468,6 +668,12 @@ character encoding declaration</a> subject to the following requirements.
 
 <p>All proposed features are provided in similar forms in released versions
 of at least one C++ compiler.
+</p>
+
+
+<h1 id="acknowledgements">Acknowledgements</h1>
+
+<p><span style="background-color:red">FIXME</span>
 </p>
 
 
