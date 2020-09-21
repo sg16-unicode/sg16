@@ -18,6 +18,9 @@ The following sections list papers and projects currently under our purview.  Ad
 WG Number     | Title/Notes/Links
 ------------- | -----
 \<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
+[P2201][]     | Mixed string literal concatenation
+[P2194][]     | The character set of C++ source code is Unicode
+[P2178][]     | Misc lexing and string handling improvements
 [P2071][]     | Named universal character escapes
 [P2029][]     | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
 [P2020][]     | Locales, Encodings and Unicode
@@ -67,6 +70,9 @@ WG Number     | Status      | Title/Notes/Links
 [N2231][]     |             | char8_t: A type for UTF-8 characters and strings
 
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
+[P2201]: https://wg21.link/p2201
+[P2194]: https://wg21.link/p2194
+[P2178]: https://wg21.link/p2178
 [P2071]: https://wg21.link/p2071
 [P2029]: https://wg21.link/p2029
 [P2020]: https://wg21.link/p2020
