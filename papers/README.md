@@ -5,7 +5,7 @@ ISO JTC1/SC22 WG21 and WG14 papers:
 
 WG21 Number     | Title | Revisions
 --------------- | ----- | ----
-[DXXXXR0_SG16_MEETING_SUMMARIES][]     | SG16: Unicode meeting summaries 2020-09-09 through 2020-09-09 | [DR0][DXXXXR0_SG16_MEETING_SUMMARIES]
+[DXXXXR0][DXXXXR0_SG16_MEETING_SUMMARIES]     | SG16: Unicode meeting summaries 2020-09-09 through 2020-09-09 | [DR0][DXXXXR0_SG16_MEETING_SUMMARIES]
 [P2217R0][]     | SG16: Unicode meeting summaries 2020-06-10 through 2020-08-26 | [R0][P2217R0]
 [P2179R0][]     | SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27 | [R0][P2179R0]
 [P2071R0][]     | Named universal character escapes | [DR1][D2071R1] [R0][P2071R0]
