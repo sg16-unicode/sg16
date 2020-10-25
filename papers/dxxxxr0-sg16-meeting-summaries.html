@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2020-09-09 through 2020-09-23</title>
+<title>SG16: Unicode meeting summaries 2020-09-09 through 2020-10-14</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-10-02</td>
+    <td>2020-10-25</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2020-09-09 through 2020-09-23</h1>
+<h1>SG16: Unicode meeting summaries 2020-09-09 through 2020-10-14</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -101,6 +101,8 @@ snapshot of select meeting summaries from that repository.
       September 9th, 2020</a></li>
   <li><a href="#2020_09_23">
       September 23rd, 2020</a></li>
+  <li><a href="#2020_10_14">
+      October 14th, 2020</a></li>
 </ul>
 
 <p>
@@ -823,6 +825,283 @@ Previously published SG16 meeting summary papers:
       to
       <a href="https://github.com/tzlaine/text">Boost.Text</a>,
       and then continue discussion of this paper.</li>
+</ul>
+
+
+<h1 id="2020_10_14">October 14th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss migration from the Cpplang Slack workspace to another Slack
+      workspace or chat service.</li>
+  <li><a href="https://github.com/tzlaine/text">Boost.Text</a>:
+    <ul>
+      <li>Review changes made following the initial Boost review.</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194R0: The character set of C++ source code is Unicode</a>:
+    <ul>
+      <li>Continue discussion.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Nathan Baggs</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom asked for a volunteer to review
+      <a href="https://wg21.link/p1030r4">P1030R4</a>
+      for any new SG16 concerns.</li>
+  <li>Steve bravely volunteered to do so.</li>
+  <li>PBrett asked if CWG has a substantial backlog like LWG does.</li>
+  <li>Jens responded that CWG does not, that it is awaiting tentatively ready
+      papers from EWG, and continues to do issue processing.</li>
+  <li>Discuss migration from the Cpplang Slack workspace to another Slack
+      workspace or chat service:
+    <ul>
+      <li>Tom introduced the issue.  Concerns have been raised about governance
+          of the Cpplang Slack workspace, particularly with regard to enforcing
+          a code of conduct (CoC).  Several prominent SG16 members have
+          deactivated their accounts.  If conditions don't improve such that
+          those members are comfortable reactivating their accounts, we'll have
+          to migrate elsewhere.</li>
+      <li>Zach confirmed the situation and stated that the financier of the
+          workspace has no interest in moderation; a number of people have
+          reported issues without satisfactory resolution.</li>
+      <li>PBrett raised the option of not using a chat service for SG16 business
+          and indicated difficulty with use of Slack.</li>
+      <li>Steve stated that he is present on Slack regularly, but only monitors
+          a small handful of channels that have so far not attracted
+          problems.</li>
+      <li>Steve added that he is not concerned about migrating elsewhere, but
+          would like to retain an open channel.</li>
+      <li>Steve noted that the SG16 mailing list is open and has not attracted
+          problems.</li>
+      <li>Tom opined that use of a chat service has been helpful to build and
+          maintain cohesiveness among SG16 participants.</li>
+      <li>Jens stated that he has not used Slack, that the mailing list should
+          be the primary means of communication, and that the means of
+          communication should not exclude anyone.</li>
+      <li>PBrett mentioned that the
+          <a href="https://www.includecpp.org">#include&lt;c++&gt;</a>
+          community are investigating a collaboration system that requires
+          participants to be vouched for.</li>
+      <li>PBrett expressed a preference for a WG21 provided service with an
+          actively enforced CoC.</li>
+      <li>Corentin suggested that we wait to see if WG21 decides to offer such
+          a service.</li>
+      <li>Tom agreed and noted that discussion within WG21 is already
+          happening.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/tzlaine/text">Boost.Text</a> updates:
+    <ul>
+      <li>Zach provided an overview of the changes inspired by the Boost review:
+        <ul>
+          <li><em>[ Editor's note: The Boost review threads are available at
+              <a href="https://lists.boost.org/Archives/boost/2020/06/249242.php">https://lists.boost.org/Archives/boost/2020/06/249242.php</a>
+              and
+              <a href="https://lists.boost.org/Archives/boost/2020/08/249594.php">https://lists.boost.org/Archives/boost/2020/08/249594.php</a>.
+              ]</em></li>
+          <li>The string layer was removed.</li>
+          <li>Many of the previously concrete types are now templates.  For
+              example, <tt>text</tt> is now an alias of a <tt>basic_text</tt>
+              specialization analagous to <tt>std::string</tt> and
+              <tt>std::basic_string</tt>.</li>
+          <li><tt>basic_text</tt> is parameterized by Unicode normalization,
+              code unit type, and string container.</li>
+          <li><tt>text</tt> and <tt>text_view</tt> are NFC, UTF-8, use
+              <tt>char</tt> as the code unit type, and use
+              <tt>basic_string&lt;char&gt;</tt> as the string container.</li>
+          <li>More type deduction is done now.</li>
+          <li>Various usability improvements were made.</li>
+          <li>Interfaces are now constrained with C++ Concepts when compiling
+              as C++20.</li>
+          <li>A new algorithm was added to perform normalization during insert
+              and erase operations</li>
+          <li><tt>basic_text</tt> is an adapter over a string container; this
+              avoids allocator awareness while still allowing use of
+              allocators.</li>
+          <li>The <a href="https://unicode.org/reports/tr15/#Stream_Safe_Text_Format">stream-safe text format</a>
+              is now enforced.  This may result in truncation of extended
+              grapheme clusters (EGCs), but this is reasonable as there is no
+              technical reason for EGCs longer than the stream-safe text format
+              length.</li>
+        </ul>
+      </li>
+      <li>Tom asked how normalization on insert and erase works.</li>
+      <li>Zach responded that there is an algorithm to find the previous and
+          next stable code points and then normalize in between.</li>
+      <li>PBrett asked about the stream-safe text format and whether it can
+          lead to loss of information.</li>
+      <li>Zach responded that, yes, it can lead to silent loss of information,
+          but only in unrealistic scenarios; real text has no need for an EGC
+          to be longer than 30 scalar values.  The maximum EGC length for the
+          stream-safe text format was selected to enable use of statically
+          sized 128 byte buffers.  The longest known sequence of scalar values
+          needed for a real character is 18, but sequences of length 4 are more
+          common in actual text.  The stream-safe text format is part of the
+          Unicode standard.</li>
+      <li>PBrett asked about emoji compositions.</li>
+      <li>Zach replied that all defined emoji sequences are limited to 7 or 8
+          scalar values.</li>
+      <li>Steve asked about the use of C++ Concepts for range insert and join
+          operations, what constraints are placed on the operands, and whether
+          bidirectional iterators are required or whether forward iterators
+          suffice.</li>
+      <li>Zach replied that he tried to require only forward iterators, but
+          concluded that bidirectional or better is required for efficiency as
+          maintaining normalization requires look back.</li>
+      <li>Tom noted that maintaining normalization may require mutating scalar
+          values on either side of the operation as well.</li>
+      <li>Corentin returned to the stream-safe text format topic and stated his
+          understanding that emoji sequence can get longer than the 7 or 8
+          scalar values that Zack mentioned, but not longer than 18.
+          <a href="https://zalgo.org">Zalgo</a>
+          is impacted, but that is ok.  Not using the stream-safe text format
+          would be very expensive.</li>
+      <li>Zach added that the original purpose of the stream-safe text format
+          was to read a buffer, normalize it, then move on; normalization
+          occurs one EGC at a time.</li>
+      <li>Victor noted that one of the changes was to support encodings other
+          than UTF-8 and asked if the default would be
+          implementation-defined.</li>
+      <li>Zach replied that the parameterization is similar to
+          <tt>std::basic_string</tt>.  The default is NFC, UTF-8, and storage
+          via <tt>std::basic_string&lt;char&gt;</tt>.</li>
+      <li>Jens stated that a UTF-8 string literal yields an array of
+          <tt>char8_t</tt> and that <tt>std::string</tt> is a volabulary type
+          that appears in API boundaries; this interface may be unfriendly.</li>
+      <li>Zach replied that he was unconcerned about that mismatch.</li>
+      <li>Tom noted that <tt>std::string</tt> can not be expected to always
+          hold UTF-8.</li>
+      <li>Jens expressed a desire to avoid use of <tt>reinterpret_cast</tt>;
+          adopting <tt>char8_t</tt> may have been a mistake, or is something
+          that everything has to adapt to.</li>
+      <li>Steve stated that he sees UTF-8 data transported in
+          <tt>std::string</tt> frequently and problems occur when programmers
+          fail to track encoding; this doesn't make the situation worse.</li>
+      <li>Corentin opined that our direction should be that <tt>char</tt> is
+          used for the system encoding and <tt>char8_t</tt> is used for
+          UTF-8.</li>
+      <li>Corentin added that a magic compile-time function may be needed to
+          convert <tt>char8_t</tt> literals to <tt>char</tt>.</li>
+      <li>Tom asked about the use of separate template parameters for encoding
+          vs normalization and whether those could be combined so that
+          normalization is a property of the encoding.</li>
+      <li>Zach responded that the encoding is deduced by the size of the code
+          unit type.</li>
+      <li>Tom asked if Zack considered a single template parameter that
+          specifies encoding with associated normalization.</li>
+      <li>Zach responded that he did not; that the expectation is that users
+          will want to change just the normalization form.</li>
+      <li>PBrett asked what additional feedback Zack would like from SG16.</li>
+      <li>Zach requested participation in the next Boost review and that other
+          feedback is welcome, particularly with regard to defaults.</li>
+      <li>Zack added that any questions posed will be presented at the start of
+          the next Boost review.</li>
+      <li>Steve asked if the current code is aligned with these changes.</li>
+      <li>Zach responded yes, the
+          <a href="https://github.com/tzlaine/text">code on github</a>
+          is up to date.</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194R0: The character set of C++ source code is Unicode</a>:
+    <ul>
+      <li>PBrett presented:
+        <ul>
+          <li>The principle advantage of using Unicode to describe C++ lexing
+              and parsing is that it is the only system that can do so
+              comprehensively.</li>
+          <li>Unicode defines what a blank space character is and means.</li>
+          <li>Use of Unicode to describe the standard does not impose a
+              requirement that Unicode be used as the internal character set
+              for implementations.</li>
+          <li>Universal-character-name (UCN) reversal does not require support
+              for non-Unicode characters.  For example, an implementation that
+              uses UTF-32 as the internal character set could use an unused bit
+              to track characters that require UCN reversion.</li>
+          <li>Trigraphs are an alternative way to express a basic source
+              character and are supported by exploiting implementation-defined
+              behavior in translation phase 1.</li>
+        </ul>
+      </li>
+      <li>Tom noted two concerns that he would like to ensure the proposal
+          addresses:
+        <ul>
+          <li>That the described conversion accurately reflects existing
+              practice.</li>
+          <li>The core wording issue with reversion of UCNs; that there is no
+              lexical element to revert to.</li>
+        </ul>
+      </li>
+      <li>Jens stated that, from a core perspective, the UCN reversal is well
+          recognized as hand waving.</li>
+      <li>Jens noted that proper support for Unicode source files is still
+          relatively new in gcc.</li>
+      <li>Jens added that migration to a different character model that better
+          specifies behavior, perhaps in terms of Unicode code points would be
+          an improvment.</li>
+      <li>Corentin stated that he and Peter Brett will bring a paper proposing
+          to remove UCN introduction during translation phase 1.</li>
+      <li>Hubert stated that handling source characters as Unicode code points
+          is a transition closer to the C model.</li>
+      <li>Hubert suggested that unmapped characters may, perhaps, require
+          special handling in comments.</li>
+      <li>Hubert added that the UCN reversion is magic and that it effectively
+          matches the extended character model in a restricted form;
+          implementations use an extended character model.</li>
+      <li>PBrett expressed uncertainty as to how trigraphs, which are no longer
+          specified in the C++ standard, get involved here.</li>
+      <li>Jens stated that translation phase 1 being implementation-defined was
+          the compromise escape hatch that allows implementations to continue
+          to support trigraphs.</li>
+      <li>Tom mentioned that concerns about trigraphs may be due to his asking
+          how they are affected by UCN reversion.</li>
+      <li>PBrett noted that such concerns are effectively identical to cases of
+          the same abstract character being represented by potentially different
+          code points or code point sequences in the souce code as can happen
+          with rare cases in Shift-JIS.</li>
+      <li>PBrett added that he and Corentin feel strongly that the source
+          character set should not be observable by portable programs.</li>
+      <li>Hubert stated that no tax should be imposed on either the programmer
+          or the implementation if the source character set and execution
+          character set are the same; an implementation should not have to
+          perform character validation in such cases.</li>
+      <li>PBrett acknowledged and noted that the standard should not forbid
+          implementations to preserve values through translation.</li>
+      <li>Corentin stated that there are characters that are not representable
+          in Unicode, but such characters tend to be ones that are not
+          represented on computers at all, or not used in source files.</li>
+      <li>Jens stated that the relative effect on wording for a Unicode code
+          points vs extended character model is expected to be minimal.</li>
+      <li>Tom asked Jens if the character model he has in mind is incompatible
+          with what Peter and Corentin are proposing.</li>
+      <li>Jens responded that the distinction is effectively Unicode vs
+          Unicode+X.  But since unassigned code points can be specified in
+          UCNs, we're effectively going to end up with a Unicode+X model
+          regardless.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be October 28th and that we'll
+      continue discussion of P2194.</li>
 </ul>
 
 
