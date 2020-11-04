@@ -67,8 +67,19 @@ WG Number     | Title/Notes/Links
 
 WG Number     | Status      | Title/Notes/Links
 ------------- | ------      | -----
+[N2594][]     |             | Mixed Wide String Literal Concatenation
+[N2500][]     |             | Restartable and Non-Restartable Functions for Efficient Character Conversions, r2
 [N2231][]     |             | char8_t: A type for UTF-8 characters and strings
 
+## Inactive Papers
+
+WG Number     | Title/Notes/Links
+------------- | -----
+~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superceded by [N2500][])
+
+[N2594]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2594.htm
+[N2500]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2500.pdf
+[N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [P2201]: https://wg21.link/p2201
 [P2194]: https://wg21.link/p2194
