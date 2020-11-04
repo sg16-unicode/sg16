@@ -30,7 +30,7 @@ WG Number     | Title/Notes/Links
 [P1859][]     | Standard terminology for execution character set encodings
 [P1629][]     | Standard Text Encoding
 [P1628][]     | Unicode character properties
-[P0244][]     | Text_view: A C++ concepts and range based character encoding and code point enumeration library
+[P0244][]     | Text\_view: A C++ concepts and range based character encoding and code point enumeration library
 
 ## Accepted Papers
 
@@ -40,12 +40,12 @@ WG Number     | Standard    | Title/Notes/Links
 ------------- | --------    | -----
 [P1892][]     | C++20       | Extended locale-specific presentation specifiers for std::format
 [P1868][]     | C++20       | 🦄 width: clarifying units of width and precision in std::format
-[P1423][]     | C++20       | char8_t backward compatibility remediation
+[P1423][]     | C++20       | char8\_t backward compatibility remediation
 [P1139][]     | C++20       | Address wording issues related to ISO 10646
-[P1041][]     | C++20       | Make char16_t/char32_t string literals be UTF-16/32
+[P1041][]     | C++20       | Make char16\_t/char32\_t string literals be UTF-16/32
 [P1025][]     | C++20       | Update The Reference To The Unicode Standard
 [P0645][]     | C++20       | Text Formatting
-[P0482][]     | C++20       | char8_t: A type for UTF-8 characters and strings
+[P0482][]     | C++20       | char8\_t: A type for UTF-8 characters and strings
 
 ## Inactive Papers
 
@@ -69,7 +69,7 @@ WG Number     | Status      | Title/Notes/Links
 ------------- | ------      | -----
 [N2594][]     |             | Mixed Wide String Literal Concatenation
 [N2500][]     |             | Restartable and Non-Restartable Functions for Efficient Character Conversions, r2
-[N2231][]     |             | char8_t: A type for UTF-8 characters and strings
+[N2231][]     |             | char8\_t: A type for UTF-8 characters and strings
 
 ## Inactive Papers
 
