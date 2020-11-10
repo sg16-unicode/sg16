@@ -53,11 +53,11 @@ The following papers are no longer being pursued.
 
 WG Number     | Title/Notes/Links
 ------------- | -----
-~~[P1097][]~~ | ~~Named character escapes~~<br/>(Superceded by P2071)
 ~~[P1880][]~~ | ~~uNstring Arguments Shall Be UTF-N Encoded~~<br/>(This proposal was withdrawn by the author upon determining that the complexity of the required wording updates would outweigh their benefits)
 ~~[P1879][]~~ | ~~Please Don't Rewrite My String Literals~~<br/>(This proposal was withdrawn by the author)
 ~~[P1854][]~~ | ~~Conversion to execution encoding should not lead to loss of meaning~~<br/>(The author incorporated this proposal in to [P2178][])
 ~~[P1844][]~~ | ~~Enhancement of regex~~<br/>(Severe ABI concerns prevent updating `std::regex`.  We will explore deprecating and replacing it)
+~~[P1097][]~~ | ~~Named character escapes~~<br/>(Superceded by P2071)
 ~~[P0353][]~~ | ~~Unicode Friendly Encoding Conversions for the Standard Library~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 ~~[P0169][]~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 
