@@ -5,7 +5,7 @@ ISO JTC1/SC22 WG21 and WG14 papers:
 
 WG21 Number     | Title | Revisions
 --------------- | ----- | ----
-[DXXXXR0][DXXXXR0_SG16_MEETING_SUMMARIES]     | SG16: Unicode meeting summaries 2020-09-09 through 2020-09-09 | [DR0][DXXXXR0_SG16_MEETING_SUMMARIES]
+[D2253R0][]     | SG16: Unicode meeting summaries 2020-09-09 through 2020-09-09 | [DR0][D2253R0]
 [P2217R0][]     | SG16: Unicode meeting summaries 2020-06-10 through 2020-08-26 | [R0][P2217R0]
 [P2179R0][]     | SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27 | [R0][P2179R0]
 [P2071R0][]     | Named universal character escapes | [DR1][D2071R1] [R0][P2071R0]
@@ -74,4 +74,4 @@ WG14 Number     | Title
 [D2071R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/d2071r1.html
 [P2179R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p2179r0.html
 [P2217R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p2217r0.html
-[DXXXXR0_SG16_MEETING_SUMMARIES]: https://rawgit.com/sg16-unicode/sg16/master/papers/dxxxxr0-sg16-meeting-summaries.html
+[D2253R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/d2253r0.html
