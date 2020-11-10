@@ -22,7 +22,6 @@ WG Number     | Title/Notes/Links
 [P2194][]     | The character set of C++ source code is Unicode
 [P2178][]     | Misc lexing and string handling improvements
 [P2071][]     | Named universal character escapes
-[P2029][]     | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
 [P2020][]     | Locales, Encodings and Unicode
 [P1953][]     | Unicode Identifiers And Reflection
 [P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
@@ -38,6 +37,7 @@ The following papers have been adopted for an ISO standard.
 
 WG Number     | Standard    | Title/Notes/Links
 ------------- | --------    | -----
+[P2029][]     | C++23       | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
 [P1892][]     | C++20       | Extended locale-specific presentation specifiers for std::format
 [P1868][]     | C++20       | 🦄 width: clarifying units of width and precision in std::format
 [P1423][]     | C++20       | char8\_t backward compatibility remediation
