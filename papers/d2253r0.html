@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2020-09-09 through 2020-10-28</title>
+<title>SG16: Unicode meeting summaries 2020-09-09 through 2020-11-11</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-11-10</td>
+    <td>2020-11-15</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2020-09-09 through 2020-10-28</h1>
+<h1>SG16: Unicode meeting summaries 2020-09-09 through 2020-11-11</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -105,6 +105,8 @@ snapshot of select meeting summaries from that repository.
       October 14th, 2020</a></li>
   <li><a href="#2020_10_28">
       October 28th, 2020</a></li>
+  <li><a href="#2020_11_11">
+      November 11th, 2020</a></li>
 </ul>
 
 <p>
@@ -1405,6 +1407,305 @@ Previously published SG16 meeting summary papers:
     </ul>
   </li>
   <li>Tom stated that the next meeting will be November 11th.</li>
+</ul>
+
+
+<h1 id="2020_11_11">November 11th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1885r3">P1885R3: Naming Text Encodings to Demystify Them</a>:
+    <ul>
+      <li>Review updates since the
+          <a href="https://wiki.edg.com/bin/view/Wg21prague/SG16D1885R2">review of D1885R2 in Prague</a>.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2093r2">P2093R2: Formatted output</a></li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Nathan Baggs</li>
+  <li>Jens Maurer</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom announced that Peter Brett has agreed to take the role of assistant
+      chair for SG16.
+    <ul>
+      <li>Herb requested that all WG and SG chairs nominate someone to act as
+          an assistant chair.</li>
+      <li>Peter Brett volunteered to do so.</li>
+      <li>The new roles have not been communicated to all of WG21 yet.
+      <li>Should anyone have any concerns or questions, please let Tom
+          know.</li>
+      <li>Thank you Peter!</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1885r3">P1885R3: Naming Text Encodings to Demystify Them</a>:
+    <ul>
+      <li>Tom provided a brief introduction:
+        <ul>
+          <li>We last looked at this paper in Prague and approved it pending
+              some additional research that Corentin agreed to do.</li>
+          <li>Corentin completed that research and the updates are present in
+              R3.</li>
+          <li>The purpose of today's review is to review those updates; not to
+              revisit the proposed design.</li>
+        </ul>
+      </li>
+      <li>Corentin provided a summary of the updates.
+        <ul>
+          <li>Lists of encodings supported by several text facilities and other
+              specifications were added.</li>
+          <li>These lists identify some encodings that are not registered with
+              the IANA registry.</li>
+          <li>Lists of known encodings not registered with the IANA registry are
+              present in annex B.</li>
+          <li>No other registry is more comprehensive than the IANA
+              registry.</li>
+          <li>The
+              <a href="https://encoding.spec.whatwg.org">WhatWG Encoding standard</a>
+              contains a
+              <a href="https://encoding.spec.whatwg.org/#legacy-single-byte-encodings">list of encodings</a>
+              that continue to be encountered by browser and non-browser user
+              agents on the web; each of these encodings is registered with the
+              IANA DB.</li>
+        </ul>
+      </li>
+      <li>PBrett asked if the primary use case for the paper is detection of
+          the literal and system encodings.</li>
+      <li>Corentin confirmed that is the primary motivating use case.</li>
+      <li>PBrett noted that the proposal goes to a fair amount of effort to be
+          comprehensive in this respect.</li>
+      <li>Corentin acknowledged and stated that the proposal is motivated by
+          requirements to cope with legacy environments; if a magic wand could
+          be waved to make those requirements disappear, then waving it would be
+          a better use of our time.</li>
+      <li>Corentin added that SG16 is confident that legacy encodings will
+          continue to be relevant for many years.</li>
+      <li>Corentin summarized the goals of providing a comprehensive list of
+          encodings:
+        <ul>
+          <li>To ensure portability across implementations.</li>
+          <li>To avoid WG21 having to determine which legacy encodings are and
+              are not important.</li>
+        </ul>
+      </li>
+      <li>Steve agreed with the primary goals as stated by Peter and Corentin,
+          but added that this functionality would be useful for general I/O
+          interfaces.</li>
+      <li>Steve provided an exmaple; he works on a product that integrates with
+          email services and has to deal with email that is encoded in a variety
+          of legacy encodings in addition to UTF-8.</li>
+      <li>Steve noted that they could limit support to only those encodings that
+          are on the WhatWG list.</li>
+      <li>Steve added that the WhatWG list is a closed list and that it will not
+          be extended.</li>
+      <li>Corentin noted that the WhatWG list is a subset of the IANA list, but
+          the reverse is not.</li>
+      <li>Corentin added that the IANA registry may be extended later, though it
+          has not been updated since 2004.</li>
+      <li>Tom stated that another potential use case is for JeanHeyd's
+          transcoding work.</li>
+      <li>Jens noted that the proposed feature does not expose which encodings
+          are and are not in the WhatWG encoding standard.</li>
+      <li>Jens suggested that, if there are uncertainties with regard to fit for
+          other uses, that the design could be scaled down so that it only
+          exposes the literal and system encodings.  When standardizing an
+          interface for dealing with endianness, a minimal approach was taken
+          and that side-stepped design discussions.</li>
+      <li>Corentin asked Steve if he would like to have an interface that
+          exposes which encodings are and are not included in the WhatWG
+          encoding standard.</li>
+      <li>Steve replied that he has a need to be able to communicate and set
+          expectations and added that it would not be terrible if the ability
+          to consume additional encodings was added accidentally, but that there
+          is a need to ensure output is not produced in encodings other than
+          UTF-8 and UTF-16.</li>
+      <li>Steve added that he doesn't know if he has a good use case for being
+          able to query which encodings are blessed by the WhatWG encoding
+          standard and expressed uncertainty whether such programmatic support
+          would be useful.</li>
+      <li>Corentin stated that the design is the way it is so that encodings
+          that are not known to a given system can still be named.</li>
+      <li>Corentin expressed a preference for waiting to scale the feature down
+          pending feedback from LEWG.</li>
+      <li>Corentin noted that he still has feedback from Tom and the LEWG
+          mailing list to address.</li>
+      <li>PBrett requested that a revision of the paper also address the
+          potential ABI impact if a new encoding were to be added to the IANA
+          registry; WTF-8 for example.</li>
+      <li>Corentin replied that the ABI point to be addressed is the size and
+          underlying type of the enumeration and agreed to amend the paper.</li>
+      <li>Steve noted that string literals in headers are subject to ODR IFNDR
+          concerns if included in TUs that are compiled with different encoding
+          options and then linked together; this concern presumably applies to
+          querying the literal encoding as well.</li>
+      <li>Tom asked Corentin if he had come across the
+          <a href="https://icu4c-demos.unicode.org/icu-bin/convexp">ICU converter explorer</a>
+          while researching encodings that were not present in the IANA registry
+          and provided a link to
+          <a href="https://icu4c-demos.unicode.org/icu-bin/convexp?s=IBM&s=IANA">https://icu4c-demos.unicode.org/icu-bin/convexp?s=IBM&s=IANA</a>;
+          this facility can identify encodings that are known to ICU, but are
+          not present in the IANA registry.</li>
+      <li>Corentin replied that he had heard of it and generally understands
+          that ICU has support for many encodings.</li>
+      <li>Tom pointed out that the ICU converter explorer also reveals aliases
+          that are not present in the IANA registry.</li>
+      <li>Corentin replied that he is uncertain how important support for such
+          aliases is.</li>
+      <li>Zach asked if the paper has already been reviewed by LEWG.</li>
+      <li>Corentin replied that LEWG has initiated a mailing list review, but
+          that there has not been much feedback regarding desire for the feature
+          yet.</li>
+      <li>Tom noted that Victor expressed strong support for it on the mailing
+          list.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2093r2">P2093R2: Formatted output</a>:
+    <ul>
+      <li>Victor presented:
+        <ul>
+          <li>The goal is to integrate <tt>std::format</tt> directly with I/O in
+              order to provide an alternative to <tt>std::cout</tt>,
+              <tt>std::printf</tt>, and <tt>std::fputs</tt> that uses the
+              <tt>std::format</tt> syntax.</li>
+          <li>The naming and interface are inspired by other languages.</li>
+          <li>The ability is provided to print via C streams (e.g.,
+              <tt>stdout</tt>) or C++ streams (e.g., <tt>std::cout</tt>).</li>
+          <li>There are multiple options for printing a newline; the most
+              flexibile option is to allow the programmer to specify the newline
+              sequence themselves.</li>
+          <li>C++ iostreams doesn't work as expected with UTF-8 now, especially
+              when printing to the Windows onsole.</li>
+          <li>On Windows, the run-time locale and terminal character set are
+              distinct and separately managed in practice.</li>
+          <li>The reference implementation works portably on Windows and POSIX
+              systems and does not require compilation with the Visual C++
+              <tt>/utf-8</tt> option.</li>
+          <li>The reference implementation has the performance benefits noted in
+              <a href="https://wg21.link/p0645">P0645</a>
+              and outperforms both <tt>std::printf</tt> and
+              <tt>std::cout</tt>.</li>
+          <li>The output that is produced is locale independent by default.</li>
+          <li>There is no global or shared formatting state to manage.</li>
+          <li>The binary size of calls is reduced through use of type erasure;
+              <tt>std::printf</tt> without error handling is slightly smaller
+              than the proposed <tt>std::print</tt>.</li>
+        </ul>
+      </li>
+      <li>Jens asked if synchronization with C streams was disabled via
+          <tt>std::ios_base::sync_with_stdio()</tt> when testing
+          performance.</li>
+      <li>Victor confirmed that it was.</li>
+      <li>Jens asked why the performance results are an order of magnitude
+          worse on Windows.</li>
+      <li>Victor replied that testing was on a different machine running in a
+          VM.</li>
+      <li>Corentin expressed strong support for the feature.</li>
+      <li>Zach echoed that support.</li>
+      <li>Zach stated that he found the proposed <tt>std::println</tt> a little
+          odd.  From a LEWG perspective, the newline handling is unclear for
+          <tt>std::print(stdout, ...)</tt> vs <tt>std::print(cout, ...)</tt>.
+          From an SG16 perspective, it is unclear what a newline is at all.</li>
+      <li>Zach suggested leaving it to the programmer to specify the kind of
+          newline they want.</li>
+      <li>Tom noted that the streams themselves are typically involved in
+          formatting newlines and asked Zach if stream determined newline
+          sequences addresses his concern.</li>
+      <li>Zach replied that it does not and that he would prefer to change the
+          default behavior for <tt>std::print</tt> to be to write to
+          <tt>std::stdout</tt> and to remove <tt>std::println</tt>.</li>
+      <li>Corentin professed support for <tt>std::println</tt> as a means to
+          avoid concerns over what kind of newline sequence to use.</li>
+      <li>Steve noted that differences between <tt>std::println</tt> and
+          <tt>std::print</tt> will be encountered when programmers are learning
+          these interfaces; just as the difference between printing of a
+          newline differs for <tt>std::puts</tt> vs <tt>std::fputs</tt>.</li>
+      <li>Steve expressed uncertainty regarding any additional value provided
+          by <tt>std::println</tt>.</li>
+      <li>Jens stated that there are two orthogonal features in the proposal
+          that he would prefer to see separated if possible.
+        <ul>
+          <li>1: Use of the <tt>std::format</tt> machinery to avoid need for
+              temporary strings as would be returned by calls to
+              <tt>std::format</tt>.</li>
+          <li>2: <tt>std::print</tt> is encoding aware in a way that
+              <tt>std::format</tt> is not.</li>
+        </ul>
+      </li>
+      <li>Jens noted that this feature appears to be focussed on terminals and
+          that use of terminals is on the decline.</li>
+      <li>Victor disagreed that <tt>std::print</tt> is a terminal facility since
+          it can also be used to write to a file; in which case, it will still
+          use the right encoding.</li>
+      <li>Victor also disagreed that use of terminals is on a decline.</li>
+      <li>Jens clarified that he does not wish to see these feature dropped from
+          the proposal, but rather separated; though it isn't necessarily clear
+          how a separated transcoding facility would work.</li>
+      <li>Jens expressed surprise regarding use of the C <tt>FILE*</tt> streams
+          over <tt>std::streambuf</tt>.</li>
+      <li>Steve replied that locale information is associated with
+          <tt>std::streambuf</tt> and that it manipulates data in the
+          stream.</li>
+      <li>Tom confirmed that the <tt>std::codecvt</tt> facet is attached via
+          <tt>std::streambuf</tt>.</li>
+      <li>Jens observed that that is a broken design.</li>
+      <li>Steve agreed and noted that the saving grace is that most programmers
+          avoid doing terrible things.</li>
+      <li>PBrett expressed concern over handling of locales.  In the
+          <tt>std::cout &lt;&lt; std::format(...)</tt> example, adding
+          <tt>L</tt> to a format specifier will enable localized output using
+          the global locale.  Doing similarly with <tt>std::print</tt> would,
+          by default, use <tt>std::stdout</tt> and the global locale rather
+          than <tt>std::cout</tt> and its associated locale.</li>
+      <li>PBrett expressed support for use of <tt>std::print</tt> with an
+          explicit stream such that it uses the locale imbued in the stream and
+          for dropping support for a default stream.</li>
+      <li>Victor pointed out that the <tt>std::format</tt> and
+          <tt>std::print</tt> examples are consistent; the global locale is
+          used in each case.</li>
+      <li>Victor noted that it is possible to pass a <tt>std::ostream</tt> to
+          <tt>std::print</tt> and have its locale be used; LEWG has already
+          expressed support for that approach.</li>
+      <li>Victor added that <tt>std::cout</tt> has global state and therefore
+          all the same problems as use of a global locale.</li>
+      <li>PBrett stated that, if <tt>std::print</tt> is specified to use a
+          default stream, that he would prefer it to use the locale imbued in
+          <tt>std::cout</tt> rather than the global locale.</li>
+      <li>PBrett noted that having to pass or query a <tt>std::ostream</tt>
+          would bring back performance concerns, but that is also the desired
+          behavior, so the performance improvements as presented are not
+          particularly compelling.</li>
+      <li>Jens noted that having synchronous I/O disabled will cause
+          interleaving issues, so that does not reflect normal practice and
+          distorts the performance improvements as presented.</li>
+      <li>Victor noted that it is pretty uncommon to use <tt>std::cout</tt>
+          for locale related purposes and stated that new tutorials for
+          <tt>std::print</tt> could teach correct usage.</li>
+      <li>Victor expressed a preference to not sacrifice performance for
+          corner cases.</li>
+      <li>Jens disagreed that this represents a corner case.</li>
+      <li>Corentin requested an interface that allows just passing a
+          locale.</li>
+    </ul>
+  </li>
+  <li>Tom stated that our next regularly scheduled telecon would be the week of
+      Thanksgiving in the US, so we'll skip that week and the next telecon will
+      be held in four weeks on December 9th.  Similarly, the telecon after that
+      one  will be skipped due to Christmas leaving us meeting again on January
+      13th.</li>
 </ul>
 
 
