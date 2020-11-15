@@ -1,0 +1,1712 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2020-09-09 through 2020-11-11</title>
+</head>
+
+<style type="text/css">
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+
+tt {
+    font-family: monospace;
+}
+
+/* Thanks to Elias Kosunen for the following CSS suggestions! */
+
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    line-height: 125%;
+}
+
+html, body {
+    background-color: #eee;
+}
+
+h1, h2, h3, h4, h5, p, span, li, dt, dd {
+    color: #333;
+}
+
+p, li {
+    line-height: 140%;
+}
+
+body {
+    padding: 1em;
+    max-width: 1600px;
+}
+
+p, li {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-font-smoothing: antialiased !important;
+    text-rendering: optimizelegibility !important;
+    letter-spacing: .01em;
+}
+
+h1, h2, h3 {
+    margin-bottom: 1em;
+    letter-spacing: .03em;
+}
+
+blockquote.quote
+{
+    margin-left: 0em;
+    border-style: solid;
+    background-color: lemonchiffon;
+    color: #000000;
+    border: 1px solid black;
+}
+
+</style>
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>P2253R0</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2020-11-15</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2020-09-09 through 2020-11-11</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2020_09_09">
+      September 9th, 2020</a></li>
+  <li><a href="#2020_09_23">
+      September 23rd, 2020</a></li>
+  <li><a href="#2020_10_14">
+      October 14th, 2020</a></li>
+  <li><a href="#2020_10_28">
+      October 28th, 2020</a></li>
+  <li><a href="#2020_11_11">
+      November 11th, 2020</a></li>
+</ul>
+
+<p>
+Previously published SG16 meeting summary papers:
+<ul>
+  <li><a href="https://wg21.link/p1080">P1080: SG16: Unicode meeting summaries 2018/03/28 - 2018/04/25</a></li>
+  <li><a href="https://wg21.link/p1137">P1137: SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20</a></li>
+  <li><a href="https://wg21.link/p1237">P1237: SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03</a></li>
+  <li><a href="https://wg21.link/p1422">P1422: SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09</a></li>
+  <li><a href="https://wg21.link/p1666">P1666: SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22</a></li>
+  <li><a href="https://wg21.link/p1896">P1896: SG16: Unicode meeting summaries 2019/06/12 - 2019/09/25</a></li>
+  <li><a href="https://wg21.link/p2009">P2009: SG16: Unicode meeting summaries 2019-10-09 through 2019-12-11</a></li>
+  <li><a href="https://wg21.link/p2179">P2179: SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27</a></li>
+  <li><a href="https://wg21.link/p2217">P2217: SG16: Unicode meeting summaries 2020-06-10 through 2020-08-26</a></li>
+</ul>
+</p>
+
+
+<h1 id="2020_09_09">September 9th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2178r1">P2178R1: Misc lexing and string handling improvements</a>
+    <ul>
+      <li>Discuss proposal 1: Mandating support for UTF-8 encoded source files in phase 1</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194R0: The character set of C++ source code is Unicode</a></li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Administrative updates:
+    <ul>
+      <li>Tom provided an update on the WG14 timeline for C2X.
+        <ul>
+          <li>WG14 sent out notification that C2X must be published by
+              August 31st, 2023.</li>
+          <li>That means C2X must be feature complete by August of 2022.</li>
+          <li>Any proposals that we want to get in to C for compatibility
+              reasons needs to be done or (close to done) by
+              August of 2022.</li>
+        </ul>
+      </li>
+      <li>PBindels noted that timeline aligns well with C++23.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2178r1">P2178R1: Misc lexing and string handling improvements</a>
+    <ul>
+      <li>Proposal 1: Mandating support for UTF-8 encoded source files in
+          phase 1
+        <ul>
+          <li>Corentin provided an introduction:
+            <ul>
+              <li>The intent of the proposal is to specify that the set of
+                  implementation-defined source file encodings shall include
+                  UTF-8.</li>
+              <li>This reflects standard practice amongst the major
+                  implementations.</li>
+              <li>The meachanism used to specify that the source encoding is
+                  UTF-8 remains implementation-defined.</li>
+              <li>Implementations may use any mechanism desired to determine
+                  which encoding to use.</li>
+              <li>Quoting Richard Smith: "If we want C++ to be portable, there
+                  must be a portable source file encoding".</li>
+              <li>This proposal is orthogonal to any hypothetical proposal to
+                  allow differently encoded source files in the same
+                  translation unit.</li>
+              <li>Per Unicode guidelines, a UTF-8 BOM would be handled as
+                  whitespace.</li>
+            </ul>
+          </li>
+          <li>PBrett asked if Corentin is open to follow up papers that tackle
+              additional issues.</li>
+          <li>Corentin responded that Tom has work in-progress that is
+              orthogonal to this paper.</li>
+          <li>PBrett urged adoption; this suffices to compile a source package
+              on any platform.</li>
+          <li>Tom stated that, in practice, there are at least four sets of
+              source files involved when compiling any non-trivial project.
+              Those are,
+              1) the source files for the project,
+              2) the C standard headers,
+              3) the C++ standard headers, and
+              4) the platform header files (POSIX, Win32 SDK, etc...).
+              The question is how these disparate projects adopt UTF-8
+              incrementally.</li>
+          <li>Corentin replied that z/OS is an exception that would require
+              support for a mix of UTF-8 and EBCDIC source files; on other
+              platforms, system headers are limited to ASCII in practice.
+              Vcpkg currently compiles all packages as UTF-8.</li>
+          <li>Jens stated that standard headers are below the concern of the
+              standard; they are effectively magic and implementations can
+              provide whatever mechanisms they desire to make them work.</li>
+          <li>Jens added that it is always ok to restrict oneself to the basic
+              source character set and only use UTF-8 when targeting a UTF-8
+              supporting compiler.</li>
+          <li>Hubert stated that the standard has separate wording for headers
+              vs source files; the latter are also an abstraction in the
+              standard and we can specify that physical source file characters
+              are composed from code units, but that still leaves open the
+              question of what the container is.  On many platforms a file is a
+              sequence of bytes, but for some implementations, a source file may
+              be a sequential data set of fixed length records.</li>
+          <li>Hubert added that, with regard to specifying use of a UTF-8 BOM to
+              detect the encoding, some implementations have other means for
+              encoding detection; for example, z/OS allows specifying an
+              encoding via filesystem metadata.</li>
+          <li>Tom revisited PBrett's scenario of a portable source package on
+              any platform, noted that there are additional source file sets
+              involved if there are third party package dependencies, and stated
+              a desire for a UTF-8 solution to be optimized for deployment and
+              migration across the ecosystem.</li>
+          <li>Corentin acknowledged that desire but asserted that is not a goal
+              of the current proposal.</li>
+          <li>PBrett asked the attendant core experts how to word this proposal
+              given that the standard doesn't require actual source files.</li>
+          <li>Hubert responded that the standard discusses source files but
+              leaves their structure undefined; we can specify a specific form
+              of source file as, e.g., a sequence of UTF-8 code units.</li>
+          <li>Corentin agreed and stated that direction matches the intent; a
+              network stream of UTF-8 code units should be acceptable as a
+              source file.</li>
+          <li>Jens added that the standard is hazy about what a source file is;
+              it is an abstraction and must not be required to be something that
+              can, for example, be opened by <tt>fopen()</tt>; compilers can be
+              written in any language and therefore can't rely on the C++ notion
+              of files.  Specifying a UTF-8 encoding will necessarily require
+              punching through the existing abstraction.</li>
+          <li>Zach expanded on Tom's concern and noted that, for existing
+              projects, the compiler already knows how to perform encoding
+              conversions; if we have to alter the specification for translation
+              phases, that seems ok.</li>
+          <li>Zach noted that addressing the simple use case where all source
+              files are known to be UTF-8 is important.</li>
+          <li>Mark stated that C++20 modules potentially provides additional
+              separation between source files.</li>
+          <li>Corentin agreed and emphasized Mark's point.</li>
+          <li>Tom responded that exploiting that potential requires the ability
+              to specify encoding options on a per-TU basis, but that is ok;
+              that is an issue for build systems to address.</li>
+          <li>Hubert noted that the wording for headers may be quite different
+              than for source files.</li>
+          <li>Corentin asked if translation phases 1 through 3 are processed
+              independently for each header.</li>
+          <li>Hubert responded that he didn't think we specify that headers
+              (as opposed to source files) are read in this manner.</li>
+          <li>PBrett noted that this will require digging a tunnel through the
+              implementation-defined behavior currently present in translation
+              phase 1.</li>
+          <li>Corentin agreed, but noted that there is only so much we can
+              specify happen prior to translation phase 1.</li>
+          <li>Hubert elaborated on prior comments regarding different wording
+              for headers vs source files; the form of the <tt>#include</tt>
+              directive written with a quoted name is specified to look for a
+              source file and then, if one isn't found, to retry as if the
+              directive were written with a name in angle brackets; headers can
+              be resolved in this form.</li>
+          <li>Jens expressed a belief that standard library headers are headers
+              and other things are source files.</li>
+          <li>Hubert agreed, but noted that a source file can interpose on a
+              header.</li>
+          <li>Tom switched the focus to handling of BOMs and presented a hostile
+              example of not specifying behavior when a BOM is present; one
+              implementation could choose to require a BOM, another could choose
+              not to permit one, and another could choose to allow them
+              optionally and use their presence to inform encoding.</li>
+          <li>Corentin replied that, in Unicode, BOMs are not whitespace and
+              should be ignored; they can be used to detect the encoding, but
+              not to reject a code unit stream assumed to be UTF-8.</li>
+          <li>Hubert stated that wording is definitely required to express
+              that.</li>
+          <li>PBrett stated that a BOM can only appear at the start of a source
+              file; a BOM code unit sequence at the start of a string literal is
+              not a BOM.</li>
+          <li>Hubert responded that there may not be agreement on that; there
+              could be special cases for raw-string literals.</li>
+          <li>Corentin asserted that a BOM is a non-breaking white space;
+              U+FEFF is "ZERO WIDTH NO-BREAK SPACE".</li>
+          <li>PBindels provided a linke to
+              <a href="https://www.unicode.org/faq/utf_bom.html#bom6">https://www.unicode.org/faq/utf_bom.html#bom6</a>
+              which states:
+              <div style="padding: .5em; background: #E9FBE9">
+              Q: What should I do with U+FEFF in the middle of a file?
+                <div style="padding: .5em; background: #E9FBE9">
+                A: In the absence of a protocol supporting its use as a BOM and
+                when not at the beginning of a text stream, U+FEFF should
+                normally not occur. For backwards compatibility it should be
+                treated as ZERO WIDTH NON-BREAKING SPACE (ZWNBSP), and is then
+                part of the content of the file or string. The use of U+2060
+                WORD JOINER is strongly preferred over ZWNBSP for expressing
+                word joining semantics since it cannot be confused with a BOM.
+                When designing a markup language or data protocol, the use of
+                U+FEFF can be restricted to that of Byte Order Mark. In that
+                case, any U+FEFF occurring in the middle of a file can be
+                treated as an unsupported character.
+              </div>
+            </div>
+          </li>
+          <li>PBindels noted that the old use of U+FEFF as a zero-width
+              non-breaking space character was deprecated in Unicode 3.</li>
+          <li>Tom replied that U+FEFF is only white space when present
+              somewhere other than the beginning of the input; it should be
+              ignored when present as the first code unit sequence.</li>
+          <li>Hubert stated that there is a distinction from a source code
+              column perspective, but that there is nothing in C or C++ that
+              requires a token to appear at the start of a line.</li>
+          <li>Hubert clarified that there are cases in C++ where adding a
+              space matters.</li>
+          <li>PBrett suggested that handling of BOMs be a subject of further
+              work.</li>
+          <li>Tom explained that gcc and Visual C++ conflict with regard to
+              handling of BOMs.  Gcc will ignore one when directed to compile
+              as UTF-8, but will emit an error otherwise.  Visual C++ uses a
+              BOM to inform encoding.</li>
+          <li>Hubert raised a question regarding whether a BOM is or is not
+              part of the source file content.</li>
+          <li>Jens restated Hubert's question in more concrete terms by asking
+              if a BOM is visible during translation phases 1 and 2.</li>
+          <li>Corentin replied that standard practice is inconsistent because
+              tools are not consistent; if we don't want to break existing
+              tools then we can't require a BOM.</li>
+          <li>Tom agreed and asserted that no one has suggested a BOM should
+              be required.</li>
+          <li>PBrett summarized recent discussion; there is implementation
+              divergence regarding whether a BOM is honored as indicating an
+              encoding vs being ignored.</li>
+          <li>PBrett suggested a survey of existing tools is needed.</li>
+          <li>Hubert noted that, with respect to Corentin's last statement;
+              we haven't taken a position.  It is likely not controversial to
+              ignore a BOM when processing as UTF-8; but we know we don't
+              want to require a BOM.</li>
+          <li>Hubert added that it sounds like gcc doesn't use a BOM for
+              encoding detection; in which case the BOM is not a BOM.  It
+              sounds like existing compilers effectively ignore it.</li>
+          <li>Tom stated that he doesn't know of any experiments that can
+              reveal whether a BOM is handled as white space or removed as
+              file content.</li>
+          <li>PBindels asked if that is observable.</li>
+          <li>Hubert responded that it is via compiler diagnostics.</li>
+          <li>Zach stated that he prefers the approach of a source annotation
+              or command line option to select encoding as BOMs are kind of
+              magical.</li>
+          <li>Zach suggested tabling further discussion of BOM handling
+              until/unless we have a separate proposal.</li>
+          <li>Corentin observed that current web browsers will prioritize
+              source encoding tags over a BOM.</li>
+          <li>PBrett expressed support for not specifying any BOM behavior for
+              an initial proposal.</li>
+          <li>Hubert asserted that something must be specified regarding BOM
+              allowance in order for wording to not otherwise reject source
+              files with a BOM.</li>
+          <li><b>Poll: All implementations should be required to provide an
+              implementaion-defined mechanism to support the scenario in which
+              all source files used within a translation unit are UTF-8 encoded
+              whether or not they have a UTF-8 BOM</b>.
+            <ul>
+              <li><b>Attendees: 10</b></li>
+              <li><b>No objection to unanimous consent.</b></li>
+            </ul>
+          </li>
+          <li>Tom asked if we should poll whether files must consistently have
+              a BOM.</li>
+          <li>Zach asked if that isn't already covered by separate processing
+              of translation phases 1 through 3.</li>
+          <li>Jens replied that it is.</li>
+          <li>Zach stated that we should not do that poll then.</li>
+          <li>Tom agreed.</li>
+          <li><b>Poll: It should be implementation-defined whether a UTF-8 BOM
+              is used to inform the encoding of a source file.</b>
+            <ul>
+              <li>Mark clarified that voting in favor is a vote for
+                  implementation divergence.</li>
+              <li><b>Attendees: 10</b></li>
+              <li>
+                <table>
+                  <tr>
+                    <th style="text-align:right">SF</th>
+                    <th style="text-align:right">F</th>
+                    <th style="text-align:right">N</th>
+                    <th style="text-align:right">A</th>
+                    <th style="text-align:right">SA</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align:right">4</th>
+                    <th style="text-align:right">3</th>
+                    <th style="text-align:right">1</th>
+                    <th style="text-align:right">2</th>
+                    <th style="text-align:right">0</th>
+                  </tr>
+                </table>
+              </li>
+              <li><b>Consensus is in favor.</b></li>
+              <li>A: I would prefer well-defined behavior over
+                  implementation-defined behavior.</li>
+              <li>Hubert responded that implementation-defined behavior is
+                  needed for z/OS in order for filesystem based meta-data to be
+                  consulted; requiring 100% conformance with a BOM would be
+                  problematic.</li>
+            </ul>
+          </li>
+          <li><b>Poll: The presence or absence of a BOM is a reasonable
+              portable mechanism for detecting UTF-8 source file encoding.</b>
+            <ul>
+              <li><b>Attendees: 10</b></li>
+              <li>
+                <table>
+                  <tr>
+                    <th style="text-align:right">SF</th>
+                    <th style="text-align:right">F</th>
+                    <th style="text-align:right">N</th>
+                    <th style="text-align:right">A</th>
+                    <th style="text-align:right">SA</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align:right">0</th>
+                    <th style="text-align:right">1</th>
+                    <th style="text-align:right">0</th>
+                    <th style="text-align:right">3</th>
+                    <th style="text-align:right">6</th>
+                  </tr>
+                </table>
+              </li>
+              <li><b>No consensus; or rather, consensus is that a BOM is not a
+                  reasonable portable mechanism for detection of source file
+                  encoding.</b></li>
+              <li>PBrett explained that his position is weakly held because
+                  there may be obscure implementation circumstances where only
+                  an unreasonable mechanism exists.</li>
+              <li>Hubert noted that programmers can add a BOM themselves.</li>
+              <li>F: BOMs are used within the Microsoft ecosystem to inform
+                  encoding and appear to be useful there.</li>
+              <li>Hubert responded that such a scenario is reasonable for
+                  Windows, but that doesn't suffice to claim it as a reasonable
+                  portable mechanism.</li>
+              <li>Mark noted that the first poll taken leaves this option
+                  available.</li>
+              <li>Corentin stated that the source annotation approach is a
+                  superior solution.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be in two weeks, on September 23rd,
+      and will focus on
+      <a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194</a>.</li>
+  <li>Tom asked Jens to confirm that he has a competing paper.</li>
+  <li>Jens responded affirmatively, but that he is waiting for
+      <a href="https://wg21.link/p2029">P2029</a> to land.</li>
+  <li>Jens reminded the group that there is need to progress
+      <a href="https://wg21.link/p1949">P1949</a>; it appears to be stuck in
+      EWG.</li>
+  <li>Tom asked Steve if
+      <a href="https://wg21.link/p1949">P1949</a>
+      was ready for another round in EWG.</li>
+  <li>Steve confirmed that it is, has been submitted for the mailing, and that
+      he will prepare slides.</li>
+  <li>Tom promised to ping JF.</li>
+  <li><em>[ Editor's note: Tom did so and JF put it on the EWG schedule for
+      Thursday, September 24th. ]</em></li>
+  <li>Hubert reminded the group that there will be a plenary in November and
+      that papers made tentatively ready by EWG will require another meeting
+      to be approved.</li>
+</ul>
+
+
+<h1 id="2020_09_23">September 23rd, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1949r6">P1949R6: C++ Identifier Syntax using Unicode Standard Annex 31</a>
+    <ul>
+      <li>Ensure we are collectively prepared for presentation to EWG on Thursday.</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194R0: The character set of C++ source code is Unicode</a></li>
+  <li>Review
+      <a href="https://github.com/tzlaine/text">Boost.Text</a>
+      changes following initial Boost review.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Martinho Fernandes</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1949r6">P1949R6: C++ Identifier Syntax using Unicode Standard Annex 31</a>
+    <ul>
+      <li>Tom explained that the goal of this review is to ensure we are
+          collectively prepared for the presentation to EWG on Thursday.
+          Specifically:
+        <ul>
+          <li>To perform a run-through of Steve's slides and provide
+              feedback.</li>
+          <li>To play devil's advocate in anticipation of questions or concerns
+              that may be raised at the EWG telecon.</li>
+        </ul>
+      </li>
+      <li>Steve presented:
+        <ul>
+          <li><em>[ Editor's note: Steve's draft slides are available in the
+              SG16 mailing list archive at
+              <a href="https://lists.isocpp.org/sg16/2020/09/1866.php">https://lists.isocpp.org/sg16/2020/09/1866.php</a>.
+              ]</em></li>
+          <li>The slides present a brief summary of the proposal, challenges
+              with emoji support, script impact, uses of
+              <a href="https://unicode.org/reports/tr31">UAX #31</a>
+              by other languages, and wording overview.</li>
+          <li>Summary slides present the identifier syntax, requirements for
+              <a href="https://unicode.org/reports/tr15">NFC normalization</a>,
+              and that this proposal addresses C++20 NB comment NL029.</li>
+          <li>The status quo is that identifiers can be surprising as they may
+              look like symbols or incorporate characters that look like
+              operators.</li>
+          <li>The proposed identifiers are closed over normalization and are
+              guaranteed stable by the Unicode standard.</li>
+          <li>The status quo for emoji support in identifiers is that it is
+              accidental, incomplete, and broken.</li>
+          <li>Emoji are not guaranteed stable by the Unicode standard.
+              Supporting emoji could introduce instability to identifiers over
+              time; what was once an identifier may cease to be one in the
+              future.</li>
+          <li>Some characters categorized as emoji are surprising; for example,
+              <tt>#</tt>, <tt>*</tt>, and the decimal digits <tt>0</tt> through
+              <tt>9</tt> are all categorized as emoji since they may begin an
+              emoji keycap sequence.</li>
+          <li>Supporting emoji would require being inventive; there is no
+              standard for use of emojis in identifiers.</li>
+          <li>Support for emoji in identifiers could be added later with an
+              appropriate proposal.</li>
+          <li>The proposal does not exclude any scripts.</li>
+          <li>Some scripts, including English, contain words that are not valid
+              as identifiers.  English examples include <tt>can't</tt>,
+              <tt>won't</tt>, and <tt>mother-in-law</tt>.  Likewise, some
+              scripts require use of invisible characters like ZWJ (U+200D) and
+              ZWNJ (U+200C) to spell some words and, in some cases, these
+              characters are all that differentiate some words.  For example,
+              the Farsi words
+              <tt>نامهای</tt> (U+0646 U+0627 U+0645 U+0647 U+0627 U+06CC) and
+              <tt>نامه‌ای</tt> (U+0646 U+0627 U+0645 U+0647 U+200C U+0627 U+06CC)
+              differ only by the presence of a ZWNJ.</li>
+          <li>Other languages, including at least Java, Python, Erlang, Rust,
+              and ECMAScript have adopted UAX #31.</li>
+          <li>Wording has been provided by a CWG expert.</li>
+        </ul>
+      </li>
+      <li>Jens suggested that the 'OTHER "WEIRD IDENTIFIER CODE POINTS"' slide
+          be updated to make it clear that the content reflects the C++20
+          status quo.</li>
+      <li>Zach suggested being more specific about the end result of allowing
+          unassigned code points in identifiers; that choice enabled some emoji
+          to be incorporated in an unprincipled fashion.</li>
+      <li>Jens suggested increasing the font size for examples.</li>
+      <li>PBrett requested updates to slides with examples to make it clear
+          whether they reflect the C++20 status quo or proposed behavior.</li>
+      <li>Jens questioned the motivation behind some of the presented examples;
+          if the challenge faced by supporting emoji is algorithmic complexity,
+          then it would make sense to present the complicated examples
+          first.</li>
+      <li>Zach suggested that it might be productive to include the grapheme
+          cluster rules on a slide.</li>
+      <li>Steve responded that the paper includes a complicated regular
+          expression copied from
+          <a href="https://www.unicode.org/reports/tr51">UTS #51</a>
+          that can be used to match a possible, but not necessarily valid,
+          emoji sequence; that could be added.</li>
+      <li>Tom commented on the "SOME SURPRISING THINGS ARE EMOJI" slide; that
+          example demonstrates that lexing would be made more challenging
+          because emoji sequences can begin with members of the basic source
+          character set.</li>
+      <li>Steve agreed and presented a related concern; whether <tt>1</tt>
+          followed by U+20E3 (COMBINING ENCLOSING KEYCAP), a valid emoji,
+          would be allowed to start an identifier.</li>
+      <li>PBrett noted that a standard that addressed how to incorporate emoji
+          support into identifiers would benefit other languages.</li>
+      <li>Jens requested the use of lowercase letters in the examples of
+          English words that can't be used as identifiers in order to maintain
+          focus on the punctuation characters.</li>
+      <li>Tom suggested that the "ZWJ AND ZWNJ" slide make it more clear what
+          is being illustrated; that <tt>نامهای</tt> is a valid identifier,
+          but that <tt>نامه‌ای</tt> is not because it includes a ZWNJ.</li>
+      <li>Hubert suggested updating spacing to make the ZWNJ presence more
+          clear.</li>
+      <li>Hubert noted that UAX #31 doesn't prescribe handling of ZWJ and ZWNJ,
+          but rather provides a recommendation; it would be disengenuous to
+          claim disallowance of these characters based on UAX #31.</li>
+      <li>Steve acknowledged and noted that script analysis could be performed,
+          but that doing so would be difficult.</li>
+      <li>Corentin asserted that we are not qualified to make decisions that
+          affect, for example, Farsi; such decisions should be driven by domain
+          experts.</li>
+      <li>Martinho requested adding rationale for why ZWJ and ZWNJ characters
+          should be rejected in identifiers.</li>
+      <li>Hubert responded that the reason for rejection is that their presence
+          may not affect presentation.</li>
+      <li>Corentin noticed Rust listed on the "OTHER ADOPTERS" page and stated
+          that Rust hasn't adopted UAX #31 yet.</li>
+      <li>PBrett expressed a belief that Rust had adopted UAX #31.</li>
+      <li>Martinho provided a link to the Rust tracking issue,
+          <a href="https://github.com/rust-lang/rust/issues/55467">https://github.com/rust-lang/rust/issues/55467</a>,
+          and explained that, though the issue is not yet resolved, the
+          proposal has been accepted and is implemented in the development
+          tree; there just hasn't been a new release of Rust that includes it
+          yet.</li>
+      <li>Tom suggested that C# could be added to the list of adopters.</li>
+      <li>Corentin disagreed and noted that the C# specification is still based
+          on category properties, not the XID properties.</li>
+      <li>Tom opined that it sounds like C# was an early adopter of UAX #31 and
+          still uses the older properties; C# presumably has identifier
+          stability issues as a result.</li>
+      <li>Corentin suggested that the wording slide isn't helpful and could be
+          dropped.</li>
+      <li>Jens requested that, if the wording slide is retained, that the text
+          be left-align.</li>
+      <li>Jens noted that there is a formal step that EWG affirm wording, but
+          that it isn't necessary to dive into details.</li>
+      <li>Jens recollected that, during the last EWG review, the major concerns
+          were about emoji and script support.</li>
+      <li>Tom and Steve both confirmed that recollection.</li>
+      <li>Zach commented that the script restrictions involving Farsi was just
+          an example; the point is that some scripts have similar limitations
+          as English with respect to some words not being valid identifiers.
+          Steve agreed and noted that some words in some scripts require white
+          space.</li>
+      <li>Jens added that we know of no script that is completely excluded.</li>
+      <li>PBrett asked if a poll to forward the paper to CWG should be expected
+          in the EWG telecon.</li>
+      <li>Tom and Jens described the tentatively ready process adopted in
+          Prague; that the paper can be made tentatively read at the next
+          plenary, and then adopted at the following plenary.</li>
+      <li>Tom asked if any other languages are known to support emoji in
+          identifiers.</li>
+      <li>Corentin replied that Swift does.</li>
+      <li>Tom responded that Swift currently uses the same approach that C++20
+          does, so Swift's emoji support is just as broken as that in
+          C++20.</li>
+      <li>Corentin added that Swift also allows some emoji as operators.</li>
+      <li>Corentin opined that emoji are generally considered like symbols and
+          therefore shouldn't appear in identifiers.</li>
+      <li>Martinho noted that CSS allows just about any character in an
+          identifier.</li>
+      <li>Tom discussed an additional complication faced by supporting emoji;
+          the text and emoji presentation styles.  Emoji characters have a
+          default presentation style that can be changed by a presentation
+          selector; the question is whether an emoji sequence with a
+          presentation selector that matches the default presentation style
+          and an emoji sequence without a presentation selector should be
+          considered valid spellings of the same identifier.</li>
+      <li>Tom noted that the slides don't present what would be required in
+          order to support emoji well.</li>
+      <li>Tom asked if there is a fast path option such that the complexity
+          needed to support emoji is only paid if emoji are used.</li>
+      <li>Corentin replied that lexing behavior would have to become EGC
+          based.</li>
+      <li>Tom asked how much of the Unicode property DB would be required for
+          emoji support and noted that the emoji data text files are about
+          67K.</li>
+      <li>Corentin noted that other data may be required depending on design
+          decisions.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2194r0">P2194R0: The character set of C++ source code is Unicode</a>
+    <ul>
+      <li>PBrett presented, assisted by Corentin.
+        <ul>
+          <li>This paper forked from proposal 9 of
+              <a href="https://wg21.link/p2178r1">P2178R1: Misc lexing and string handling improvements</a>.</li>
+          <li>SG16 has had several passionate discussions about this in the
+              past.</li>
+          <li>The ideas presented are Corentin's, PBrett provided the
+              prose.</li>
+          <li>Key points:
+            <ul>
+              <li>This is not a proposal to change the standard.</li>
+              <li>This is not a proposal to change any implementations.</li>
+              <li>This is about how we think about lexing and parsing.</li>
+            </ul>
+          </li>
+          <li>C++20 is, perhaps accidentally, correct as is by requiring all
+              source input characters to be representable by either basic
+              source characters or Universal Character Names (UCNs).</li>
+          <li>Taking a dependency on Unicode is reasonable.</li>
+          <li>In C++20, translation phase 1 is effectively limited to Unicode
+              scalar values by the requirement that translation phase 1
+              produce only basic source characters and UCNs.</li>
+          <li>Only UTF encodings produce scalar values without requiring a
+              character set map.</li>
+          <li><em>[ Editor's note: presentation was cut short at this point by
+              discussion and time constraints. ]</em></li>
+        </ul>
+      </li>
+      <li>Hubert asked why the paper contains proposed wording if it is not
+          intended to change the standard.</li>
+      <li>PBrett responded that the Proposed Wording section will be removed
+          in the next revision and additional content added to clarify the
+          difference between Unicode scalar value and character.</li>
+      <li><em>[ Editor's note: the following discussion concerns the difference
+          between a Unicode scalar value (a Unicode code point that is not a
+          surrogate code point) and a Unicode assigned character (a Unicode
+          code point that represents an abstract character). ]</em></li>
+      <li>Jens wondered about the ramifications of supporting Unicode scalar
+          values as opposed to assigned characters and when character
+          properties become relevant; the Unicode of 1993 differs substantially
+          from Unicode today.</li>
+      <li>Martinho noted that Unicode has not always maintained backwards
+          compatibility.</li>
+      <li>Hubert agreed and noted that the Unicode code space shrunk in Unicode
+          2.0 when UTF-16 and surrogate code points were defined.  </li>
+      <li>Jens observed that UCNs can be explicitly written to produce arbitrary
+          scalar values, including scalar values corresponding to unassigned
+          code points.</li>
+      <li>PBrett responded that explicit UCNs are rarely seen outside of
+          compiler test suites.</li>
+      <li>PBrett added that, conceptually, post translation phase 1, only scalar
+          values remain.</li>
+      <li>Jens expressed uncertainty; that it isn't clear that newly assigned
+          Unicode characters have meaning for an existing C++ standard.</li>
+      <li>PBrett responded that such meaning is immaterial since explicit UCNs
+          are allowed to name unassigned code points.</li>
+      <li>Jens acknowledged that we have to define behavior for all possible
+          Unicode scalar values whether assigned or not.</li>
+      <li>PBrett agreed and noted that such behavior impacts the set of allowed
+          identifiers as proposed in
+          <a href="https://wg21.link/p1949">P1949: C++ Identifier Syntax using Unicode Standard Annex 31</a>.</li>
+      <li>Jens wondered if character properties are actually relevant for
+          translation phase 1.</li>
+      <li>Hubert stated that it is important to understand whether there would
+          be a benefit to insisting that code points correspond to assigned
+          characters in particular contexts.</li>
+      <li>Hubert added that stating that lexing and parsing are in terms of
+          assigned characters would be distracting in general.</li>
+      <li>Martinho returned discussion to the example Jens provided of an
+          implementation being behind the current Unicode standard; there are
+          motivating use cases for use of a UCN for a code point that has not
+          yet been assigned by Unicode in a published standard.  For example,
+          in anticipation of a new Japanese calendar era,
+          U+32FF (SQUARE ERA NAME REIWA) was reserved before the new era began
+          though the new character did not appear in a published Unicode
+          standard until after the era began.</li>
+      <li>Corentin noted that there is no intent to remove support for explicit
+          UCNs.</li>
+      <li>Corentin aded that, whether a code point is assigned or not only
+          matters during translation phase 1 conversions.</li>
+      <li>Hubert asserted that it would be undesirable to specify constraints
+          on translation phase 1 conversions; some implementations use
+          <tt>iconv</tt>, implementors may not want to validate <tt>iconv</tt>
+          and instead document their implementation-defined behavior as,
+          "whatever <tt>iconv</tt> does".</li>
+      <li>Corentin stated that there is no intent to restrict
+          implementation-defined character mapping in translation phase 1.</li>
+      <li>PBrett responded that, in principle, requiring Unicode characters
+          post translation phase 1 would require rejecting Unicode scalar values
+          corresponding to unassigned code points.</li>
+      <li>Jens reflected on earlier terminology discussions and joking about
+          what "character" means because it is hazy and strange.</li>
+      <li>Jens opined that, unless "character" is defined in such a way that
+          any benefits it offers over "scalar value" are made apparent, we
+          should avoid it.</li>
+      <li>PBrett disagreed.</li>
+      <li>Jens noted that the telecon was about to end and stated that it may
+          be useful to expand on that at a future telecon.</li>
+      <li>PBrett asked if more time should be dedicated to this topic.</li>
+      <li>Tom expressed support for more time as different perspectives suggest
+          we would benefit from increasing understanding.</li>
+      <li>Hubert noted that there will be a competing paper partially motivated
+          by a desire for the standard to remain abstract and not tied too
+          heavily to Unicode.</li>
+
+      <li>Hubert noted that the competing paper mentioned at the end of the last
+          telecon is partially motivated by a desire for the standard to remain
+          abstract and not tied too heavily to Unicode.</li>
+      <li><em>[ Editor's note: That paper would align the C++ standard with the
+          C standard model of extended characters.  It remains in draft status
+          pending CWG approval of
+          <a href="https://wg21.link/p2029">P2029</a>
+          due to wording dependencies. ]</em></li>
+      <li>Corentin expressed little interest in the distinction between
+          characters and scalar values; that character properties are what
+          matters.</li>
+      <li>Corentin added that LEWG will be backed up in C++23, so it is good to
+          focus on these core language issues now.</li>
+      <li>Mark agreed; this is fundamental work.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be in three weeks, on October 14th,
+      and that we'll probably start discussion with a review of recent updates
+      to
+      <a href="https://github.com/tzlaine/text">Boost.Text</a>,
+      and then continue discussion of this paper.</li>
+</ul>
+
+
+<h1 id="2020_10_14">October 14th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss migration from the Cpplang Slack workspace to another Slack
+      workspace or chat service.</li>
+  <li><a href="https://github.com/tzlaine/text">Boost.Text</a>:
+    <ul>
+      <li>Review changes made following the initial Boost review.</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194R0: The character set of C++ source code is Unicode</a>:
+    <ul>
+      <li>Continue discussion.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Nathan Baggs</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom asked for a volunteer to review
+      <a href="https://wg21.link/p1030r4">P1030R4</a>
+      for any new SG16 concerns.</li>
+  <li>Steve bravely volunteered to do so.</li>
+  <li>PBrett asked if CWG has a substantial backlog like LWG does.</li>
+  <li>Jens responded that CWG does not, that it is awaiting tentatively ready
+      papers from EWG, and continues to do issue processing.</li>
+  <li>Discuss migration from the Cpplang Slack workspace to another Slack
+      workspace or chat service:
+    <ul>
+      <li>Tom introduced the issue.  Concerns have been raised about governance
+          of the Cpplang Slack workspace, particularly with regard to enforcing
+          a code of conduct (CoC).  Several prominent SG16 members have
+          deactivated their accounts.  If conditions don't improve such that
+          those members are comfortable reactivating their accounts, we'll have
+          to migrate elsewhere.</li>
+      <li>Zach confirmed the situation and stated that the financier of the
+          workspace has no interest in moderation; a number of people have
+          reported issues without satisfactory resolution.</li>
+      <li>PBrett raised the option of not using a chat service for SG16 business
+          and indicated difficulty with use of Slack.</li>
+      <li>Steve stated that he is present on Slack regularly, but only monitors
+          a small handful of channels that have so far not attracted
+          problems.</li>
+      <li>Steve added that he is not concerned about migrating elsewhere, but
+          would like to retain an open channel.</li>
+      <li>Steve noted that the SG16 mailing list is open and has not attracted
+          problems.</li>
+      <li>Tom opined that use of a chat service has been helpful to build and
+          maintain cohesiveness among SG16 participants.</li>
+      <li>Jens stated that he has not used Slack, that the mailing list should
+          be the primary means of communication, and that the means of
+          communication should not exclude anyone.</li>
+      <li>PBrett mentioned that the
+          <a href="https://www.includecpp.org">#include&lt;c++&gt;</a>
+          community are investigating a collaboration system that requires
+          participants to be vouched for.</li>
+      <li>PBrett expressed a preference for a WG21 provided service with an
+          actively enforced CoC.</li>
+      <li>Corentin suggested that we wait to see if WG21 decides to offer such
+          a service.</li>
+      <li>Tom agreed and noted that discussion within WG21 is already
+          happening.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/tzlaine/text">Boost.Text</a> updates:
+    <ul>
+      <li>Zach provided an overview of the changes inspired by the Boost review:
+        <ul>
+          <li><em>[ Editor's note: The Boost review threads are available at
+              <a href="https://lists.boost.org/Archives/boost/2020/06/249242.php">https://lists.boost.org/Archives/boost/2020/06/249242.php</a>
+              and
+              <a href="https://lists.boost.org/Archives/boost/2020/08/249594.php">https://lists.boost.org/Archives/boost/2020/08/249594.php</a>.
+              ]</em></li>
+          <li>The string layer was removed.</li>
+          <li>Many of the previously concrete types are now templates.  For
+              example, <tt>text</tt> is now an alias of a <tt>basic_text</tt>
+              specialization analagous to <tt>std::string</tt> and
+              <tt>std::basic_string</tt>.</li>
+          <li><tt>basic_text</tt> is parameterized by Unicode normalization,
+              code unit type, and string container.</li>
+          <li><tt>text</tt> and <tt>text_view</tt> are NFC, UTF-8, use
+              <tt>char</tt> as the code unit type, and use
+              <tt>basic_string&lt;char&gt;</tt> as the string container.</li>
+          <li>More type deduction is done now.</li>
+          <li>Various usability improvements were made.</li>
+          <li>Interfaces are now constrained with C++ Concepts when compiling
+              as C++20.</li>
+          <li>A new algorithm was added to perform normalization during insert
+              and erase operations</li>
+          <li><tt>basic_text</tt> is an adapter over a string container; this
+              avoids allocator awareness while still allowing use of
+              allocators.</li>
+          <li>The <a href="https://unicode.org/reports/tr15/#Stream_Safe_Text_Format">stream-safe text format</a>
+              is now enforced.  This may result in truncation of extended
+              grapheme clusters (EGCs), but this is reasonable as there is no
+              technical reason for EGCs longer than the stream-safe text format
+              length.</li>
+        </ul>
+      </li>
+      <li>Tom asked how normalization on insert and erase works.</li>
+      <li>Zach responded that there is an algorithm to find the previous and
+          next stable code points and then normalize in between.</li>
+      <li>PBrett asked about the stream-safe text format and whether it can
+          lead to loss of information.</li>
+      <li>Zach responded that, yes, it can lead to silent loss of information,
+          but only in unrealistic scenarios; real text has no need for an EGC
+          to be longer than 30 scalar values.  The maximum EGC length for the
+          stream-safe text format was selected to enable use of statically
+          sized 128 byte buffers.  The longest known sequence of scalar values
+          needed for a real character is 18, but sequences of length 4 are more
+          common in actual text.  The stream-safe text format is part of the
+          Unicode standard.</li>
+      <li>PBrett asked about emoji compositions.</li>
+      <li>Zach replied that all defined emoji sequences are limited to 7 or 8
+          scalar values.</li>
+      <li>Steve asked about the use of C++ Concepts for range insert and join
+          operations, what constraints are placed on the operands, and whether
+          bidirectional iterators are required or whether forward iterators
+          suffice.</li>
+      <li>Zach replied that he tried to require only forward iterators, but
+          concluded that bidirectional or better is required for efficiency as
+          maintaining normalization requires look back.</li>
+      <li>Tom noted that maintaining normalization may require mutating scalar
+          values on either side of the operation as well.</li>
+      <li>Corentin returned to the stream-safe text format topic and stated his
+          understanding that emoji sequence can get longer than the 7 or 8
+          scalar values that Zack mentioned, but not longer than 18.
+          <a href="https://zalgo.org">Zalgo</a>
+          is impacted, but that is ok.  Not using the stream-safe text format
+          would be very expensive.</li>
+      <li>Zach added that the original purpose of the stream-safe text format
+          was to read a buffer, normalize it, then move on; normalization
+          occurs one EGC at a time.</li>
+      <li>Victor noted that one of the changes was to support encodings other
+          than UTF-8 and asked if the default would be
+          implementation-defined.</li>
+      <li>Zach replied that the parameterization is similar to
+          <tt>std::basic_string</tt>.  The default is NFC, UTF-8, and storage
+          via <tt>std::basic_string&lt;char&gt;</tt>.</li>
+      <li>Jens stated that a UTF-8 string literal yields an array of
+          <tt>char8_t</tt> and that <tt>std::string</tt> is a volabulary type
+          that appears in API boundaries; this interface may be unfriendly.</li>
+      <li>Zach replied that he was unconcerned about that mismatch.</li>
+      <li>Tom noted that <tt>std::string</tt> can not be expected to always
+          hold UTF-8.</li>
+      <li>Jens expressed a desire to avoid use of <tt>reinterpret_cast</tt>;
+          adopting <tt>char8_t</tt> may have been a mistake, or is something
+          that everything has to adapt to.</li>
+      <li>Steve stated that he sees UTF-8 data transported in
+          <tt>std::string</tt> frequently and problems occur when programmers
+          fail to track encoding; this doesn't make the situation worse.</li>
+      <li>Corentin opined that our direction should be that <tt>char</tt> is
+          used for the system encoding and <tt>char8_t</tt> is used for
+          UTF-8.</li>
+      <li>Corentin added that a magic compile-time function may be needed to
+          convert <tt>char8_t</tt> literals to <tt>char</tt>.</li>
+      <li>Tom asked about the use of separate template parameters for encoding
+          vs normalization and whether those could be combined so that
+          normalization is a property of the encoding.</li>
+      <li>Zach responded that the encoding is deduced by the size of the code
+          unit type.</li>
+      <li>Tom asked if Zack considered a single template parameter that
+          specifies encoding with associated normalization.</li>
+      <li>Zach responded that he did not; that the expectation is that users
+          will want to change just the normalization form.</li>
+      <li>PBrett asked what additional feedback Zack would like from SG16.</li>
+      <li>Zach requested participation in the next Boost review and that other
+          feedback is welcome, particularly with regard to defaults.</li>
+      <li>Zack added that any questions posed will be presented at the start of
+          the next Boost review.</li>
+      <li>Steve asked if the current code is aligned with these changes.</li>
+      <li>Zach responded yes, the
+          <a href="https://github.com/tzlaine/text">code on github</a>
+          is up to date.</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194R0: The character set of C++ source code is Unicode</a>:
+    <ul>
+      <li>PBrett presented:
+        <ul>
+          <li>The principle advantage of using Unicode to describe C++ lexing
+              and parsing is that it is the only system that can do so
+              comprehensively.</li>
+          <li>Unicode defines what a blank space character is and means.</li>
+          <li>Use of Unicode to describe the standard does not impose a
+              requirement that Unicode be used as the internal character set
+              for implementations.</li>
+          <li>Universal-character-name (UCN) reversal does not require support
+              for non-Unicode characters.  For example, an implementation that
+              uses UTF-32 as the internal character set could use an unused bit
+              to track characters that require UCN reversion.</li>
+          <li>Trigraphs are an alternative way to express a basic source
+              character and are supported by exploiting implementation-defined
+              behavior in translation phase 1.</li>
+        </ul>
+      </li>
+      <li>Tom noted two concerns that he would like to ensure the proposal
+          addresses:
+        <ul>
+          <li>That the described conversion accurately reflects existing
+              practice.</li>
+          <li>The core wording issue with reversion of UCNs; that there is no
+              lexical element to revert to.</li>
+        </ul>
+      </li>
+      <li>Jens stated that, from a core perspective, the UCN reversal is well
+          recognized as hand waving.</li>
+      <li>Jens noted that proper support for Unicode source files is still
+          relatively new in gcc.</li>
+      <li>Jens added that migration to a different character model that better
+          specifies behavior, perhaps in terms of Unicode code points would be
+          an improvment.</li>
+      <li>Corentin stated that he and Peter Brett will bring a paper proposing
+          to remove UCN introduction during translation phase 1.</li>
+      <li>Hubert stated that handling source characters as Unicode code points
+          is a transition closer to the C model.</li>
+      <li>Hubert suggested that unmapped characters may, perhaps, require
+          special handling in comments.</li>
+      <li>Hubert added that the UCN reversion is magic and that it effectively
+          matches the extended character model in a restricted form;
+          implementations use an extended character model.</li>
+      <li>PBrett expressed uncertainty as to how trigraphs, which are no longer
+          specified in the C++ standard, get involved here.</li>
+      <li>Jens stated that translation phase 1 being implementation-defined was
+          the compromise escape hatch that allows implementations to continue
+          to support trigraphs.</li>
+      <li>Tom mentioned that concerns about trigraphs may be due to his asking
+          how they are affected by UCN reversion.</li>
+      <li>PBrett noted that such concerns are effectively identical to cases of
+          the same abstract character being represented by potentially different
+          code points or code point sequences in the souce code as can happen
+          with rare cases in Shift-JIS.</li>
+      <li>PBrett added that he and Corentin feel strongly that the source
+          character set should not be observable by portable programs.</li>
+      <li>Hubert stated that no tax should be imposed on either the programmer
+          or the implementation if the source character set and execution
+          character set are the same; an implementation should not have to
+          perform character validation in such cases.</li>
+      <li>PBrett acknowledged and noted that the standard should not forbid
+          implementations to preserve values through translation.</li>
+      <li>Corentin stated that there are characters that are not representable
+          in Unicode, but such characters tend to be ones that are not
+          represented on computers at all, or not used in source files.</li>
+      <li>Jens stated that the relative effect on wording for a Unicode code
+          points vs extended character model is expected to be minimal.</li>
+      <li>Tom asked Jens if the character model he has in mind is incompatible
+          with what Peter and Corentin are proposing.</li>
+      <li>Jens responded that the distinction is effectively Unicode vs
+          Unicode+X.  But since unassigned code points can be specified in
+          UCNs, we're effectively going to end up with a Unicode+X model
+          regardless.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be October 28th and that we'll
+      continue discussion of P2194.</li>
+</ul>
+
+
+<h1 id="2020_10_28">October 28th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194R0: The character set of C++ source code is Unicode</a>
+    <ul>
+      <li>Continue discussion.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1885r3">P1885R3: Naming Text Encodings to Demystify Them</a>
+    <ul>
+      <li>Review updates since the
+          <a href="https://wiki.edg.com/bin/view/Wg21prague/SG16D1885R2">review of D1885R2 in Prague</a>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom provided an update on the possibility of a WG21 hosted chat service.
+    <ul>
+      <li>Discussion at the recent pre-meeting administrative telecon ended
+          with an action item for Tom to submit a paper to be reviewed and
+          discussed at a to-be-scheduled administrative telecon.</li>
+    </ul>
+  </li>
+  <li>Tom announced that we'll discuss
+      <a href="https://wg21.link/p2093">P2093: Formatted Output</a>
+      at our next telecon assuming we complete review of
+      <a href="https://wg21.link/p1885r3">P1885R3: Naming Text Encodings to Demystify Them</a>.</li>
+  <li><a href="https://isocpp.org/files/papers/P2194R0.pdf">P2194R0: The character set of C++ source code is Unicode</a>:
+    <ul>
+      <li>PBrett introduced:
+        <ul>
+          <li>Continuing discussion from prior telecons; we need to follow up
+              with regard to how important it is that all inputs be mappable to
+              Unicode scalar values.</li>
+          <li>This is not a proposal to require use of Unicode scalar values as
+              the internal encoding; rather, that the observable behavior be
+              as-if the implementation used a Unicode encoding internally.
+              This approach eases specification.</li>
+          <li>Arguments of "someone might do some crazy thing" are not
+              persuasive.</li>
+        </ul>
+      </li>
+      <li>Hubert suggested there isn't actually significant opposition to this
+          view; it was pointed out during the last meeting that the wording
+          differences would be minimal.</li>
+      <li>Hubert added that the key difference is the addition of a restriction;
+          that all characters be mappable through the Unicode code space.</li>
+      <li>PBrett agreed and noted that much of the current specification is
+          already described in terms of Unicode.</li>
+      <li>Tom asked to what degree existing implementations reflect adherence to
+          a Unicode-only model.</li>
+      <li>PBrett responded that the paper's "Current implementation practice"
+          section notes that most existing implementations use UTF-8 as the
+          internal encoding, but that IBM's xlC for z/OS and EDG are exceptions
+          that use EBCDIC and ASCII based code pages instead.</li>
+      <li>PBrett added that Clang on z/OS uses UTF-8 as the internal encoding
+          and converts source files from EBCDIC when they are read.</li>
+      <li>Hubert clarified that Clang on z/OS only supports the IBM-1047
+          character set.</li>
+      <li>Hubert added that there has been consideration for use of
+          <tt>iconv</tt> to convert source files, but there are concerns about
+          encoding names not being portable.</li>
+      <li>PBrett added that gcc can also be built to use UTF-EBCDIC as its
+          internal encoding.</li>
+      <li>PBrett returned to Tom's original question and stated that EDG and
+          IBM's xlC are the only implementations that do not use a Unicode
+          encoding as the internal encoding, but the difference is not
+          observable.</li>
+      <li>Tom asked if a universal-character-name (UCN) that names an unassigned
+          character still constitutes a Unicode scalar value.</li>
+      <li>Jens responded that it does; Unicode scalar values include all valid
+          Unicode code points except for the surrogate code points used for
+          UTF-16.</li>
+      <li>Tom stated that, at our last telecon, Hubert asserted that
+          implementations should not be required to diagnose invalid characters
+          in string literals, at least not when the source file encoding matches
+          the execution encoding.</li>
+      <li>Jens noted that such a diagnostic only requires a simple range
+          check.</li>
+      <li>PBrett brought up prior discussions regarding source files containing
+          ill-formed code unit sequences.</li>
+      <li>Tom opined that that concern does not fall under the scope of this
+          paper.</li>
+      <li>PBrett replied that it is relevant for the scenario where ill-formed
+          code unit sequences are present in string literals and where the
+          implementation copies the code units.</li>
+      <li>PBrett added that this only seems to occur in mojibake scenarios; when
+          compiling ISO-8859-1 encoded source files as UTF-8 for example.</li>
+      <li>Steve stated that it is preferable to use explicit escape sequences
+          when ill-formed code unit sequences are actually desired than to rely
+          on the implementation failing to diagnose such sequences.</li>
+      <li>PBrett agreed and noted that such cases are now being found in
+          projects he works on due to increased use of tools that expect UTF-8
+          and diagnose an ISO-8859-1 encoded copyright symbol as an ill-formed
+          code unit sequence.</li>
+      <li>PBrett added that these projects are migrating source files to UTF-8
+          in response.</li>
+      <li>Tom asked where we stand as a group on this paper.</li>
+      <li>Jens provided a summary of the three UCN models described in the C99
+          rationale.  WG21 chose model A for C++, WG14 chose model B for C.</li>
+      <li>[ <em>Editor's note: The referenced
+          <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/C99RationaleV5.10.pdf">"C99 rationale" document</a>,
+          in section 5.2.1, subsection "UCN models", states:</em>
+          <div style="padding: .5em; background: #E9FBE9">
+          Once this was adopted, there was still one problem, how to specify
+          UCNs in the Standard.  Both the C and C++ committees studied this
+          situation and the available solutions, and drafted three models:<br/>
+            <div style="padding: .5em; background: #E9FBE9">
+            A. Convert everything to UCNs in basic source characters as soon as
+            possible, that is, in translation phase 1.<br/>
+            B. Use native encodings where possible, UCNs otherwise.<br/>
+            C. Convert everything to wide characters as soon as possible using
+            an internal encoding that encompasses the entire source character
+            set and all UCNs.<br/>
+            </div>
+          Furthermore, in any place where a program could tell which model was
+          being used, the standard should try to label those corner cases as
+          undefined behavior.
+          </div>
+          ]
+      </li>
+      <li>Jens stated that, in the C++ model, after translation phase 1, all
+          source input is described in terms of the basic source character set;
+          this model is supposed to be indistinguishable from the other models,
+          but is not because only Unicode scalar values may be representable.
+          This is arguably a defect of the model.</li>
+      <li>Jens noted that the other models allow extended characters.</li>
+      <li>Jens expressed agreement with moving away from the current model as it
+          produces more specification issues, at least in part due to confusion
+          with explicit UCNs, than a model based on code points or scalar values
+          would.</li>
+      <li>PBrett noted that implementations convert explicit UCNs lazily.</li>
+      <li>Jens expressed support for requiring that compilers be able to
+          represent all Unicode scalar values with support for extended
+          characters; this would suffice to avoid cases of accidental UCN
+          formation by token pasting.</li>
+      <li>Jens expressed skepticism regarding being able to meaningfully
+          prohibit edge cases like distinct Shift-JIS characters that map to
+          the same Unicode character, but this could be acknowledged.</li>
+      <li>Hubert stated that Unicode suffices for round tripping of almost all
+          characters; exceptions are mostly theoretical.  An implementation can
+          map such characters to code points in the Unicode Private Use Area
+          (PUA) to support round-tripping of such special cases if desired; this
+          is a QoI issue.</li>
+      <li>Hubert added that another choice would be to make such cases
+          explicitly ill-formed thereby requiring a diagnostic warning of
+          non-portable code.</li>
+      <li>PBrett opined that the standard should not normatively acknowledge a
+          Unicode+X model; implementations can still offer extensions.</li>
+      <li>Jens asked Hubert, as an authoritative source of requirements for
+          EBCDIC-based implementations, whether a Unicode+X model in the
+          standard is required, perhaps for control characters that are not
+          semantics preserving in Unicode.</li>
+      <li>Hubert replied that the status quo is that semantics in terms of how
+          the character is written are not preserved.</li>
+      <li>Steve noted that some programmer somewhere will therefore be relying
+          on that.</li>
+      <li>Jens asked Hubert if a Unicode-only model is a concern for his
+          implementations.</li>
+      <li>Hubert replied that he does not believe it to be problematic; there is
+          a mapping to Unicode from almost every character and for any special
+          cases, there is an escape hatch via translation phase 1.</li>
+      <li>Tom stated that he has now been persuaded that a Unicode+X model is
+          not necessary for legacy code and that a diagnostic for non-portable
+          code is desirable.</li>
+      <li>PBrett stated that the unobservability of the encoding of the source
+          code is an important principle.</li>
+      <li>Mark reflected on the past two years and how our thoughts regarding
+          how to write simpler libraries have lead us to this conclusion.</li>
+      <li>Steve added that our prior discussions regarding character and string
+          literals encountered challenges with the translation phases; the
+          current wording made it challenging to talk about such concerns.</li>
+      <li>Jens stated that the last time we took away latitude in the standard
+          was when we standardized on 2s-complement; research conducted found
+          that there were no modern machines that were not 2s-complement.</li>
+      <li>Jens added that, assuming we have sufficiently scrutinized the
+          concerns here, and we have Hubert here to argue for one of the outlier
+          platforms, it would still be nice to have more input from other
+          implementors.</li>
+      <li>PBrett responded that there is no intention to remove behavioral
+          lattitude here.</li>
+      <li>Jens stated that he finds the mapping of control characters to
+          something that isn't semantics preserving in EBCDIC concerning, but
+          if Hubert is ok with it, then he trusts that it is not a problem in
+          practice.</li>
+      <li>Hubert responded that the wording presented continues to allow both
+          models.</li>
+      <li>PBrett elaborated; there exists a mapping from EBCDIC to Unicode and
+          it is indistinguishable whether the input was mapped to Unicode and
+          then magically reverted.</li>
+      <li>Hubert noted that this model does not permit different behavior for a
+          physical character vs use of a UCN.</li>
+      <li>Tom replied that, per previous discussion, an implementation can
+          differentiate behavior there as if it had mapped the character through
+          the PUA; a programmer could encode a PUA character using a UCN.</li>
+      <li>PBrett added that an escape sequence could also be used.</li>
+      <li>Hubert stated that previous discussion raised concerns that had rather
+          weak arguments and suggested that the paper could be revised to
+          deemphasize those concerns.</li>
+      <li>PBrett responded that this is a defensive paper written with the goal
+          of defending the status quo.</li>
+      <li>Tom stated that his impression had been that this paper would move in
+          the direction of removing the introduction of implicit UCNs in
+          translation phase 1.</li>
+      <li>PBrett replied that that would be a different paper; perhaps the one
+          Jens has in mind.</li>
+      <li>Jens stated that that paper still awaits
+          <a href="https://wg21.link/p2029">P2029</a>
+          adoption in the standard.</li>
+      <li>Hubert suggested a goal; we want to affirm this paper as a way of
+          ensuring the portability of source code across environments.</li>
+      <li>Hubert added that characters that don't map to Unicode are mostly
+          theoretical and not of practical significance.</li>
+      <li>Hubert stated that the last point we need to address is preservation
+          of the potentially non-semantics preserving behavior of translation
+          phase 1.</li>
+      <li>PBrett countered that he and Corentin want to ensure that, if a source
+          file is encoded as UTF-8, that semantics are preserved.</li>
+      <li>PBrett added that there isn't really a future for this paper;  The
+          next direction would be a paper to remove implicit introduction of
+          UCNs.</li>
+      <li>Jens noted that the status quo is that the standard does not directly
+          support characters outside of Unicode today and that it would be
+          helpful to reaffirm that the status quo is sufficient for EBCDIC; that
+          would leave us just needing motivation sufficient for changing the
+          translation description in the standard.</li>
+      <li>Jens added that he would like to have a poll that we are happy to
+          transition to a model specified in terms of Unicode scalar
+          values.</li>
+      <li>Hubert expressed support for that poll.</li>
+      <li>Tom asked for a summary of what we consider to be the motivation for
+          changing the model in the standard.</li>
+      <li>Jens replied that most implementations use the extended character
+          model internally; switching from the UCN model to the Unicode scalar
+          value model better reflects implementation practice and avoids some
+          of the specification issues that arise with the UCN model.</li>
+      <li>PBrett asked if this change would be evolutionary given that no
+          implementations would be affected.</li>
+      <li>Jens replied that it may not be, but that EWG would likely prefer to
+          discuss it.</li>
+      <li>Hubert noted that there may be implementation impact because the move
+          away from implicit UCNs may make some behavior well-defined that is
+          currently undefined behavior.</li>
+      <li><b>Poll: The model of description in the C++ language standard should
+          be switched from basic source character set + UCNs to Unicode scalar
+          values.</b>
+        <ul>
+          <li>Mark clarified that a vote in favor is a vote for implementation
+              divergence.</li>
+          <li><b>Attendees: 8</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li>Consensus is in favor.</li>
+        </ul>
+      </li>
+      <li>Hubert raised a question of when explicitly written UCNs are
+          translated.</li>
+      <li>Jens acknowledged that as a concern; we'll need to determine what the
+          status quo is and what behavior is desired.</li>
+      <li>Hubert added that we'll need to determine whether it makes sense to
+          preserve undefined behavior in existing cases.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be November 11th.</li>
+</ul>
+
+
+<h1 id="2020_11_11">November 11th, 2020</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1885r3">P1885R3: Naming Text Encodings to Demystify Them</a>:
+    <ul>
+      <li>Review updates since the
+          <a href="https://wiki.edg.com/bin/view/Wg21prague/SG16D1885R2">review of D1885R2 in Prague</a>.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2093r2">P2093R2: Formatted output</a></li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Nathan Baggs</li>
+  <li>Jens Maurer</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom announced that Peter Brett has agreed to take the role of assistant
+      chair for SG16.
+    <ul>
+      <li>Herb requested that all WG and SG chairs nominate someone to act as
+          an assistant chair.</li>
+      <li>Peter Brett volunteered to do so.</li>
+      <li>The new roles have not been communicated to all of WG21 yet.
+      <li>Should anyone have any concerns or questions, please let Tom
+          know.</li>
+      <li>Thank you Peter!</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p1885r3">P1885R3: Naming Text Encodings to Demystify Them</a>:
+    <ul>
+      <li>Tom provided a brief introduction:
+        <ul>
+          <li>We last looked at this paper in Prague and approved it pending
+              some additional research that Corentin agreed to do.</li>
+          <li>Corentin completed that research and the updates are present in
+              R3.</li>
+          <li>The purpose of today's review is to review those updates; not to
+              revisit the proposed design.</li>
+        </ul>
+      </li>
+      <li>Corentin provided a summary of the updates.
+        <ul>
+          <li>Lists of encodings supported by several text facilities and other
+              specifications were added.</li>
+          <li>These lists identify some encodings that are not registered with
+              the IANA registry.</li>
+          <li>Lists of known encodings not registered with the IANA registry are
+              present in annex B.</li>
+          <li>No other registry is more comprehensive than the IANA
+              registry.</li>
+          <li>The
+              <a href="https://encoding.spec.whatwg.org">WhatWG Encoding standard</a>
+              contains a
+              <a href="https://encoding.spec.whatwg.org/#legacy-single-byte-encodings">list of encodings</a>
+              that continue to be encountered by browser and non-browser user
+              agents on the web; each of these encodings is registered with the
+              IANA DB.</li>
+        </ul>
+      </li>
+      <li>PBrett asked if the primary use case for the paper is detection of
+          the literal and system encodings.</li>
+      <li>Corentin confirmed that is the primary motivating use case.</li>
+      <li>PBrett noted that the proposal goes to a fair amount of effort to be
+          comprehensive in this respect.</li>
+      <li>Corentin acknowledged and stated that the proposal is motivated by
+          requirements to cope with legacy environments; if a magic wand could
+          be waved to make those requirements disappear, then waving it would be
+          a better use of our time.</li>
+      <li>Corentin added that SG16 is confident that legacy encodings will
+          continue to be relevant for many years.</li>
+      <li>Corentin summarized the goals of providing a comprehensive list of
+          encodings:
+        <ul>
+          <li>To ensure portability across implementations.</li>
+          <li>To avoid WG21 having to determine which legacy encodings are and
+              are not important.</li>
+        </ul>
+      </li>
+      <li>Steve agreed with the primary goals as stated by Peter and Corentin,
+          but added that this functionality would be useful for general I/O
+          interfaces.</li>
+      <li>Steve provided an exmaple; he works on a product that integrates with
+          email services and has to deal with email that is encoded in a variety
+          of legacy encodings in addition to UTF-8.</li>
+      <li>Steve noted that they could limit support to only those encodings that
+          are on the WhatWG list.</li>
+      <li>Steve added that the WhatWG list is a closed list and that it will not
+          be extended.</li>
+      <li>Corentin noted that the WhatWG list is a subset of the IANA list, but
+          the reverse is not.</li>
+      <li>Corentin added that the IANA registry may be extended later, though it
+          has not been updated since 2004.</li>
+      <li>Tom stated that another potential use case is for JeanHeyd's
+          transcoding work.</li>
+      <li>Jens noted that the proposed feature does not expose which encodings
+          are and are not in the WhatWG encoding standard.</li>
+      <li>Jens suggested that, if there are uncertainties with regard to fit for
+          other uses, that the design could be scaled down so that it only
+          exposes the literal and system encodings.  When standardizing an
+          interface for dealing with endianness, a minimal approach was taken
+          and that side-stepped design discussions.</li>
+      <li>Corentin asked Steve if he would like to have an interface that
+          exposes which encodings are and are not included in the WhatWG
+          encoding standard.</li>
+      <li>Steve replied that he has a need to be able to communicate and set
+          expectations and added that it would not be terrible if the ability
+          to consume additional encodings was added accidentally, but that there
+          is a need to ensure output is not produced in encodings other than
+          UTF-8 and UTF-16.</li>
+      <li>Steve added that he doesn't know if he has a good use case for being
+          able to query which encodings are blessed by the WhatWG encoding
+          standard and expressed uncertainty whether such programmatic support
+          would be useful.</li>
+      <li>Corentin stated that the design is the way it is so that encodings
+          that are not known to a given system can still be named.</li>
+      <li>Corentin expressed a preference for waiting to scale the feature down
+          pending feedback from LEWG.</li>
+      <li>Corentin noted that he still has feedback from Tom and the LEWG
+          mailing list to address.</li>
+      <li>PBrett requested that a revision of the paper also address the
+          potential ABI impact if a new encoding were to be added to the IANA
+          registry; WTF-8 for example.</li>
+      <li>Corentin replied that the ABI point to be addressed is the size and
+          underlying type of the enumeration and agreed to amend the paper.</li>
+      <li>Steve noted that string literals in headers are subject to ODR IFNDR
+          concerns if included in TUs that are compiled with different encoding
+          options and then linked together; this concern presumably applies to
+          querying the literal encoding as well.</li>
+      <li>Tom asked Corentin if he had come across the
+          <a href="https://icu4c-demos.unicode.org/icu-bin/convexp">ICU converter explorer</a>
+          while researching encodings that were not present in the IANA registry
+          and provided a link to
+          <a href="https://icu4c-demos.unicode.org/icu-bin/convexp?s=IBM&s=IANA">https://icu4c-demos.unicode.org/icu-bin/convexp?s=IBM&s=IANA</a>;
+          this facility can identify encodings that are known to ICU, but are
+          not present in the IANA registry.</li>
+      <li>Corentin replied that he had heard of it and generally understands
+          that ICU has support for many encodings.</li>
+      <li>Tom pointed out that the ICU converter explorer also reveals aliases
+          that are not present in the IANA registry.</li>
+      <li>Corentin replied that he is uncertain how important support for such
+          aliases is.</li>
+      <li>Zach asked if the paper has already been reviewed by LEWG.</li>
+      <li>Corentin replied that LEWG has initiated a mailing list review, but
+          that there has not been much feedback regarding desire for the feature
+          yet.</li>
+      <li>Tom noted that Victor expressed strong support for it on the mailing
+          list.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2093r2">P2093R2: Formatted output</a>:
+    <ul>
+      <li>Victor presented:
+        <ul>
+          <li>The goal is to integrate <tt>std::format</tt> directly with I/O in
+              order to provide an alternative to <tt>std::cout</tt>,
+              <tt>std::printf</tt>, and <tt>std::fputs</tt> that uses the
+              <tt>std::format</tt> syntax.</li>
+          <li>The naming and interface are inspired by other languages.</li>
+          <li>The ability is provided to print via C streams (e.g.,
+              <tt>stdout</tt>) or C++ streams (e.g., <tt>std::cout</tt>).</li>
+          <li>There are multiple options for printing a newline; the most
+              flexibile option is to allow the programmer to specify the newline
+              sequence themselves.</li>
+          <li>C++ iostreams doesn't work as expected with UTF-8 now, especially
+              when printing to the Windows onsole.</li>
+          <li>On Windows, the run-time locale and terminal character set are
+              distinct and separately managed in practice.</li>
+          <li>The reference implementation works portably on Windows and POSIX
+              systems and does not require compilation with the Visual C++
+              <tt>/utf-8</tt> option.</li>
+          <li>The reference implementation has the performance benefits noted in
+              <a href="https://wg21.link/p0645">P0645</a>
+              and outperforms both <tt>std::printf</tt> and
+              <tt>std::cout</tt>.</li>
+          <li>The output that is produced is locale independent by default.</li>
+          <li>There is no global or shared formatting state to manage.</li>
+          <li>The binary size of calls is reduced through use of type erasure;
+              <tt>std::printf</tt> without error handling is slightly smaller
+              than the proposed <tt>std::print</tt>.</li>
+        </ul>
+      </li>
+      <li>Jens asked if synchronization with C streams was disabled via
+          <tt>std::ios_base::sync_with_stdio()</tt> when testing
+          performance.</li>
+      <li>Victor confirmed that it was.</li>
+      <li>Jens asked why the performance results are an order of magnitude
+          worse on Windows.</li>
+      <li>Victor replied that testing was on a different machine running in a
+          VM.</li>
+      <li>Corentin expressed strong support for the feature.</li>
+      <li>Zach echoed that support.</li>
+      <li>Zach stated that he found the proposed <tt>std::println</tt> a little
+          odd.  From a LEWG perspective, the newline handling is unclear for
+          <tt>std::print(stdout, ...)</tt> vs <tt>std::print(cout, ...)</tt>.
+          From an SG16 perspective, it is unclear what a newline is at all.</li>
+      <li>Zach suggested leaving it to the programmer to specify the kind of
+          newline they want.</li>
+      <li>Tom noted that the streams themselves are typically involved in
+          formatting newlines and asked Zach if stream determined newline
+          sequences addresses his concern.</li>
+      <li>Zach replied that it does not and that he would prefer to change the
+          default behavior for <tt>std::print</tt> to be to write to
+          <tt>std::stdout</tt> and to remove <tt>std::println</tt>.</li>
+      <li>Corentin professed support for <tt>std::println</tt> as a means to
+          avoid concerns over what kind of newline sequence to use.</li>
+      <li>Steve noted that differences between <tt>std::println</tt> and
+          <tt>std::print</tt> will be encountered when programmers are learning
+          these interfaces; just as the difference between printing of a
+          newline differs for <tt>std::puts</tt> vs <tt>std::fputs</tt>.</li>
+      <li>Steve expressed uncertainty regarding any additional value provided
+          by <tt>std::println</tt>.</li>
+      <li>Jens stated that there are two orthogonal features in the proposal
+          that he would prefer to see separated if possible.
+        <ul>
+          <li>1: Use of the <tt>std::format</tt> machinery to avoid need for
+              temporary strings as would be returned by calls to
+              <tt>std::format</tt>.</li>
+          <li>2: <tt>std::print</tt> is encoding aware in a way that
+              <tt>std::format</tt> is not.</li>
+        </ul>
+      </li>
+      <li>Jens noted that this feature appears to be focussed on terminals and
+          that use of terminals is on the decline.</li>
+      <li>Victor disagreed that <tt>std::print</tt> is a terminal facility since
+          it can also be used to write to a file; in which case, it will still
+          use the right encoding.</li>
+      <li>Victor also disagreed that use of terminals is on a decline.</li>
+      <li>Jens clarified that he does not wish to see these feature dropped from
+          the proposal, but rather separated; though it isn't necessarily clear
+          how a separated transcoding facility would work.</li>
+      <li>Jens expressed surprise regarding use of the C <tt>FILE*</tt> streams
+          over <tt>std::streambuf</tt>.</li>
+      <li>Steve replied that locale information is associated with
+          <tt>std::streambuf</tt> and that it manipulates data in the
+          stream.</li>
+      <li>Tom confirmed that the <tt>std::codecvt</tt> facet is attached via
+          <tt>std::streambuf</tt>.</li>
+      <li>Jens observed that that is a broken design.</li>
+      <li>Steve agreed and noted that the saving grace is that most programmers
+          avoid doing terrible things.</li>
+      <li>PBrett expressed concern over handling of locales.  In the
+          <tt>std::cout &lt;&lt; std::format(...)</tt> example, adding
+          <tt>L</tt> to a format specifier will enable localized output using
+          the global locale.  Doing similarly with <tt>std::print</tt> would,
+          by default, use <tt>std::stdout</tt> and the global locale rather
+          than <tt>std::cout</tt> and its associated locale.</li>
+      <li>PBrett expressed support for use of <tt>std::print</tt> with an
+          explicit stream such that it uses the locale imbued in the stream and
+          for dropping support for a default stream.</li>
+      <li>Victor pointed out that the <tt>std::format</tt> and
+          <tt>std::print</tt> examples are consistent; the global locale is
+          used in each case.</li>
+      <li>Victor noted that it is possible to pass a <tt>std::ostream</tt> to
+          <tt>std::print</tt> and have its locale be used; LEWG has already
+          expressed support for that approach.</li>
+      <li>Victor added that <tt>std::cout</tt> has global state and therefore
+          all the same problems as use of a global locale.</li>
+      <li>PBrett stated that, if <tt>std::print</tt> is specified to use a
+          default stream, that he would prefer it to use the locale imbued in
+          <tt>std::cout</tt> rather than the global locale.</li>
+      <li>PBrett noted that having to pass or query a <tt>std::ostream</tt>
+          would bring back performance concerns, but that is also the desired
+          behavior, so the performance improvements as presented are not
+          particularly compelling.</li>
+      <li>Jens noted that having synchronous I/O disabled will cause
+          interleaving issues, so that does not reflect normal practice and
+          distorts the performance improvements as presented.</li>
+      <li>Victor noted that it is pretty uncommon to use <tt>std::cout</tt>
+          for locale related purposes and stated that new tutorials for
+          <tt>std::print</tt> could teach correct usage.</li>
+      <li>Victor expressed a preference to not sacrifice performance for
+          corner cases.</li>
+      <li>Jens disagreed that this represents a corner case.</li>
+      <li>Corentin requested an interface that allows just passing a
+          locale.</li>
+    </ul>
+  </li>
+  <li>Tom stated that our next regularly scheduled telecon would be the week of
+      Thanksgiving in the US, so we'll skip that week and the next telecon will
+      be held in four weeks on December 9th.  Similarly, the telecon after that
+      one  will be skipped due to Christmas leaving us meeting again on January
+      13th.</li>
+</ul>
+
+
+</body>
