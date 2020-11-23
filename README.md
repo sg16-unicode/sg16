@@ -18,6 +18,7 @@ The following sections list papers and projects currently under our purview.  Ad
 WG Number     | Title/Notes/Links
 ------------- | -----
 \<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
+[P2246][]     | Character encoding of diagnostic text
 [P2201][]     | Mixed string literal concatenation
 [P2194][]     | The character set of C++ source code is Unicode
 [P2178][]     | Misc lexing and string handling improvements
@@ -67,20 +68,24 @@ WG Number     | Title/Notes/Links
 
 WG Number     | Status      | Title/Notes/Links
 ------------- | ------      | -----
+[N2595][]     |             | Restartable and Non-Restartable Functions for Efficient Character Conversions | r4<br/>(Previously [N2431][N2431 (R0)], [N2440][N2440 (R1)], and [N2500][N2500 (R2)])
 [N2594][]     |             | Mixed Wide String Literal Concatenation
-[N2500][]     |             | Restartable and Non-Restartable Functions for Efficient Character Conversions, r2
 [N2231][]     |             | char8\_t: A type for UTF-8 characters and strings
 
 ## Inactive Papers
 
 WG Number     | Title/Notes/Links
 ------------- | -----
-~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superceded by [N2500][])
+~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superceded by [N2440][])
+~~[N2440][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions | r1~~<br/>(Superceded by [N2500][])
+~~[N2500][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions | r2~~<br/>(Superceded by [N2595][])
 
+[N2595]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2595.pdf
 [N2594]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2594.htm
 [N2500]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2500.pdf
 [N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
+[P2246]: https://wg21.link/p2246
 [P2201]: https://wg21.link/p2201
 [P2194]: https://wg21.link/p2194
 [P2178]: https://wg21.link/p2178
