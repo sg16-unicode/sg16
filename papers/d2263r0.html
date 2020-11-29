@@ -1,0 +1,335 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+
+<title>
+A call for a WG21 managed chat service
+</title>
+
+<style type="text/css">
+
+body {
+    max-width: 1600px;
+}
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+
+table#references th,
+table#references td
+{
+    vertical-align: top;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>D2263R0 <em>Draft</em></td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2020-11-29</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>WG21</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>
+A call for a WG21 managed chat service
+</h1>
+
+<ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#motivation">Motivation</a></li>
+  <li><a href="#requirements">Requirements</a>
+    <ul>
+      <li><a href="#req_client">Client Requirements</a></li>
+      <li><a href="#req_admin">Administrative Requirements</a></li>
+    </ul>
+  </li>
+  <li><a href="#proposal">Proposal</a></li>
+  <li><a href="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#references">References</a></li>
+</ul>
+
+
+<h1 id="introduction">Introduction</h1>
+
+<p>
+WG21 has historically used two distinct chat services.
+IRC channels hosted on
+<a href="https://freenode.net">freenode</a>
+have long been used for coordination between rooms and meeting attendees at
+face to face meetings.
+In more recent times, channels on the
+<a href="https://cpplang.slack.com">Cpplang</a>
+Slack workspace funded by
+<a href="https://cppalliance.org">The C++ Alliance</a>
+have been used by WG21 work groups (WGs) and study groups (SGs) for informal
+collaboration between meetings and for coordination at face to face meetings.
+Neither of these services is maintained by WG21 adminstrators, nor are they
+moderated in accordance with the
+<a title="SD-4: WG21 Practices and Procedures"
+   href="https://isocpp.org/std/standing-documents/sd-4-wg21-practices-and-procedures#code-of-conduct">
+   WG21 code of conduct</a><sup><a title="SD-4: WG21 Practices and Procedures"
+                                   href="#ref_wg21_coc">[WG21_COC]</a></sup>,
+<a title="ISO Code of Conduct for the technical work"
+   href="https://www.iso.org/publication/PUB100397.html">
+   ISO code of conduct</a><sup><a title="ISO Code of Conduct for the technical work"
+                                  href="#ref_iso_coc">[ISO_COC]</a></sup>,
+or the
+<a title="IEC code of conduct for delegates and experts"
+   href="https://basecamp.iec.ch/download/iec-code-of-conduct-for-delegates-and-experts">
+   IEC code of conduct</a><sup><a title="IEC code of conduct for delegates and experts"
+                                  href="#ref_iec_coc">[IEC_COC]</a></sup>.
+The possibility of a WG21 managed chat service was raised during the
+<a title="WG21 Pre-Autumn 2020 telecon minutes"
+   href="https://wg21.link/n4871">
+   Autumn 2020 pre-meeting telecon</a><sup><a title="WG21 Pre-Autumn 2020 telecon minutes"
+                                              href="#ref_wg21_n4871">[WG21_N4871]</a></sup>
+and Tom Honermann was directed to submit a paper to be discussed at a future
+administrative telecon.
+Contained herein is a proposal to establish a WG21 sponsored and maintained
+chat service governed under existing WG21 practices and procedures to be used
+for informal discussion within WGs and SGs, and for coordination at face to face
+meetings.
+</p>
+
+
+<h1 id="motivation">Motivation</h1>
+
+<p>
+Slack has been a useful resource within SG16 for collaboration, informal sharing
+of ideas and news, and discussion of controversial topics.
+The author of this paper believes such use has been instrumental in creating
+unity, engagement, and cohesiveness within the group.
+Slack has also been used by SG15, and continues to be used by many WG21 members
+for language and library design discussions of C++ features such as ranges and
+concepts.
+</p>
+
+<p>
+Concerns over the lack of enforcement of a code of conduct (CoC) within the
+<a href="https://cpplang.slack.com">Cpplang</a>
+Slack workspace has prompted several prominent SG16 attendees to deactivate
+their accounts.
+SG16 is now in the position of having to migrate to a new chat service in
+order to restore the vibrant participation that was enjoyed previously;
+discussion on the SG16 Slack channel has dropped precipitously since these
+deactivations occurred.
+While several options are available, a WG21 managed service that requires
+compliance with the WG21 CoC is preferred.
+</p>
+
+<p>
+A WG21 managed service would address the current adhoc use of both IRC and Slack
+during face to face meetings thereby simplifying collaboration.
+New attendees at face to face meetings that feel intimidated by the prospect of
+voicing their ideas and concerns in front of a room full of experts may feel
+more comfortable asking for clarification, elaboration, or confirmation of their
+thoughts on a chat service before speaking up; a common chat service may help to
+facilitate increased participation by new attendees.
+Since both IRC and Slack are open to people that are not committee members, use
+of a WG21 managed service might help to reduce the possibility of unintended
+information leaks during face to face meetings.
+A discussion on the committee chairs mailing list suggested that at leat two
+WGs and several SGs would make use of a WG21 managed service if provided.
+</p>
+
+
+<h1 id="requirements">Requirements</h1>
+
+<p>
+The following features are requirements to be used for evaluation of proposed
+solutions.
+Those listed with <b>(M)</b> are mandatory features that must be provided
+in order for a solution to be considered viable.
+Those listed with <b>(A)</b> are advantageous features that may be helpful to
+select from a set of viable solutions.
+</p>
+
+
+<h2 id="req_client">Client Requirements</h2>
+
+<p>
+<ul>
+  <li><b>(M)</b> Desktop: Linux, macOS, Windows</li>
+  <li><b>(M)</b> Mobile: Android, iOS</li>
+  <li><b>(M)</b> Browser: Chrome, Edge, Firefox, Safari</li>
+  <li><b>(M)</b> Accessibility features for those with physical or visual
+                 impairments (e.g., works with common screen readers).
+  </li>
+  <li><b>(A)</b> Support for browsers that have Javascript disabled.</li>
+  <li><b>(A)</b> Support for encrypted communications.</li>
+  <li><b>(A)</b> IRC bridge.</li>
+  <li><b>(A)</b> Custom emoji support.</li>
+</ul>
+</p>
+
+
+<h2 id="req_admin">Administrative Requirements</h2>
+
+<p>
+<ul>
+  <li><b>(M)</b> Product cost must fit within WG21's budget.</li>
+  <li><b>(M)</b> Maintenance and administrative overhead must be manageable
+                 for the WG21 system administrator.</li>
+  <li><b>(A)</b> Integration with the account management system used for
+                 <a href="https://isocpp.org/papers">isocpp.org/papers</a>,
+                 the WG21 calendar service,
+                 the recently added electronic polling service,
+                 and/or the mailing lists.
+  </li>
+  <li>Moderation capabilities:
+    <ul>
+      <li><b>(M)</b> Per-channel moderation delegation.</li>
+      <li><b>(M)</b> Per-channel blocking of users by moderators.</li>
+      <li><b>(M)</b> Deletion of comments that are perceived to be offensive
+                     or to violate the WG21 CoC by moderators.</li>
+      <li><b>(M)</b> History or logging (to enable review of alleged CoC
+                     violations).</li>
+      <li><b>(A)</b> In-app reporting of CoC violations by users.</li>
+    </ul>
+  </li>
+  <li><b>(A)</b> Administratively defined channels and the ability to
+                 prohibit adhoc channels and/or private channels.</li>
+  <li>Bot capabilities:
+    <ul>
+      <li><b>(A)</b> Paper reference elaboration like <tt>npaperbot</tt> on
+                     Slack; a bot that observes text like <tt>[P1000]</tt> and
+                     responds with a link to the paper and the paper title,
+                     author, and date.
+      </li>
+      <li><b>(A)</b> CoC assistant; a bot that observes and reports use of
+                     offensive language that may violate the CoC.
+      </li>
+    </ul>
+  </li>
+  <li><b>(A)</b> Open source.</li>
+</ul>
+</p>
+
+
+<h1 id="proposal">Proposal</h1>
+
+<p>
+Assuming the identification of a product that meets the requirements listed
+above, the following configuration is proposed for deployment of an environment
+that can be managed in accordance with the WG21 CoC.
+This configuration is intended to encourage maximum participation by offering
+an appropriate balance of free expression and expectations of privacy while
+ensuring that CoC violations can be identified and acted on in a timely and
+appropriate manner.
+<ul>
+  <li>Participation will require authentication with a WG21 managed
+      account provisioning service such as that used for
+      <a href="https://isocpp.org/papers">isocpp.org/papers</a>.</li>
+  <li>Participation will be limited to WG21 members and selected outside experts
+      similarly to participation in WG21 mailing lists.  Authorization of
+      outside experts will follow the existing protocol used to authorize
+      membership in non-public WG21 mailing lists.</li>
+  <li>All channels will be administratively defined; users will not be able to
+      create adhoc channels.  This is intended to ensure that each channel has
+      an appropriate moderator assigned.</li>
+  <li>Private channels and correspondence will not be enabled.  This is intended
+      to ensure that all communications are observable for CoC purposes.
+      Assuming a product that supports threaded messages like Slack, users will
+      be permitted to engage in discussions that are not broadcast to all users
+      within a channel, but those discussions will still be accessible to all
+      members of the channel.</li>
+  <li>Chat messages will be subject to the same expectations of privacy as
+      statements made during a WG21 face to face meeting or telecon.  Users may
+      not be quoted outside the chat service without explicit permission.</li>
+  <li>Channels will be provided for each WG, SG, and advisory group (AG) subject
+      to approval by the group chair and the availability of moderators as
+      delegated by the chair.  A chair may serve as moderator.</li>
+  <li>CoC violations will be reported as described in the
+      <a title="SD-4: WG21 Practices and Procedures"
+         href="https://isocpp.org/std/standing-documents/sd-4-wg21-practices-and-procedures#code-of-conduct">
+         WG21 code of conduct</a><sup><a title="SD-4: WG21 Practices and Procedures"
+                                         href="#ref_wg21_coc">[WG21_COC]</a></sup>.</li>
+  <li>Assuming a capable product, users will be able to report CoC violations
+      from within the chat service.  Such reports will not be anonymous, but
+      the reporter will only be known to the moderators that receive these
+      reports.  Moderators will only be authorized to share the identify of the
+      reporter as required for administrative purposes.</li>
+  <li>Use of the chat service will not be required for participation in any WG,
+      SG, or AG face to face meeting or telecon.  The service will be used only
+      for informal communications and discussions and does not displace use of
+      any existing services.  Formal communications will continue to be
+      conducted via the existing mailing lists.</li>
+  <li>The chat service will be used in preference to the existing IRC and Slack
+      workspace previously used for coordination at face to face meetings.</li>
+  <li>Assuming a capable product, a service that mimics the <tt>npaperbot</tt>
+      bot on Slack will be provided.</li>
+  <li>Assuming a capable product, users will be able to register and use custom
+      emoji.  Custom emoji will be subject to CoC concerns in the same manner
+      as other text.</li>
+</ul>
+</p>
+
+
+<h1 id="acknowledgements">Acknowledgements</h1>
+
+Thank you to the C++ Alliance for funding the Slack
+<a href="https://cpplang.slack.com">Cpplang</a>
+workspace for the last several years.
+
+
+<h1 id="references">References</h1>
+
+<table id="references">
+  <tr>
+    <td id="ref_wg21_coc"><sup>[WG21_COC]</sup></td>
+    <td>
+      Herb Sutter,
+      "SD-4: WG21 Practices and Procedures", 2020.<br/>
+      <a href="https://isocpp.org/std/standing-documents/sd-4-wg21-practices-and-procedures">https://isocpp.org/std/standing-documents/sd-4-wg21-practices-and-procedures</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_iso_coc"><sup>[ISO_COC]</sup></td>
+    <td>
+      International Organization for Standardization,
+      "ISO Code of Conduct for the technical work", 2020.<br/>
+      <a href="https://www.iso.org/publication/PUB100397.html">https://www.iso.org/publication/PUB100397.html</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_iec_coc"><sup>[IEC_COC]</sup></td>
+    <td>
+      International Electrotechnical Commission,
+      "IEC code of conduct for delegates and experts", 2019.<br/>
+      <a href="https://basecamp.iec.ch/download/iec-code-of-conduct-for-delegates-and-experts">https://basecamp.iec.ch/download/iec-code-of-conduct-for-delegates-and-experts</a>
+    </td>
+  </tr>
+  <tr>
+    <td id="ref_n4871"><sup>[WG21_N4871]</sup></td>
+    <td>
+      Nina Dinka Ranns,
+      "WG21 Pre-Autumn 2020 telecon minutes", 2019.<br/>
+      <a href="https://wg21.link/n4871">https://wg21.link/n4871</a>
+    </td>
+  </tr>
+</table>
+
+
+</body>

@@ -5,6 +5,7 @@ ISO JTC1/SC22 WG21 and WG14 papers:
 
 WG21 Number     | Title | Revisions
 --------------- | ----- | ----
+[D2263R0][]     | A call for a WG21 managed chat service | [DR0][D2263R0]
 [P2253R0][]     | SG16: Unicode meeting summaries 2020-09-09 through 2020-09-09 | [R0][P2253R0]
 [P2217R0][]     | SG16: Unicode meeting summaries 2020-06-10 through 2020-08-26 | [R0][P2217R0]
 [P2179R0][]     | SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27 | [R0][P2179R0]
@@ -75,3 +76,4 @@ WG14 Number     | Title
 [P2179R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p2179r0.html
 [P2217R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p2217r0.html
 [P2253R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p2253r0.html
+[D2263R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/d2263r0.html
