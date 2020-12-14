@@ -70,6 +70,7 @@ WG Number     | Status      | Title/Notes/Links
 ------------- | ------      | -----
 [N2620][]     |             | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], and [N2595 (R3)][N2595])
 [N2594][]     |             | Mixed Wide String Literal Concatenation
+[N2563][]     |             | Character encoding of diagnostic text
 [N2231][]     |             | char8\_t: A type for UTF-8 characters and strings
 
 ## Inactive Papers
@@ -84,6 +85,7 @@ WG Number     | Title/Notes/Links
 [N2620]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2620.htm
 [N2595]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2595.pdf
 [N2594]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2594.htm
+[N2563]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2563.pdf
 [N2500]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2500.pdf
 [N2440]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2440.pdf
 [N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
