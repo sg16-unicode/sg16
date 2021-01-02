@@ -22,6 +22,7 @@ WG Number     | Title/Notes/Links
 [P2201][]     | Mixed string literal concatenation
 [P2194][]     | The character set of C++ source code is Unicode
 [P2178][]     | Misc lexing and string handling improvements
+[P2093][]     | Formatted output
 [P2071][]     | Named universal character escapes
 [P2020][]     | Locales, Encodings and Unicode
 [P1953][]     | Unicode Identifiers And Reflection
@@ -95,6 +96,7 @@ WG Number     | Title/Notes/Links
 [P2194]: https://wg21.link/p2194
 [P2178]: https://wg21.link/p2178
 [P2071]: https://wg21.link/p2071
+[P2093]: https://wg21.link/p2093
 [P2029]: https://wg21.link/p2029
 [P2020]: https://wg21.link/p2020
 [P1953]: https://wg21.link/p1953
