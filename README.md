@@ -29,6 +29,7 @@ WG Number     | Title/Notes/Links
 [P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
 [P1885][]     | Naming Text Encodings to Demystify Them
 [P1859][]     | Standard terminology for execution character set encodings
+[P1729][]     | Text Parsing
 [P1629][]     | Standard Text Encoding
 [P1628][]     | Unicode character properties
 [P0244][]     | Text\_view: A C++ concepts and range based character encoding and code point enumeration library
@@ -109,6 +110,7 @@ WG Number     | Title/Notes/Links
 [P1859]: https://wg21.link/p1859
 [P1854]: https://wg21.link/p1854
 [P1844]: https://wg21.link/p1844
+[P1729]: https://wg21.link/p1729
 [P1629]: https://wg21.link/p1629
 [P1628]: https://wg21.link/p1628
 [P1423]: https://wg21.link/p1423
