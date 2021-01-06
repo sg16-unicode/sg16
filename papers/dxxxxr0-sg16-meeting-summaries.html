@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-12-29</td>
+    <td>2020-01-05</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -301,14 +301,11 @@ Previously published SG16 meeting summary papers:
           the device instead of to the file stream makes sense is on Windows
           where it can be known definitively that the file stream is attached to
           a console.</li>
-      <li>Hubert explained that z/OS supports two modes:
-        <ul>
-          <li>1) ASCII: interfaces are provided that perform conversion from an
-              internal encoding when writing to a stream; this is commonly used
-              for simple encodings.</li>
-          <li>2) EBCDIC: this is a byte pass through mode.</li>
-        </ul>
-      </li>
+      <li>Hubert explained that, on z/OS, an application can internally be in
+          ASCII or EBCDIC mode, open file handles can be imbued with the
+          property of being ASCII or EBCDIC, and the C-level I/O APIs can
+          automatically translate between them for, at least, single-byte
+          encodings.</li>
       <li>Jens commented that the proposed feature appears to be centered around
           a special facility for Windows and expressed uncertain skepticism
           regarding driving a design around it.</li>
@@ -340,7 +337,8 @@ Previously published SG16 meeting summary papers:
           implementation-defined.</li>
       <li>Zach expressed support for the approach described in the paper.</li>
       <li>Hubert stated that encompasing the console in a separate facility
-          would pose challenges.</li>
+          would pose challenges because it assumes the presence of a unique
+          "console" in the environment.</li>
       <li>Hubert added that an important concern is encoding of string literals
           vs encoding of strings received from the environment.  For example,
           regex libraries tend to use a possibly pre-compiled pattern encoded
