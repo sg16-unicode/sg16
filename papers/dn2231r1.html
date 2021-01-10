@@ -191,6 +191,9 @@ compatibility between the C and C++ languages.
          href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
       WG14 DR 488</a>
       since its resolution has now been incorporated in the working draft.</li>
+  <li>Removed the previously proposed <tt>__STDC_UTF_8__</tt> macro since the
+      UTF-8 character and string literals and <tt>char8_t</tt> type are intended
+      only for use with UTF-8.</li>
   <li>Replaced use of "execution character encoding" with the more standard
       "execution character set" terminology.</li>
   <li>Additional minor prose and miscellaneous updates.</li>
@@ -499,8 +502,6 @@ manifest (affects only the program being build).
       and UTF-8.</li>
   <li>A new <tt>__STDC_CHAR8_T__</tt> macro used to indicate when <tt>u8</tt>
       literals are type char8_t.</li>
-  <li>A new <tt>__STDC_UTF_8__</tt> macro used to indicate when <tt>u8</tt>
-      literals are encoded in UTF-8.</li>
   <li>New <tt>char8_t</tt> related atomic macros and types.</li>
 </ul>
 </p>
@@ -666,31 +667,6 @@ of <tt>char8_t</tt> may be initialized by a UTF-8 string literal, optionally
 enclosed in braces.  Successive bytes of the string literal (including the
 terminating null character if there is room or if the array is of unknown size)
 initialize the elements of the array.
-</blockquote>
-</p>
-
-<p>Change in 6.10.8.2 (Environment macros) paragraph 1:
-<blockquote>
-The following macro names are conditionally defined by the implementation:<br/>
-<br/>
-[&hellip;]<br/>
-<br/>
-<ins><tt>__STDC_UTF_8__</tt> The integer constant 1, intended to indicate that
-values of type <tt>char8_t</tt> are UTF-8 encoded. If some other encoding is
-used, the macro shall not be defined and the actual encoding used is
-implementation-defined.</ins><br/>
-<br/>
-<tt>__STDC_UTF_16__</tt> The integer constant 1, intended to indicate that
-values of type <tt>char16_t</tt> are UTF-16 encoded. If some other encoding is
-used, the macro shall not be defined and the actual encoding used is
-implementation-defined.<br/>
-<br/>
-<tt>__STDC_UTF_32__</tt> The integer constant 1, intended to indicate that
-values of type <tt>char32_t</tt> are UTF-32 encoded. If some other encoding is
-used, the macro shall not be defined and the actual encoding used is
-implementation-defined.<br/>
-<br/>
-[&hellip;]<br/>
 </blockquote>
 </p>
 
@@ -995,17 +971,6 @@ conversion state is unspecified.
 </blockquote>
 </p>
 
-<p>Change in J.3.4 (Characters) paragraph 1:
-<blockquote>
-[&hellip;]<br/>
-&mdash; The encoding of any of <tt>wchar_t</tt><ins><tt>, char8_t</tt></ins>,
-<tt>char16_t</tt>, and <tt>char32_t</tt> where the corresponding standard
-encoding macro (<tt>__STDC_ISO_10646__</tt><ins>, <tt>__STDC_UTF_8__</tt></ins>,
-<tt>__STDC_UTF_16__</tt>, or
-<tt>__STDC_UTF_32__</tt>) is not defined (6.10.8.2).
-</blockquote>
-</p>
-
 <p>Change in J.6.1 (Rule based identifiers) paragraph 2:
 <blockquote>
 The following NNN identifiers or keywords match these patterns and have
@@ -1018,10 +983,6 @@ particular semantics provided by this document.<br/>
 <tt>atomic_char16_t</tt><br/>
 <tt>ATOMIC_CHAR16_T_LOCK_FREE</tt><br/>
 [&hellip;]<br/>
-<tt>__STDC_NO_VLA__</tt><br/>
-<ins><tt>__STDC_UTF_8__</tt></ins><br/>
-<tt>__STDC_UTF_16__</tt><br/>
-<tt>__STDC_UTF_32__</tt><br/>
 </blockquote>
 </p>
 
