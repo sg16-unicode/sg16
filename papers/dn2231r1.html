@@ -1006,6 +1006,48 @@ encoding macro (<tt>__STDC_ISO_10646__</tt><ins>, <tt>__STDC_UTF_8__</tt></ins>,
 </blockquote>
 </p>
 
+<p>Change in J.6.1 (Rule based identifiers) paragraph 2:
+<blockquote>
+The following NNN identifiers or keywords match these patterns and have
+particular semantics provided by this document.<br/>
+<br/>
+[&hellip;]<br/>
+<tt>atomic_char</tt><br/>
+<ins><tt>atomic_char8_t</tt></ins><br/>
+<ins><tt>ATOMIC_CHAR8_T_LOCK_FREE</tt></ins><br/>
+<tt>atomic_char16_t</tt><br/>
+<tt>ATOMIC_CHAR16_T_LOCK_FREE</tt><br/>
+[&hellip;]<br/>
+<tt>__STDC_NO_VLA__</tt><br/>
+<ins><tt>__STDC_UTF_8__</tt></ins><br/>
+<tt>__STDC_UTF_16__</tt><br/>
+<tt>__STDC_UTF_32__</tt><br/>
+</blockquote>
+</p>
+
+<p>Change in J.6.2 (Particular identifiers or keywords) paragraph 1:
+<blockquote>
+The following NNNN identifiers or keywords are not covered by the above and
+have particular semantics provided by this document.<br/>
+<br/>
+[&hellip;]<br/>
+<tt>char</tt><br/>
+<ins><tt>char8_t</tt></ins><br/>
+<tt>char16_t</tt><br/>
+<tt>char32_t</tt><br/>
+[&hellip;]<br/>
+<tt>BUFSIZ</tt><br/>
+<ins><tt>c8rtomb</tt></ins><br/>
+<tt>c16rtomb</tt><br/>
+<tt>c32rtomb</tt><br/>
+[&hellip;]<br/>
+<tt>mbrlen</tt><br/>
+<ins><tt>mbrtoc8</tt></ins><br/>
+<tt>mbrtoc16</tt><br/>
+<tt>mbrtoc32</tt><br/>
+[&hellip;]<br/>
+</blockquote>
+</p>
 
 <h1 id="acknowledgements">Acknowledgements</h1>
 
