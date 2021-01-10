@@ -180,6 +180,12 @@ compatibility between the C and C++ languages.
       <sup><a title="[WG14 N2596]: C2x Working Draft"
               href="#ref_wg14_n2596">
       [WG14 N2596]</a></sup></li>
+  <li>Updated wording to address <tt>u8</tt> character literals and removed
+      references to
+      <a title="[WG14 N2198]: Adding the u8 character prefix"
+         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
+      WG14 N2198</a>
+      since it has been incorporated in the working draft.</li>
   <li>Removed drafting notes regarding
       <a title="[WG14 DR 488]: c16rtomb() on wide characters encoded as multiple char16_t"
          href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
@@ -486,14 +492,8 @@ manifest (affects only the program being build).
       in the <tt>&lt;uchar.h&gt;</tt> header.</li>
   <li>The type of UTF-8 string literals is changed from array of
       <tt>const char</tt> to array of <tt>const char8_t</tt>.</li>
-  <li>The type of UTF-8 character literals (assuming
-      <a title="[WG14 N2198]: Adding the u8 character prefix"
-         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
-      WG14 N2198</a>
-      <sup><a title="[WG14 N2198]: Adding the u8 character prefix"
-              href="#ref_wg14_n2198">
-      [WG14 N2198]</a></sup> is adopted) is changed from <tt>char</tt> to
-      <tt>char8_t</tt>.</li>
+  <li>The type of UTF-8 character literals is changed from
+      <tt>unsigned char</tt> to <tt>char8_t</tt>.</li>
   <li>New <tt>mbrtoc8()</tt> and <tt>c8rtomb()</tt> functions declared in
       <tt>&lt;uchar.h&gt;</tt> enable conversions between multibyte characters
       and UTF-8.</li>
@@ -590,14 +590,50 @@ WG14 N2596</a>
 [WG14 N2596]</a></sup>
 </p>
 
-<p>Additional updates will be necessary if
-<a title="[WG14 N2198]: Adding the u8 character prefix"
-   href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
-WG14 N2198</a>
-<sup><a title="[WG14 N2198]: Adding the u8 character prefix"
-        href="#ref_wg14_n2198">
-[WG14 N2198]</a></sup>
-is adopted.</p>
+<p>Change in 6.4.4 (Character constants) paragraph 9:
+<blockquote>
+The value of an octal or hexadecimal escape sequence shall be in the range of
+representable values for the corresponding type:
+<div style="margin-left: 1em;">
+<table style="border-collapse: collapse;">
+  <tr style="border-bottom: 1px solid black;">
+    <td style="border-right: 1px solid black;">Prefix</td>
+    <td>Corresponding type</td>
+  </tr>
+  <tr>
+    <td style="border-right: 1px solid black;">none</td>
+    <td><tt>unsigned char</tt></td>
+  </tr>
+  <tr>
+    <td style="border-right: 1px solid black;"><tt>u8</tt></td>
+    <td><tt><del>unsigned char</del><ins>char8_t</ins></tt></td>
+  </tr>
+  <tr>
+    <td style="border-right: 1px solid black;"><tt>L</tt></td>
+    <td>the unsigned type corresponding to <tt>wchar_t</tt></td>
+  </tr>
+  <tr>
+    <td style="border-right: 1px solid black;"><tt>u</tt></td>
+    <td><tt>char16_t</tt></td>
+  </tr>
+  <tr>
+    <td style="border-right: 1px solid black;"><tt>U</tt></td>
+    <td><tt>char32_t</tt></td>
+  </tr>
+</table>
+</div>
+</blockquote>
+</p>
+
+<p>Change in 6.4.4 (Character constants) paragraph 12:
+<blockquote>
+A UTF-8 character constant has type
+<tt><del>unsigned char</del><ins>char8_t</ins></tt>.
+The value of a UTF-8 character constant is equal to its ISO/IEC 10646 code
+point value, provided that the code point value can be encoded as a
+single UTF-8 code unit.
+</blockquote>
+</p>
 
 <p>Change in 6.4.5 (String Literals) paragraph 6:
 <blockquote>
@@ -874,23 +910,12 @@ The <tt>mbrtoc8</tt> function returns the first of the following that applies
 If <tt>s</tt> is a null pointer, the c8rtomb function is equivalent to the call
 <blockquote>
 <div style="margin-left: 2em;">
-c8rtomb(buf, '\0', ps)
+c8rtomb(buf, u8'\0', ps)
 </div>
 </blockquote>
 where <tt>buf</tt> is an internal buffer.
 </blockquote>
 </p>
-
-<p><em>Drafting note: If 
-<a title="[WG14 N2198]: Adding the u8 character prefix"
-   href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
-WG14 N2198</a>
-<sup><a title="[WG14 N2198]: Adding the u8 character prefix"
-        href="#ref_wg14_n2198">
-[WG14 N2198]</a></sup>
-is adopted, the character literal in paragraph 2 above should be changed from
-'\0' to u8'\0'.
-</em></p>
 
 <p>Add a new paragraph 3:
 <blockquote class="stdins">
@@ -1013,14 +1038,6 @@ with WG14.</p>
       "C2x Working Draft", N2596, 2020.<br/>
       <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf">
       http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf</a></td>
-  </tr>
-  <tr>
-    <td id="ref_wg14_n2198"><sup>[WG14 N2198]</sup></td>
-    <td>
-      Aaron Ballman,
-      "Adding the u8 character prefix", N2198, 2017.<br/>
-      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
-      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf</a></td>
   </tr>
 </table>
 
