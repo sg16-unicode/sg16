@@ -95,7 +95,7 @@ div.compare_item {
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-01-09</td>
+    <td>2021-01-10</td>
   </tr>
   <tr>
     <th>Proposal category:</th>
@@ -173,6 +173,18 @@ compatibility between the C and C++ languages.
               href="#ref_p0482r6">
       [P0482R6]</a></sup>
       to refer to the revision adopted for C++20.</li>
+  <li>Rebased the proposed wording on
+      <a title="[WG14 N2596]: C2x Working Draft"
+         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf">
+      WG14 N2596</a>
+      <sup><a title="[WG14 N2596]: C2x Working Draft"
+              href="#ref_wg14_n2596">
+      [WG14 N2596]</a></sup></li>
+  <li>Removed drafting notes regarding
+      <a title="[WG14 DR 488]: c16rtomb() on wide characters encoded as multiple char16_t"
+         href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
+      WG14 DR 488</a>
+      since its resolution has now been incorporated in the working draft.</li>
   <li>Replaced use of "execution character encoding" with the more standard
       "execution character set" terminology.</li>
   <li>Additional minor prose and miscellaneous updates.</li>
@@ -411,7 +423,7 @@ LmNELmNELmPuAEAymRz3OASPnZ0dnJ+fX6uP/f19hEIh/B8jZg5SOCteOQAAAABJRU5ErkJggg==
 
 <p>Difficulty in managing multiple encodings with the same code unit type is
 not the only challenge posed by use of <tt>char</tt> as the UTF-8 code unit
-type.  The following code exhibits implementation defined behavior. 
+type.  The following code exhibits implementation defined behavior.
 <blockquote><pre><code class="c">
 _Bool is_utf8_multibyte_code_unit(char c) {
   return c &gt;= 0x80;
@@ -569,8 +581,14 @@ features are currently implemented.
 
 <input type="checkbox" id="hidedel">Hide deleted text</input>
 
-<p>These changes are relative to the ISO/IEC 9899:2017 committee draft as of
-2018-03-17.</p>
+<p>These changes are relative to
+<a title="[WG14 N2596]: C2x Working Draft"
+   href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf">
+WG14 N2596</a>
+<sup><a title="[WG14 N2596]: C2x Working Draft"
+        href="#ref_wg14_n2596">
+[WG14 N2596]</a></sup>
+</p>
 
 <p>Additional updates will be necessary if
 <a title="[WG14 N2198]: Adding the u8 character prefix"
@@ -585,7 +603,7 @@ is adopted.</p>
 <blockquote>
 [&hellip;] For UTF-8 string literals, the array elements have type
 <del><tt>char</tt></del><ins><tt>char8_t</tt></ins>, and are initialized with
-the characters of the multibyte character sequence, as encoded in UTF–8. 
+the characters of the multibyte character sequence, as encoded in UTF–8.
 [&hellip;]
 </blockquote>
 </p>
@@ -662,12 +680,16 @@ ATOMIC_POINTER_LOCK_FREE<br/>
 
 <p>Change in 7.17.6 (Atomic integer types) paragraph 1:
 <blockquote>
-For each line in the following table,<sup>261)</sup> the atomic type name is
-declared as a type that has the same representation and alignment requirements
-as the corresponding direct type.<sup>262)</sup>
+For each line in the following
+table,<sup><em>[Footnote: See "future library directions" (7.31.10).]</em></sup>
+the atomic type name is declared as a type that has the same representation
+and alignment requirements as the corresponding direct
+type.<sup><em>[Footnote: The same representation and alignment requirements are
+meant to imply interchangeability as arguments to functions, return values
+from functions, and members of unions.]</em></sup>
 <div style="margin-left: 1em;">
-<table>
-  <tr>
+<table style="border-collapse: collapse;">
+  <tr style="border-bottom: 1px solid black;">
     <td>Atomic type name</td>
     <td>Direct type</td>
   </tr>
@@ -712,8 +734,8 @@ The types declared are <tt>mbstate_t</tt> (described in 7.29.1) and
 <blockquote>
 <tt>char8_t</tt>
 </blockquote>
-which is an unsigned integer type used for 8-bit characters and is the same
-type as <tt>unsigned char</tt>; and</ins>
+which is an unsigned integer type used for UTF-8 characters and is the
+same type as <tt>unsigned char</tt>; and</ins>
 </ins>
 <blockquote>
 <tt>char16_t</tt>
@@ -808,7 +830,11 @@ The <tt>mbrtoc8</tt> function returns the first of the following that applies
     <td><tt>(size_t)</tt> (−2)</td>
     <td>if the next <tt>n</tt> bytes contribute to an incomplete (but
         potentially valid) multibyte character, and all <tt>n</tt> bytes have
-        been processed (no value is stored).<sup><em>Footnote</em>)</sup>
+        been processed (no value is
+        stored).<sup><em>[Footnote: When <tt>n</tt> has at least the value of
+        the <tt>MB_CUR_MAX</tt> macro, this case can only occur if <tt>s</tt>
+        points at a sequence of redundant shift sequences (for implementations
+        with state-dependent encodings).]</em></sup>
     </td>
   </tr>
   <tr>
@@ -820,15 +846,6 @@ The <tt>mbrtoc8</tt> function returns the first of the following that applies
     </td>
   </tr>
 </table>
-</blockquote>
-</p>
-
-<p>Add a new footnote for the reference in paragraph 4 above:
-<blockquote class="stdins">
-<sup><em>Footnote</em>)</sup>When <tt>n</tt> has at least the value of the
-<tt>MB_CUR_MAX</tt> macro, this case can only occur if <tt>s</tt> points at a
-sequence of redundant shift sequences (for implementations with state-dependent
-encodings).
 </blockquote>
 </p>
 
@@ -888,16 +905,6 @@ by any shift sequence needed to restore the initial shift state; the resulting
 state described is the initial conversion state.
 </blockquote>
 </p>
-
-<p><em>Drafting note: The wording in paragraph 3 above includes the proposed
-wording updates from
-<a title="[WG14 DR 488]: c16rtomb() on wide characters encoded as multiple char16_t"
-   href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
-WG14 DR 488</a>
-<sup><a title="[WG14 DR 488]: c16rtomb() on wide characters encoded as multiple char16_t"
-        href="#ref_wg14_dr488">
-[WG14 DR 488]</a></sup>.
-</em></p>
 
 <p>Add a new paragraph 4:
 <blockquote class="stdins">
@@ -963,7 +970,7 @@ conversion state is unspecified.
 </blockquote>
 </p>
 
-<p>Change in J.3.4 (Characters):
+<p>Change in J.3.4 (Characters) paragraph 1:
 <blockquote>
 [&hellip;]<br/>
 &mdash; The encoding of any of <tt>wchar_t</tt><ins><tt>, char8_t</tt></ins>,
@@ -1000,19 +1007,20 @@ with WG14.</p>
       https://wg21.link/p0482r6</a></td>
   </tr>
   <tr>
+    <td id="ref_wg14_n2596"><sup>[WG14 N2596]</sup></td>
+    <td>
+      JeanHeyd Meneide, Freek Wiedijk, et al.,
+      "C2x Working Draft", N2596, 2020.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf</a></td>
+  </tr>
+  <tr>
     <td id="ref_wg14_n2198"><sup>[WG14 N2198]</sup></td>
     <td>
       Aaron Ballman,
       "Adding the u8 character prefix", N2198, 2017.<br/>
       <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
       http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf</a></td>
-  </tr>
-  <tr>
-    <td id="ref_wg14_dr488"><sup>[WG14 DR 488]</sup></td>
-    <td>
-      "c16rtomb() on wide characters encoded as multiple char16_t", DR 488, 2016.<br/>
-      <a href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
-      http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488</a></td>
   </tr>
 </table>
 
