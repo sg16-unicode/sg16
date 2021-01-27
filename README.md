@@ -71,9 +71,16 @@ WG Number     | Title/Notes/Links
 WG Number     | Status      | Title/Notes/Links
 ------------- | ------      | -----
 [N2620][]     |             | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], and [N2595 (R3)][N2595])
-[N2594][]     |             | Mixed Wide String Literal Concatenation
-[N2563][]     |             | Character encoding of diagnostic text
 [N2231][]     |             | char8\_t: A type for UTF-8 characters and strings
+
+## Accepted Papers
+
+The following papers have been adopted for an ISO standard.
+
+WG Number     | Standard    | Title/Notes/Links
+------------- | --------    | -----
+[N2594][]     | C2x         | Mixed Wide String Literal Concatenation
+[N2563][]     | C2x         | Character encoding of diagnostic text
 
 ## Inactive Papers
 
