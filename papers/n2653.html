@@ -5,11 +5,6 @@
 
 <title>char8_t: A type for UTF-8 characters and strings (Revision 1)</title>
 
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
 <style type="text/css">
 pre {
     display: inline;
@@ -95,7 +90,7 @@ div.compare_item {
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-01-25</td>
+    <td>2021-02-13</td>
   </tr>
   <tr>
     <th>Proposal category:</th>
@@ -197,6 +192,7 @@ compatibility between the C and C++ languages.
   <li>Replaced use of "execution character encoding" with the more standard
       "execution character set" terminology.</li>
   <li>Additional minor prose and miscellaneous updates.</li>
+  <li>Removed use of highlight.js for code highlighting purposes.</li>
 </ul>
 
 
@@ -286,7 +282,7 @@ diagnosing what is wrong.
 <div class="compare">
 <div class="compare_item">
 <fieldset><legend>mb_utf8.c</legend>
-<pre><code class="c">
+<pre>
 #include &lt;windows.h&gt;
 
 int main() {
@@ -298,9 +294,9 @@ int main() {
     u8"\U0001F64A";  // U+1F64A SPEAK-NO-EVIL MONKEY
   MessageBoxA(NULL, message, caption, MB_OK);
 }
-</code></pre></fieldset>
+</pre></fieldset>
 <fieldset><legend>Compile</legend>
-<pre><code class="Bash">
+<pre>
 &gt; cl mb_utf8.c /Femb_utf8.exe user32.lib
 Microsoft (R) C/C++ Optimizing Compiler Version 19.13.26128 for x64
 Copyright (C) Microsoft Corporation.  All rights reserved.
@@ -312,11 +308,11 @@ Copyright (C) Microsoft Corporation.  All rights reserved.
 /out:mb_utf8.exe
 mb_utf8.obj
 user32.lib
-</code></pre></fieldset>
+</pre></fieldset>
 <fieldset><legend>Run</legend>
-<pre><code class="Bash">
+<pre>
 &gt; mb_utf8.exe
-</code></pre>
+</pre>
 <img src="data:image/png;base64,
 iVBORw0KGgoAAAANSUhEUgAAAIIAAACFCAYAAACXBiBFAAAABHNCSVQICAgIfAhkiAAAByJJREFU
 eJzt3LFTWtkCx/Evb9JmAo5/QBTNzoANOlpg6Zg3Zou4jtpud4kWG5sUmbF0xsIGKl/ubrFpwVFT
@@ -358,7 +354,7 @@ n9ruGcTJAAAAAElFTkSuQmCC
 
 <div class="compare_item">
 <fieldset><legend>mb_utf16.c</legend>
-<pre><code class="c">
+<pre>
 #include &lt;windows.h&gt;
 
 int main() {
@@ -370,9 +366,9 @@ int main() {
     L"\U0001F64A";  // U+1F64A SPEAK-NO-EVIL MONKEY
   MessageBoxW(NULL, message, caption, MB_OK);
 }
-</code></pre></fieldset>
+</pre></fieldset>
 <fieldset><legend>Compile</legend>
-<pre><code class="Bash">
+<pre>
 &gt; cl mb_utf16.c /Femb_utf16.exe user32.lib
 Microsoft (R) C/C++ Optimizing Compiler Version 19.13.26128 for x64
 Copyright (C) Microsoft Corporation.  All rights reserved.
@@ -384,11 +380,11 @@ Copyright (C) Microsoft Corporation.  All rights reserved.
 /out:mb_utf16.exe
 mb_utf16.obj
 user32.lib
-</code></pre></fieldset>
+</pre></fieldset>
 <fieldset><legend>Run</legend>
-<pre><code class="Bash">
+<pre>
 &gt; mb_utf16.exe
-</code></pre>
+</pre>
 <img src="data:image/png;base64,
 iVBORw0KGgoAAAANSUhEUgAAAHcAAACFCAYAAABhY2eYAAAABHNCSVQICAgIfAhkiAAAB0dJREFU
 eJztnbFvGskXx7+c0kZZLP8BPzj7TgI32JKLoUT2yU4RX5S4vW6IXdy5uSKSJZcUaZbKv/Pviju5
@@ -433,11 +429,11 @@ LmNELmNELmPuAEAymRz3OASPnZ0dnJ+fX6uP/f19hEIh/B8jZg5SOCteOQAAAABJRU5ErkJggg==
 <p>Difficulty in managing multiple encodings with the same code unit type is
 not the only challenge posed by use of <tt>char</tt> as the UTF-8 code unit
 type.  The following code exhibits implementation defined behavior.
-<blockquote><pre><code class="c">
+<blockquote><pre>
 _Bool is_utf8_multibyte_code_unit(char c) {
   return c &gt;= 0x80;
 }
-</code></pre></blockquote>
+</pre></blockquote>
 </p>
 
 <p>UTF-8 leading and continuation code units have values in the range 128
@@ -454,11 +450,11 @@ its value will be interpreted as negative and the promoted value of type
 is always false for these implementations.</p>
 
 <p>To correct the code above, explicit conversions are required.  For example:
-<blockquote><pre><code class="c">
+<blockquote><pre>
 _Bool is_utf8_multibyte_code_unit(char c) {
   return ((unsigned char)c) &gt;= 0x80;
 }
-</code></pre></blockquote>
+</pre></blockquote>
 </p>
 
 <p>Finally, no facilities are currently provided for transcoding between the
@@ -510,7 +506,7 @@ manifest (affects only the program being build).
 code compatibility between C and C++20 such that the following code would be
 well-formed with the same semantics for both languages while providing
 additional type safety and protection from implementation defined sign issues.
-<blockquote><pre><code class="c">
+<blockquote><pre>
 #include &lt;uchar.h&gt;
 
 void use_utf8(const char8_t *p) {
@@ -522,7 +518,7 @@ void use_utf8(const char8_t *p) {
 int main() {
   use_utf8(u8"text");
 }
-</code></pre></blockquote>
+</pre></blockquote>
 </p>
 
 
