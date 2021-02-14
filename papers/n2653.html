@@ -77,12 +77,12 @@ div.compare_item {
     <th/>
   </tr>
   <tr>
-    <th>Revises:</th>
-    <td><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm">N2231</a></td>
-  </tr>
-  <tr>
     <th>Title:</th>
     <td>char8_t: A type for UTF-8 characters and strings (Revision 1)</td>
+  </tr>
+  <tr>
+    <th>Revises:</th>
+    <td><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm">N2231</a></td>
   </tr>
   <tr>
     <th>Author:</th>
@@ -191,6 +191,8 @@ compatibility between the C and C++ languages.
       only for use with UTF-8.</li>
   <li>Replaced use of "execution character encoding" with the more standard
       "execution character set" terminology.</li>
+  <li>Updated the <a href="#implementation_exp">Implementation Experience</a>
+      section with links to completed implementations in gcc and glibc.</li>
   <li>Additional minor prose and miscellaneous updates.</li>
   <li>Removed use of highlight.js for code highlighting purposes.</li>
 </ul>
@@ -554,21 +556,35 @@ when necessary to preserve compatibility with prior C language standards.
 
 <h1 id="implementation_exp">Implementation Experience</h1>
 
-<p>The proposed changes in this paper are being implemented in forks of gcc
-and glibc, but are not yet complete.  Once completed, they will be available
-in the <tt>char8_t</tt> branches of the following repositories:
+<p>The proposed changes have been implemented in forks of gcc and glibc and
+are available in the <tt>char8_t-for-c</tt> and <tt>char8_t</tt> branches
+respectively of the following repositories:
 <ul>
-  <li>gcc: <a href="https://github.com/tahonermann/gcc/tree/char8_t">
-      https://github.com/tahonermann/gcc/tree/char8_t</a></li>
+  <li>gcc: <a href="https://github.com/tahonermann/gcc/tree/char8_t-for-c">
+      https://github.com/tahonermann/gcc/tree/char8_t-for-c</a></li>
   <li>glibc: <a href="https://github.com/tahonermann/glibc/tree/char8_t">
       https://github.com/tahonermann/glibc/tree/char8_t</a></li>
 </ul>
 </p>
 
 <p>
-The new gcc <tt>-fchar8_t</tt> and <tt>-fno-char8_t</tt> compiler options
-support enabling and disabling the new features.  No backward compatibility
-features are currently implemented.
+The changes to glibc provide declarations for the <tt>char8_t</tt> typedef
+and the <tt>c8rtomb()</tt> and <tt>mbrtoc8()</tt> functions.  When compiling
+for C, these declarations are only present when the <tt>_CHAR8_T_SOURCE</tt>
+feature test macro is defined.
+</p>
+
+<p>
+The changes to gcc provide the <tt>atomic_char8_t</tt> typedef, the
+<tt>ATOMIC_CHAR8_T_LOCK_FREE</tt> macro, and the change of type for UTF-8
+literals from array of <tt>const char</tt> to array of
+<tt>const unsigned char</tt>.  The existing <tt>-fchar8_t</tt> and
+<tt>-fno-char8_t</tt> compiler options are extended to C code to allow
+opting-in or opting-out of these changes.  When <tt>-fchar8_t</tt> is
+enabled, the <tt>_CHAR8_T_SOURCE</tt> macro is defined to inform the
+C library that the <tt>char8_t</tt> typedef and the <tt>c8rtomb()</tt>
+and <tt>mbrtoc8()</tt> declarations should be provided by the <tt>uchar.h</tt>
+header..
 </p>
 
 
