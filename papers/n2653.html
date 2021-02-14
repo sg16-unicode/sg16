@@ -150,51 +150,58 @@ compatibility between the C and C++ languages.
 <h1 id="changes_since_n2231">Changes since <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm">N2231</a></h1>
 
 <ul>
-  <li>Rewrote the abstract to reflect that
-      <a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
-         href="https://wg21.link/p0482r6">
-      P0482R6</a>
-      <sup><a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
-              href="#ref_p0482r6">
-      [P0482R6]</a></sup>
-      was adopted for C++20.</li>
-  <li>Added missing items to the <a href="#proposal">Proposal</a> section.</li>
-  <li>Added missing items to the <a href="#backward_compat">Backward Compatibility</a> section.</li>
-  <li>Updated references to previous revisions of
-      <a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
-         href="https://wg21.link/p0482r6">
-      P0482R6</a>
-      <sup><a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
-              href="#ref_p0482r6">
-      [P0482R6]</a></sup>
-      to refer to the revision adopted for C++20.</li>
-  <li>Rebased the proposed wording on
-      <a title="[WG14 N2596]: C2x Working Draft"
-         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf">
-      WG14 N2596</a>
-      <sup><a title="[WG14 N2596]: C2x Working Draft"
-              href="#ref_wg14_n2596">
-      [WG14 N2596]</a></sup></li>
-  <li>Updated wording to address <tt>u8</tt> character literals and removed
-      references to
-      <a title="[WG14 N2198]: Adding the u8 character prefix"
-         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
-      WG14 N2198</a>
-      since it has been incorporated in the working draft.</li>
-  <li>Removed drafting notes regarding
-      <a title="[WG14 DR 488]: c16rtomb() on wide characters encoded as multiple char16_t"
-         href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
-      WG14 DR 488</a>
-      since its resolution has now been incorporated in the working draft.</li>
-  <li>Removed the previously proposed <tt>__STDC_UTF_8__</tt> macro since the
-      UTF-8 character and string literals and <tt>char8_t</tt> type are intended
-      only for use with UTF-8.</li>
-  <li>Replaced use of "execution character encoding" with the more standard
-      "execution character set" terminology.</li>
-  <li>Updated the <a href="#implementation_exp">Implementation Experience</a>
-      section with links to completed implementations in gcc and glibc.</li>
-  <li>Additional minor prose and miscellaneous updates.</li>
-  <li>Removed use of highlight.js for code highlighting purposes.</li>
+  <li>Proposal changes:
+    <ul>
+      <li>Rebased the proposed wording on
+          <a title="[WG14 N2596]: C2x Working Draft"
+             href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf">
+          WG14 N2596</a>
+          <sup><a title="[WG14 N2596]: C2x Working Draft"
+                  href="#ref_wg14_n2596">
+          [WG14 N2596]</a></sup></li>
+      <li>Updated wording to address <tt>u8</tt> character literals and removed
+          references to
+          <a title="[WG14 N2198]: Adding the u8 character prefix"
+             href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf">
+          WG14 N2198</a>
+          since it has been incorporated in the working draft.</li>
+      <li>Removed drafting notes regarding
+          <a title="[WG14 DR 488]: c16rtomb() on wide characters encoded as multiple char16_t"
+             href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
+          WG14 DR 488</a>
+          since its resolution has now been incorporated in the working draft.</li>
+      <li>Removed the previously proposed <tt>__STDC_UTF_8__</tt> macro since the
+          UTF-8 character and string literals and <tt>char8_t</tt> type are intended
+          only for use with UTF-8.</li>
+    </ul>
+  </li>
+  <li>Other changes:
+    <ul>
+      <li>Added missing items to the <a href="#backward_compat">Backward Compatibility</a> section.</li>
+      <li>Updated the <a href="#implementation_exp">Implementation Experience</a>
+          section with links to completed implementations in gcc and glibc.</li>
+      <li>Rewrote the abstract to reflect that
+          <a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+             href="https://wg21.link/p0482r6">
+          P0482R6</a>
+          <sup><a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+                  href="#ref_p0482r6">
+          [P0482R6]</a></sup>
+          was adopted for C++20.</li>
+      <li>Updated references to previous revisions of
+          <a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+             href="https://wg21.link/p0482r6">
+          P0482R6</a>
+          <sup><a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+                  href="#ref_p0482r6">
+          [P0482R6]</a></sup>
+          to refer to the revision adopted for C++20.</li>
+      <li>Replaced use of "execution character encoding" with the more standard
+          "execution character set" terminology.</li>
+      <li>Additional minor prose and miscellaneous updates.</li>
+      <li>Removed use of highlight.js for code highlighting purposes.</li>
+    </ul>
+  </li>
 </ul>
 
 
