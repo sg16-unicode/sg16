@@ -239,7 +239,7 @@ UTF-8 is now used by more than 96% of all websites</a>
 [W3Techs]</a></sup>.
 While UTF-8 now dominates websites, it has not attained similar usage success
 as the execution character set of C and C++ compilers.  Important
-compilers, such as Microsoft's Visual Studio, do not support use of UTF-8 as
+compilers, such as Microsoft's Visual C++, do not support use of UTF-8 as
 the execution character set<sup>[*]</sup>.  Programs that must consume
 and produce text in the execution character set and manipulate UTF-8
 text must choose one of two approaches to managing text in these distinct
@@ -470,7 +470,7 @@ in this paper are intended to address the above issues while retaining the
 ability to write source code that is compatible across C and C++.
 </p>
 
-<p><em>[*]: Microsoft Visual Studio 2015 added the <tt>/utf-8</tt> and
+<p><em>[*]: Microsoft Visual C++ 2015 added the <tt>/utf-8</tt> and
 <tt>/execution-charset:utf-8</tt> options to enable use of UTF-8 as the
 execution character set.  However, in practice, these options are of limited
 use since the Windows platform SDK does not, in general, support UTF-8.</em>
