@@ -19,6 +19,7 @@ WG Number     | Title/Notes/Links
 ------------- | -----
 \<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
 [P2316][]     | Consistent character literal encoding
+[P2314][]     | Character sets and encodings
 [P2297][]     | Wording improvements for encodings and character sets
 [P2295][]     | Correct UTF-8 handling during phase 1 of translation
 [P2246][]     | Character encoding of diagnostic text
@@ -103,6 +104,7 @@ WG Number     | Title/Notes/Links
 [N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [P2316]: https://wg21.link/p2316
+[P2314]: https://wg21.link/p2314
 [P2297]: https://wg21.link/p2297
 [P2295]: https://wg21.link/p2295
 [P2246]: https://wg21.link/p2246
