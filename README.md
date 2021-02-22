@@ -24,11 +24,8 @@ WG Number     | Title/Notes/Links
 [P2295][]     | Correct UTF-8 handling during phase 1 of translation
 [P2246][]     | Character encoding of diagnostic text
 [P2201][]     | Mixed string literal concatenation
-[P2194][]     | The character set of C++ source code is Unicode
-[P2178][]     | Misc lexing and string handling improvements
 [P2093][]     | Formatted output
 [P2071][]     | Named universal character escapes
-[P2020][]     | Locales, Encodings and Unicode
 [P1953][]     | Unicode Identifiers And Reflection
 [P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
 [P1885][]     | Naming Text Encodings to Demystify Them
@@ -60,6 +57,9 @@ The following papers are no longer being pursued.
 
 WG Number     | Title/Notes/Links
 ------------- | -----
+~~[P2194][]~~ | ~~The character set of C++ source code is Unicode~~<br/>(The goals of this paper are now being pursued via [P2314][] and [P2297][])
+~~[P2178][]~~ | ~~Misc lexing and string handling improvements~~<br/>(The goals of this paper are now being pursued via [P2194][], [P2223][], [P2295][], and [P2316][])
+~~[P2020][]~~ | ~~Locales, Encodings and Unicode~~<br/>(This paper did not contain a concrete proposal and no revisions are expected; it will be used as reference material)
 ~~[P1880][]~~ | ~~uNstring Arguments Shall Be UTF-N Encoded~~<br/>(This proposal was withdrawn by the author upon determining that the complexity of the required wording updates would outweigh their benefits)
 ~~[P1879][]~~ | ~~Please Don't Rewrite My String Literals~~<br/>(This proposal was withdrawn by the author)
 ~~[P1854][]~~ | ~~Conversion to execution encoding should not lead to loss of meaning~~<br/>(The author incorporated this proposal in to [P2178][])
@@ -108,6 +108,7 @@ WG Number     | Title/Notes/Links
 [P2297]: https://wg21.link/p2297
 [P2295]: https://wg21.link/p2295
 [P2246]: https://wg21.link/p2246
+[P2223]: https://wg21.link/p2223
 [P2201]: https://wg21.link/p2201
 [P2194]: https://wg21.link/p2194
 [P2178]: https://wg21.link/p2178
