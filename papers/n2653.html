@@ -50,6 +50,16 @@ blockquote.stddel
     padding-left: 0.5empadding-right: 0.5em;
 }
 
+blockquote.quote
+{
+    margin-top: 0em;
+    margin-left: 0em;
+    border-style: solid;
+    background-color: lemonchiffon;
+    color: #000000;
+    border: 1px solid black;
+}
+
 div.compare {
   padding-left: 40px;
   display: table; /* undo float:left effect */
@@ -90,7 +100,7 @@ div.compare_item {
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-02-13</td>
+    <td>2021-02-15</td>
   </tr>
   <tr>
     <th>Proposal category:</th>
@@ -209,25 +219,25 @@ hold values of code units for the 16-bit and 32-bit variants, but a new type
 was not added for the UTF-8 variant.  Instead, UTF-8 string literals were
 defined in terms of the <tt>char</tt> type used for the code unit type of
 ordinary string literals.  UTF-8 is the only text encoding mandated to be
-supported by the C standard for which there is no distinctly named code unit
-type.
+supported by the C standard for which the standard does not provide a
+distinctly named code unit type.
 </p>
 
 <p>Whether <tt>char</tt> is a signed or unsigned type is implementation
 defined and implementations that use an 8-bit signed char are at a
 disadvantage with respect to working with UTF-8 encoded text due to the
-necessity of having to rely on conversions to unsigned types in order to
-correctly process leading and continuation code units of multi-byte encoded
-code points.
+necessity of having to rely on conversions to an unsigned type in order to
+correctly process lead and continuation code units.
 </p>
 
 <p>The lack of a distinct type and the use of a code unit type with a range
 that does not portably include the full unsigned range of UTF-8 code units
 presents challenges for working with UTF-8 encoded text that are not present
 when working with UTF-16 or UTF-32 encoded text.  Enclosed is a proposal for
-a new <tt>char8_t</tt> typedef and related library enhancements intended to
-remove barriers to working with UTF-8 encoded text and to enable working with
-all five of the standard mandated text encodings in a consistent manner.
+a new <tt>char8_t</tt> typedef and related language and library enhancements
+intended to better facilitate portable handling of UTF-8 encoded text and to
+enable working with all five of the standard mandated text encodings in a
+consistent manner.
 </p>
 
 
@@ -240,34 +250,81 @@ UTF-8 is now used by more than 96% of all websites</a>
 <sup><a title="Usage of UTF-8 for websites"
         href="#ref_w3techs">
 [W3Techs]</a></sup>.
-While UTF-8 now dominates websites, it has not attained similar usage success
-as the execution character set of C and C++ compilers.  Important
-compilers, such as Microsoft's Visual C++, do not support use of UTF-8 as
-the execution character set<sup>[*]</sup>.  Programs that must consume
-and produce text in the execution character set and manipulate UTF-8
-text must choose one of two approaches to managing text in these distinct
-encodings:
+While UTF-8 now dominates websites, it has not attained similar adoption
+rates in the execution environments of C and C++ programs.
+Microsoft introduced support for using UTF-8 as a system's Active Code Page
+(ACP) in the April 2018 update of Windows 10, but that support remains a beta
+feature for which enablement is hidden within administrative regional settings.
+Most POSIX systems, including Linux and macOS, use UTF-8 as the system
+encoding by default, but continue to support changing the execution environment
+encoding via locale related environment variables like <tt>LC_ALL</tt>.
+Systems built on EBCDIC, like IBM's z/OS, continue to remain significant players
+in the C and C++ ecosystems.
+</p>
+
+<p>
+Programs that must consume, produce, or otherwise manipulate both UTF-8 text
+and text in the execution environment must choose one of two approaches to
+manage text stored in these potentially distinct encodings:
 <ol>
-  <li>Use <tt>char</tt> for both encodings while being careful to transcode
-      between the encodings when necessary.</li>
-  <li>Use <tt>char</tt> for the execution character set, and another
-      type, generally <tt>unsigned char</tt>, for UTF-8.</li>
+  <li>Use <tt>char</tt> for both encodings.</li>
+  <li>Use <tt>char</tt> when working with text for the execution environment,
+      and a different type, generally <tt>unsigned char</tt>, for UTF-8
+      encoded text.</li>
 </ol>
 </p>
 
-<p>The challenge with the first approach is ensuring that text is
-appropriately transcoded and is in the correct encoding when passed to
-other functions.  Since the same type, <tt>char</tt>, is used as the code unit
-type for both encodings, the programmer is unable to rely on the type system
-to help identify mistakes.
+<p>
+The challenge with the first approach is ensuring that text is appropriately
+transcoded and is in the correct encoding when passed to functions, including
+standard library functions.
+Since the same type, <tt>char</tt>, is used as the code unit type for both
+encodings, the programmer is unable to rely on the type system to help identify
+mistakes.
 </p>
 
-<p>The challenge with the second approach is that UTF-8 string literals have
-type array of <tt>char</tt>.  Direct comparisons with UTF-8 string literals
-are subject to sign mismatch (depending on the sign of <tt>char</tt>), and
-attempts to assign pointers to the desired code unit type directly to UTF-8
-string literals results in assignment from incompatible pointer types
+<p>
+The challenge with the second approach is that there is no common type for
+components to agree to use for UTF-8 text and, even when agreement on an
+alternate type is present, UTF-8 string literals still have type array of
+<tt>char</tt>.
+Assuming use of <tt>unsigned char</tt>, direct comparison with UTF-8 string
+literals is subject to sign mismatch (depending on the sign of <tt>char</tt>),
+and attempts to assign pointers to the desired code unit type directly to
+UTF-8 string literals results in assignment from incompatible pointer types
 (regardless of the sign of <tt>char</tt>).
+</p>
+
+<p>
+The adoption of a <tt>char8_t</tt> type via
+<a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+   href="https://wg21.link/p0482r6">
+P0482R6</a>
+<sup><a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+        href="#ref_p0482r6">
+[P0482R6]</a></sup>
+for C++20 presents an opportunity for C to do similarly so as to retain source
+code compatibility while also establishing a standard type for components to
+use for UTF-8 text.
+</p>
+
+<p>The addition of the <tt>char8_t</tt> typedef is intended to support source
+code compatibility between C and C++20 such that the following code would be
+well-formed with the same semantics for both languages while providing
+additional type safety and protection from implementation defined sign issues.
+<blockquote><pre>
+#include &lt;uchar.h&gt;
+
+void use_utf8(const char8_t *p) {
+  if (p[0] &gt;= 0x80) {
+    /* Handle UTF-8 lead or continuation code unit... */
+  }
+}
+
+int main() {
+  use_utf8(u8"text");
+}
+</pre></blockquote>
 </p>
 
 <p>Difficulty in managing multiple encodings with the same code unit type is
@@ -316,8 +373,10 @@ ability to write source code that is compatible across C and C++.
 <tt>/execution-charset:utf-8</tt> options to enable use of UTF-8 as the
 execution character set.  However, in practice, these options are of limited
 use since the Windows platform SDK does not, in general, support UTF-8.</em>
+</p>
+
+<p>
 <font color="red">
-<br/>
 <em>FIXME</em>: The Windows 10 April 2018 update added beta support for
 using UTF-8 as the system code page either by updating regional settings
 (affects all programs) or by compiling with an appropriately configured
@@ -331,16 +390,20 @@ manifest (affects only the program being build).
 <p>The proposed changes include:
 
 <ul>
-  <li>A new typedef of <tt>unsigned char</tt> named <tt>char8_t</tt> defined
+  <li>A new <tt>char8_t</tt> typedef of <tt>unsigned char</tt> defined
       in the <tt>&lt;uchar.h&gt;</tt> header.</li>
   <li>The type of UTF-8 string literals is changed from array of
       <tt>const char</tt> to array of <tt>const char8_t</tt>.</li>
   <li>The type of UTF-8 character literals is changed from
-      <tt>unsigned char</tt> to <tt>char8_t</tt>.</li>
+      <tt>unsigned char</tt> to <tt>char8_t</tt>.<br/>
+      (Since UTF-8 character literals already have type <tt>unsigned char</tt>,
+      this isn't a meaningful change).</li>
   <li>New <tt>mbrtoc8()</tt> and <tt>c8rtomb()</tt> functions declared in
       <tt>&lt;uchar.h&gt;</tt> enable conversions between multibyte characters
       and UTF-8.</li>
-  <li>New <tt>char8_t</tt> related atomic macros and types.</li>
+  <li>New <tt>char8_t</tt> related atomic macros
+      (<tt>ATOMIC_CHAR8_T_LOCK_FREE</tt>) and types
+      (<tt>atomic_char8_t</tt>).</li>
 </ul>
 </p>
 
