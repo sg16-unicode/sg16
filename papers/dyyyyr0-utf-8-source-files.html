@@ -97,7 +97,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2020-09-06</td>
+    <td>2020-10-25</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -117,6 +117,8 @@ blockquote.quote
       Introduction</a></li>
   <li><a href="#motivation">
       Motivation</a></li>
+  <li><a href="#deployment">
+      Deployment</a></li>
   <li><a href="#existing_practice">
       Existing practice</a>
     <ul>
@@ -218,8 +220,23 @@ files that make up a translation unit be encoded with compatible encodings.  In
 practice, this means a lowest common denominator approach, typically ASCII.
 </p>
 
+<ul>
+  <li><span style="background-color:red">FIXME</span>: Relaxation of the basic source character set restrictions.</li>
+  <li><span style="background-color:red">FIXME</span>: In conjunction with P1949, a path to adding more operators ala Swift.</li>
+  <li><span style="background-color:red">FIXME</span>: See https://github.com/boostorg/spirit/issues/612#issuecomment-642333176.</li>
+</ul>
+
 <p>
 <span style="background-color:red">Add Zach's famous example.</span>
+</p>
+
+
+<h1 id="deployment">Deployment</h1>
+
+<p><span style="background-color:red">FIXME</span>: Need for TUs that consist of differently encoded source files.
+</p>
+
+<p><span style="background-color:red">FIXME</span>: Just "iconv existing source files" isn't simple due to impact to build systems, generated source files, CI pipelines, code review and other tools, editors, etc...
 </p>
 
 
