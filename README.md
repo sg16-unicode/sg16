@@ -18,11 +18,15 @@ The following sections list papers and projects currently under our purview.  Ad
 WG Number     | Title/Notes/Links
 ------------- | -----
 \<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
+[P2362][]     | Make obfuscating wide character literals ill-formed
+[P2361][]     | Unevaluated strings literals
+[P2348][]     | Whitespaces Wording Revamp
 [P2316][]     | Consistent character literal encoding
 [P2314][]     | Character sets and encodings
-[P2297][]     | Wording improvements for encodings and character sets
-[P2295][]     | Correct UTF-8 handling during phase 1 of translation
+[P2295][]     | Support for UTF-8 as a portable source file encoding
+[P2290][]     | Delimited escapes sequences
 [P2246][]     | Character encoding of diagnostic text
+[P2223][]     | Trimming whitespaces before line splicing
 [P2201][]     | Mixed string literal concatenation
 [P2093][]     | Formatted output
 [P2071][]     | Named universal character escapes
@@ -57,6 +61,7 @@ The following papers are no longer being pursued.
 
 WG Number     | Title/Notes/Links
 ------------- | -----
+~~[P2297][]~~ | ~~Wording improvements for encodings and character sets~~<br/>(The goals of this paper were mostly addressed via [P2314][])
 ~~[P2194][]~~ | ~~The character set of C++ source code is Unicode~~<br/>(The goals of this paper are now being pursued via [P2314][] and [P2297][])
 ~~[P2178][]~~ | ~~Misc lexing and string handling improvements~~<br/>(The goals of this paper are now being pursued via [P2194][], [P2223][], [P2295][], and [P2316][])
 ~~[P2020][]~~ | ~~Locales, Encodings and Unicode~~<br/>(This paper did not contain a concrete proposal and no revisions are expected; it will be used as reference material)
@@ -103,10 +108,14 @@ WG Number     | Title/Notes/Links
 [N2440]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2440.pdf
 [N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
+[P2362]: https://wg21.link/p2362
+[P2361]: https://wg21.link/p2361
+[P2348]: https://wg21.link/p2348
 [P2316]: https://wg21.link/p2316
 [P2314]: https://wg21.link/p2314
 [P2297]: https://wg21.link/p2297
 [P2295]: https://wg21.link/p2295
+[P2290]: https://wg21.link/p2290
 [P2246]: https://wg21.link/p2246
 [P2223]: https://wg21.link/p2223
 [P2201]: https://wg21.link/p2201
