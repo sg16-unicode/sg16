@@ -37,6 +37,7 @@ WG Number     | Title/Notes/Links
 [P1729][]     | Text Parsing
 [P1629][]     | Standard Text Encoding
 [P1628][]     | Unicode character properties
+[P1072][]     | basic\_string::resize\_and\_overwrite
 [P0244][]     | Text\_view: A C++ concepts and range based character encoding and code point enumeration library
 
 ## Accepted Papers
@@ -143,6 +144,7 @@ WG Number     | Title/Notes/Links
 [P1238]: https://wg21.link/p1238
 [P1139]: https://wg21.link/p1139
 [P1097]: https://wg21.link/p1097
+[P1072]: https://wg21.link/p1072
 [P1041]: https://wg21.link/p1041
 [P1025]: https://wg21.link/p1025
 [P0645]: https://wg21.link/p0645
