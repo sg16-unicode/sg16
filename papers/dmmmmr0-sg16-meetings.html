@@ -1,0 +1,397 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2021-04-14 through 2021-04-14</title>
+</head>
+
+<style type="text/css">
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+
+tt {
+    font-family: monospace;
+}
+
+/* Thanks to Elias Kosunen for the following CSS suggestions! */
+
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    line-height: 125%;
+}
+
+html, body {
+    background-color: #eee;
+}
+
+h1, h2, h3, h4, h5, p, span, li, dt, dd {
+    color: #333;
+}
+
+p, li {
+    line-height: 140%;
+}
+
+body {
+    padding: 1em;
+    max-width: 1600px;
+}
+
+p, li {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-font-smoothing: antialiased !important;
+    text-rendering: optimizelegibility !important;
+    letter-spacing: .01em;
+}
+
+h1, h2, h3 {
+    margin-bottom: 1em;
+    letter-spacing: .03em;
+}
+
+blockquote.quote
+{
+    margin-left: 0em;
+    border-style: solid;
+    background-color: lemonchiffon;
+    color: #000000;
+    border: 1px solid black;
+}
+
+</style>
+
+<body>
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>DXXXXR0 <em>Draft</em></td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2021-04-27</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2021-04-14 through 2021-04-14</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2021_04_14">
+      April 14th, 2021</a></li>
+</ul>
+
+<p>
+Previously published SG16 meeting summary papers:
+<ul>
+  <li><a href="https://wg21.link/p1080">P1080: SG16: Unicode meeting summaries 2018/03/28 - 2018/04/25</a></li>
+  <li><a href="https://wg21.link/p1137">P1137: SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20</a></li>
+  <li><a href="https://wg21.link/p1237">P1237: SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03</a></li>
+  <li><a href="https://wg21.link/p1422">P1422: SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09</a></li>
+  <li><a href="https://wg21.link/p1666">P1666: SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22</a></li>
+  <li><a href="https://wg21.link/p1896">P1896: SG16: Unicode meeting summaries 2019/06/12 - 2019/09/25</a></li>
+  <li><a href="https://wg21.link/p2009">P2009: SG16: Unicode meeting summaries 2019-10-09 through 2019-12-11</a></li>
+  <li><a href="https://wg21.link/p2179">P2179: SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27</a></li>
+  <li><a href="https://wg21.link/p2217">P2217: SG16: Unicode meeting summaries 2020-06-10 through 2020-08-26</a></li>
+  <li><a href="https://wg21.link/p2253">P2253: SG16: Unicode meeting summaries 2020-09-09 through 2020-11-11</a></li>
+  <li><a href="https://wg21.link/p2352">P2352: SG16: Unicode meeting summaries 2020-12-09 through 2021-03-24</a></li>
+</ul>
+</p>
+
+
+<h1 id="2021_04_14">April 14th, 2021</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://isocpp.org/files/papers/P2295R2.pdf">P2295R2: Correct UTF-8 handling during phase 1 of translation</a></li>
+  <li><a href="https://isocpp.org/files/papers/P2348R0.pdf">P2348R0: Whitespaces Wording Revamp</a></li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>PBrett introduced the agenda.</li>
+  <li><a href="https://isocpp.org/files/papers/P2295R2.pdf">P2295R2: Correct UTF-8 handling during phase 1 of translation</a>
+    <ul>
+      <li>Corentin introduced:
+        <ul>
+          <li>This is a proposal to require that UTF-8 be one of the set of
+              otherwise implementation-defined source file encodings.</li>
+          <li>With regard to ill-formed code unit sequences, there is no such
+              thing; the source code is either valid UTF-8 or it is not
+              UTF-8.</li>
+          <li>Gcc does not validate its presumed UTF-8 input.</li>
+          <li>With regard to BOMs, the proposal does not impose any
+              requirements other than that a BOM present in a UTF-8 source
+              file be ignored for the purposes of lexing.</li>
+          <li>An implementation may use the presence or non-presence of a BOM
+              as part of its source file encoding determination.</li>
+          <li>The proposed wording will require updates for changes that will
+              presumably be adopted from Jens'
+              <a href="https://wg21.link/p2314">P2314: Character sets and encodings</a>.</li>
+          <li>This proposal follows Beman Dawes' earlier proposal,
+              <a href="https://wg21.link/n3463">N3463: Portable Program Source Files</a>.</li>
+          <li>At present, the C++ standard has no requirement for a portable
+              source file.</li>
+        </ul>
+      </li>
+      <li>Tom stated that gcc will perform UTF-8 validation if both
+          <tt>-finput-charset=utf-8</tt> and <tt>-fexec-charset=utf-8</tt>
+          are specified.</li>
+      <li><em>[ Editor's note: Tom was wrong (and since Tom is also the editor,
+          he can be blunt like that); gcc only validates UTF-8 for string
+          literals, and then only if <tt>-fexec-charset=&lt;encoding&gt;</tt>
+          is specified. ]</em></li>
+      <li>Jens noted a capitalization issue in the wording; the sentence
+          following the added note in [lex.phases]p1 has a capitalized "The"
+          following a ";".</li>
+      <li>Jens asked why the note added to [lex.phases]p1 is just a note; the
+          preceding prose provides a definition, but does not impose any
+          requirements.</li>
+      <li>PBrett responded that, if an invalid sequence is present, then there
+          is no sequence of Unicode scalar values.</li>
+      <li>PBrett asked if moving the note after the following sentence would
+          resolve the concern.</li>
+      <li>Jens replied that it would not; that would define a UTF-8 source file
+          and state that a well-formed UTF-8 source file must be accepted, but
+          would impose no requirements on an ill-formed UTF-8 source file.</li>
+      <li>PBrett acknowledged that further wording work is needed.</li>
+      <li>Jens observed, and noted that the paper discusses, that
+          implementations can accept source files that approximate UTF-8.</li>
+      <li>Hubert noted that a normative statement is needed to state that it is
+          implementation-defined how a requirement for UTF-8 source files is
+          specified.</li>
+      <li>PBindels suggested placing a requirement for well-formed input with
+          the character set definitions.</li>
+      <li>Jens indicated no objection to clarification, but that he would like
+          to see the ISO 10646 definition of "well-formed".</li>
+      <li>Steve observed that the note is stating that invalid UTF-8 sequences
+          cannot happen in a well-formed UTF-8 source file.</li>
+      <li>Jens responded that there is a normative difference between
+          something that cannot happen and something that is ill-formed; the
+          latter requires a diagnostic.</li>
+      <li>Hubert asserted that the wording needs to establish intent; a
+          sequence of bytes may happen to be well-formed UTF-8, but the
+          wording needs to ensure that the bytes were intended to be
+          interpreted as UTF-8.</li>
+      <li>PBindels summarized; we need to state there is an
+          implementation-defined way to specify that a source file is to be
+          interpreted as UTF-8.</li>
+      <li>Jens agreed.</li>
+      <li>JenaHeyd agreed from chat, "Yes, Hubert's definition is correct. You
+          have to make it so the implementation has a way to mark/identify a
+          source file as UTF-8, and then you can impose these requirements."</li>
+      <li>Corentin stated the intent; that the compiler determine the source
+          encoding in an implementation-defined way, but that a source file
+          that does not decode successfully is diagnosed as ill-formed.</li>
+      <li>Tom suggested specifying that the file must decode successfully as
+          opposed to being well-formed.</li>
+      <li>PBrett stated that a branch is needed in translation phase 1 to
+          distinguish the cases where the source file is encoded as UTF-8 vs
+          some other encoding.</li>
+      <li>Zach suggested that a definition for a UTF-8 source file is
+          unnecessary.</li>
+      <li>PBindels expressed concern that there may be a conflict between use
+          of a BOM and a truly portable source file.</li>
+      <li>PBrett responded that the goal is that, if a source file is UTF-8
+          encoded, that there is a way to direct an implementation to process
+          it as such.</li>
+      <li>Jens acknowledged and added that an implementation could require use
+          of a command line option to opt-in to UTF-8 encoded source files;
+          that implies that the source file is not automatically portable,
+          but is the best we can do.</li>
+      <li>Tom agreed and stated that the only way we could do better is to
+          require a BOM everywhere and nobody wants that.</li>
+      <li>Zach noted that the only statement made regarding a BOM is that it
+          can be ignored; presumably after encoding determination is complete
+          so that the BOM doesn't interfere with translation phase 2.</li>
+      <li>Hubert noted that, once the encoding is determined to be UTF-8, a
+          BOM is portably ignored.</li>
+      <li>PBrett encouraged assumption of non-hostile implementations; no
+          implementation is going to require a BOM in order for a UTF-8
+          encoded source file to be processed as such.</li>
+      <li>Several relevant comments were made from chat:
+        <ul>
+          <li>Steve: "We want portable source code. If anyone requires a BOM,
+              then portable source code needs one."</li>
+          <li>JeanHeyd: "If you put in a BOM and use -fexec-charset=SHIFT-JIS,
+              the implementation can ignore the BOM and still read everything
+              as SHIFT-JIS."</li>
+          <li>Hubert: "If you did that, the BOM is not a BOM..."</li>
+        </ul>
+      </li>
+      <li>Jens suggested that the wording needs to establish when encoding
+          determination happens; that should be the first step of translation
+          phase 1.</li>
+      <li>Jens added that the wording should be consistent with regard to
+          encoding vs encoding form vs encoding scheme.</li>
+      <li>Tom stated that, for UTF-8, encoding form vs encoding scheme doesn't
+          matter, but that encoding scheme should be used if the intent is for
+          the wording to be compatible with UTF-16 or UTF-32.</li>
+      <li>Hubert asserted that, since the context is byte oriented files,
+          encoding scheme should be used.</li>
+      <li>Jens reiterated the necessary wording updates; the encoding scheme to
+          use must first be established, then the source file can be validated
+          and diagnostics issued if it fails to conform to the encoding
+          scheme.</li>
+      <li>Jens added that the wording needs to prevent the current
+          implementation-defined mapping to the internal encoding from being
+          applied to UTF-8 source files.</li>
+      <li>PBindels asked if the added sentence in translation phase 2 regarding
+          the "first codepoint" applies to each source file or just to the
+          primary source file.</li>
+      <li>Tom and Corentin replied that translation phases 1 through 3 are
+          performed separately for each source file.</li>
+      <li>Hubert suggested that translation phase 2 should discard a lead
+          U+FEFF character regardless of the source file encoding.</li>
+      <li>Jens noted that the added translation phase 2 sentence doesn't make
+          sense without the wording changes proposed in
+          <a href="https://wg21.link/p2314">P2314: Character sets and encodings</a>
+          due to character translation to <i>universal-character-name</i> in
+          translation phase 1.</li>
+      <li>Tom noted that the wording changes in P2314 allow distinguishing a
+          source file with a BOM and a source file that starts with a
+          <tt>\uFEFF</tt> <i>universal-character-name</i>.</li>
+      <li>Jens clarified that, after P2314, a <i>universal-character-name</i>
+          isn't translated to a UCS scalar value until translation phase 3.</li>
+      <li>Hubert stated that it is a design question whether we want to treat a
+          leading <tt>\uFEFF</tt> <i>universal-character-name</i> as a BOM.</li>
+      <li>PBrett asked PBindels if he is satisfied with the BOM design
+          following prior discussion.</li>
+      <li>PBindels responded that he is, so long as we don't intentionally or
+          unintentionally create the situation where UTF-8 source files end up
+          requiring a BOM in practice.</li>
+      <li>PBrett asked if we should add normative encouragement not to require
+          a BOM.</li>
+      <li>Hubert noted that, as wording updates are done, care must be taken to
+          ensure we don't lose the wording that requires an implementation to
+          accept a UTF-8 encoded source file whether it does, or does not,
+          contain a BOM.</li>
+      <li>Tom asked about handling of differently encoded source files.</li>
+      <li>JeanHeyd replied in chat, "I think it's better to leave Encoding
+          Identication to Tom's Paper on the subject."</li>
+      <li>Tom replied in chat, "Assuming I actually deliver on that
+          threat..."</li>
+      <li>Hubert responded that the implementation must provide some means for
+          standard headers (as opposed to header files), to remain usable when
+          the implementation is running in UTF-8 mode.</li>
+      <li>Steve added in chat, "Which might be 7 bit ascii for those headers.
+          Which is largely the case today."</li>
+      <li><b>We wish to require implementations to support UTF-8 source files.</b>
+        <ul>
+          <li><b>Attendance: 10</b></li>
+          <li><b>No objections to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li><b>We wish to require implementations to be capable of accepting UTF-8
+          source files whether or not they begin with a U+FEFF byte order mark</b>.
+        <ul>
+          <li><b>Attendance: 10</b></li>
+          <li><b>No objections to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li>Hubert reported that Clang allows non-UTF-8 encoded header names in
+          <tt>#include</tt> directives in otherwise UTF-8 encoded source
+          files.</li>
+      <li>Steve stated that, since file names are not required to be
+          representable in UTF-8, requiring strictly well-formed UTF-8 could
+          have unanticipated consequences.</li>
+      <li>JeanHeyd asked in chat, "Does `\xFF` work in header-names as an
+          escape?"</li>
+      <li>Corentin replied in chat, "unspecified".</li>
+      <li>Corentin explained his intent in requiring diagnosis of ill-formed
+          UTF-8 input.</li>
+      <li>PBindels asked why it is useful to allow invalid UTF-8 in
+          comments.</li>
+      <li>Corentin replied that Clang source code has comments explaining why
+          invalid UTF-8 in comments is explicitly allowed and provided a link
+          to the source code.
+        <ul>
+          <li><a href="https://github.com/llvm/llvm-project/blob/main/clang/lib/Lex/Lexer.cpp#L3136-L3144">https://github.com/llvm/llvm-project/blob/main/clang/lib/Lex/Lexer.cpp#L3136-L3144</a></li>
+        </ul>
+      </li>
+      <li>PBrett shared cases of copyright symbols appearing in otherwise ASCII
+          files.</li>
+      <li>Tom noted that non-ASCII characters tend to appear in author, product,
+          and company names in comments.</li>
+      <li>Hubert stated that source files that <tt>iconv</tt> will reject are
+          undesirable.</li>
+      <li><b>We wish to require implementations to have a mode in which they diagnose ill-formed UTF-8 source files (regardless of whether the ill-formedness is located in comments, header names or string literals).</b>
+        <ul>
+          <li><b>Attendance: 10</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">8</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+        </ul>
+      </li>
+      <li><b>Consensus is strongly in favor.</b></li>
+      <li><b>SF: As it stands right now, people are already basically rolling
+          the dice with their source files. This is strictly an improvement
+          over the status quo, because now there is, at least, one entirely
+          portable way to write source code.</b></li>
+      <li>Corentin asked about necessary wording to support both source files
+          and non-files.</li>
+      <li>Hubert responded that (standard library) headers are not source
+          files; source files are those things that are included by
+          <tt>#include</tt> directives that do not name standard headers.</li>
+      <li>PBrett asked if the wording should be modified do discuss "input"
+          as opposed to "files".</li>
+      <li>Hubert responded that such a change is not necessary.</li>
+      <li>Corentin pledged to bring back a revised paper.</li>
+    </ul>
+  <li>Tom stated the next telecon will be April 28th.</li>
+</ul>
+
+
+</body>
