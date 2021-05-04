@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2021-04-14 through 2021-04-14</title>
+<title>SG16: Unicode meeting summaries 2021-04-14 through 2021-04-28</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-04-27</td>
+    <td>2021-05-04</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2021-04-14 through 2021-04-14</h1>
+<h1>SG16: Unicode meeting summaries 2021-04-14 through 2021-04-28</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -99,6 +99,8 @@ snapshot of select meeting summaries from that repository.
 <ul>
   <li><a href="#2021_04_14">
       April 14th, 2021</a></li>
+  <li><a href="#2021_04_28">
+      April 28th, 2021</a></li>
 </ul>
 
 <p>
@@ -391,6 +393,334 @@ Previously published SG16 meeting summary papers:
       <li>Corentin pledged to bring back a revised paper.</li>
     </ul>
   <li>Tom stated the next telecon will be April 28th.</li>
+</ul>
+
+
+<h1 id="2021_04_28">April 28th, 2021</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://cplusplus.github.io/LWG/issue3547">LWG3547: Time formatters should not be locale sensitive by default</a></li>
+  <li><a href="https://wg21.link/p2093r5">P2093R5: Formatted output</a></li>
+  <li><a href="https://wg21.link/p2295r3">P2295R3: Support for UTF-8 as a portable source file encoding</a></li>
+  <li><a href="https://wg21.link/p2348r0">P2348R0: Whitespaces Wording Revamp</a></li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Charlie Barto was welcomed with a round of introductions.</li>
+  <li>PBrett introduced the agenda.</li>
+  <li><a href="https://cplusplus.github.io/LWG/issue3547">LWG3547: Time formatters should not be locale sensitive by default</a>
+    <ul>
+      <li>PBrett presented:
+        <ul>
+          <li>Peter's presentation slides are available
+              <a href="https://github.com/sg16-unicode/sg16-meetings/blob/master/presentations/2021-04-28-lwg3547-presentation.pptx">here</a>.</li>
+          <li>As currently specified, whether a format specifier is locale
+              dependent is not obvious.</li>
+          <li>Floating point values are locale independent by default, but
+              chrono values are not.</li>
+          <li>There is no systematic way to format locale-independent and
+              locale-dependent chrono values.</li>
+        </ul>
+      </li>
+      <li>Victor expressed a preference for chrono values being locale
+          independent by default.</li>
+      <li>Victor explained that the current specification derived from existing
+          specifiers used elsewhere.</li>
+      <li>Victor noted that, in some cases, specifiers are not available for
+          locale independent formatting.</li>
+      <li>Victor reported success with a prototype implementation of the
+          proposed resolution that performs locale independent formatting of
+          chrono values unless a <tt>L</tt> specifier is present.</li>
+      <li>Charlie stated that changes to the format specifier syntax may have
+          more implementation impact than just requiring changes to the
+          implementation behavior.</li>
+      <li><em>[ Editor's note: Discussion regarding the amount of time
+          available to make changes before implementations of
+          <tt>std::format()</tt> are shipped to users ensued.  That discussion
+          is not recorded as it involved discussion of internal company time
+          lines that have not yet been stated in public. ]</em></li>
+      <li>PBrett noted that there are two related issues:
+        <ul>
+          <li>1: The format specification syntax.</li>
+          <li>2: The behavior of the format specifiers.</li>
+        </ul>
+      </li>
+      <li>PBrett explained that the proposed resolution addresses both concerns
+          by making the format syntax consistent in requiring a <tt>L</tt>
+          specifier to opt-in to locale dependent behavior.</li>
+      <li>Charlie noted that <tt>std::format()</tt> does not currently perform
+          any transcoding operations today; not for format arguments, and not
+          for text provided by a locale that uses a different character encoding
+          than the literal encoding.</li>
+      <li>Charlie added that <tt>std::format()</tt> does need to be encoding
+          aware for the purposes of field width estimation.</li>
+      <li>Corentin stated that the intent of the proposed resolution is to
+          ensure that <tt>std::format()</tt> use consistent syntax to opt-in to
+          locale dependent formatting and encouraged trying to address at least
+          this concern.</li>
+      <li>Corentin added that LWG might agree on a resolution in a short time
+          frame, but that there will not be a plenary poll until June.</li>
+      <li>PBrett stated that the resolution may be considered evolutionary.</li>
+      <li>Victor agreed and noded that the <tt>L</tt> specifier could be added
+          for a future standard.</li>
+      <li>Victor asserted that we do need to decide what the default behavior
+          is now.</li>
+      <li>Victor added that we could consider transcoding locale provided text
+          and potentially detecting mojibake if it would be produced.</li>
+      <li>Victor noted that the format string is always a literal.</li>
+      <li><em>[ Editor's note: In C++20, the format string may not be a literal,
+          but
+          <a href="https://wg21.link/p2216">P2216</a>,
+          if adopted, will require a literal or other compile-time evaluated
+          expression. ]</em></li>
+      <li>Zach asked for clarification regarding what is meant by
+          "default behavior" and noted that the <tt>%Ou</tt> specifier is
+          locale dependent, but that <tt>%u</tt> is not.</li>
+      <li>Victor responded that there are cases like <tt>%T</tt> that do not
+          have locale independent forms.</li>
+      <li><em>[ Editor's note: <tt>%T</tt> is locale dependent because the
+          decimal point character potentially used for sub-second precision is
+          provided by the locale. ]</em></li>
+      <li>Hubert stated that these concerns will be difficult to resolve
+          quickly, are clearly evolutionary, and may require balloting.</li>
+      <li>Hubert added that there may also be issues with requiring the locale
+          independent behavior to use English translations.</li>
+      <li>Tom noted that the basic source character set already has a bias in
+          English.</li>
+      <li>Hubert responded that this goes further; we may potentially have to
+          specify behavior in terms of <tt>asctime()</tt>.</li>
+      <li>Charlie commented that the text provided by the locale facet is
+          currently produced by the operating system; changing that behavior
+          may not be problematic.</li>
+      <li>Charlie added that adding new format specifiers will result in
+          incompatibilities if code that uses those specifiers is run with an
+          older library implementation that doesn't support them.</li>
+      <li>Charlie noted that, if support for compile-time format string
+          checking is adopted via
+          <a href="https://wg21.link/p2216">P2216</a>,
+          then the format string will become part of the function template
+          specialization; this may help to avoid library compatibility
+          issues.</li>
+      <li>Charlie stated that there are multiple sources of locale information
+          and that formatting of the chrono types is goverend by the Windows
+          region settings.</li>
+      <li>Charlie noted that changes to the Windows region settings require a
+          reboot.</li>
+      <li>Tom asked for confirmation that calls to <tt>std::setlocale()</tt>
+          don't affect how chrono values are formatted.</li>
+      <li>Charlie confirmed that is correct.</li>
+      <li>PBrett asked if <tt>std::format()</tt> behavior is affected by
+          changes to the global locale via <tt>std::locale::global()</tt>.</li>
+      <li>Charlie responded that the global locale does affect the behavior of
+          format specifiers that include the <tt>L</tt> specifier.</li>
+      <li>Charlie clarified that the global locale will not affect parsing of
+          the format string itself.</li>
+      <li>Corentin requested review of the proposed resolution.</li>
+      <li>Hubert noted that the wording requires that the "C" locale be used
+          for field formats that do not include the <tt>L</tt> specifier
+          regardless of whether a <tt>std::locale</tt> argument is passed.</li>
+      <li>Hubert noted that under the C++20 wording, implementations trying to
+          accomodate this tentative future direction may be more able to ignore
+          the global locale than an explicit locale argument.  So, a change
+          that maintains respecting the locale parameter is more compatible
+          with C++20.</li>
+      <li>Tom responded that doing so would not be consistent with the other
+          standard format specifiers.</li>
+      <li>Victor agreed and added that he would be strongly opposed to implicit
+          use of a <tt>std::locale</tt> parameter.</li>
+      <li>Jens stated that a migration path to better behavior needs to be
+          estalished and noted that the current situation is an interesting
+          mess.</li>
+      <li>Jens suggested investigating how to increase consistency with the
+          existing locale dependent format specifiers; e.g., for decimal
+          point and digit group separator characters.</li>
+      <li>Jens added that there may be cases where it would be useful to be
+          able to specify use of the "C" locale even when a locale is provided
+          as an argument.</li>
+      <li>Jens observed that use of the "C" locale for the chrono <tt>%p</tt>
+          specifier would be consistent with use of the "C" locale for floating
+          point values.</li>
+      <li>Jens noted that the example in the proposed resolution does not match
+          the proposed grammar; the <tt>L</tt> specifier should precede the
+          <i>chrono-specs</i> specifier, not follow it.</li>
+      <li>Jens stated that adding support for the <tt>L</tt> specifier is
+          backward compatible from a standard evolution perspective.</li>
+      <li>Tom stated that a change to use the "C" locale in place of the global
+          locale or a locale passed as an argument can be done as a non-abi
+          breaking change.</li>
+      <li>Charlie agreed, but noted that some implementation tricks may be
+          required to avoid potential conflicts with older libraries.</li>
+      <li>Zach stated that mixing different library versions is non-conforming
+          anyway.</li>
+      <li>Corentin stated that the "C" locale is used as a proxy for the
+          absence of a locale and suggested that a constexpr locale might be
+          desired in the future.</li>
+      <li>Corentin asked Charlie if formatters can be modified without
+          breaking ABI.</li>
+      <li>Charlie replied that they are templates, so modifications can result
+          in ODR violations.  Charled added that inline namespaces can be
+          helpful in some cases.</li>
+      <li>PBrett asked for confirmation that use of a <tt>L</tt> specifier
+          where one is not expected will result in a format exception being
+          thrown.</li>
+      <li>Victor confirmed that is the case.</li>
+      <li>PBrett asked if the <tt>L</tt> specifier could be reserved now such
+          that a format exception will be thrown if used, and then different
+          behavior specified later.</li>
+      <li>Charlie responded that changing behavior to not throw in cases where
+          an exception was previously thrown is fine so long as mixed library
+          version problems are avoided.</li>
+      <li>Victor expressed agreement with Jens' prior comments.</li>
+      <li>Victor stated that behavior must remain consistent between
+          <tt>std::format()</tt> overloads that do and do not accept
+          <tt>std::locale</tt> arguments; the presence of the
+          <tt>std::locale</tt> argument must not, by itself, affect
+          behavior.</li>
+      <li>PBrett suggested that a paper that explores the alternatives may be
+          required.</li>
+      <li>Corentin asserted that it must be possible to evolve the
+          <tt>std::format</tt> format string so as to add new behaviors.</li>
+      <li>Corentin expressed distaste for the idea of a "no locale" specifier;
+          that approach would still result in inconsistencies with number
+          formatting.</li>
+      <li>Charlie agreed.</li>
+      <li>Jens conceded that challenging standardization work will be required
+          if behavior changes from C++20 to C++23.</li>
+      <li>Jens asserted that the right to add format specifiers when a new
+          standard is issued must be reserved, even if doing so causes
+          implementation challenges.</li>
+      <li><b>Poll 1: LWG3547 raises a valid design defect in [time.format] in C++20.</b>
+        <ul>
+          <li><b>Attendance: 11</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">7</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Strong consensus that this issue represents a
+              design defect.</b></li>
+        </ul>
+      </li>
+      <li>Hubert noted that, with regard to issues of consistency, the proposed
+          resolution is a departure from existing interfaces such as
+          <tt>strftime()</tt>.</li>
+      <li><b>Poll 2: The proposed LWG3547 resolution as written should be applied to C++23.</b>
+        <ul>
+          <li><b>Attendance: 11</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus.</b></li>
+          <li><b>SA: Mitigation of behavior changes sensitive to string literal
+              contents is very difficult and there are options available to
+              deal with this problem in an additive way; this direction
+              represents an unnecessary backward compatibility break.</b></li>
+        </ul>
+      </li>
+      <li>Mark stated that the proposed resolution would have been great 18
+          months ago.</li>
+      <li>PBrett responded that we need to recognize when we make mistakes
+          and own correcting them.</li>
+      <li>Corentin lamented the current state being another case of a bad
+          default.</li>
+      <li>Tom suggested that the current behavior can be presented as
+          intentional with the goal to maintain consistency with existing
+          interfaces; new format specifiers can then be added in C++23.</li>
+      <li>PBrett suggested that an SG16 issue be filed and a volunteer found
+          to work on it.</li>
+      <li>Victor responded that the behavior isn't sufficiently broken to
+          make him want to spend time on it.</li>
+      <li><em>[ Editor's note: Despite that lack of desire, Victor and
+          Corentin quickly authored an initial draft paper that will become
+          <a href="https://wg21.link/p2372r0">P2372R0</a>
+          once published. ]</em></li>
+      <li>PBrett volunteered to work on a paper.</li>
+    </ul>
+  </li>
+  <li>Tom and PBrett thanked Charlie for joining the telecon and encouraged
+      him to continue attending.</li>
+  <li>Tom stated that Victor had expressed interest in working on a potential
+      <tt>std::locale</tt> replacement and asked if there were other
+      volunteers interested in such work.
+    <ul>
+      <li>Victor responded that the motivation was provided by Hubert's
+          example code included in the telecon agenda, that he is interested
+          in conducting some implementation experiments, but that he does not
+          have anything concrete in mind yet.</li>
+      <li><em>[ Editor's note: Hubert's example is below.  In addition to the
+          question of which locale is used in the formatting, there is a
+          question of how encoding issues are handled.  The example depends on
+          a locale to provide translations of AM/PM designators for a 12-hour
+          clock.  What happens when the literal encoding is UTF-8 and the
+          locale provides translations in Windows codepage 932?</em>
+<pre style="display:inline"><tt>
+    std::print("{:%r}\n", std::chrono::system_clock::now().time_since_epoch());
+</tt></pre>
+          <em>]</em>
+      </li>
+      <li>PBrett expressed interest in being involved.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next SG16 telecon will be held May 12th.
+    <ul>
+      <li>Tom added that the agenda will include further discussion of
+          <a href="https://wg21.link/p2093r5">P2093R5: Formatted output</a>
+          and a return to
+          <a href="https://wg21.link/p2295r3">P2295R3: Support for UTF-8 as a portable source file encoding</a>.</li>
+      <li>PBrett asked if a CWG expert could review and comment on the updated
+          wording for P2295R3.</li>
+      <li>Hubert agreed to do so.</li>
+      <li>Corentin requested a CWG expert also review the proposed wording in
+          <a href="https://wg21.link/p2348r0">P2348R0: Whitespaces Wording Revamp</a>.</li>
+  </li>
 </ul>
 
 
