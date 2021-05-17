@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2021-04-14 through 2021-04-28</title>
+<title>SG16: Unicode meeting summaries 2021-04-14 through 2021-05-12</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-05-04</td>
+    <td>2021-05-17</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2021-04-14 through 2021-04-28</h1>
+<h1>SG16: Unicode meeting summaries 2021-04-14 through 2021-05-12</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -101,6 +101,8 @@ snapshot of select meeting summaries from that repository.
       April 14th, 2021</a></li>
   <li><a href="#2021_04_28">
       April 28th, 2021</a></li>
+  <li><a href="#2021_05_12">
+      May 12th, 2021</a></li>
 </ul>
 
 <p>
@@ -721,6 +723,292 @@ Previously published SG16 meeting summary papers:
       <li>Corentin requested a CWG expert also review the proposed wording in
           <a href="https://wg21.link/p2348r0">P2348R0: Whitespaces Wording Revamp</a>.</li>
   </li>
+</ul>
+
+
+<h1 id="2021_05_12">May 12th, 2021</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2295r3">P2295R3: Support for UTF-8 as a portable source file encoding</a></li>
+  <li><a href="https://wg21.link/p2372r1">P2372R1: Fixing locale handling in chrono formatters</a></li>
+  <li><a href="https://wg21.link/p2093r6">P2093R6: Formatted output</a></li>
+  <li><a href="https://wg21.link/p2348r0">P2348R0: Whitespaces Wording Revamp</a></li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Brett</li>
+  <li>Tom Honermann</li>
+  <li>Steve Downey</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2295r3">P2295R3: Support for UTF-8 as a portable source file encoding</a>
+    <ul>
+      <li>No discussion as the author was not present.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2372r1">P2372R1: Fixing locale handling in chrono formatters</a>
+    <ul>
+      <li><em>[ Editor's note: D2372R1 was the active paper under discussion at
+          the telecon.  That paper was later published as P2372R1 without
+          further modification.  The agenda and links used here reference
+          P2372R1 since the links to the draft paper were ephemeral.
+          ]</em></li>
+      <li>PBrett introduced the topic:
+        <ul>
+          <li>LEWG reached consensus for the direction proposed by
+              <a href="https://wg21.link/p2372r0">P2372R0</a>
+              at its
+              <a href="https://wiki.edg.com/bin/view/Wg21telecons2021/P2372#2021-05-03">2021-05-03 telecon</a>
+              with additional refinement to preserve locale dependent
+              formatting for iostreams.</li>
+          <li>Since SG16 polls conduced at its
+              <a href="https://github.com/sg16-unicode/sg16-meetings#april-28th-2021">2021-04-28 telecon</a>
+              did not agree with this direction, LEWG requested that SG16
+              review and conform or rebut the LEWG consensus.</li>
+        </ul>
+      </li>
+      <li>Victor presented slides lightly updated from his prior LEWG
+          presentation.
+        <ul>
+          <li>Victor's presentation slides are available
+              <a href="https://github.com/sg16-unicode/sg16-meetings/blob/master/presentations/2021-05-12-p2372-presentation.pdf">here</a>.</li>
+        </ul>
+      </li>
+      <li><b>Poll 1: Forward D2372R1 to LEWG for inclusion in C++23 and with
+          the intent that it be applied retroactively to C++20.</b>
+        <ul>
+          <li><b>Attendance: 8</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Strong consensus in favor.</b></li>
+        </ul>
+      </li>
+      <li><em>[Editor's note: D2372R1 contains the LEWG requested update to
+          preserve locale dependent formatting for ostreams. ]</em></li>
+      <li><em>[Editor's note: The chair's perception is that SG16's change in
+          consensus is attributable to two factors:
+        <ol type="1">
+          <li>New information that arrived after the initial poll.</li>
+          <li>SG16's original poll targeted C++23 while LEWG's poll targets
+              C++23 and C++20 as a DR; some concerns had been expressed
+              regarding backward compatibility and migration.</li>
+        </ol>
+          ]</em>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2093r6">P2093R6: Formatted output</a>
+    <ul>
+      <li>Victor presented:
+        <ul>
+          <li><tt>std::print()</tt> integrates <tt>std::format()</tt> with
+              I/O.</li>
+          <li>R6 addresses recent LEWG feedback:
+            <ul>
+              <li>The proposed <tt>std::print()</tt> header was changed from
+                  <tt>&lt;io&gt;</tt> to <tt>&lt;print&gt;</tt>.</li>
+              <li>Additional rationale and clarifications were added regarding:
+                <ul>
+                  <li>Substitution of replacement characters.</li>
+                  <li>The choice to base behavior on the compile-time literal
+                      encoding.</li>
+                  <li>ANSI escape sequences do not constitute a native device
+                      API.</li>
+                  <li>Existing practice in Rust.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>PBrett asked how substitutions would be performed for different kinds
+          of ill-formed scenarios.</li>
+      <li>Zach stated that the Unicode standard documents recommended practice
+          for substitution of replacement characters.</li>
+      <li><em>[ Editor's note:
+          <a href="http://www.unicode.org/versions/Unicode13.0.0">Unicode 13</a>
+          discusses substitution of replacement characters in section
+          "U+FFFD Substitution of Maximal Subparts" of
+          chapter 3.9, "Unicode Encoding Forms" and in
+          chapter 5.22, "U+FFFD Substitution in Conversion". ]</em></li>
+      <li>Zach expressed a preference for implementations to be consistent in
+          how replacement characters are substituted.</li>
+      <li>Hubert stated that an example should be added to the paper.</li>
+      <li>Hubert expressed a preference for <tt>vprint_unicode()</tt> to
+          substitute replacement characters even when the output device is not
+          Unicode.</li>
+      <li>Victor asked if that could be done as implementation-defined
+          behavior.</li>
+      <li>Hubert responded, no; the goal is for the substitution behavior to be
+          determinstic for <tt>vprint_unicode()</tt> regardless of the output
+          device.</li>
+      <li>Victor replied that he would prefer that behavior to be optional.</li>
+      <li>Hubert replied that he would like to ensure that ill-formed inputs are
+          not presented with no indication that something went wrong.</li>
+      <li>PBrett stated that, when writing to a Unicode device, a
+          <tt>U+FFFD</tt> replacement character should be substituted and the
+          device should then handle it as its designers intended.</li>
+      <li>Victor agreed with the substitution rationale for the device case
+          since transcoding may be necessary, but disagreed for files due to a
+          desire to avoid the validation overhead.</li>
+      <li>Hubert expressed a preference for the behavior of
+          <tt>vprint_unicode()</tt> to be consistent across files and
+          devices.</li>
+      <li>PBrett suggested that what Hubert desires is some kind of noisy
+          failure, like a trap.</li>
+      <li>Hubert agreed and restated the goal as some kind of signal that
+          encoding issues were encountered.</li>
+      <li>Steve stated that C++ programs do not typically interact directly
+          with a device and that it is difficult to diagnose problems where the
+          data can't be inspected en route.</li>
+      <li>PBrett asked if Steve had a suggestion.</li>
+      <li>Steve responded with a preference for a programatic error handling
+          facility.</li>
+      <li>Zach stated that, in the case where UTF-8 source is copied to a UTF-8
+          sink, introduction of replacement characters could be surprising, but
+          when transcoding is required, e.g., when the sink is UTF-16, then
+          replacement characters are expected.</li>
+      <li>Zach suggested decomposing the problem; validate and handle errors
+          first, then convert.</li>
+      <li>Charlie explained that, on Windows, the only ways to write Unicode to
+          the console are to change the console encoding and write using the
+          ANSI APIs, or to convert to UTF-16 and write using the wide APIs.</li>
+      <li>Charlie noted that, since the console encoding is a global property
+          of the process, changing it within <tt>std::print()</tt> would require
+          synchronization.</li>
+      <li>Zach suggested that it is reasonable to get mojibake in the ANSI case
+          if the console encoding hasn't been correctly set.</li>
+      <li>Hubert responded that the global console encoding condition seems to
+          be particular to Windows and worth addressing.</li>
+      <li>Charlie pondered the ramifications of writing to a stream opened in
+          text mode.</li>
+      <li>Victor reiterated his stance on not wanting to pay validation costs
+          except in cases where transcoding is necessitated.</li>
+      <li><b>Poll 2: When &lt;print&gt; facilities must transcode formatting
+          results for display on a device and, during that process,
+          invalidly-encoded text is encountered, <tt>std::print()</tt> should
+          replace the erroneously-encoded code units with
+          U+FFFD REPLACEMENT CHARACTER.</b>
+        <ul>
+          <li><b>Attendance: 9</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus is in favor.</b></li>
+          <li><b>A: Not convinced that silently substituting replacement
+              characters is always the right policy; an exception could be
+              appropriate.  There are parallels with integer overflow.</b></li>
+          <li><b>A: Testing is difficult if substitution is device
+              sensitive.</b></li>
+        </ul>
+      </li>
+      <li>Charlie expressed support for a direction that would allow explicitly
+          inhibiting use of the native device API but noted that, on Windows,
+          that would mean the console encoding would have to be correctly set
+          and the application would have to take care of buffering
+          concerns.</li>
+      <li><b>Poll 3: When &lt;print&gt; facilities need not transcode their
+          formatting results for display on a device and invalidly-encoded text
+          is encountered, <tt>std::print()</tt> should nevertheless replace the
+          erroneously-encoded code units with U+FFFD REPLACEMENT CHARACTER.</b>
+        <ul>
+          <li><b>Attendance: 9</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">3</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>N: Undecided due to uncertainty; more consideration is
+              needed.</b></li>
+          <li><b>A: Would prefer a UB approach that would enable sanitizers to
+              diagnose these cases and remain conforming.</b></li>
+          <li><b>SA: There is lack of implementation experience for this
+              direction, it imposes overhead, and there are terminals that
+              accept bytes.</b></li>
+          <li><b>SA: A wide contract with validation does not make sense for
+              high-performance I/O.</b></li>
+        </ul>
+      </li>
+      <li>PBrett stated that there appear to be different audiences for
+          <tt>std::print()</tt> and these audiences have different ideas of
+          what is "obviously" correct:
+        <ul>
+          <li>For some, <tt>std::print()</tt> is a simple tool that enables a
+              better Hello World.</li>
+          <li>For others, it is a high-performance I/O facility.</li>
+          <li>For yet others, it is a way to format bytes.</li>
+        </ul>
+      </li>
+      <li>Tom suggested that an error handling facility might move us
+          towards more consensus.</li>
+      <li>PBrett noted that something like JeanHeyd's transcoding facilities
+          could provide that.</li>
+      <li>Charlie agreed that integration of a familiar transcoding facility
+          could work.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next telecon will be May 26th and that the agenda
+      will again include
+      <a href="https://wg21.link/p2295r3">P2295R3</a>
+      and
+      <a href="https://wg21.link/p2093r6">P2093R6</a>.</li>
 </ul>
 
 
