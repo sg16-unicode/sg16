@@ -11,6 +11,7 @@ A standing paper that describes our intended scope, directives, guidelines and c
 
 The following sections list papers and projects currently under our purview.  Additionally, we provide input to proposals that originate elsewhere within WG21 when those proposals touch on topics listed in [P1253 - Guidelines for when a WG21 proposal should be reviewed by SG16][P1253].
 
+
 # WG21 (C++) Papers
 
 ## Active Papers and Projects
@@ -74,14 +75,16 @@ WG Number     | Title/Notes/Links
 ~~[P0353][]~~ | ~~Unicode Friendly Encoding Conversions for the Standard Library~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 ~~[P0169][]~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 
+
 # WG14 (C) Papers
 
 ## Active Papers
 
-WG Number     | Status      | Title/Notes/Links
-------------- | ------      | -----
-[N2620][]     |             | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], and [N2595 (R3)][N2595])
-[N2231][]     |             | char8\_t: A type for UTF-8 characters and strings
+WG Number     | Title/Notes/Links
+------------- | -----
+[N2728][]     | char16\_t & char32\_t string literals shall be UTF-16 & UTF-32 \| r0
+[N2620][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], and [N2595 (R3)][N2595])
+[N2231][]     | char8\_t: A type for UTF-8 characters and strings
 
 ## Accepted Papers
 
@@ -101,6 +104,8 @@ WG Number     | Title/Notes/Links
 ~~[N2440][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r1~~<br/>(Superceded by [N2500][])
 ~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superceded by [N2440][])
 
+
+[N2728]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2728.htm
 [N2620]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2620.htm
 [N2595]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2595.pdf
 [N2594]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2594.htm
