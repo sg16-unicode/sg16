@@ -33,7 +33,8 @@ WG21 Number     | Title | Revisions
 
 WG14 Number     | Title | Revisions
 --------------- | ----- | ----
-[N2653][]       | char8\_t: A type for UTF-8 characters and strings | [DR1:N2653][N2653] [R0:N2231][N2231]
+[N2653][]       | char8\_t: A type for UTF-8 characters and strings | [R1:N2653][N2653] [R0:N2231][N2231]
+
 
 [N2231]: https://rawgit.com/sg16-unicode/sg16/master/papers/n2231.html
 [N2653]: https://rawgit.com/sg16-unicode/sg16/master/papers/n2653.html

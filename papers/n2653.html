@@ -100,7 +100,7 @@ div.compare_item {
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-02-15</td>
+    <td>2021-05-30</td>
   </tr>
   <tr>
     <th>Proposal category:</th>
@@ -115,23 +115,23 @@ div.compare_item {
 
 <p>
 <strong>Abstract:</strong> C++20, through the adoption of
-<a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+<a title="[WG21 P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
    href="https://wg21.link/p0482r6">
-P0482R6</a>
-<sup><a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
-        href="#ref_p0482r6">
-[P0482R6]</a></sup>,
+WG21 P0482R6</a>
+<sup><a title="[WG21 P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+        href="#ref_wg21_p0482r6">
+[WG21 P0482R6]</a></sup>,
 added a new <tt>char8_t</tt> fundamental type, changed the character
 type of <tt>u8</tt> character and string literals from <tt>char</tt> to
 <tt>char8_t</tt>, and added the <tt>c8rtomb()</tt> and <tt>mbrtoc8()</tt>
 functions for conversion between multibyte characters and UTF-8.
 This paper proposes corresponding changes for C to add a <tt>char8_t</tt>
-typedef of <tt>unsigned char</tt>, to change the array element type of
-<tt>u8</tt> string literals from <tt>char</tt> to <tt>unsigned char</tt>
+typedef name with type <tt>unsigned char</tt>, to change the array element
+type of <tt>u8</tt> string literals from <tt>char</tt> to <tt>unsigned char</tt>
 (<tt>u8</tt> character literals already have type <tt>unsigned char</tt>),
 and to add the <tt>c8rtomb()</tt> and <tt>mbrtoc8()</tt> functions.
-These changes are intended to improve support for UTF-8 and source code
-compatibility between the C and C++ languages.
+These changes are intended to maintain compatibility between C and C++ and
+to improve portable support for UTF-8.
 </p>
 
 
@@ -142,10 +142,32 @@ compatibility between the C and C++ languages.
       Introduction</a></li>
   <li><a href="#motivation">
       Motivation</a></li>
+  <li><a href="#design_options">
+      Design Options</a></li>
+    <ul>
+      <li><a href="#do_char8_t_type">
+          The <tt>char8_t</tt> type: typedef name vs a new integer type</li>
+      <li><a href="#do_char8_t_underlying_type">
+          The underlying type of <tt>char8_t</tt></li>
+      <li><a href="#do_u8_string_lit_type">
+          UTF-8 string literal type</li>
+      <li><a href="#do_char_array_init">
+          <tt>char</tt> array initialization by a UTF-8 string literal</li>
+    </ul>
+  </li>
   <li><a href="#proposal">
       Proposal</a></li>
   <li><a href="#backward_compat">
-      Backward Compatibility</a></li>
+      Backward Compatibility</a>
+    <ul>
+      <li><a href="#bc_pointer_conversion">
+          Pointer conversion from a UTF-8 string literal</li>
+      <li><a href="#bc_string_lit_element_value">
+          The value of a UTF-8 string literal element</li>
+      <li><a href="#bc_type_inference">
+          Type inference</li>
+    </ul>
+  </li>
   <li><a href="#implementation_exp">
       Implementation Experience</a></li>
   <li><a href="#wording">
@@ -180,31 +202,29 @@ compatibility between the C and C++ languages.
              href="http://www.open-std.org/jtc1/sc22/WG14/www/docs/summary.htm#dr_488">
           WG14 DR 488</a>
           since its resolution has now been incorporated in the working draft.</li>
-      <li>Removed the previously proposed <tt>__STDC_UTF_8__</tt> macro since the
-          UTF-8 character and string literals and <tt>char8_t</tt> type are intended
+      <li>Removed the previously proposed change to disallow initialization of
+          an array of type <tt>char</tt> or <tt>signed char</tt> by a UTF-8
+          string literal.</li>
+      <li>Removed the previously proposed <tt>__STDC_UTF_8__</tt> macro since UTF-8
+          character and string literals and the <tt>char8_t</tt> type are intended
           only for use with UTF-8.</li>
     </ul>
   </li>
   <li>Other changes:
     <ul>
       <li>Rewrote the abstract to reflect that
-          <a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+          <a title="[WG21 P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
              href="https://wg21.link/p0482r6">
-          P0482R6</a>
-          <sup><a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
-                  href="#ref_p0482r6">
-          [P0482R6]</a></sup>
+          WG21 P0482R6</a>
+          <sup><a title="[WG21 P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
+                  href="#ref_wg21_p0482r6">
+          [WG21 P0482R6]</a></sup>
           was adopted for C++20.</li>
-      <li>Updated the UTF-8 statistics quoted from W3Techs from 2017 to 2021.</li>
-      <li>Removed the previous example from the
-          <a href="#motivation">Motivation</a> section illustrating incorrect
-          use of "ANSI" Win32 APIs.</li>
+      <li>Rewrote the <a href="#motivation">Motivation</a> section.</li>
+      <li>Added the <a href="#design_options">Design Options</a> section.</li>
+      <li>Expanded the <a href="#backward_compat">Backward Compatibility</a> section.</li>
       <li>Updated the <a href="#implementation_exp">Implementation Experience</a>
           section with links to completed implementations in gcc and glibc.</li>
-      <li>Added missing items to the <a href="#backward_compat">Backward Compatibility</a> section.</li>
-      <li>Replaced use of "execution character encoding" with the more standard
-          "execution character set" terminology.</li>
-      <li>Additional minor prose and miscellaneous updates.</li>
       <li>Removed use of highlight.js for code highlighting purposes.</li>
     </ul>
   </li>
@@ -214,36 +234,42 @@ compatibility between the C and C++ languages.
 <h1 id="introduction">Introduction</h1>
 
 <p>C11 introduced support for UTF-8, 16-bit, and 32-bit encoded string
-literals.  New <tt>char16_t</tt> and <tt>char32_t</tt> typedefs were added to
-hold values of code units for the 16-bit and 32-bit variants, but a new type
-was not added for the UTF-8 variant.  Instead, UTF-8 string literals were
-defined in terms of the <tt>char</tt> type used for the code unit type of
-ordinary string literals.  UTF-8 is the only text encoding mandated to be
-supported by the C standard for which the standard does not provide a
-distinctly named code unit type.
+literals.
+New <tt>char16_t</tt> and <tt>char32_t</tt> typedef names were added to hold
+values of code units for the 16-bit and 32-bit variants, but a new type
+or typedef name was not added for the UTF-8 variant.
+Instead, UTF-8 string literals were specified with the same type used for
+ordinary string literals; array of <tt>char</tt>.
+UTF-8 is the only character encoding mandated to be supported by the C
+standard for which the standard does not provide a distinctly named code
+unit type.
 </p>
 
 <p>Whether <tt>char</tt> is a signed or unsigned type is implementation
-defined and implementations that use an 8-bit signed char are at a
-disadvantage with respect to working with UTF-8 encoded text due to the
-necessity of having to rely on conversions to an unsigned type in order to
-correctly process lead and continuation code units.
+defined.
+Implementations that use an 8-bit signed char are at a disadvantage with
+respect to working with UTF-8 encoded text since the value range of their
+implementation of char does not extend to the full range of UTF-8 code unit
+values; programmers working with such implementations must inject casts
+to unsigned char for portable code to correctly process lead and continuation
+code unit values.
 </p>
 
 <p>The lack of a distinct type and the use of a code unit type with a range
 that does not portably include the full unsigned range of UTF-8 code units
 presents challenges for working with UTF-8 encoded text that are not present
-when working with UTF-16 or UTF-32 encoded text.  Enclosed is a proposal for
-a new <tt>char8_t</tt> typedef and related language and library enhancements
-intended to better facilitate portable handling of UTF-8 encoded text and to
-enable working with all five of the standard mandated text encodings in a
-consistent manner.
+when working with UTF-16 or UTF-32 encoded text.
+Enclosed is a proposal for a new <tt>char8_t</tt> typedef and related language
+and library enhancements intended to better facilitate portable handling of
+UTF-8 encoded text and to enable working with all five of the standard
+mandated character encodings in a consistent manner.
 </p>
 
 
 <h1 id="motivation">Motivation</h1>
 
-<p>As of February 2021,
+<p>
+As of February 2021,
 <a title="Usage of UTF-8 for websites"
    href="https://w3techs.com/technologies/details/en-utf8/all/all">
 UTF-8 is now used by more than 96% of all websites</a>
@@ -252,9 +278,9 @@ UTF-8 is now used by more than 96% of all websites</a>
 [W3Techs]</a></sup>.
 While UTF-8 now dominates websites, it has not attained similar adoption
 rates in the execution environments of C and C++ programs.
-Microsoft introduced support for using UTF-8 as a system's Active Code Page
-(ACP) in the April 2018 update of Windows 10, but that support remains a beta
-feature for which enablement is hidden within administrative regional settings.
+Microsoft has introduced several ways in which a program can opt-in to use of
+UTF-8 as the Active Code Page (ACP) starting with the April 2018 update of
+Windows 10, but, by default, the ACP remains dependent on region settings.
 Most POSIX systems, including Linux and macOS, use UTF-8 as the system
 encoding by default, but continue to support changing the execution environment
 encoding via locale related environment variables like <tt>LC_ALL</tt>.
@@ -263,36 +289,35 @@ in the C and C++ ecosystems.
 </p>
 
 <p>
-Programs that must consume, produce, or otherwise manipulate both UTF-8 text
-and text in the execution environment must choose one of two approaches to
-manage text stored in these potentially distinct encodings:
-<ol>
-  <li>Use <tt>char</tt> for both encodings.</li>
+Programs that consume or produce UTF-8 text and text for which the encoding is
+dependent on the execution environment must choose one of a few approaches to
+manage text represented in these potentially distinct encodings:
+<ul>
+  <li>Use <tt>char</tt> for all text and meticulously track which encoding
+      is to be used at all times.</li>
+  <li>Use <tt>char</tt> for all text, but meticulously convert to or from UTF-8
+      when interacting with the environment so that text is always represented
+      as UTF-8 within a component.</li>
   <li>Use <tt>char</tt> when working with text for the execution environment,
       and a different type, generally <tt>unsigned char</tt>, for UTF-8
       encoded text.</li>
-</ol>
+</ul>
 </p>
 
 <p>
-The challenge with the first approach is ensuring that text is appropriately
-transcoded and is in the correct encoding when passed to functions, including
-standard library functions.
-Since the same type, <tt>char</tt>, is used as the code unit type for both
-encodings, the programmer is unable to rely on the type system to help identify
-mistakes.
+The challenge with the first two approaches is ensuring that text is
+appropriately tagged and converted as it flows through the program.
+Since the same type, <tt>char</tt>, is used as the code unit type for all
+text, the programmer is unable to rely on the type system to help identify
+when text has not been appropriately converted.
 </p>
 
 <p>
-The challenge with the second approach is that there is no common type for
-components to agree to use for UTF-8 text and, even when agreement on an
-alternate type is present, UTF-8 string literals still have type array of
-<tt>char</tt>.
-Assuming use of <tt>unsigned char</tt>, direct comparison with UTF-8 string
-literals is subject to sign mismatch (depending on the sign of <tt>char</tt>),
-and attempts to assign pointers to the desired code unit type directly to
-UTF-8 string literals results in assignment from incompatible pointer types
-(regardless of the sign of <tt>char</tt>).
+The challenge with the third approach is the lack of a common type that
+unambiguously denotes UTF-8 text across components.
+Within a program, even if there is agreement on an alternate type to use,
+UTF-8 string literals still have type array of <tt>char</tt>, not the
+agreed upon type.
 </p>
 
 <p>
@@ -301,87 +326,367 @@ The adoption of a <tt>char8_t</tt> type via
    href="https://wg21.link/p0482r6">
 P0482R6</a>
 <sup><a title="[P0482R6]: char8_t: A type for UTF-8 characters and strings (Revision 6)"
-        href="#ref_p0482r6">
+        href="#ref_wg21_p0482r6">
 [P0482R6]</a></sup>
-for C++20 presents an opportunity for C to do similarly so as to retain source
-code compatibility while also establishing a standard type for components to
-use for UTF-8 text.
-</p>
-
-<p>The addition of the <tt>char8_t</tt> typedef is intended to support source
-code compatibility between C and C++20 such that the following code would be
-well-formed with the same semantics for both languages while providing
-additional type safety and protection from implementation defined sign issues.
-<blockquote><pre>
-#include &lt;uchar.h&gt;
-
-void use_utf8(const char8_t *p) {
-  if (p[0] &gt;= 0x80) {
-    /* Handle UTF-8 lead or continuation code unit... */
-  }
-}
-
-int main() {
-  use_utf8(u8"text");
-}
-</pre></blockquote>
-</p>
-
-<p>Difficulty in managing multiple encodings with the same code unit type is
-not the only challenge posed by use of <tt>char</tt> as the UTF-8 code unit
-type.  The following code exhibits implementation defined behavior.
-<blockquote><pre>
-_Bool is_utf8_multibyte_code_unit(char c) {
-  return c &gt;= 0x80;
-}
-</pre></blockquote>
-</p>
-
-<p>UTF-8 leading and continuation code units have values in the range 128
-(0x80) to 255 (0xFF).  In the common case where <tt>char</tt> is implemented
-as a signed 8-bit type with a two's complement representation and a range of
--128 (-0x80) to 127 (0x7F), these values exceed the unsigned range of the
-<tt>char</tt> type.  Such implementations typically encode such code units as
-unsigned values which are then reinterpreted as signed values when read.  In
-the code above, integral promotion rules result in <tt>c</tt> being promoted to
-type <tt>int</tt> for comparison to the <tt>0x80</tt> operand.  if <tt>c</tt>
-holds a value corresponding to a leading or continuation code unit value, then
-its value will be interpreted as negative and the promoted value of type
-<tt>int</tt> will likewise be negative.  The result is that the comparison
-is always false for these implementations.</p>
-
-<p>To correct the code above, explicit conversions are required.  For example:
-<blockquote><pre>
-_Bool is_utf8_multibyte_code_unit(char c) {
-  return ((unsigned char)c) &gt;= 0x80;
-}
-</pre></blockquote>
-</p>
-
-<p>Finally, no facilities are currently provided for transcoding between the
-execution character set and UTF-8.
-</p>
-
-<p>The issues described above present significant challenges to working with
-UTF-8 encoded text.  As the use of UTF-8 continues to rise, the ability to
-work well with UTF-8 text will only grow more important.  The changes proposed
-in this paper are intended to address the above issues while retaining the
-ability to write source code that is compatible across C and C++.
-</p>
-
-<p><em>[*]: Microsoft Visual C++ 2015 added the <tt>/utf-8</tt> and
-<tt>/execution-charset:utf-8</tt> options to enable use of UTF-8 as the
-execution character set.  However, in practice, these options are of limited
-use since the Windows platform SDK does not, in general, support UTF-8.</em>
+for C++20 provided a common type tailored for use with UTF-8 text.
+Adoption of a similar type for C would facilitate source code compatibility
+between C and C++20, establish a standard common type for programmers that
+prefer the third approach above, and provide consistent behavior across
+implementations without the difficulties imposed by the implementation-defined
+signedness of <tt>char</tt>.
 </p>
 
 <p>
-<font color="red">
-<em>FIXME</em>: The Windows 10 April 2018 update added beta support for
-using UTF-8 as the system code page either by updating regional settings
-(affects all programs) or by compiling with an appropriately configured
-manifest (affects only the program being build).
-</font>
+Consider the following function that purports to check whether a pointer
+points to UTF-8 text that begins with a UTF-8 leading byte.
+UTF-8 leading bytes have values in the range 192 (0xC0) to 255 (0xFF) though
+not all values in that range may appear in valid UTF-8 encoded text.
+<blockquote><pre>
+bool starts_with_utf8_leading_byte(const char *s) {
+  return *s &gt;= 0xC0;
+}
+</pre></blockquote>
+For implementations that define <tt>char</tt> as either an unsigned type or
+with a size greater than 8 bits, this function will correctly classify its
+inputs (assuming no invalid values).
+However, for implementations that define <tt>char</tt> as a signed 8-bit type
+with a two's complement representation and a range of -128 (-0x80) to
+127 (0x7F), the values of UTF-8 leading bytes become negative values with
+the result that this function always returns false.
+For the function to behave consistently across implementations, it must be
+modified to ensure the comparison is performed with an unsigned type.
+<blockquote><pre>
+bool starts_with_utf8_leading_byte(const char *s) {
+  return (unsigned char)*s &gt;= 0xC0;
+}
+</pre></blockquote>
+The introduction of a <tt>char8_t</tt> type that behaves as an unsigned type
+would allow the function to be simply implemented as follows such that it
+behaves the same for all C and C++20 implementations.
+<blockquote><pre>
+bool starts_with_utf8_leading_byte(const char8_t *s) {
+  return *s &gt;= 0xC0;
+}
+</pre></blockquote>
+</p>
+
+<p>
+Functions like the <tt>starts_with_utf8_leading_byte()</tt> example above
+are not frequently written and the problem exhibited can be easily
+discovered and corrected during testing.
+However, more insidious problems may be encountered in other cases, such as
+with the <tt>&lt;ctype.h&gt;</tt> character classification functions.
+Consider the following code that naively attempts to convert its input to
+uppercase using <tt>toupper()</tt>.
+<blockquote><pre>
+void convert_to_uppercase(char *p) {
+  for (; *p; ++p) {
+    *p = toupper(*p);
+  }
+}
+</pre></blockquote>
+</p>
+
+<p>
+When called with a UTF-8 encoded string that contains non-ASCII characters,
+this function encounters undefined behavior for implementations with an 8-bit
+signed <tt>char</tt> type; even when the current locale is UTF-8-based.
+The problem is that lead and continuation UTF-8 code unit values are negative
+for such implementations and may result in a sign extended negative value
+(that does not match <tt>EOF</tt>) being passed to <tt>toupper()</tt>.
+The result is undefined behavior according to
+C17 7.4, "Character handling &lt;ctype.h&gt;", paragraph 1:
+<div style="margin-left: 1em;">
+<blockquote class="quote">
+The header <tt>&lt;ctype.h&gt;</tt> declares several functions useful for
+classifying and mapping characters.<sup>202)</sup>
+In all cases the argument is an <tt>int</tt>, the value of which shall be
+representable as an <tt>unsigned char</tt> or shall equal the value of the
+macro <tt>EOF</tt>.
+If the argument has any other value, the behavior is undefined.
+</blockquote>
+</div>
+For this code to portably work as intended, the argument to <tt>toupper()</tt>
+must be cast to <tt>unsigned char</tt>.
+Alternatively, changing the type of the <tt>convert_to_uppercase()</tt>
+parameter to the proposed <tt>char8_t</tt> type would portably correct the
+code while also signifying that the intended input is UTF-8.
+</p>
+
+
+<h1 id="design_options">Design Options</h1>
+
+
+<h2 id="do_char8_t_type">The <tt>char8_t</tt> type: typedef name vs a new integer type</h2>
+
+<p>
+When the <tt>char16_t</tt> and <tt>char32_t</tt> types were introduced in C11
+and C++11, a choice was faced whether to introduce them as typedef names of
+existing types or as new integer types.
+The WG14 and WG21 committees chose different directions; WG14 opted for
+typedef names for C and WG21 opted for new integer types for C++.
+This choice was consistent with prior choices regarding the <tt>wchar_t</tt>
+type.
+The same choice applies for the introduction of a <tt>char8_t</tt> type.
+</p>
+
+<p>
+The <tt>char16_t</tt> and <tt>char32_t</tt> types were added to C++11 by the
+adoption of
+<a title="[WG21 N2249]: New Character Types in C++"
+   href="https://wg21.link/n2249">
+WG21 N2249</a>
+<sup><a title="[WG21 N2249]: New Character Types in C++"
+        href="#ref_wg21_n2249">
+[WG21 N2249]</a></sup>.
+The motivation for new integer types stated in that proposal includes the
+ability to support function overloading and template specialization; abilities
+that would not be possible, at least not reliably and portably, if the new
+types were simply typedef names of existing types.
+At the time these types were adopted, C did not yet have support for generic
+programming; the <tt>_Generic</tt> generic selection expression had not yet
+been adopted.
+Thus, there was little to no motivation for WG14 to impose the additional effort
+required to support new integer types on implementors.
+</p>
+
+<p>
+WG14 now has several proposals to improve support for generic programming in C:
+<ul>
+  <li><a title="WG14 N2734: Improve type generic programming"
+         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2734.pdf">
+      WG14 N2734: Improve type generic programming</a>
+      <sup><a title="[WG14 N2734]: Improve type generic programming"
+              href="#ref_wg14_n2734">
+      [WG14 N2734]</a></sup></li>
+  <li><a title="WG14 N2724: Not-So-Magic - typeof(…) in C | r3"
+         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2724.htm">
+      WG14 N2724: Not-So-Magic - typeof(…) in C | r3</a>
+      <sup><a title="[WG14 N2724]: Not-So-Magic - typeof(…) in C | r3"
+              href="#ref_wg14_n2724">
+      [WG14 N2724]</a></sup></li>
+  <li><a title="WG14 N2738: Type-generic lambdas"
+         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2738.pdf">
+      WG14 N2738: Type-generic lambdas</a>
+      <sup><a title="[WG14 N2738]: Type-generic lambdas"
+              href="#ref_wg14_n2738">
+      [WG14 N2738]</a></sup></li>
+  <li><a title="WG14 N2735: Type inference for variable definitions and function returns"
+         href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2735.pdf">
+      WG14 N2735: Type inference for variable definitions and function returns</a>
+      <sup><a title="[WG14 N2735]: Type inference for variable definitions and function returns"
+              href="#ref_wg14_n2735">
+      [WG14 N2735]</a></sup></li>
+</ul>
+Desire for generic programming improvements may translate to additional
+motivation for distinct integer types for character data.
+The following example illustrates a potential use case that would be enabled
+by distinct types.
+<blockquote><pre>
+void send_narrow(const char*);
+void send_wide(const wchar_t*);
+void send_utf8(const char8_t*);
+void send_utf16(const char16_t*);
+void send_utf32(const char32_t*);
+#define send(X)                            \
+        _Generic((X),                      \
+                 char*:     send_narrow,   \
+                 wchar_t*:  send_wide,     \
+                 char8_t*:  send_utf8,     \
+                 char16_t*: send_utf16,    \
+                 char32_t*: send_utf32)(X)
+void f() {
+  send(L"text");   /* Would be ok with distinct types; calls send_wide(). */
+  send(u8"text");  /* Would be ok with distinct types; calls send_utf8(). */
+}
+</pre></blockquote>
+</p>
+
+<p>
+Clang supports an
+<a title="Clang 11 documentation, Attributes in Clang"
+   href="https://releases.llvm.org/11.0.0/tools/clang/docs/AttributeReference.html#overloadable">
+extension that enables overloading in C</a>
+<sup><a title="Clang 11 documentation, Attributes in Clang"
+        href="#ref_clang_overloadable">
+[Clang overloadable]</a></sup>.
+If adopted by WG14, the code above could be more simply written as:
+<blockquote><pre>
+void __attribute__((overloadable)) send(const char*);
+void __attribute__((overloadable)) send(const wchar_t*);
+void __attribute__((overloadable)) send(const char8_t*);
+void __attribute__((overloadable)) send(const char16_t*);
+void __attribute__((overloadable)) send(const char32_t*);
+void f() {
+  send(L"text");   /* Would be ok with distinct types; calls send(const wchar_t*). */
+  send(u8"text");  /* Would be ok with distinct types; calls send(const char8_t*). */
+}
+</pre></blockquote>
+</p>
+
+<p>
+Introduction of a new <tt>char8_t</tt> integer type without a corresponding
+change to make <tt>wchar_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt>
+distinct integer types would be inconsistent and surprising.
+While the author sees potential use for distinct types as shown above, such
+a change of direction should be pursued via a separate proposal.
+Should WG14 indicate support for such direction when reviewing this proposal,
+the author will submit a separate proposal.
+In the meantime, this proposal advocates for only a new <tt>char8_t</tt>
+typedef name in order to maintain consistency with other character types.
+</p>
+
+<p>
+<b>Proposed: a new <tt>char8_t</tt> typedef name defined in the <tt>uchar.h</tt>
+header.</b>
+</p>
+
+
+<h2 id="do_char8_t_underlying_type">The underlying type of <tt>char8_t</tt></h2>
+
+<p>
+UTF-8 code unit values range from 0x00 to 0xF5 (the values 0xC0, 0xC1, and 0xF5
+through 0xFF do not occur in well-formed UTF-8 code unit sequences) and
+therefore require at least an 8-bit type for storage.
+</p>
+
+<p>
+The existing <tt>char16_t</tt> and <tt>char32_t</tt> typedef names are defined
+as having the same type as <tt>uint_least16_t</tt> and <tt>uint_least32_t</tt>
+respectively.
+This suggests that the underlying type of <tt>char8_t</tt> should be the same
+type as <tt>uint_least8_t</tt>.
+However, the latitude provided for the <tt>uint_least8_t</tt> typedef name to
+be defined with a type other than <tt>unsigned char</tt> provides no benefit
+for the proposed <tt>char8_t</tt> type; <tt>unsigned char</tt> is already
+defined to be unsigned with a size and alignment of 1 byte.
+Since bytes are constrained to be at least 8-bits and no smaller types are
+possible, additional leniency would only serve to limit portability.
+</p>
+
+<p>
+The type of character constants with a <tt>u8</tt> <i>encoding-prefix</i> is
+already <tt>unsigned char</tt>.
+The underlying type for <tt>char8_t</tt> in C++20 is also
+<tt>unsigned char</tt>.
+For consistency with <tt>u8</tt> character constants and the C++20
+<tt>char8_t</tt> type, this proposal defines the underlying type of the
+proposed <tt>char8_t</tt> type to be <tt>unsigned char</tt>.
+</p>
+
+<p>
+<b>Proposed: The underlying type of <tt>char8_t</tt> is
+<tt>unsigned char</tt>.</b>
+</p>
+
+
+<h2 id="do_u8_string_lit_type">UTF-8 string literal type</h2>
+
+<p>
+In C17, a UTF-8 string literal has type array of <tt>char</tt>.
+Since the size and signedness of <tt>char</tt> are implementation-defined,
+portable code requires casts to an unsigned type when reading UTF-8
+code unit values stored in objects of type <tt>char</tt>.
+This is required because common implementations implement <tt>char</tt>
+as a signed 8-bit type for which integer promotion rules produce a
+negative value for leading and trailing code unit values (which all have
+values above 0x7F).
+While it is uncommon for code to directly access the elements of a string
+literal, such accesses may occur when macros are involved.
+</p>
+
+<p>
+In the working draft, UTF-8 character constants have a type of
+<tt>unsigned char</tt>.
+That results in a surprising inconsistency with UTF-8 string literals.
+<blockquote><pre>
+#define M(X) ((X) &gt;= 0x80)
+
+void f() {
+  M(u8"\U00E9"[0]); /* True for some implementations, false for others.
+                       U+00E9 is encoded as 0xC3 0xA9 in UTF-8.
+                       0xC3 will promote to a negative integer value for
+                       implementations with a signed 8-bit char type. */
+  M(u8'\xC3');      /* True for all implementations. */
+}
+</pre></blockquote>
+Changing the type of a UTF-8 string literal to an array of type <tt>char8_t</tt>
+would avoid this inconsistency such that both expressions above would result in
+a true value for all implementations.
+</p>
+
+<p>
+For consistency with <tt>u8</tt> character constants and the type of C++20
+UTF-8 string literals, this proposal changes the type of a UTF-8 string literal
+from array of <tt>char</tt> to array of <tt>char8_t</tt>.
+The <a href="#backward_compat">Backward Compatibility</a> section discusses the
+impact of this change.
+</p>
+
+<p>
+<b>Proposed: The type of UTF-8 string literals is changed from array of
+<tt>char</tt> to array of <tt>char8_t</tt>.</b>
+</p>
+
+
+<h2 id="do_char_array_init"><tt>char</tt> array initialization by a UTF-8 string literal</h2>
+
+<p>
+In C17, arrays of type <tt>char</tt>, <tt>signed char</tt>, and
+<tt>unsigned char</tt> may be initialized by a UTF-8 string
+literal.  These were all made ill-formed in C++20 where only
+arrays of <tt>char8_t</tt> may be initialized by a UTF-8 string
+literal.
+<blockquote><pre>
+const          char cu8[]  = u8"text";  /* Ok in C17 and C++17, ill-formed in C++20. */
+const signed   char scu8[] = u8"text";  /* Ok in C17 and C++17, ill-formed in C++20. */
+const unsigned char ucu8[] = u8"text";  /* Ok in C17 and C++17, ill-formed in C++20. */
+</pre></blockquote>
+</p>
+
+<p>
+For other character types, whether an array of the character type can be
+initialized by a string literal with a mismatched encoding prefix depends
+on the implementation.
+C17 6.7.9, "Initialization", paragraph 15 states:
+<div style="margin-left: 1em;">
+<blockquote class="quote">
+An array with element type compatible with a qualified or unqualified version
+of <tt>wchar_t</tt>, <tt>char16_t</tt>, or <tt>char32_t</tt> may be initialized
+by a wide string literal with the corresponding encoding prefix (<tt>L</tt>,
+<tt>u</tt>, or <tt>U</tt>, respectively), optionally enclosed in braces.
+Successive wide characters of the wide string literal (including the
+terminating null wide character if there is room or if the array is of unknown
+size) initialize the elements of the array.
+</blockquote>
+</div>
+C++ does not allow initialization of mismatched encoding prefixes.
+<blockquote><pre>
+const wchar_t  wc16[] = u"text";  /* Ok in C17 if wchar_t and char16_t are compatible types, ill-formed in C++20. */
+const wchar_t  wc32[] = U"text";  /* Ok in C17 if wchar_t and char32_t are compatible types, ill-formed in C++20. */
+const char16_t c16w[] = L"text";  /* Ok in C17 if wchar_t and char16_t are compatible types, ill-formed in C++20. */
+const char32_t c32w[] = L"text";  /* Ok in C17 if char32_t and wchar_t are compatible types, ill-formed in C++20. */
+</pre></blockquote>
+</p>
+
+<p>
+Prohibiting initialization of arrays of type <tt>char</tt> and
+<tt>signed char</tt> by UTF-8 string literals would improve consistency with
+C++20.
+However, the existing inconsistencies are fully explainable as a consequence of
+the choice to use existing integer types for wide character types in C vs the
+choice to introduce new integer types in C++.
+If WG14 were to decide to switch to use of distinct integer types for wide
+character types (and <tt>char8_t</tt>) in the future, then it would make sense
+to align initialization allowances with C++.
+Until then, this proposal preserves the existing ability to initialize an
+array of plain <tt>char</tt> or an array of <tt>signed char</tt>
+with a UTF-8 string literal.
+</p>
+
+<p>
+<b>Proposed: initialization of an array of type <tt>char</tt> or an array of
+type <tt>signed char</tt> by a UTF-8 string literal remains well-formed.</b>
 </p>
 
 
@@ -390,72 +695,141 @@ manifest (affects only the program being build).
 <p>The proposed changes include:
 
 <ul>
-  <li>A new <tt>char8_t</tt> typedef of <tt>unsigned char</tt> defined
-      in the <tt>&lt;uchar.h&gt;</tt> header.</li>
+  <li>A new <tt>char8_t</tt> typedef name with type <tt>unsigned char</tt>
+      defined in the <tt>&lt;uchar.h&gt;</tt> header.</li>
   <li>The type of UTF-8 string literals is changed from array of
-      <tt>const char</tt> to array of <tt>const char8_t</tt>.</li>
+      <tt>char</tt> to array of <tt>char8_t</tt>.</li>
   <li>The type of UTF-8 character literals is changed from
       <tt>unsigned char</tt> to <tt>char8_t</tt>.<br/>
       (Since UTF-8 character literals already have type <tt>unsigned char</tt>,
-      this isn't a meaningful change).</li>
+      this is not a semantic change).</li>
+  <li>Initialization of an array of type <tt>char</tt> or type
+      <tt>signed char</tt> by a UTF-8 string literal remains well-formed.</li>
   <li>New <tt>mbrtoc8()</tt> and <tt>c8rtomb()</tt> functions declared in
       <tt>&lt;uchar.h&gt;</tt> enable conversions between multibyte characters
       and UTF-8.</li>
-  <li>New <tt>char8_t</tt> related atomic macros
-      (<tt>ATOMIC_CHAR8_T_LOCK_FREE</tt>) and types
-      (<tt>atomic_char8_t</tt>).</li>
+  <li>A new <tt>ATOMIC_CHAR8_T_LOCK_FREE</tt> macro.</li>
+  <li>A new <tt>atomic_char8_t</tt> typedef name.</li>
 </ul>
-</p>
-
-<p>The addition of the <tt>char8_t</tt> typedef is intended to support source
-code compatibility between C and C++20 such that the following code would be
-well-formed with the same semantics for both languages while providing
-additional type safety and protection from implementation defined sign issues.
-<blockquote><pre>
-#include &lt;uchar.h&gt;
-
-void use_utf8(const char8_t *p) {
-  if (p[0] &gt;= 0x80) {
-    /* Handle UTF-8 lead or continuation code unit... */
-  }
-}
-
-int main() {
-  use_utf8(u8"text");
-}
-</pre></blockquote>
 </p>
 
 
 <h1 id="backward_compat">Backward Compatibility</h1>
 
-<p>The changes proposed in this paper impact backward compatibility as a
-result of changing the type of UTF-8 string literals.  There are four primary
-consequences:
-<ol>
-  <li>Code that directly accesses the code unit values of UTF-8 string literals
-      without an intervening cast to an unsigned type may experience silent
-      behavioral changes for implementations with a signed 8-bit <tt>char</tt>
-      type.  In general, such accesses are likely indicative of latent defects
-      in the code, and are defects likely fixed by the proposed changes.</li>
-  <li>Initialization or assignment of <tt>const char</tt> pointers (including
-      parameters) from UTF-8 string literals will now result in incompatible
-      pointer conversions.  This is an intentional change intended to allow
-      the use of compiler diagnostics to identify cases where incorrectly
-      encoded text is used.</li>
-  <li>Initialization of arrays of type <tt>char</tt> with a UTF-8 string
-      literal will now be ill-formed.  This is an intentional change intended
-      to allow the use of compiler diagnostics to identify cases where
-      incorrectly encoded text is used.</li>
-  <li>Code that makes use of <tt>_Generic</tt> or type deduction extensions
-      such as gcc's <tt>__typeof__</tt> type specifier may become ill-formed
-      or behave differently.</li>
-</ol>
+<p>The proposed change to the type of UTF-8 string literals impacts backward
+compatibility as described in the following sections.
+Implementors are encouraged to offer options to disable <tt>char8_t</tt>
+support when necessary to preserve compatibility with C17.
 </p>
 
-<p>These changes are a primary objective of this proposal.  Implementations
-are encouraged to add options to disable <tt>char8_t</tt> support entirely
-when necessary to preserve compatibility with prior C language standards.
+
+<h2 id="bc_pointer_conversion">Pointer conversion from a UTF-8 string literal</h2>
+
+<p>
+Initialization or assignment of <tt>char</tt> pointers (including
+parameters) from UTF-8 string literals remains well-formed under this
+proposal.
+However, some implementations may produce warnings about differences in
+signedness depending on whether <tt>char</tt> is a signed or unsigned type.
+</p>
+
+<p>
+For example:
+<blockquote><pre>
+const char *p = u8"text"; // Well-formed in C17 and with this proposal, but
+                          // implementations may now warn about different
+                          // signedness for the pointer target type.
+</pre></blockquote>
+</p>
+
+
+<h2 id="bc_string_lit_element_value">The value of a UTF-8 string literal element</h2>
+
+<p>
+Code that directly accesses the code unit values of UTF-8 string literals
+without an intervening cast to an unsigned type may observe different values
+under this proposal.
+This will occur for implementations with a signed 8-bit <tt>char</tt> type
+when accessing a leading or trailing UTF-8 code unit (such code units have a
+value in the range <tt>0x80</tt> through <tt>0xFF</tt>).
+</p>
+
+<p>
+For example:
+<blockquote><pre>
+if (u8"\u00E9"[0] &lt; 0) {} // Well-formed with implementation-defined behavior
+                          // in C17.  Well-formed with portable behavior with
+                          // this proposal (the conditional is always false).
+</pre></blockquote>
+</p>
+
+<p>
+The author is unaware of use cases that involve directly probing the values
+of UTF-8 string literal elements, but such accesses may occur as a result of
+macro processing.
+Code intended to be portable will already contain an appropriate cast to an
+unsigned type and will therefore be unaffected by this proposal.
+Non-portable code that relies on leading and trailing UTF-8 code unit values
+having a negative value will require modification.
+</p>
+
+
+<h2 id="bc_type_inference">Type inference</h2>
+
+<p>
+Code that makes use of <tt>_Generic</tt> expressions, type inference extensions
+such as gcc's <tt>__typeof__</tt> type specifier, or Clang's extension for
+overloading in C may become ill-formed or behave differently with this proposal.
+</p>
+
+<p>
+In the following example, <tt>serialize</tt> is a type-generic macro that, based
+on the type of its argument, dispatches to either <tt>serialize_text()</tt>,
+<tt>serialize_wide_text()</tt>, <tt>serialize_int()</tt>. or
+<tt>serialize_double()</tt>.
+With this proposal, there is no longer a type match, so the code becomes
+ill-formed.
+This code can be corrected on the caller side by adding a cast to <tt>char*</tt>
+or on the callee side by adding a type match for <tt>unsigned char*</tt>.
+The latter approach has the benefit of allowing <tt>serialize</tt> to dispatch
+to a <tt>serialize_u8text()</tt> function that specifically handles UTF-8
+encoded text.
+<blockquote><pre>
+void serialize_text(const char*);
+void serialize_wide_text(const wchar_t*);
+void serialize_int(int);
+void serialize_double(double);
+#define serialize(X) _Generic((X),                           \
+                              char*:    serialize_text,      \
+                              wchar_t*: serialize_wide_text, \
+                              int:      serialize_int,       \
+                              double:   serialize_double)(X)
+void f() {
+  serialize(u8"text"); // Well-formed in C17, ill-formed with this proposal.
+}
+</pre></blockquote>
+</p>
+
+<p>
+The following example reimplements the serialization example, using Clang's
+extension for overloading in C.
+In this case, the change of type for the UTF-8 string literal results in
+ambiguous  overload resolution.
+Here again, the code can be corrected on the caller side by adding a cast, or
+can be corrected on the callee side by adding an overload for
+<tt>const unsigned char*</tt>.
+Again, the latter has the benefit of enabling UTF-8 encoded text to be handled
+differently than text matching the execution character set.
+<blockquote><pre>
+void serialize(const char*)    __attribute__((overloadable));
+void serialize(const wchar_t*) __attribute__((overloadable));
+void serialize(int)            __attribute__((overloadable));
+void serialize(double)         __attribute__((overloadable));
+void f() {
+  serialize(u8"text"); // Well-formed in C17 with Clang's overloading extension.
+                       // Ill-formed with this proposal.
+}
+</pre></blockquote>
 </p>
 
 
@@ -474,22 +848,21 @@ respectively of the following repositories:
 
 <p>
 The changes to glibc provide declarations for the <tt>char8_t</tt> typedef
-and the <tt>c8rtomb()</tt> and <tt>mbrtoc8()</tt> functions.  When compiling
-for C, these declarations are only present when the <tt>_CHAR8_T_SOURCE</tt>
-feature test macro is defined.
+name and the <tt>c8rtomb()</tt> and <tt>mbrtoc8()</tt> functions.
+When compiling for C, these declarations are only present when the
+<tt>_CHAR8_T_SOURCE</tt> feature test macro is defined.
 </p>
 
 <p>
-The changes to gcc provide the <tt>atomic_char8_t</tt> typedef, the
+The changes to gcc provide the <tt>atomic_char8_t</tt> typedef name, the
 <tt>ATOMIC_CHAR8_T_LOCK_FREE</tt> macro, and the change of type for UTF-8
-literals from array of <tt>const char</tt> to array of
-<tt>const unsigned char</tt>.  The existing <tt>-fchar8_t</tt> and
-<tt>-fno-char8_t</tt> compiler options are extended to C code to allow
-opting-in or opting-out of these changes.  When <tt>-fchar8_t</tt> is
-enabled, the <tt>_CHAR8_T_SOURCE</tt> macro is defined to inform the
-C library that the <tt>char8_t</tt> typedef and the <tt>c8rtomb()</tt>
-and <tt>mbrtoc8()</tt> declarations should be provided by the <tt>uchar.h</tt>
-header..
+literals from array of <tt>char</tt> to array of <tt>unsigned char</tt>.
+The existing <tt>-fchar8_t</tt> and <tt>-fno-char8_t</tt> compiler options
+are extended to C code to allow opting-in or opting-out of these changes.
+When <tt>-fchar8_t</tt> is enabled, the <tt>_CHAR8_T_SOURCE</tt> macro is
+defined to inform the C library that the <tt>char8_t</tt> typedef name and
+the <tt>c8rtomb()</tt> and <tt>mbrtoc8()</tt> declarations should be provided
+by the <tt>uchar.h</tt> header.
 </p>
 
 
@@ -557,31 +930,6 @@ single UTF-8 code unit.
 <del><tt>char</tt></del><ins><tt>char8_t</tt></ins>, and are initialized with
 the characters of the multibyte character sequence, as encoded in UTF–8.
 [&hellip;]
-</blockquote>
-</p>
-
-<p>Change in 6.7.9 (Initialization) paragraph 14:
-<blockquote>
-An array of character type may be initialized by a character string
-literal<del> or UTF-8 string literal</del>, optionally enclosed in braces. Successive
-bytes of the string literal (including the terminating null character if there
-is room or if the array is of unknown size) initialize the elements of the
-array.
-</blockquote>
-</p>
-
-<p><em>Drafting note: The changes to 6.7.9p14 affect backward compatibility
-by removing the ability to initialize an array of character type with a UTF-8
-string literal.  This is an intentional change made to align with C++20.
-</em></p>
-
-<p>Insert a new paragraph after 6.7.9 (Initialization) paragraph 14:
-<blockquote class=stdins>
-An array with element type compatible with a qualified or unqualified version
-of <tt>char8_t</tt> may be initialized by a UTF-8 string literal, optionally
-enclosed in braces.  Successive bytes of the string literal (including the
-terminating null character if there is room or if the array is of unknown size)
-initialize the elements of the array.
 </blockquote>
 </p>
 
@@ -941,25 +1289,111 @@ with WG14.</p>
   <tr>
     <td id="ref_w3techs"><sup>[W3Techs]</sup></td>
     <td>
-      "Usage of UTF-8 for websites", W3Techs, 2021.<br/>
+      "Usage of UTF-8 for websites",
+      W3Techs,
+      2021.<br/>
       <a href="https://w3techs.com/technologies/details/en-utf8/all/all">
       https://w3techs.com/technologies/details/en-utf8/all/all</a></td>
-  </tr>
-  <tr>
-    <td id="ref_p0482r6"><sup>[P0482R6]</sup></td>
-    <td>
-      Tom Honermann,
-      "char8_t: A type for UTF-8 characters and strings (Revision 6)", P0482R6, 2018.<br/>
-      <a href="https://wg21.link/p0482r6">
-      https://wg21.link/p0482r6</a></td>
   </tr>
   <tr>
     <td id="ref_wg14_n2596"><sup>[WG14 N2596]</sup></td>
     <td>
       JeanHeyd Meneide, Freek Wiedijk, et al.,
-      "C2x Working Draft", N2596, 2020.<br/>
+      "C2x Working Draft",
+      WG14 N2596,
+      2020.<br/>
       <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf">
       http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2596.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_n2620"><sup>[WG14 N2620]</sup></td>
+    <td>
+      JeanHeyd Meneide,
+      "Restartable and Non-Restartable Functions for Efficient Character Conversions | r4",
+      WG14 N2620,
+      2020.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2620.htm">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2620.htm</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_n2654"><sup>[WG14 N2654]</sup></td>
+    <td>
+      Jens Gustedt,
+      "Revise spelling of keywords v5",
+      WG14 N2654,
+      2021.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2654.pdf">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2654.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_n2724"><sup>[WG14 N2724]</sup></td>
+    <td>
+      JeanHeyd Meneide,
+      "Not-So-Magic - typeof(…) in C | r3",
+      WG14 N2724,
+      2021.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2724.htm">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2724.htm</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_n2734"><sup>[WG14 N2734]</sup></td>
+    <td>
+      Jens Gustedt,
+      "Improve type generic programming",
+      WG14 N2734,
+      2021.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2734.pdf">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2734.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_n2735"><sup>[WG14 N2735]</sup></td>
+    <td>
+      Jens Gustedt,
+      "Type inference for variable definitions and function returns",
+      WG14 N2735,
+      2021.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2735.pdf">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2735.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg14_n2738"><sup>[WG14 N2738]</sup></td>
+    <td>
+      Jens Gustedt,
+      "Type-generic lambdas",
+      WG14 N2738,
+      2021.<br/>
+      <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2738.pdf">
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2738.pdf</a></td>
+      http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2695.pdf</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg21_n2249"><sup>[WG21 N2249]</sup></td>
+    <td>
+      Lawrence Crowl,
+      "New Character Types in C++",
+      WG21 N2249,
+      2007.<br/>
+      <a href="https://wg21.link/n2249">
+      https://wg21.link/n2249</a></td>
+  </tr>
+  <tr>
+    <td id="ref_wg21_p0482r6"><sup>[WG21 P0482R6]</sup></td>
+    <td>
+      Tom Honermann,
+      "char8_t: A type for UTF-8 characters and strings (Revision 6)",
+      WG21 P0482R6,
+      2018.<br/>
+      <a href="https://wg21.link/p0482r6">
+      https://wg21.link/p0482r6</a></td>
+  </tr>
+  <tr>
+    <td id="ref_clang_overloadable"><sup>[Clang overloadable]</sup></td>
+    <td>
+      The Clang Team,
+      "Clang 11 documentation, Attributes in Clang",
+      2020.<br/>
+      <a href="https://releases.llvm.org/11.0.0/tools/clang/docs/AttributeReference.html#overloadable">
+      https://releases.llvm.org/11.0.0/tools/clang/docs/AttributeReference.html#overloadable</a></td>
   </tr>
 </table>
 
