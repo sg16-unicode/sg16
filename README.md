@@ -84,7 +84,7 @@ WG Number     | Title/Notes/Links
 ------------- | -----
 [N2728][]     | char16\_t & char32\_t string literals shall be UTF-16 & UTF-32 \| r0
 [N2620][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], and [N2595 (R3)][N2595])
-[N2231][]     | char8\_t: A type for UTF-8 characters and strings
+[N2653][]     | char8\_t: A type for UTF-8 characters and strings (Revision 1)<br/>(Previously [N2231 (R0)][N2231])
 
 ## Accepted Papers
 
@@ -103,9 +103,11 @@ WG Number     | Title/Notes/Links
 ~~[N2500][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r2~~<br/>(Superceded by [N2595][])
 ~~[N2440][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r1~~<br/>(Superceded by [N2500][])
 ~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superceded by [N2440][])
+~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superceded by [N2653][])
 
 
 [N2728]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2728.htm
+[N2653]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2653.htm
 [N2620]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2620.htm
 [N2595]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2595.pdf
 [N2594]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2594.htm
