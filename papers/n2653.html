@@ -100,7 +100,7 @@ div.compare_item {
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-05-30</td>
+    <td>2021-06-04</td>
   </tr>
   <tr>
     <th>Proposal category:</th>
@@ -525,6 +525,77 @@ void f() {
 </p>
 
 <p>
+Additional motivation for distinct integer types is the ability to specify
+them as non-aliasing types.
+A non-aliasing type is one for which objects of the type may only be accessed
+using a limited set of types; compatible types and specially designated types
+like <tt>char</tt> and <tt>unsigned char</tt>.
+Compilers may use type based alias analysis (TBAA) to generate more efficient
+code for non-aliasing types.
+Aliasing violations result in undefined behavior.
+</p>
+
+<p>
+The following example code would be well-formed in C regardless of whether
+<tt>char8_t</tt> is specified as a new integer type or as a typedef name of
+an existing character type.
+If <tt>char8_t</tt> is specified as a typedef name of an existing character
+type, then the example also works as expected because it does not violate
+aliasing rules.
+However, if <tt>char8_t</tt> is specified as a new integer type, then the
+example would exhibit undefined behavior because an object of type
+<tt>char</tt> is accessed using the <tt>char8_t</tt> type (assuming no new
+special provisions added to C17 6.5, Expressions, paragraph 7).
+Thus, there is a trade-off between code efficiency and safety inherent in
+how <tt>char8_t</tt> is defined.
+<blockquote><pre>
+void do_utf8_things(const char8_t *s) {
+  *s;
+}
+void f() {
+  const char *presumably_utf8_text = "text";
+  do_utf8_things(presumably_utf8_text);
+}
+</pre></blockquote>
+</p>
+
+<p>
+Since <tt>char8_t</tt> is a distinct type in C++ and the C++ type system
+prohibits implicit access to objects with an incompatible type without use of
+a cast, the above example is ill-formed in C++20.
+However, the code may be rendered well-formed in C++20 by the addition of a
+cast, but will then result in undefined behavior when executed.
+<blockquote><pre>
+void do_utf8_things(const char8_t *s) {
+  *s;
+}
+void f() {
+  const char *presumably_utf8_text = "text";
+  do_utf8_things((const char8_t*)presumably_utf8_text);
+}
+</pre></blockquote>
+Such a cast might be added by a C programmer in order to silence warnings
+regarding a change of signedness that might be produced when the
+<tt>const char*</tt> argument to <tt>do_utf8_things()</tt> is converted to
+<tt>const char8_t*</tt>; assuming <tt>char8_t</tt> is a typedef name of a
+differently signed character type (otherwise, if <tt>char8_t</tt> were a
+distinct type, the code would exhibit undefined behavior whether or not
+the cast was present).
+In that case, the unfortunate result is that the code is well-formed for
+both C and C++, but exhibits undefined behavior only when compiled for C++.
+</p>
+
+<p>
+This aliasing asymmetry between C and C++ is not a new concern; it already
+exists for the <tt>wchar_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt>
+types.
+For example, <tt>char16_t</tt> and <tt>uint_least16_t</tt> are distinct
+integer types in C++ (and do not alias), but are the same type in C.
+Whether these aliasing issues are more significant for <tt>char8_t</tt> as
+opposed to the other character types is a subjective concern.
+</p>
+
+<p>
 Introduction of a new <tt>char8_t</tt> integer type without a corresponding
 change to make <tt>wchar_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt>
 distinct integer types would be inconsistent and surprising.
@@ -533,7 +604,8 @@ a change of direction should be pursued via a separate proposal.
 Should WG14 indicate support for such direction when reviewing this proposal,
 the author will submit a separate proposal.
 In the meantime, this proposal advocates for only a new <tt>char8_t</tt>
-typedef name in order to maintain consistency with other character types.
+typedef name in order to maintain consistency with the existing character
+types.
 </p>
 
 <p>
@@ -1279,8 +1351,15 @@ have particular semantics provided by this document.<br/>
 
 <h1 id="acknowledgements">Acknowledgements</h1>
 
-<p>Thank you to Aaron Ballman for his kind assistance facilitating interaction
-with WG14.</p>
+<p>
+Thank you to Aaron Ballman for his kind assistance facilitating interaction
+with WG14.
+</p>
+
+<p>
+Thank you to Richard Smith and Jens Maurer for review feedback and many
+educational and helpful conversations.
+</p>
 
 
 <h1 id="references">References</h1>
