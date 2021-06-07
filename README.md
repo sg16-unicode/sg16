@@ -27,12 +27,9 @@ WG Number     | Title/Notes/Links
 [P2295][]     | Support for UTF-8 as a portable source file encoding
 [P2290][]     | Delimited escapes sequences
 [P2246][]     | Character encoding of diagnostic text
-[P2223][]     | Trimming whitespaces before line splicing
-[P2201][]     | Mixed string literal concatenation
 [P2093][]     | Formatted output
 [P2071][]     | Named universal character escapes
 [P1953][]     | Unicode Identifiers And Reflection
-[P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
 [P1885][]     | Naming Text Encodings to Demystify Them
 [P1859][]     | Standard terminology for execution character set encodings
 [P1729][]     | Text Parsing
@@ -47,7 +44,10 @@ The following papers have been adopted for an ISO standard.
 
 WG Number     | Standard    | Title/Notes/Links
 ------------- | --------    | -----
+[P2223][]     | C++23       | Trimming whitespaces before line splicing
+[P2201][]     | C++23       | Mixed string literal concatenation
 [P2029][]     | C++23       | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
+[P1949][]     | C++23       | C++ Identifier Syntax using Unicode Standard Annex 31
 [P1892][]     | C++20       | Extended locale-specific presentation specifiers for std::format
 [P1868][]     | C++20       | 🦄 width: clarifying units of width and precision in std::format
 [P1423][]     | C++20       | char8\_t backward compatibility remediation
