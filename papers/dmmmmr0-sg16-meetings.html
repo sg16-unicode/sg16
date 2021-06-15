@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2021-04-14 through 2021-05-12</title>
+<title>SG16: Unicode meeting summaries 2021-04-14 through 2021-05-26</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-05-17</td>
+    <td>2021-06-15</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2021-04-14 through 2021-05-12</h1>
+<h1>SG16: Unicode meeting summaries 2021-04-14 through 2021-05-26</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -103,6 +103,8 @@ snapshot of select meeting summaries from that repository.
       April 28th, 2021</a></li>
   <li><a href="#2021_05_12">
       May 12th, 2021</a></li>
+  <li><a href="#2021_05_26">
+      May 26th, 2021</a></li>
 </ul>
 
 <p>
@@ -745,8 +747,8 @@ Previously published SG16 meeting summary papers:
   <li>Jens Maurer</li>
   <li>Mark Zeren</li>
   <li>Peter Brett</li>
-  <li>Tom Honermann</li>
   <li>Steve Downey</li>
+  <li>Tom Honermann</li>
   <li>Victor Zverovich</li>
   <li>Zach Laine</li>
 </ul>
@@ -1009,6 +1011,214 @@ Previously published SG16 meeting summary papers:
       <a href="https://wg21.link/p2295r3">P2295R3</a>
       and
       <a href="https://wg21.link/p2093r6">P2093R6</a>.</li>
+</ul>
+
+
+<h1 id="2021_05_26">May 26th, 2021</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2295r4">P2295R4: Support for UTF-8 as a portable source file encoding</a>
+    <ul>
+      <li>Review updates intended to address prior SG16 feedback.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2093r6">P2093R6: Formatted output</a>
+    <ul>
+      <li>Discuss locale dependent character encoding concerns.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2295r4">P2295R4: Support for UTF-8 as a portable source file encoding</a>
+    <ul>
+      <li><em>[ Editor's note: D2295R4 was the active paper under discussion at
+          the telecon.  The agenda and links used here reference
+          P2295R4 since the links to the draft paper were ephemeral.  The
+          published document may differ from the reviewed draft revision.
+          ]</em></li>
+      <li>PBrett provided an introduction.</li>
+      <li>Corentin presented and described the changes from R3 to the
+          draft R4.</li>
+      <li>PBrett observed that the wording updates removed the prior
+          definition for a <i>UTF-8 file</i> and added a new definition for
+          a <i>UTF-8 source file</i>.</li>
+      <li>Tom recalled prior discussion that suggested there was no need to
+          provide such a definition at all.</li>
+      <li>Jens confirmed and explained that the prior suggestion was to
+          instead specify translation phase 1 in terms of a sequnce of
+          characters instead.</li>
+      <li>Jens noted that there will be merge conflicts with
+          <a href="https://wg21.link/p2314">P2314</a>.</li>
+      <li>Corentin asked if the merge conflicts can be dealt with after CWG
+          reviews P2314.</li>
+      <li>Jens confirmed that they can be.</li>
+      <li>PBrett asked if progress can be made before P2314 is adopted into
+          the working paper.</li>
+      <li>Jens confirmed that progress can be made.</li>
+      <li>PBrett asked Jens if he would like to see additional wording changes
+          reviewed in SG16.</li>
+      <li>Jens replied that he would and noted that he had not received a
+          response to all of the suggestions previously provided in his message
+          to the mailing list available at
+          <a href="https://lists.isocpp.org/sg16/2021/04/2353.php">https://lists.isocpp.org/sg16/2021/04/2353.php</a>.</li>
+      <li>Jens observed that the proposed wording results in existing wording
+          no longer applying to all source files.  For example, "Any source
+          file character not in the basic source character set is replaced by
+          the <i>universal-character-name</i> that designates that character"
+          now appears in a paragraph that doesn't apply to UTF-8 source
+          files.</li>
+      <li>Corentin responded that this paper doesn't make sense without the
+          changes from P2314.</li>
+      <li>Tom asked if the wording could be rebased on P2314 with a noted
+          dependency on P2314.</li>
+      <li>Jens replied that it could be.</li>
+      <li>Hubert noted that the definition of a UTF-8 source file is problematic
+          since the definition could apply to a file that just so happens to
+          decode as UTF-8, but is not intended as a UTF-8 file.</li>
+      <li>PBrett responded that the following sentence specifies that encoding
+          determination is implementation-defined.</li>
+      <li>Hubert acknowledged and suggested it might be helpful to reorder the
+          sentences.</li>
+      <li>Hubert added that wording is still required to reflect intent that a
+          file be interpreted as UTF-8.</li>
+      <li>PBrett agreed by way of an example; an implementation invoked without
+          such intent may analyze a file, determine that it does not decode
+          successfully as UTF-8, and then interpret it as, for example,
+          Windows-1252, and do so without issuing a diagnostic.</li>
+      <li>Jens observed that the wording states that, "An implementation shall
+          support UTF-8 source files", but there is no wording to require
+          diagnosis of ill-formed UTF-8 source files.</li>
+      <li>Corentin responded that there is no such thing as an invalid UTF-8
+          file; either a file is valid UTF-8 or it is not UTF-8.</li>
+      <li>Mark responded that there is a desire to have implementations produce
+          a diagnostic if source files that are purported to be encoded as
+          UTF-8 are not, in fact, valid UTF-8.</li>
+      <li>PBrett stated that there are three distinct requirements:
+        <ul>
+          <li>A requirement to support UTF-8 encoded source files.</li>
+          <li>A requirement for means to inform the implementation that all
+              source files are to be assumed to be UTF-8 encoded.</li>
+          <li>A requirement that the implementation diagnose files that were
+              assumed to be UTF-8 encoded but that contain (some) non-UTF-8
+              content.</li>
+        </ul>
+      </li>
+      <li>Hubert offered some suggested wording in chat:
+        <ul>
+          <li>"An implementation shall provide for processing physical source
+              files as having a UTF-8 encoding scheme without restriction,
+              other than resource limits ([implimits]), upon the content of
+              the physical source file."</li>
+        </ul>
+      </li>
+      <li>Jens pasted previously suggested wording from the mailing list in
+          chat:
+        <ul>
+          <li>"The encoding scheme of a physical source file is determined in
+              an implementation-defined manner.  An implementation shall
+              support (possibly among others) the UTF-8 encoding scheme."</li>
+          <li>"If the encoding scheme of a physical source file is determined
+              to be UTF-8, the physical source file shall consist of a
+              well-formed sequence of UTF-8 code units as specified by ISO/IEC
+              10646."</li>
+        </ul>
+      </li>
+      <li>Hubert expressed support for that wording but thought some additional
+          updates would still be required to ensure diagnostics.</li>
+      <li>Corentin disagreed with removal of wording that requires that the
+          scalar value of source file characters be preserved.</li>
+      <li>Jens responded that the scalar value preservation wording isn't
+          required because the mapping to the translation character set already
+          preserves characters.</li>
+      <li>Steve noted the existence of wording that uses the phrase "known to
+          the implementation" and asked if that could be used to specify how
+          source file encoding is determined.</li>
+      <li>Tom suggested that implementation-defined is preferred since that
+          reflects a documentation requirement.</li>
+      <li>Hubert added that the "known to the implementation" wording is not
+          intended to reflect that implementations can be wrong.</li>
+      <li>PBrett observed that Jens and Hubert would presumably like to see
+          updated wording.</li>
+      <li>Hubert expressed a belief that the required wording has been
+          identified and that he is onboard with the goal of preserving scalar
+          value sequences from UTF-8 source files.</li>
+      <li>Corentin responded that he will bring back a revised paper with the
+          suggested wording.</li>
+      <li>Steve informed the group that the EWG chair is considering dedicating
+          a telecon to SG16 papers in the next month or so.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2093r6">P2093R6: Formatted output</a>
+    <ul>
+      <li>PBrett reported a previous conversation with Victor in which Victor
+          expressed that he felt he has the guidance he needs regarding
+          handling of substitution characters and locale.</li>
+      <li>Victor presented slides:
+        <ul>
+          <li>The next question to be answered is whether it is ok to base
+              behavior on the literal encoding.</li>
+          <li>Use of the literal encoding avoids race conditions with locale
+              settings.</li>
+        </ul>
+      </li>
+      <li>Discussion ensued regarding current dependencies on the choice of
+          literal encoding and it was observed that, though the wording
+          provided by
+          <a href="https://wg21.link/p1868">P1868</a>
+          to specify estimated format field widths is not based on the literal
+          encoding, at least one implementation is planning to only use the
+          specified estimated widths when the literal encoding is UTF-8.</li>
+      <li>Hubert observed that field width estimation can apply to content
+          from other than string literals.</li>
+      <li>PBrett provided an example; when <tt>gettext()</tt> is used, a
+          literal is used for the message catalog lookup, but the result is
+          not a string literal.</li>
+      <li>Hubert acknowledged the provided rationale, but noted that it does
+          not address concerns raised and that he has seen many cases where
+          use of locales works fine on UNIX systems.</li>
+      <li>Hubert added that this has the potential to bite existing users since
+          code may appear to work correctly until it suddenly doesn't.</li>
+      <li>Victor replied that his goal is to make UTF-8 cases work as expected
+          and that he is willing to accept some surprises in other
+          scenarios.</li>
+      <li>Victor stressed that the intention is that, on UNIX systems, bytes
+          are simply passed through.</li>
+      <li>Tom directed discussion towards the example code from the
+          <a href="https://lists.isocpp.org/sg16/2021/05/2389.php">telecon announcement</a>.</li>
+      <li>Victor stated that he will request a LWG issue or author a paper to
+          address handling of locale provided text.</li>
+      <li><em>[ Editor's note: Victor requested an LWG issue that is now
+          tracked as
+          <a href="https://wg21.link/lwg3565">LWG issue 3565</a>. ]</em></li>
+      <li>Corentin stated that he is content with undefined behavior for cases
+          where UTF-8 input is expected, but the input is not actually
+          UTF-8 encoded.</li>
+      <li>Hubert responded that the format locale situation is rather urgent
+          for EBCDIC environments.</li>
+      <li>PBrett stated that he is ok with the proposal because it won't break
+          anything worse than it already is.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next telecon will be held on June 9th.</li>
 </ul>
 
 
