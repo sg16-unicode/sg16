@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2021-06-09 through 2021-06-09</title>
+<title>SG16: Unicode meeting summaries 2021-06-09 through 2021-06-23</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-06-15</td>
+    <td>2021-06-29</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2021-06-09 through 2021-06-09</h1>
+<h1>SG16: Unicode meeting summaries 2021-06-09 through 2021-06-23</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -99,6 +99,8 @@ snapshot of select meeting summaries from that repository.
 <ul>
   <li><a href="#2021_06_09">
       June 9th, 2021</a></li>
+  <li><a href="#2021_06_23">
+      June 23rd, 2021</a></li>
 </ul>
 
 <p>
@@ -125,16 +127,796 @@ Previously published SG16 meeting summary papers:
 <h2>Draft agenda:</h2>
 
 <ul>
+  <li><a href="https://wg21.link/p2093r6">P2093R6: Formatted output</a>
+    <ul>
+      <li>Continue discussion and poll for consensus on answers to the
+          following questions:
+        <ul>
+          <li>1) How should invalidly encoded text be handled when transcoding
+                 for the purpose of writing directly to a device interface?</li>
+          <li>2) Is use of UTF-8 as the literal encoding a sufficient indicator
+                 that all input fed to <tt>std::format(</tt>) and
+                 <tt>std::print()</tt> (including the format string, programmer
+                 supplied field arguments, and locale provided text) will be
+                 UTF-8 encoded?</li>
+          <li>3) Is the literal encoding a sufficient indicator in general that
+                 all input fed to <tt>std::format()</tt> and
+                 <tt>std::print()</tt> (including the format string, programmer
+                 supplied field arguments, and locale provided text) will be
+                 provided in an encoding compatible with the literal
+                 encoding?</li>
+          <li>4) What are the implications for future support of
+                 <tt>std::print("{} {} {} {}", L"Wide text", u8"UTF-8 text", u"UTF-16 text", U"UTF-32 text")</tt>?</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/lwg3565">LWG 3565: Handling of encodings in localized formatting of <tt>chrono</tt> types is underspecified</a>
 </ul>
 
 <h2>Attendees:</h2>
 
 <ul>
+  <li>Charlie Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
 </ul>
 
 <h2>Meeting summary:</h2>
 
 <ul>
+  <li><a href="https://wg21.link/p2093r6">P2093R6: Formatted output</a>:
+    <ul>
+      <li>No initial discussion was held; the meeting proceded directly to
+          candidate polls previously
+          <a href="https://lists.isocpp.org/sg16/2021/06/2430.php">communicated to the mailing list</a>.</li>
+      <li>Poll 1 discussion:
+        <ul>
+          <li>Zach stated that programmers will expect <tt>std::format()</tt>
+              and <tt>std::print()</tt> to behave the same way.</li>
+          <li>Victor stated that <tt>std::print()</tt> can be implemented using
+              <tt>std::format()</tt>; <tt>std::print()</tt> is intended to be
+              just <tt>std::format()</tt> with additional device dependent
+              transcoding.</li>
+        </ul>
+      </li>
+      <li><b>Poll 1: P2093R6: <tt>&lt;format&gt;</tt> and <tt>&lt;print&gt;</tt>
+          facilities should have consistent behavior with respect to encoding
+          expectations for the format string.</b>
+        <ul>
+          <li><b>Attendance: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li>Poll 2 discussion:
+        <ul>
+          <li><em>[ Editor's note: the original poll was "P2093R6:
+              <tt>&lt;format&gt;</tt> and <tt>&lt;print&gt;</tt> facilities
+              should have consistent behavior with respect to encoding
+              expectations for the output of formatters." ]</em></li>
+          <li>Victor asked for confirmation that the "formatters" term in the
+              poll refers to formatter specializations.</li>
+          <li>Tom confirmed that it does.</li>
+          <li>Zach asked for confirmation that formatters can be user
+              provided.</li>
+          <li>Victor confirmed that they can be.</li>
+          <li>Hubert stated that a desire to bypass encoding constraints will
+              require a concept for binary formatters and a corresponding
+              proposal.</li>
+          <li>Jens expressed a belief that formatters are allowed to be
+              agnostic with respect to use with <tt>std::format()</tt> vs
+              <tt>std::print()</tt>.</li>
+          <li><em>[ Editor's note: Jens observation prompted the addition of
+              poll 2.2 to confirm matching design intent. ]</em></li>
+          <li>Victor stated that there is currently no mechanism proposed for a
+              formatter to be informed as to whether it is being used with
+              <tt>std::format()</tt> or <tt>std::print()</tt>.</li>
+          <li>Zach expressed confusion about the poll.</li>
+          <li>Hubert suggested this poll be deferred until after later polls
+              concerned with the consequences of violating encoding
+              expectations.</li>
+        </ul>
+      </li>
+      <li><b>Poll 2.1: P2093R6: <tt>&lt;format&gt;</tt> and
+          <tt>&lt;print&gt;</tt> facilities should have consistent behavior
+          with respect to encoding expectations for the output of
+          formatters.</b>
+        <ul>
+          <li>Per discussion; poll deferred until after later polls.</li>
+        </ul>
+      </li>
+      <li><b>Poll 2.2: P2093R6: formatters should not be sensitive to whether
+          they are being used with a <tt>&lt;format&gt;</tt> or
+          <tt>&lt;print&gt;</tt> facility.</b>
+        <ul>
+          <li><b>Attendance: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li>Poll 3 discussion:
+        <ul>
+          <li><em>[ Editor's note: the original poll was "P2093R6: Regardless
+              of format string encoding assumptions, <tt>&lt;format&gt;</tt>
+              facilities (but not <tt>&lt;print&gt;</tt> facilities) may be
+              used to format binary data." ]</em></li>
+          <li>Victor stated that support for binary data is a nice capability
+              to have and is needed to match existing uses of
+              <tt>printf()</tt>.</li>
+          <li>Steve noted that this poll is relevant for cases where
+              transcoding is required.</li>
+          <li>Tom agreed and noted that the code author may not be aware of
+              implementation performed transcoding.</li>
+          <li>Jens asked for reasons that a text facility would be used for
+              binary data.</li>
+          <li>Victor responded that <tt>printf()</tt> is often used with
+              binary data and noted that the format string does not
+              necessarily contain text; it might solely contain field
+              specifiers.</li>
+          <li>Tom noted that filenames may be formatted, but might not conform
+              to encoding expectations.</li>
+          <li>Steve mentioned having also seen ostreams used with binary
+              data.</li>
+          <li>Hubert noted again that additional design work would be needed
+              for binary data to be transported through any implicit
+              transcoding performed by <tt>std::print()</tt>.</li>
+          <li>Hubert added that control characters can be another source of
+              binary data.</li>
+          <li>Zach suggested splitting the poll to address
+              <tt>&lt;format&gt;</tt> and <tt>&lt;print&gt;</tt> separately so
+              as to remove the parenthetical text.</li>
+          <li>Zach suggested that there may be a use case for standard
+              formatters for binary data or for a "raw" print interface.</li>
+          <li>Victor suggested there may be some misunderstanding; that
+              <tt>std::print()</tt> may be used with binary data with the
+              result that garbage is displayed on the console.</li>
+          <li>Hubert politely disagreed due to the lack of an escape mechanism
+              for binary data.</li>
+          <li>Jens agreed that some form of a non-text in-band signalling
+              mechanism would be needed.</li>
+          <li>Victor clarified that his argument for preserving binary data is
+              for the case where output is directed to a file.</li>
+          <li>Hubert noted that poll 3 and poll 10 are related and that
+              concensus for poll 10 will require facilities related to poll
+              3.</li>
+        </ul>
+      </li>
+      <li><b>Poll 3.1: P2093R6: Regardless of format string encoding
+          assumptions, <tt>&lt;format&gt;</tt> facilities may be used to format
+          binary data.</b>
+        <ul>
+          <li><b>Attendance: 8 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Strong consensus in favor.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 3.2: P2093R6: Regardless of format string encoding
+          assumptions, <tt>&lt;print&gt;</tt> facilities may be used to
+          format binary data.</b>
+        <ul>
+          <li><b>Attendance: 8 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Weak consensus in favor.</b></li>
+          <li>A: No comment</li>
+        </ul>
+      </li>
+      <li>Poll 4 discussion:
+        <ul>
+          <li><em>[ Editor's note: the original poll was "P2093R6:
+              <tt>&lt;print&gt;</tt> facilities exhibit undefined behavior
+              when a format string or formatter output does not match encoding
+              expectations." ]</em></li>
+          <li>Steve expressed a desire for behavior less severe than undefined
+              behavior.</li>
+          <li>Victor expressed discomfort with undefined behavior as well,
+              particularly that the poll applies to all <tt>std::print()</tt>
+              invocations regardless of where the output is directed.</li>
+          <li>Hubert spoke in favor of the poll and noted that this establishes
+              that an implementor or code reviewer can diagnose these cases;
+              that can't happen if behavior is defined.</li>
+          <li>Jens agreed with Hubert, noted the existence of the precondition,
+              and that a violation is "library UB" amd therefore less
+              consequencial than core language UB.</li>
+          <li>Steve stated in chat: "OK, based on Hubert and Jens's comments,
+              I'll withdraw my objections about UB.  I'd like better
+              terminology but this isn't the forum."</li>
+          <li>Jens stated that the paper would benefit from some prose that
+              explains the intended model and that inconsistently encoded data
+              can be stitched together.</li>
+          <li>Jens expressed distaste for preconditions being so specific to a
+              corner case and professed desire for a good programming
+              model.</li>
+          <li>Zach noted similarities with
+              <a href="https://wg21.link/p1868">P1868</a>;
+              the worst case outcome is mojibake displayed on the terminal;
+              the damage is limited.</li>
+          <li>Zach stated that either UB or implementation-defined behavior
+              would be fine for now, but that we may desire another failure
+              mode where the behavior is more contained in the future; a
+              behavior mode that reflects that something went wrong, but where
+              the damage is localized.</li>
+          <li>Victor stated that he feels this poll overreaches; that the only
+              concern is with regard to writing to a file vs a terminal and
+              that, in practice, all that should happen is that the data is
+              passed through or that replacement characters are
+              substituted.</li>
+          <li>Hubert noted that files may correspond to special devices;
+              e.g., /dev/tty.</li>
+          <li>Hubert stated that UB is a specification tool and noted that
+              implementors are in a position to distinguish between polls 4
+              and 5, but that a code reviewer generally cannot.</li>
+        </ul>
+      </li>
+      <li><b>Poll 4: P2093R6: <tt>&lt;print&gt;</tt> facilities exhibit
+          undefined behavior when an encoding expectation is present and a
+          format string or formatter output does not match those
+          expectations.</b>
+        <ul>
+          <li><b>Attendance: 8 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Strong consensus in favor.</b></li>
+          <li>SA: I think this is too broad and the impact is larger than
+              necessary.</li>
+        </ul>
+      </li>
+      <li><b>Poll 5: P2093R6: <tt>&lt;print&gt;</tt> facilities exhibit
+          undefined behavior when an encoding expectation is present and a
+          format string or formatter output does not match those expectations
+          and output is directed to a device that has encoding
+          expectations.</b>
+        <ul>
+          <li><b>Attendance: 8 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">6</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Stronger consensus in favor relative to poll 4.</b></li>
+        </ul>
+      </li>
+      <li>Poll 6 discussion:
+        <ul>
+          <li><em>[ Editor's note: the original poll was "P2093R6:
+              <tt>&lt;print&gt;</tt> facility implementors are encouraged to
+              provide a run-time means for diagnosing format strings and
+              formatter output that does not match encoding expectations."
+              ]</em></li>
+          <li>Tom noted that this is not dependent on UB.</li>
+          <li>Hubert agreed.</li>
+          <li>Corentin expressed skepticism that this is implementable.</li>
+          <li>Hubert responded that the binary case is not well supported, but
+              can be done and probably with a reasonable result.</li>
+          <li>Hubert noted that it may be difficult for an implementation of
+              this extension to distinguish the escaped binary data case.</li>
+          <li>Charlie noted that invalidly encoded data can be detected,
+              but that mojibake cannot be.</li>
+          <li>Steve expressed desire for diagnostics for when the data doesn't
+              match the encoding, but not for attempts to match mixed
+              encodings.</li>
+          <li>Zach noted that heuristic warnings can result in false positives
+              and false negatives.</li>
+          <li>Hubert observed that qualitative determination of good vs bad
+              output may require a human.</li>
+        </ul>
+      </li>
+      <li><b>Poll 6: P2093R6: <tt>&lt;print&gt;</tt> facility implementors are
+          encouraged to provide a run-time means for diagnosing format strings
+          and formatter output that is not well-formed according to the
+          expected encoding.</b>
+        <ul>
+          <li><b>Attendance: 8 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Consensus in favor.</b></li>
+          <li>A: I don't want double validation and this falls outside the
+              standard.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be in two weeks on June 23rd and
+      that we will complete polling and discuss
+      <a href="https://wg21.link/lwg3565">LWG 3565</a>.
+</ul>
+
+
+<h1 id="2021_06_23">June 23rd, 2021</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2093r6">P2093R6: Formatted output</a>
+    <ul>
+      <li>Finish polling begun at the last telecon.</li>
+    </ul>
+  </li>
+  <li><a href="https://cplusplus.github.io/LWG/issue3565">LWG 3565: Handling of encodings in localized formatting of chrono types is underspecified</a>
+    <ul>
+      <li>Discuss and poll the proposed resolution.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2295r4">P2295R4: Support for UTF-8 as a portable source file encoding</a>
+    <ul>
+      <li>Review updated wording produced through collaboration between
+          Corentin, Jens, Hubert, and Peter.
+        <ul>
+          <li><a href="https://lists.isocpp.org/sg16/2021/04/2353.php">https://lists.isocpp.org/sg16/2021/04/2353.php</a></li>
+          <li><a href="https://lists.isocpp.org/sg16/2021/06/2429.php">https://lists.isocpp.org/sg16/2021/06/2429.php</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2093r6">P2093R6: Formatted output</a>:
+    <ul>
+      <li>PBrett reviewed the polls taken at the last telecon.
+        <ul>
+          <li><em>[ Editor's note: See the
+              <a href="#2021_06_09">June 9th, 2021</a>
+              summary for the prior polls. ]</em></li>
+          <li>Tom clarified the intent behind the "encoding expectations"
+              terminology in the polls; it is intended to distinguish cases
+              where there is a dependence on a particular encoding, but
+              without tying that dependence to a particular mechanism for
+              determining the existence of such a dependence.  As proposed,
+              the paper currently imposes a UTF-8 encoding expectation when
+              the literal encoding is UTF-8.</li>
+          <li>Hubert expressed being content with poll 5 relative to poll 4
+              since the determination of what constitutes a device with
+              encoding expectations is left up to the implementation.</li>
+          <li>Hubert noted that it is ambiguous whether a file may constitute
+              a device with encoding expectations and provided
+              <tt>/dev/tty</tt> as an example.</li>
+        </ul>
+      </li>
+      <li>Poll 2.1 discussion:
+        <ul>
+          <li>Victor stated that <tt>std::format()</tt> does not have an
+              encoding expectation by itself but that string formatters must be
+              encoding aware to honor field width specifiers.</li>
+          <li>Victor added that <tt>std::print()</tt> is special due to
+              transcoding requirements.</li>
+          <li>Hubert noted that these polls address the abstract design
+              extent.</li>
+          <li>Jens stated that, as currently specified, there is no implied
+              encoding expectation, but there may be an expectation for the
+              combined formatter outputs to be consistent.</li>
+          <li>Jens added that the format string might not contribute text to
+              the final result; it might consist solely of field
+              specifiers.</li>
+          <li>Jens concluded that concatenation of the output of two formatters
+              that produce differently encoded text might produce text that is
+              not consistently encoded and that nothing is provided to
+              reconcile them.</li>
+          <li>Tom agreed and opined that diagnostics would be useful, but that
+              it is not clear how to reconcile that with desired support for
+              binary formatting.</li>
+          <li>Victor replied that he doesn't see any problems with combining
+              binary and text and reiterated that the ability to do so
+              addresses real use cases.</li>
+          <li>PBrett opined that the <tt>&lt;format&gt;</tt> and
+              <tt>&lt;print&gt;</tt> facilities do not need to be consistent;
+              the only time an encoding expectation should be present is when
+              the output is directed to a device with an encoding
+              expectation.</li>
+          <li>Jens asked if that implies that formatters must communicate the
+              encoding of their output.</li>
+          <li>Victor replied that use of formatters to combine binary and text
+              data is not dissimilar to existing uses of
+              <tt>std::ostream</tt> or <tt>printf()</tt>; it is up to the
+              programmer to ensure that use of formatters matches the
+              intent.</li>
+          <li>Jens asked how a programmer determines what encoding is
+              produced.</li>
+          <li>Victor replied that it is determined by the literal encoding.</li>
+          <li>PBrett replied that nothing in the standard states that though;
+              not for <tt>std::format()</tt>.</li>
+          <li>Charlie stated that the Microsoft implementation assumes Unicode
+              characters for the purposes of field width estimation, but that
+              they could transcode to Unicode if the source encoding was known;
+              but it is not known in general.</li>
+          <li>Charlie noted that the arguments passed to formatters are not
+              transcoded.</li>
+          <li>Charlie added that format strings frequently consist of only
+              invariant characters; effectively ASCII.</li>
+          <li>Charlie cautioned that the encoding of format strings must be
+              known to the implementation in order for format string parsing to
+              not misinterpret trailing code units of multibyte encoded
+              characters.</li>
+          <li>Charlie noted that, for log files, it is not necessarily desirable
+              to transcode to the system encoding.</li>
+          <li>Corentin portrayed <tt>std::print()</tt> as a two step process of
+              formatting followed by transcoding and stated that there is a
+              precondition on the output device being able to display the text,
+              but noted that such a precondition does not imply a postcondition
+              on <tt>std::format()</tt>.</li>
+          <li>Corentin stated that diagnostics would be limited because
+              mojibake is not always detectable.</li>
+          <li>Hubert observed that the sentiment for the poll appears to be
+              trending against it, but that we do have desire to avoid surprises
+              with <tt>std::print()</tt>, or at least to say that we want some
+              checking to be implemented.</li>
+          <li>Hubert suggested that the model of <tt>std::print()</tt> as a two
+              step process of calling <tt>std::format()</tt> and then printing
+              the result may be too limiting and that a more integrated design
+              that provides <tt>std::print()</tt> more detailed information
+              about formatting outputs may unblock further progress.</li>
+        </ul>
+      </li>
+      <li><b>Poll 2.1: P2093R6: <tt>&lt;format&gt;</tt> and
+          <tt>&lt;print&gt;</tt> facilities should have consistent behavior
+          with respect to encoding expectations for the output of
+          formatters.</b>
+        <ul>
+          <li><b>Attendance: 9 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Strong consensus against.</b></li>
+        </ul>
+      </li>
+      <li>Poll 7 discussion:
+        <ul>
+          <li>Victor asked if encouragement would be stated as a note in the
+              standard.</li>
+          <li>Zach responded that LWG prefers normative encouragement of the
+              form, "implementations should do X" and noted that such
+              encouragement does not impose a requirement on implementors.</li>
+          <li>Zach added that it is important to follow Unicode guidelines.</li>
+          <li>Jens asked what the implication is to implementations that cannot
+              implement the encouraged behavior.</li>
+          <li>Zach replied that, as proposed, all implementations would be able
+              to implement it since transcoding is only prescribed for one
+              Unicode form to another.</li>
+          <li>Victor noted that some implementations display a <tt>?</tt> rather
+              than a U+FFFD replacement character.</li>
+        </ul>
+      </li>
+      <li><b>Poll 7: P2093R6: <tt>&lt;print&gt;</tt> facility implementors are
+          encouraged to substitute U+FFFD replacement characters following
+          Unicode guidance when output is directed to a device and transcoding
+          is necessary.</b>
+        <ul>
+          <li><b>Attendance: 9 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Consensus in favor.</b></li>
+          <li>SA: The terminal will already handle this.</li>
+          <li>Tom noted that the device cannot handle this in the case where
+              transcoding is necessary in order to direct the output to the
+              device; e.g., when the device requires UTF-16.</li>
+          <li>Jens noted that specifying that the behavior is undefined but
+              then encouraging a particular behavior is novel.</li>
+          <li>Zach agreed but noted that this is a case of "library UB", so kind
+              of a special case.</li>
+        </ul>
+      </li>
+      <li>Poll 8 discussion:
+        <ul>
+          <li><em>[ Editor's note: the original poll was, "P2093R6: Neither
+              <tt>&lt;format&gt;</tt> nor <tt>&lt;print&gt;</tt> facilities
+              require an explicit program-controlled error handling mechanism
+              for violations of encoding expectations." ]</em></li>
+          <li>Zach stated that the poll should be framed as a change to the
+              status quo.</li>
+        </ul>
+      </li>
+      <li><b>Poll 8: P2093R6: <tt>&lt;print&gt;</tt> facilities must provide
+          an explicit program-controlled error handling mechanism for
+          violations of encoding expectations.</b>
+        <ul>
+          <li><b>Attendance: 9</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">3</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Strong consensus against.</b></li>
+        </ul>
+      </li>
+      <li>Poll 9 discussion:
+        <ul>
+          <li></em>[ Editor's note: The original poll was "P2093R6: Use of UTF-8
+              as the literal encoding is sufficient for <tt>&lt;format&gt;</tt>
+              and <tt>&lt;print&gt;</tt> facilities to assume that the format
+              string and output of all formatters is UTF-8 encoded." ]</em></li>
+          <li>Tom stated that the poll doesn't make sense as currently worded if
+              formatters are allowed to format binary data.</li>
+          <li>Zach stated that his position may differ for standard formatters
+              vs user provided formatters.</li>
+          <li>Zach added that the proposed heuristic already matches the
+              behavior used to enable field width estimation.</li>
+          <li>Tom disputed the claim that field width estimation depends on the
+              choice of literal encoding.</li>
+          <li>PBrett explained that field width is determined by code point
+              values.</li>
+          <li><em>[ Editor's note:
+              <a href="http://eel.is/c++draft/format#string.std-11">[format.string.std]p11</a>
+              states:</em>
+              <div style="padding: .5em; background: #E9FBE9">
+              For a string in a Unicode encoding, implementations should
+              estimate the width of a string as the sum of estimated widths of
+              the first code points in its extended grapheme clusters.  The
+              extended grapheme clusters of a string are defined by UAX #29.
+              The estimated width of the following code points is 2<br/>
+              ...</br>
+              The estimated width of other code points is 1.
+              </div>
+              <em>]</em></li>
+          <li>Charlie stated that Microsoft's implementation was designed
+              around the literal encoding at least partially due to current
+              technical limitations in the compiler.</li>
+          <li>Victor stated that the literal encoding is not a perfect
+              indicator, but is the best that we have available.</li>
+          <li>PBrett agreed that we don't currently have anything better.</li>
+          <li>PBrett noted that use of the literal encoding does affect the
+              cases where uses of <tt>printf()</tt> can be simply changed to
+              <tt>std::print()</tt> without potentially unintended behavioral
+              changes.</li>
+          <li>Zach compared use of the literal encoding to use of CMake; the
+              least bad option.</li>
+        </ul>
+      </li>
+      <li><b>Poll 9: P2093R6: Use of UTF-8 as the literal encoding is
+          sufficient for <tt>&lt;print&gt;</tt> facilities to establish
+          encoding expectations.</b>
+        <ul>
+          <li><b>Attendance: 9</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus: Very weak consensus.</b></li>
+          <li>Corentin commented that LEWG sent these questions back to SG16
+              for clarification and weak consensus isn't really good
+              enough.</li>
+          <li>PBrett suggested that perhaps use of an encoding tag could
+              garner more consensus.</li>
+          <li>Zach reiterated that the status quo is to use the literal
+              encoding to enable width estimation.</li>
+          <li>Jens replied that the standard does not connect literal encoding
+              with width estimation.</li>
+          <li><em>[ Editor's note:
+              <a href="http://eel.is/c++draft/format#string.std-10">[format.string.std]p10</a>
+              states:</em>
+              <div style="padding: .5em; background: #E9FBE9">
+              For the purposes of width computation, a string is assumed to be
+              in a locale-independent, implementation-defined encoding.
+              Implementations should use a Unicode encoding on platforms
+              capable of displaying Unicode text in a terminal.
+              </div>
+              <em>]</em></li>
+          <li>Zach responded that, regardless, implementations are relying on
+              literal encoding.</li>
+          <li>Charlie replied that his implementation should probably be
+              performing width estimation for other encodings like GB18030.</li>
+        </ul>
+      </li>
+      <li>Poll 10 discussion:
+        <ul>
+          <li><em>[ Editor's note: the original poll was "P2093R6: Use of a
+              literal encoding other than UTF-8 is sufficient for
+              <tt>&lt;format&gt;</tt> and <tt>&lt;print&gt;</tt> facilities to
+              assume a particular encoding for the format string and output of
+              formatters." ]</em></li>
+          <li>The weak results for poll 9 obviated the need to conduct this
+              poll.</li>
+        </ul>
+      </li>
+      <li>Poll 11 discussion:
+        <ul>
+          <li><em>[ Editor's note: the original poll was "P2093R6: Support for
+              implicit encoding conversions will only be possible when an
+              encoding assumption is implicitly or explicitly present."
+              ]</em></li>
+          <li>Victor preempted the poll by volunteering to add prose regarding
+              how future extensions could enable implicit transcoding
+              features.</li>
+          <li>Hubert noted that previous consensus was that
+              <tt>std::format()</tt> and <tt>std::print()</tt> do not require
+              the same encoding expectations.</li>
+          <li>Hubert added that it isn't clear how an implementation might take
+              that into consideration when the implementation intent appears to
+              be to pass the output of a <tt>std::format()</tt> call to a
+              transcoding facility.</li>
+          <li>Corentin stated that LEWG time is more valuable than ours and,
+              since we don't appear to have strong consensus, another meeting
+              seems warranted.</li>
+          <li>Victor agreed with Hubert and Corentin that more common
+              understanding is required.</li>
+          <li>Tom agreed and stated that it seems we are not yet ready to poll
+              forwarding the paper.</li>
+          <li>PBrett pondered how consensus could be improved.</li>
+          <li>Zach suggested that those with positions on the margins could
+              suggest ways in which their positions might be altered.</li>
+          <li>Zach noted that the current proposal and discussion has been on
+              particular technical details and that progress might be made by
+              focusing on, for example, a "Unicode context" as opposed to the
+              choice of literal encoding.</li>
+          <li>Hubert requested a clear summary of how the implementation
+              compares to the polls taken.</li>
+          <li>Hubert added that he would not oppose moving forward with
+              behavior based on the choice of literal encoding.</li>
+          <li>Tom pondered whether Hubert's suggested escape mechanism for
+              binary data would be helpful.</li>
+          <li>Victor requested more details on that mechanism, or perhaps a
+              pull request, and stated that he has not seen something that
+              sounds similar implemented elsewhere.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://cplusplus.github.io/LWG/issue3565">LWG 3565: Handling of encodings in localized formatting of chrono types is underspecified</a>
+    <ul>
+      <li>Discussion postponed due to time constraints.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2295r4">P2295R4: Support for UTF-8 as a portable source file encoding</a>
+    <ul>
+      <li>Discussion postponed due to time constraints.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be in 3 weeks, on July 14th.</li>
 </ul>
 
 
