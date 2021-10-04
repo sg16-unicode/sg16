@@ -34,29 +34,32 @@ WG Number     | Title/Notes/Links
 [P1628][]     | Unicode character properties
 [P0244][]     | Text\_view: A C++ concepts and range based character encoding and code point enumeration library
 
-## Accepted Papers
+## Accepted C++23 Papers
 
-The following papers have been adopted for an ISO standard.
+WG Number     | Title/Notes/Links
+------------- | -----
+[P2372][]     | Fixing locale handling in chrono formatters
+[P2316][]     | Consistent character literal encoding
+[P2314][]     | Character sets and encodings
+[P2246][]     | Character encoding of diagnostic text
+[P2223][]     | Trimming whitespaces before line splicing
+[P2201][]     | Mixed string literal concatenation
+[P2029][]     | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
+[P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
+[P1072][]     | basic\_string::resize\_and\_overwrite
 
-WG Number     | Standard    | Title/Notes/Links
-------------- | --------    | -----
-[P2372][]     | C++23       | Fixing locale handling in chrono formatters
-[P2316][]     | C++23       | Consistent character literal encoding
-[P2314][]     | C++23       | Character sets and encodings
-[P2246][]     | C++23       | Character encoding of diagnostic text
-[P2223][]     | C++23       | Trimming whitespaces before line splicing
-[P2201][]     | C++23       | Mixed string literal concatenation
-[P2029][]     | C++23       | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
-[P1949][]     | C++23       | C++ Identifier Syntax using Unicode Standard Annex 31
-[P1892][]     | C++20       | Extended locale-specific presentation specifiers for std::format
-[P1868][]     | C++20       | 🦄 width: clarifying units of width and precision in std::format
-[P1423][]     | C++20       | char8\_t backward compatibility remediation
-[P1139][]     | C++20       | Address wording issues related to ISO 10646
-[P1072][]     | C++23       | basic\_string::resize\_and\_overwrite
-[P1041][]     | C++20       | Make char16\_t/char32\_t string literals be UTF-16/32
-[P1025][]     | C++20       | Update The Reference To The Unicode Standard
-[P0645][]     | C++20       | Text Formatting
-[P0482][]     | C++20       | char8\_t: A type for UTF-8 characters and strings
+## Accepted C++20 Papers
+
+WG Number     | Title/Notes/Links
+------------- | -----
+[P1892][]     | Extended locale-specific presentation specifiers for std::format
+[P1868][]     | 🦄 width: clarifying units of width and precision in std::format
+[P1423][]     | char8\_t backward compatibility remediation
+[P1139][]     | Address wording issues related to ISO 10646
+[P1041][]     | Make char16\_t/char32\_t string literals be UTF-16/32
+[P1025][]     | Update The Reference To The Unicode Standard
+[P0645][]     | Text Formatting
+[P0482][]     | char8\_t: A type for UTF-8 characters and strings
 
 ## Inactive Papers
 
@@ -88,14 +91,12 @@ WG Number     | Title/Notes/Links
 [N2620][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], and [N2595 (R3)][N2595])
 [N2653][]     | char8\_t: A type for UTF-8 characters and strings (Revision 1)<br/>(Previously [N2231 (R0)][N2231])
 
-## Accepted Papers
+## Accepted C2x Papers
 
-The following papers have been adopted for an ISO standard.
-
-WG Number     | Standard    | Title/Notes/Links
-------------- | --------    | -----
-[N2594][]     | C2x         | Mixed Wide String Literal Concatenation
-[N2563][]     | C2x         | Character encoding of diagnostic text
+WG Number     | Title/Notes/Links
+------------- | -----
+[N2594][]     | Mixed Wide String Literal Concatenation
+[N2563][]     | Character encoding of diagnostic text
 
 ## Inactive Papers
 
