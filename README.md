@@ -22,11 +22,8 @@ WG Number     | Title/Notes/Links
 [P2362][]     | Make obfuscating wide character literals ill-formed
 [P2361][]     | Unevaluated strings literals
 [P2348][]     | Whitespaces Wording Revamp
-[P2316][]     | Consistent character literal encoding
-[P2314][]     | Character sets and encodings
 [P2295][]     | Support for UTF-8 as a portable source file encoding
 [P2290][]     | Delimited escapes sequences
-[P2246][]     | Character encoding of diagnostic text
 [P2093][]     | Formatted output
 [P2071][]     | Named universal character escapes
 [P1953][]     | Unicode Identifiers And Reflection
@@ -35,7 +32,6 @@ WG Number     | Title/Notes/Links
 [P1729][]     | Text Parsing
 [P1629][]     | Standard Text Encoding
 [P1628][]     | Unicode character properties
-[P1072][]     | basic\_string::resize\_and\_overwrite
 [P0244][]     | Text\_view: A C++ concepts and range based character encoding and code point enumeration library
 
 ## Accepted Papers
@@ -44,6 +40,10 @@ The following papers have been adopted for an ISO standard.
 
 WG Number     | Standard    | Title/Notes/Links
 ------------- | --------    | -----
+[P2372][]     | C++23       | Fixing locale handling in chrono formatters
+[P2316][]     | C++23       | Consistent character literal encoding
+[P2314][]     | C++23       | Character sets and encodings
+[P2246][]     | C++23       | Character encoding of diagnostic text
 [P2223][]     | C++23       | Trimming whitespaces before line splicing
 [P2201][]     | C++23       | Mixed string literal concatenation
 [P2029][]     | C++23       | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
@@ -52,6 +52,7 @@ WG Number     | Standard    | Title/Notes/Links
 [P1868][]     | C++20       | 🦄 width: clarifying units of width and precision in std::format
 [P1423][]     | C++20       | char8\_t backward compatibility remediation
 [P1139][]     | C++20       | Address wording issues related to ISO 10646
+[P1072][]     | C++23       | basic\_string::resize\_and\_overwrite
 [P1041][]     | C++20       | Make char16\_t/char32\_t string literals be UTF-16/32
 [P1025][]     | C++20       | Update The Reference To The Unicode Standard
 [P0645][]     | C++20       | Text Formatting
@@ -118,6 +119,7 @@ WG Number     | Title/Notes/Links
 [N2440]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2440.pdf
 [N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
+[P2372]: https://wg21.link/p2372
 [P2362]: https://wg21.link/p2362
 [P2361]: https://wg21.link/p2361
 [P2348]: https://wg21.link/p2348
