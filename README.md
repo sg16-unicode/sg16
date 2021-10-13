@@ -87,6 +87,7 @@ WG Number     | Title/Notes/Links
 
 WG Number     | Title/Notes/Links
 ------------- | -----
+[N2828][]     | Unicode Sequences More Than 21 Bits are a Constraint Violation
 [N2785][]     | Delimited escapes sequences
 [N2777][]     | C Identifier Syntax using Unicode Standard Annex 31
 [N2620][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], and [N2595 (R3)][N2595])
@@ -111,6 +112,7 @@ WG Number     | Title/Notes/Links
 ~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superceded by [N2653][])
 
 
+[N2828]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2828.htm
 [N2785]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2785.pdf
 [N2777]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2777.pdf
 [N2728]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2728.htm
