@@ -89,7 +89,6 @@ WG Number     | Title/Notes/Links
 ------------- | -----
 [N2785][]     | Delimited escapes sequences
 [N2777][]     | C Identifier Syntax using Unicode Standard Annex 31
-[N2728][]     | char16\_t & char32\_t string literals shall be UTF-16 & UTF-32 \| r0
 [N2620][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], and [N2595 (R3)][N2595])
 [N2653][]     | char8\_t: A type for UTF-8 characters and strings (Revision 1)<br/>(Previously [N2231 (R0)][N2231])
 
@@ -97,6 +96,7 @@ WG Number     | Title/Notes/Links
 
 WG Number     | Title/Notes/Links
 ------------- | -----
+[N2728][]     | char16\_t & char32\_t string literals shall be UTF-16 & UTF-32 \| r0
 [N2594][]     | Mixed Wide String Literal Concatenation
 [N2563][]     | Character encoding of diagnostic text
 
