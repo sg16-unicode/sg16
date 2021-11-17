@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2021-06-09 through 2021-06-23</title>
+<title>SG16: Unicode meeting summaries 2021-06-09 through 2021-07-14</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2021-06-29</td>
+    <td>2021-11-16</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2021-06-09 through 2021-06-23</h1>
+<h1>SG16: Unicode meeting summaries 2021-06-09 through 2021-07-14</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -101,6 +101,8 @@ snapshot of select meeting summaries from that repository.
       June 9th, 2021</a></li>
   <li><a href="#2021_06_23">
       June 23rd, 2021</a></li>
+  <li><a href="#2021_07_14">
+      July 14th, 2021</a></li>
 </ul>
 
 <p>
@@ -917,6 +919,163 @@ Previously published SG16 meeting summary papers:
     </ul>
   </li>
   <li>Tom stated that the next meeting will be in 3 weeks, on July 14th.</li>
+</ul>
+
+
+<h1 id="2021_07_14">July 14th, 2021</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2295r5">P2295R5: Support for UTF-8 as a portable source file encoding</a>
+    <ul>
+      <li>Review updated wording produced through collaboration between
+          Corentin, Jens, Hubert, and Peter.
+        <ul>
+          <li><a href="https://lists.isocpp.org/sg16/2021/04/2353.php">https://lists.isocpp.org/sg16/2021/04/2353.php</a></li>
+          <li><a href="https://lists.isocpp.org/sg16/2021/06/2429.php">https://lists.isocpp.org/sg16/2021/06/2429.php</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2362r0">P2362R0: Make obfuscating wide character literals ill-formed</a></li>
+  <li><a href="https://cplusplus.github.io/LWG/issue3565">LWG 3565: Handling of encodings in localized formatting of chrono types is underspecified</a>
+    <ul>
+      <li>Discuss and poll the proposed resolution.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Brett</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2295r5">P2295R5: Support for UTF-8 as a portable source file encoding</a>
+    <ul>
+      <li><em>[ Editor's note: D2295R5 was the active paper under discussion
+          at the telecon.  The agenda and links used here reference P2295R5
+          since the links to the draft paper were ephemeral.  The published
+          document is expected to differ from the reviewed draft revision as
+          noted below. ]</em></li>
+      <li>PBrett presented.
+        <ul>
+          <li>Peter's presentation slides are available
+              <a href="https://github.com/sg16-unicode/sg16-meetings/blob/master/presentations/2021-07-14-p2295r5-p2362r0-presentations.pdf">here</a>.</li>
+          <li>The wording was revised based on feedback received from the SG16
+              mailing list.</li>
+          <li>Any wording changes approved today will appear in the revision
+              of the paper that will be submitted for tomorrow's mailing
+              deadline.</li>
+        </ul>
+      </li>
+      <li>Tom noted that the existing wording regarding the introduction of
+          new-line characters for end-of-line indicators only applies to
+          non-UTF-8 encoding schemes with the proposed changes.</li>
+      <li>PBrett and Corentin explained that this is intentional; that
+          end-of-line indicators are relevant for structured text
+          (e.g., data sets), not for source files expressed as a sequence
+          of code units.</li>
+      <li>PBrett and Corentin noted that new-line character sequences will
+          be revisited with
+          <a href="https://wg21.link/p2348">P2348</a>.</li>
+      <li><em>[ Editor's note: A note was added to the final P2295R5 wording
+          to explain that end-of-line indicators are not applicable to UTF-8
+          encoded source files and that new-line characters separate lines.
+          ]</em></li>
+      <li>Hubert observed that some of the wording suggestions from the
+          mailing list discussion had not been incorporated.</li>
+      <li><em>[ Editor's note: Live editing of the proposed wording ensued,
+          the discusion of which is not captured verbatim here.  Concerns
+          discussed included use of "encoding scheme" vs "encoding", whether
+          a plural form of "source file" should be used, methods to avoid
+          use of the term "determined", and how to equate the sequence of
+          UTF-8 code units with the elements of the translation character
+          set. ]</em></li>
+      <li>Mark asked if the proposed wording handles CR/LF new-line
+          sequences.</li>
+      <li>Hubert responded that
+          <a href="https://wg21.link/p2348">P2348</a>
+          will address that concern.</li>
+      <li><b>Poll: Forward D2295R5 with wording modifications as discussed to EWG for C++23.</b>
+        <ul>
+          <li><b>Attendance: 9</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2362r0">P2362R0: Make obfuscating wide character literals ill-formed</a>
+    <ul>
+      <li>PBrett presented.
+        <ul>
+          <li>Peter's presentation slides are available
+              <a href="https://github.com/sg16-unicode/sg16-meetings/blob/master/presentations/2021-07-14-p2295r5-p2362r0-presentations.pdf">here</a>.</li>
+        </ul>
+      </li>
+      <li>Tom noted that the execution wide-character set is not necessarily
+          Unicode; non-encodable characters are possible even when
+          <tt>wchar_t</tt> is 32-bit.</li>
+      <li>Charlie noted that Visual C++ is technically not conformant since
+          its 16-bit <tt>wchar_t</tt> is not able to store every possible
+          locale dependent character in a unique <tt>wchar_t</tt> value.</li>
+      <li>Hubert explained that ISO C++ does not permit use of a
+          multi-code-unit encoding for wide character and string literals.</li>
+      <li>Charlie asked what warning level Visual C++ requires for a warning to
+          be issued for the cases proposed to become ill-formed.</li>
+      <li>Corentin responded, W2.</li>
+      <li>Tom asked Hubert how his implementation handles the multicharacter
+          case.</li>
+      <li>Hubert reported that xlC encodes the last character
+          (like gcc and Clang).</li>
+      <li>Wording review ensued.</li>
+      <li>Tom requested that the use of "character literal" removed in the
+          proposed wording for [lex.ccon]p2 be restored so that the note
+          states, "... but does not determine the value of non-encodable
+          <b>character literals</b> or multicharacter literals. ..."</li>
+      <li>PBrett agreed to do so.</li>
+      <li>Jens expressed a preference towards revising the paper title to
+          remove the word "obfuscating" in order to avoid projecting
+          bias.</li>
+      <li>Tom responded that the title is the author's prerogative, but
+          reported having had a similar reaction to the current title.</li>
+      <li>Charlie asked if there is also motivation to make non-encodable
+          character literals and multicharacter literals ill-formed as
+          well.</li>
+      <li>PBrett stated that there is and that writing a paper to do so is
+          on his todo list, but that the motivation for ordinary literals
+          is different because they are used and do not suffer some of the
+          problems that the wide variety do.</li>
+      <li><b>Poll: Forward P2362R0 with title and wording modifications as discussed to EWG for C++23.</b>
+        <ul>
+          <li><b>Attendance: 9</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://cplusplus.github.io/LWG/issue3565">LWG 3565: Handling of encodings in localized formatting of chrono types is underspecified</a>
+    <ul>
+      <li>Deferred to the next telecon due to time constraints.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next telecon will be held 2021-07-28 and that the
+      agenda will include
+      <a href="https://cplusplus.github.io/LWG/issue3565">LWG 3565</a>
+      and then
+      <a href="https://wg21.link/p2348">P2348</a>.</li>
 </ul>
 
 
