@@ -19,6 +19,9 @@ The following sections list papers and projects currently under our purview.  Ad
 WG Number     | Title/Notes/Links
 ------------- | -----
 \<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
+[P2498][]     | Forward compatibility of text_encoding with additional encoding registries
+[P2491][]     | Text encodings follow-up
+[P2460][]     | Relax requirements on wchar_t to match existing practices
 [P2419][]     | Clarify handling of encodings in localized formatting of chrono types
 [P2362][]     | Remove non-encodable wide character literals and multicharacter wide character literals
 [P2361][]     | Unevaluated strings literals
@@ -129,6 +132,9 @@ WG Number     | Title/Notes/Links
 [N2440]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2440.pdf
 [N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
+[P2498]: https://wg21.link/p2498
+[P2491]: https://wg21.link/p2491
+[P2460]: https://wg21.link/p2460
 [P2419]: https://wg21.link/p2419
 [P2372]: https://wg21.link/p2372
 [P2362]: https://wg21.link/p2362
