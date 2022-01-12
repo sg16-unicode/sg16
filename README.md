@@ -73,7 +73,7 @@ WG Number     | Title/Notes/Links
 ------------- | -----
 ~~[P2297][]~~ | ~~Wording improvements for encodings and character sets~~<br/>(The goals of this paper were mostly addressed via [P2314][])
 ~~[P2194][]~~ | ~~The character set of C++ source code is Unicode~~<br/>(The goals of this paper are now being pursued via [P2314][] and [P2297][])
-~~[P2178][]~~ | ~~Misc lexing and string handling improvements~~<br/>(The goals of this paper are now being pursued via [P2194][], [P2223][], [P2295][], and [P2316][])
+~~[P2178][]~~ | ~~Misc lexing and string handling improvements~~<br/>(The goals of this paper are now being pursued via [P1854][], [P2223][], [P2295][], [P2297][], [P2348][], [P2316][], [P2361][], [P2362][], and [P2460][])
 ~~[P2020][]~~ | ~~Locales, Encodings and Unicode~~<br/>(This paper did not contain a concrete proposal and no revisions are expected; it will be used as reference material)
 ~~[P1880][]~~ | ~~uNstring Arguments Shall Be UTF-N Encoded~~<br/>(This proposal was withdrawn by the author upon determining that the complexity of the required wording updates would outweigh their benefits)
 ~~[P1879][]~~ | ~~Please Don't Rewrite My String Literals~~<br/>(This proposal was withdrawn by the author)
