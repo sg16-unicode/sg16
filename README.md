@@ -80,7 +80,7 @@ WG Number     | Title/Notes/Links
 ~~[P1879][]~~ | ~~Please Don't Rewrite My String Literals~~<br/>(This proposal was withdrawn by the author)
 ~~[P1859][]~~ | ~~Standard terminology for execution character set encodings~~<br/>(The goals of this proposal were accomplished via [P2314][])
 ~~[P1844][]~~ | ~~Enhancement of regex~~<br/>(Severe ABI concerns prevent updating `std::regex`.  We will explore deprecating and replacing it)
-~~[P1097][]~~ | ~~Named character escapes~~<br/>(Superceded by P2071)
+~~[P1097][]~~ | ~~Named character escapes~~<br/>(Superseded by P2071)
 ~~[P0353][]~~ | ~~Unicode Friendly Encoding Conversions for the Standard Library~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 ~~[P0169][]~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 
@@ -110,14 +110,14 @@ WG Number     | Title/Notes/Links
 
 WG Number     | Title/Notes/Links
 ------------- | -----
-~~[N2777][]~~ | ~~C Identifier Syntax using Unicode Standard Annex 31~~<br/>(Superceded by [N2836][])
-~~[N2730][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r5~~<br/>(Superceded by [N2902][])
-~~[N2620][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4~~<br/>(Superceded by [N2730][])
-~~[N2595][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4~~<br/>(Superceded by [N2500][])
-~~[N2500][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r2~~<br/>(Superceded by [N2595][])
-~~[N2440][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r1~~<br/>(Superceded by [N2500][])
-~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superceded by [N2440][])
-~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superceded by [N2653][])
+~~[N2777][]~~ | ~~C Identifier Syntax using Unicode Standard Annex 31~~<br/>(Superseded by [N2836][])
+~~[N2730][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r5~~<br/>(Superseded by [N2902][])
+~~[N2620][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4~~<br/>(Superseded by [N2730][])
+~~[N2595][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4~~<br/>(Superseded by [N2500][])
+~~[N2500][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r2~~<br/>(Superseded by [N2595][])
+~~[N2440][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r1~~<br/>(Superseded by [N2500][])
+~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superseded by [N2440][])
+~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superseded by [N2653][])
 
 
 [N2916]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2916.htm
