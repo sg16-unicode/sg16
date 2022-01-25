@@ -19,7 +19,7 @@ The following sections list papers and projects currently under our purview.  Ad
 WG Number     | Title/Notes/Links
 ------------- | -----
 \<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
-[P2538][]     | C++ Identifier Security using Unicode Standard Annex 39
+[P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
 [P2513][]     | char8_t Compatibility and Portability Fixes
 [P2498][]     | Forward compatibility of text_encoding with additional encoding registries
 [P2491][]     | Text encodings follow-up
@@ -138,7 +138,7 @@ WG Number     | Title/Notes/Links
 [N2440]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2440.pdf
 [N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
-[P2538]: https://wg21.link/p2538
+[P2528]: https://wg21.link/p2528
 [P2513]: https://wg21.link/p2513
 [P2498]: https://wg21.link/p2498
 [P2491]: https://wg21.link/p2491
