@@ -97,6 +97,7 @@ WG Number     | Title/Notes/Links
 [N2836][]     | C Identifier Syntax using Unicode Standard Annex 31<br/>(Previously [N2777 (R0)][N2777])
 [N2828][]     | Unicode Sequences More Than 21 Bits are a Constraint Violation
 [N2785][]     | Delimited escapes sequences
+[N2701][]     | @ and $ in source and execution character set
 [N2653][]     | char8\_t: A type for UTF-8 characters and strings (Revision 1)<br/>(Previously [N2231 (R0)][N2231])
 
 ## Accepted C23 Papers
@@ -129,6 +130,7 @@ WG Number     | Title/Notes/Links
 [N2777]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2777.pdf
 [N2730]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2730.htm
 [N2728]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2728.htm
+[N2701]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2701.htm
 [N2653]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2653.htm
 [N2620]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2620.htm
 [N2595]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2595.pdf
