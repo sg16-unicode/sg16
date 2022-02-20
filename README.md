@@ -92,7 +92,7 @@ WG Number     | Title/Notes/Links
 
 WG Number     | Title/Notes/Links
 ------------- | -----
-[N2916][]     | C Identifier Security using Unicode Standard Annex 39
+[N2932][]     | C Identifier Security using Unicode Standard Annex 39 v2<br/>(Previously [N2916 (R0)][N2916])
 [N2902][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730])
 [N2836][]     | C Identifier Syntax using Unicode Standard Annex 31<br/>(Previously [N2777 (R0)][N2777])
 [N2828][]     | Unicode Sequences More Than 21 Bits are a Constraint Violation
@@ -112,6 +112,7 @@ WG Number     | Title/Notes/Links
 
 WG Number     | Title/Notes/Links
 ------------- | -----
+~~[N2916][]~~ | ~~C Identifier Security using Unicode Standard Annex 39~~<br/>Superseded by [N2932][])
 ~~[N2777][]~~ | ~~C Identifier Syntax using Unicode Standard Annex 31~~<br/>(Superseded by [N2836][])
 ~~[N2730][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r5~~<br/>(Superseded by [N2902][])
 ~~[N2620][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4~~<br/>(Superseded by [N2730][])
@@ -122,6 +123,7 @@ WG Number     | Title/Notes/Links
 ~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superseded by [N2653][])
 
 
+[N2932]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2932.htm
 [N2916]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2916.htm
 [N2902]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2902.htm
 [N2836]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2836.pdf
