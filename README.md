@@ -1,15 +1,27 @@
 # WG21 SG16 Unicode study group
 SG16 is an ISO/IEC JTC1/SC22/WG21 C++ study group tasked with improving Unicode and text processing support within the C++ standard.
 
-If you would like to contribute to the discussion, please join us on [<img src="http://slack.com/favicon.ico" height="16"/>Slack](https://cpplang.slack.com/messages/sg16_unicode) at https://cpplang.slack.com/messages/sg16_unicode
-(an invitation can be requested at https://cpplang.now.sh) and subcribe to our mailing list at
+If you would like to contribute to the discussion, please join us on
+[<img src="http://slack.com/favicon.ico" height="16"/>Slack](https://cpplang.slack.com/messages/sg16_unicode)
+at https://cpplang.slack.com/messages/sg16_unicode
+(an invitation can be requested at https://cpplang.now.sh)
+and subcribe to our mailing list at
 https://lists.isocpp.org/mailman/listinfo.cgi/sg16.
 
-Meetings are generally held twice a month; invitations are sent to the mailing list.  Summaries of past meetings are available at https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md.
+Meetings are generally held twice a month; invitations are sent to the mailing list.
+Summaries of past meetings are available at
+https://github.com/sg16-unicode/sg16-meetings/blob/master/README.md.
 
-A standing paper that describes our intended scope, directives, guidelines and constraints is available at [P1238 - SG16: Unicode Direction][P1238].  Anyone wanting to follow or contribute to SG16 should become familiar with it.
+A standing paper that describes our intended scope, directives, guidelines and
+constraints is available at [P1238 - SG16: Unicode Direction][P1238].
+Anyone wanting to follow or contribute to SG16 should become familiar with it.
 
-The following sections list papers and projects currently under our purview.  Additionally, we provide input to proposals that originate elsewhere within WG21 when those proposals touch on topics listed in [P1253 - Guidelines for when a WG21 proposal should be reviewed by SG16][P1253].
+We also provide input on other proposals within WG21 and WG14 when those proposals
+touch on topics listed in
+[P1253 - Guidelines for when a WG21 proposal should be reviewed by SG16][P1253].
+
+The following sections list papers and projects related to Unicode and text processing
+within WG21 and WG14.
 
 
 # WG21 (C++) Papers
@@ -92,6 +104,8 @@ WG Number     | Title/Notes/Links
 
 WG Number     | Title/Notes/Links
 ------------- | -----
+[N2940][]     | Removing trigraphs??!
+[N2939][]     | Identifier Syntax Fixes
 [N2932][]     | C Identifier Security using Unicode Standard Annex 39 v2<br/>(Previously [N2916 (R0)][N2916])
 [N2902][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730])
 [N2836][]     | C Identifier Syntax using Unicode Standard Annex 31<br/>(Previously [N2777 (R0)][N2777])
@@ -123,6 +137,8 @@ WG Number     | Title/Notes/Links
 ~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superseded by [N2653][])
 
 
+[N2940]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2940.pdf
+[N2939]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2939.pdf
 [N2932]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2932.htm
 [N2916]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2916.htm
 [N2902]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2902.htm
