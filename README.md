@@ -24,14 +24,20 @@ The following sections list papers and projects related to Unicode and text proc
 within WG21 and WG14.
 
 
+# Active Projects
+
+Project     | Description/Links | 
+----------- | -----
+Boost.Text  | What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
+ztd.text    | The premiere library for handling text in different encoding forms and reducing transcoding bugs in your C++ software<br/>[Code repository](https://github.com/soasis/text)<br/>[Documentation](https://ztdtext.readthedocs.io/en/latest)
+
+
 # WG21 (C++) Papers
 
 ## Active Papers and Projects
 
 WG Number     | Title/Notes/Links
 ------------- | -----
-\<None\>      | Boost.Text: What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
-\<None\>      | ztd.text: The premiere library for handling text in different encoding forms and reducing transcoding bugs in your C++ software.<br/>[Code repository](https://github.com/soasis/text)<br/>[Documentation](https://ztdtext.readthedocs.io/en/latest)
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
 [P2513][]     | char8_t Compatibility and Portability Fixes
 [P2498][]     | Forward compatibility of text_encoding with additional encoding registries
