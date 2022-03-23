@@ -26,7 +26,7 @@ within WG21 and WG14.
 
 # Active Projects
 
-Project     | Description/Links | 
+Project     | Description/Links
 ----------- | -----
 Boost.Text  | What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
 ztd.text    | The premiere library for handling text in different encoding forms and reducing transcoding bugs in your C++ software<br/>[Code repository](https://github.com/soasis/text)<br/>[Documentation](https://ztdtext.readthedocs.io/en/latest)
