@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2022-01-12 through 2022-02-09</title>
+<title>SG16: Unicode meeting summaries 2022-01-12 through 2022-03-09</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2022-03-22</td>
+    <td>2022-03-26</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2022-01-12 through 2022-02-09</h1>
+<h1>SG16: Unicode meeting summaries 2022-01-12 through 2022-03-09</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -103,6 +103,10 @@ snapshot of select meeting summaries from that repository.
       January 26th, 2022</a></li>
   <li><a href="#2022_02_09">
       February 9th, 2022</a></li>
+  <li><a href="#2022_02_23">
+      February 23rd, 2022</a></li>
+  <li><a href="#2022_03_09">
+      March 9th, 2022</a></li>
 </ul>
 
 <p>
@@ -995,6 +999,584 @@ Previously published SG16 meeting summary papers:
     </ul>
   </li>
   <li>Tom announced that the next telecon will be February 23rd.</li>
+</ul>
+
+
+<h1 id="2022_02_23">February 23rd, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Discuss objectives and priorities for C++26</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Hubert Tong</li>
+  <li>Inbal Levi</li>
+  <li>Jens Maurer</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom reminded the group about the upcoming SSRG meeting on Monday,
+      February 28th, and encouraged the contribution of suggested improvements
+      for
+      <a href="https://wg21.link/p2528">P2528R0 (C++ Identifier Security using Unicode Standard Annex 39)</a>
+      to the author.</li>
+  <li>Discuss objectives and priorities for C++26:
+    <ul>
+      <li>Tom asked the group for suggestions on what we should focus on for
+          C++26.</li>
+      <li>Tom suggested alias barriers as a remaining core language feature
+          improvement.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://github.com/sg16-unicode/sg16/issues/67">SG16 issue #67</a>.
+          ]</em></li>
+      <li>PBrett suggested improvements for access to command line options and
+          environment variables.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://github.com/sg16-unicode/sg16/issues/66">SG16 issue #66</a>.
+          ]</em></li>
+      <li>Jens noted the existing practice for the <tt>_wmain()</tt> entry
+          point in Microsoft Visual C++.</li>
+      <li>PBrett noted the <tt>envp</tt> parameter that POSIX adds to
+          <tt>main()</tt>.</li>
+      <li>Tom suggested <tt>std::rope</tt> for chained text segments.</li>
+      <li>Steve suggested transcoding and lamented JeanHeyd's absence.</li>
+      <li>PBrett suggested an owning string type that eschews null
+          termination.</li>
+      <li>Charles expressed concern that a string type that doesn't ensure
+          null termination may not improve security due to programmers
+          attempting to pass such data to functions that require a null
+          terminated string anyway.</li>
+      <li>PBrett suggested that implicit conversions could be prohibited.</li>
+      <li>Steve noted the usability challenges such prohibition creates.</li>
+      <li>Victor stated that programmers will misuse such types even if
+          implicit conversions are not supported; they will assume that, for
+          example, a <tt>data()</tt> member function will provide a null
+          terminated string.</li>
+      <li>PBrett replied that such concerns apply to the existing
+          <tt>std::string_view</tt> type as well.</li>
+      <li>PBrett asserted there is room for a <tt>std::string_view</tt> like
+          type that owns the string data.</li>
+      <li>Charles noted that having to pass a string held in such a type to a
+          function that requires null termination would require having to copy
+          the string contents just to add a null terminator and lamented the
+          cost of such copies.</li>
+      <li>Jens asked PBrett what other features he might like to see in a new
+          string type.</li>
+      <li>PBrett responded that he would mostly like to not have to write yet
+          more string types that avoid null termination concerns.</li>
+      <li>Jens suggested that a string type that helps to avoid allocation and
+          deallocation costs could be beneficial.</li>
+      <li>Jens stated he would prefer not to spend time in SG16 on general
+          data structures.</li>
+      <li>Jens asserted that the elephant in the room is ICU and the
+          functionality it provides and expressed a desire for a roadmap
+          towards providing similar functionality.</li>
+      <li>Steve suggested that PBrett publish a paper extolling the benefits
+          of a string type without null termination.</li>
+      <li>PBrett responded that benefits appear when working with databases
+          and graphics.</li>
+      <li>Tom stated that, if a new string type were to materialize, he would
+          like to know for sure what encoding it is intended to be used
+          with.</li>
+      <li>PBrett offered two categories of such encoding assurances:
+          1) a type intended for text with an assumed encoding, and
+          2) a type that enforces well-formed encoding.</li>
+      <li>Steve offered a third category:
+          3) a type that maintains invariants like normalization form.</li>
+      <li>Steve reported having to investigate problems due to assumption of
+          UTF-8 leading to errors when data was passed to Python programs
+          that enforced well-formedness.</li>
+      <li>Steve stated that Bloomberg is strongly in favor of a type that
+          maintains such invariants.</li>
+      <li>Charles expressed desire for a way to pass a filename on the command
+          line that is preserved.</li>
+      <li>Charles explained that this currently isn't possible on Windows due
+          to transcoding that occurs when preparing a command line to pass to
+          <tt>main()</tt>.</li>
+      <li>Tom asked if it is possible to enter such names on the command line
+          from Windows shells in the first place, but acknowledged it can be
+          done from <tt>CreateProcess()</tt>.</li>
+      <li>Charles replied that tab completion and similar shell features can
+          produce such names.</li>
+      <li>Tom asked to confirm that this should be considered a language issue
+          as opposed to a shell issue.</li>
+      <li>Charles explained that other languages provide such mechanisms and
+          noted that Rust has an <tt>OsString</tt> type that stores WTF-8 on
+          Windows.</li>
+      <li>PBrett added that Rust is a good example of a language that provides
+          strings that don't guarantee null termination.</li>
+      <li>Tom returned to discussion about features to focus on and suggested
+          Unicode algorithms.</li>
+      <li>Hubert asked if ICU provides message formatting features.</li>
+      <li>Tom confirmed that it does.</li>
+      <li>PBrett noted the work that the Message Format Working Group (MFWG)
+          is doing.</li>
+      <li><em>[ Editor's note: The MFWG tracks its work
+          <a href="https://github.com/unicode-org/message-format-wg">here</a>.
+          ]</em></li>
+      <li>Tom suggested improved support for regular expressions as another
+          feature to work on.</li>
+      <li>Charles replied that such work depends on whether the committee is
+          willing to standardize a <tt>std::regex2</tt> or similar.</li>
+      <li>Charles stated that a new regex design would presumably face the
+          same challenges that <tt>std::regex</tt> did and may therefore
+          produce a similarly poor result.</li>
+      <li>Charles noted that regular expression support is a feature for which
+          interoperability across libraries is not often needed.</li>
+      <li>PBrett asserted that a standard regex facility is beneficial because
+          general programmers aren't particularly good at writing their
+          own.</li>
+      <li>Charles suggested that a class intended to be used as a base class
+          for string buffer management could be beneficial for building
+          parsers; particularly a type that provides interfaces to peek ahead
+          and push back.</li>
+      <li>PBrett suggested a <tt>std::lexy</tt> with reference to
+          Jonathan Müller's work.</li>
+      <li><em>[ Editor's note: Jonathan's Lexy work is published
+          <a href="https://lexy.foonathan.net">here</a>. ]</em></li>
+      <li>Tom asked if the work done on <tt>std::format</tt> provides a
+          precedent for how to design a <tt>std::regex</tt> replacement that
+          would be more isolated from ABI concerns.</li>
+      <li>Charles responded that <tt>std::format</tt> is fairly exposed to ABI
+          concerns, but acknowledged the possibility of designing a more
+          isolated type.</li>
+      <li>Victor stated that Hana Dusíková's CTRE provides a good example of
+          how to write parsers.</li>
+      <li><em>[ Editor's note: Hana's CTRE work is published
+          <a href="https://compile-time-regular-expressions.readthedocs.io/en/latest">here</a>.
+          ]</em></li>
+      <li>PBrett asked about ideas for how to be more explicit about
+          associating an encoding with existing text; e.g., how to have text
+          in UTF-8 and pass it to something that requires UTF-16.</li>
+      <li>Steve asked if anyone recalled a proposal that would allow
+          specifically binding to a string literal.</li>
+      <li>Tom stated that he did not but noted that a user-defined literal
+          (UDL) can provide similar functionality.</li>
+      <li><em>[ Editor's note: Tom was thinking of something like this:</em>
+<pre style="display:inline"><tt>
+  #include &lt;cstddef&gt;
+  class string_literal {
+  private:
+      const char *p;
+      string_literal(const char *p) : p(p) {}
+  public:
+      const char* data() const { return p; }
+      friend string_literal operator ""sl(const char *p, std::size_t);
+  };
+  string_literal operator ""sl(const char *p, std::size_t) {
+      return string_literal(p);
+  }
+  void f(const char*);
+  void g(string_literal sl) {
+      f(sl.data());
+  }
+  void h() {
+      g("hello"sl);
+  }
+</tt></pre>
+        <em>]</em></li>
+      <li>Steve stated that a facility that allows associating a dynamic
+          encoding would be useful for scenarios in which the text and its
+          associated encoding are not known at compile time.</li>
+      <li>Victor noted that encodings are often properties of interfaces and
+          suggested that an attribute based approach to specifying encoding
+          expecations could be helpful; this would allow specifying
+          expectations that are dependent on locale or Windows Active Code
+          Page (ACP).</li>
+      <li>Charles expressed support for that approach.</li>
+      <li>PBrett asked what the advantage of an attribute would be.</li>
+      <li>Victor replied that it could be added to existing functions without
+          ABI impact.</li>
+      <li>Charles observed that, if the <tt>#embed</tt> is adopted, then text
+          that is not in the literal encoding might be imported.</li>
+      <li>Hubert responded that the <tt>#embed</tt> author has been clear that
+          the proposal is intended to provide binary resources.</li>
+      <li>Tom changed topics by asking for suggestions regarding how to solicit
+          new SG16 attendees and reported that he and Peter had previously
+          discussed inviting other WG21 members to share what the organizations
+          they work with do in practice.</li>
+      <li>PBrett responded that backward compatibility and existing practice
+          are motivation for not providing new facilities.</li>
+      <li>PBrett suggested that, if someone were to come forward with a
+          proposal to adopt a suite of string types similar to those provided
+          by Rust, that we might tell them no thank you.</li>
+      <li>PBrett stated that we should, of course, discuss any proposals that
+          come before us.</li>
+      <li>Tom replied that seems to argue for the status quo plus what people
+          actually do.</li>
+      <li>Jens expressed belief that there is good opportunity to make progress
+          with small improvements and provided a UTF-8 decoding iterator as an
+          example.</li>
+      <li>Tom replied that an existing proposal covers such iterators.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://wg21.link/p0244">P0244 (Text_view: A C++ concepts and range based character encoding and code point enumeration library)</a>.
+          ]</em></li>
+      <li>Charles responded that he has written a grapheme iterator.</li>
+      <li>Charles noted that such iterators are always going to be slower than
+          bulk conversion routines.</li>
+      <li>PBrett suggested adding locale-independent replacements for character
+          classification functions like <tt>isdigit()</tt>; e.g.,
+          <tt>is_ascii_digit()</tt>.</li>
+      <li>Charles expressed support for such locale invariant functions and
+          noted via chat that glib provides such a variant named
+          <tt>g_ascii_isdigit()</tt>.</li>
+      <li>Tom noted that there is a distinction; locale-independent variants
+          would operate using an implementation-defined encoding where as ASCII
+          variants would operate using ASCII even in an EBCDIC environment.</li>
+      <li>Hubert asked if anyone would object to having both variants; e.g., a
+          locale-independent variant that always operates using the "C" locale
+          and an ASCII variant.</li>
+      <li>No objections were raised.</li>
+      <li>PBrett stated that the highest priority item should be transcoding
+          facilities.</li>
+      <li>Jens asked if he meant something like <tt>iconv()</tt>.</li>
+      <li>PBrett responded that he meant something more like JeanHeyd Meneide's
+          <tt>ztd::text</tt>.</li>
+      <li><em>[ Editor's note: JeanHeyd's <tt>ztd::text</tt> work is published
+          <a href="https://ztdtext.readthedocs.io/en/latest">here</a>.
+          ]</em></li>
+      <li>Charles stated that, with regard to providing an ICU interface in
+          the standard, there are performance implications; support for generic
+          iterators would warrant availability of definitions for inlining
+          purposes.</li>
+      <li>PBrett asked if anyone could comment regarding the utility of
+          <tt>std::message</tt>.</li>
+      <li>Steve responded that the main problem with message catalogs is that
+          they don't tend to work well with real languages.</li>
+      <li>PBrett reported having good experience with GNU gettext, but that it
+          required discipline to be used successfully.</li>
+      <li>PBrett stated that the other elephant in the room is locale, but
+          noted that <tt>std::format()</tt> provides a foundation we can build
+          on.</li>
+      <li>Tom suggested the possibility of enabling thread-specific locale
+          facilities that avoid reliance on a global locale.</li>
+      <li>PBrett suggested a review of all locale dependent interfaces followed
+          by a proposal that adds variants that accept a locale as an
+          argument.</li>
+      <li>Jens replied that C already does that and that all C++ interfaces use
+          <tt>std::locale</tt>.</li>
+      <li>Hubert stated that POSIX provides a thread aware locale interface
+          that enables changing locale for a specific thread as well as
+          interfaces that accept a locale argument.</li>
+      <li>PBrett provided an example; a <tt>std::isalpha()</tt> overload that
+          accepts a <tt>std::locale</tt> argument.</li>
+      <li>Hubert responded that POSIX specifies a <tt>isalpha_l()</tt>
+          interface that accepts a <tt>locale_t</tt> argument.</li>
+      <li>Tom asked if <tt>std::locale</tt> is fundamentally problematic or
+          whether the problems we face with it are isolated to the facets.</li>
+      <li>PBrett responded that it has fundamental limitations due to reliance
+          on inheritance.</li>
+      <li>Victor stated that the facet's assumption that characters fit in a
+          code unit is the most significant problem.</li>
+      <li>Victor added that <tt>std::locale</tt> uses reference counting and
+          therefore has a performance profile similar to a shared pointer.</li>
+      <li>Hubert stated that <tt>std::locale</tt> strongly ties C++
+          implementations to the suite of C locales since the interface depends
+          on the names of C locales; it is therefore questionable how
+          implementors might provide more generic locale support.</li>
+      <li>Steve stated that WG14 recently adopted a proposal that adds
+          '@', '$', and '`' to the basic source character set.</li>
+      <li>Steve added that he intends to bring a matching paper to WG21 in the
+          near future.</li>
+      <li><em>[ Editor's note: The adopted WG14 proposal is
+          <a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2701.htm">N2701</a>.
+          ]</em></li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will be on March 9th and, unless a
+      new paper materializes, will likely focus on diving deeper into one of
+      the topics discussed today.</li>
+</ul>
+
+
+<h1 id="2022_03_09">March 9th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>ICU features to consider for C++26</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom introduced the topic:
+    <ul>
+      <li>Tom was inspired by Jens' assertion during the previous telecon that
+          "the elephant in the room is ICU and the functionality it
+          provides".</li>
+      <li>Based on that, Tom created a
+          <a href="https://docs.google.com/document/d/1f-CLhYZIf_L0q1QBEqe2sVHyAofGx8Akt_xJKDGhcgA/edit?usp=sharing">Google Doc</a>
+          containing a list of ICU feature categories annotated with Tom's
+          opinions on whether such features are worthy of consideration for
+          standardization in C++26 should suitable proposals materialize.</li>
+      <li>Tom would like to issue a Call for Papers covering the features we
+          agree are worth consideration.</li>
+    </ul>
+  </li>
+  <li>Tom began reviewing the feature categories in the order they appear in
+      the document.</li>
+  <li>The categories enumerated below are those for which there were material
+      comments.</li>
+  <li>"Unicode character properties":
+    <ul>
+      <li>Tom pondered the benefits of exposing the set of raw UCD properties
+          as opposed to just those that are needed for other features.</li>
+      <li>Charles responded that there are representation choices to be made
+          based on usage.</li>
+      <li>Steve noted that support for segmentation requires many of the UCD
+          properties.</li>
+      <li>Steve stated that it would be useful to expose all of the properties
+          to enable experimentation.</li>
+      <li>Steve noted that, if there are design problems with how the data is
+          exposed, that would be useful information.</li>
+      <li>PBrett observed that the UCD properties are needed to implement
+          proper internationalization and localization support.</li>
+      <li>PBrett pondered whether exposing all UCD properties might create
+          portability issues.</li>
+      <li>Tom asked if it might be reasonable to only expose properties with
+          stability guarantees.</li>
+      <li>Steve replied that doing so probably would not be viable; some
+          properties required for segmentation are not stable and there is a
+          need to be able to fix things.</li>
+      <li>Tom noted the difference between data being stable as compared to
+          property shapes being stable.</li>
+      <li>Steve acknowledged and noted that property shapes haven't changed
+          in a while.</li>
+      <li>Steve added that the ICU maintainers would presumably push back hard
+          if Unicode made significant changes to the shape of existing
+          properties.</li>
+    </ul>
+  </li>
+  <li>"Sets of Unicode Code Points and Strings":
+    <ul>
+      <li>Tom commented that the items in this category appear to be simple
+          utilities.</li>
+      <li>PBrett opined that may be a good reason to provide them.</li>
+      <li>Tom observed that they appear to be used to provide support for
+          character classes.</li>
+    </ul>
+  </li>
+  <li>"Locales":
+    <ul>
+      <li>PBrett stated that one of the challenges with locale identifiers is
+          that choice of locale is not fixed at compile-time.</li>
+      <li>PBrett added that locale IDs are subject to geopolitical changes.</li>
+      <li>Steve reported that there has been much work on client-side
+          localization through
+          <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-402/">ECMA 402</a>,
+          and
+          <a href="https://github.com/unicode-org/icu4x">ICU4X</a>.</li>
+      <li>Steve expressed caution over trying to standardize something like
+          ECMA 401 and ICU4X given that they are recent developments.</li>
+      <li>Steve noted that client side support uses browser based
+          facilities.</li>
+      <li>PBrett wondered if C++ code compiled to WASM should transparently
+          proxy to the local environment.</li>
+      <li>Tom asked whether new locale support could be built on
+          <tt>std::locale</tt>, perhaps via new facets.</li>
+      <li>Hubert objected to such support built on new <tt>std::locale</tt>
+          facets due to <tt>std::locale</tt> being dependent on C locale
+          names.</li>
+      <li>PBrett replied that it would be useful to be able to get an ISO
+          locale name from a standard locale.</li>
+      <li>Hubert noted that encoding information would be lost in that
+          case.</li>
+      <li>PBrett agreed and asserted that encoding ideally wouldn't be a
+          locale concern anyway.</li>
+      <li>Hubert replied that a particular script could be implied by
+          <tt>std::locale</tt>.</li>
+      <li>Steve observed that we seem to be in agreement that we don't know
+          how to do this today.</li>
+      <li>Tom stated that the problem is that proper case mapping, case
+          folding, and collation can't be provided without proper locale
+          support.</li>
+      <li>PBrett agreed and asserted the need for a plan to improve locale
+          support.</li>
+    </ul>
+  </li>
+  <li>"Resource Bundles":
+    <ul>
+      <li>Tom suggested that this feature could be built on top of features
+          like <tt>#embed</tt> and support for dynamic libraries; perhaps a
+          downstream feature then.</li>
+      <li>Charles noted that Microsoft style resource management can be
+          provided on other platforms using linker scripts.</li>
+      <li>PBrett opined that resources are a requirement for a good locale
+          system.</li>
+    </ul>
+  </li>
+  <li>"Calendars and Time Zones" and "Date and Time Formatting":
+    <ul>
+      <li>Tom stated that base facilities exist that could be expanded, but
+          that there are locale dependenices.</li>
+      <li>PBrett acknowledged concerns raised by Corentin on the mailing list
+          that noted that the existing facilities are not at parity with the
+          ICU features.</li>
+    </ul>
+  </li>
+  <li>"Message Formatting":
+    <ul>
+      <li>Tom stated that this is awaiting further developments from the
+          <a href="https://github.com/unicode-org/message-format-wg">Message Format Working Group (MFWG)</a>.</li>
+      <li>PBrett commented that, what programmers want and what they need are
+          not always the same thing.</li>
+      <li>Charles expressed a desire for experience outside the standard before
+          pursuing support in the standard; even more so for this feature than
+          for other ones.</li>
+      <li>Charles added that, ideally, a production quality application would
+          be built on top of such a facility; one that has users using it from
+          multiple locales.</li>
+      <li>PBrett opined that <tt>std::format()</tt> may not provide a great
+          base to build this on.</li>
+      <li>Charles replied that it is probably usable, but not sufficient as
+          is.</li>
+      <li>Tom stated there would presumably be a need to pass a message ID in
+          place of a format string.</li>
+      <li>Charles reported that could be done using
+          <tt>std::vformat()</tt>.</li>
+    </ul>
+  </li>
+  <li>"Text Transformation":
+    <ul>
+      <li>Tom suggested that, if there is a specific transliteration that we
+          have motivation to provide, then we can do so; range adapters
+          provide general support for this otherwise.</li>
+      <li>Steve noted that JeanHeyd's
+          <a href="https://ztdtext.readthedocs.io/en/latest">ztd.text</a>
+          library can do some of this.</li>
+      <li>Hubert asked if this feature category is referring to technical
+          transliteration or linguistic transliteration.</li>
+      <li>Tom replied that he did not know.</li>
+    </ul>
+  </li>
+  <li>"Bidirectional Algorithm":
+    <ul>
+      <li>Tom asked for confirmation that this does not have locale
+          dependencies and is effectively about state management for layout
+          purposes.</li>
+      <li>Steve replied that the algorithm is complicated as it tries to
+          support all possible scenarios.</li>
+    </ul>
+  </li>
+  <li>"Collation":
+    <ul>
+      <li>Jens described a design possibility involving locale independent
+          base functionality that operates on a set of locale dependent
+          collation rules.</li>
+      <li>Jens stated that the rules engine would have to be sufficient to
+          perform all tasks required by all locales.</li>
+      <li>Jens noted that such a facility could be useful as a building block
+          for locale support and as a standalone facility.</li>
+    </ul>
+  </li>
+  <li>"String Searching":
+    <ul>
+      <li>Tom noted the locale dependence.</li>
+      <li>PBrett noted collation dependence.</li>
+      <li>Jens stated that precise requirements are needed and that basic
+          element searching is present.</li>
+      <li>Hubert suggested this might be provided by a regular expression
+          facility.</li>
+    </ul>
+  </li>
+  <li>"Text Boundary Analysis":
+    <ul>
+      <li>Steve stated there are natural range interfaces for this and that the
+          interface is probably clear.</li>
+      <li>Hubert asked when a C++ programmer would use this.</li>
+      <li>Steve replied that he performs such analysis for reflowing text in
+          outgoing email.</li>
+      <li>PBrett added that such support was an integral part of a DSP language
+          he worked on.</li>
+      <li>Steve stated that word wrapping comes up in many scenarios.</li>
+    </ul>
+  </li>
+  <li>"Regular Expressions":
+    <ul>
+      <li>Tom suggested we consider this category if a paper arrives.</li>
+      <li>Tom noted that a proposed design would be locale dependent and would
+          presumably have to operate on various string types, potentially
+          including segmented text data structures.</li>
+      <li>PBrett pondered the possibility of a run-time only library with a
+          narrow interface that could later be overloaded for new
+          extensions.</li>
+      <li>Steve stated that this is not an area of his experties but that he
+          would be willing to help author a paper if a good design were to
+          be proposed.</li>
+      <li>Steve noted that there are many SG16 and LEWG related issues to
+          consider.</li>
+    </ul>
+  </li>
+  <li>"StringPrep":
+    <ul>
+      <li>Hubert stated that this feature is related to string normalization
+          for interchange purposes such as key lookup.</li>
+      <li>Jens noted that the
+          <a href="https://datatracker.ietf.org/doc/html/rfc3454">stringprep RFC</a>
+          specifies exclusion of certain characters and expressed a desire to
+          better understand what this facility is used for.</li>
+      <li>Tom updated the Google Doc to change the consideration column value
+          from "N/A" to "No", to add a reference to RFC 3454, and to note that
+          this is a string normalization feature.</li>
+    </ul>
+  </li>
+  <li>"IDNA":
+    <ul>
+      <li>Tom expressed considerable ignorance of this topic.</li>
+      <li><em>[ Editor's note: "IDNA" stands for
+          "Internationalizing Domain Names for Applications" and is covered by
+          <a href="https://unicode.org/reports/tr46">UTS #46</a>. ]</em></li>
+      <li>PBrett suggested such support might be needed for standard
+          networking.</li>
+    </ul>
+  </li>
+  <li>"Universal Time Scale":
+    <ul>
+      <li>Tom suggested this is not an SG16 concern and could be tackled
+          directly by LEWG if motivated.</li>
+      <li>Tom updated the Google Doc to change the consideration column value
+          from "N/A" to "No; LEWG".</li>
+    </ul>
+  </li>
+  <li>"Paragraph Layout / Complex Text Layout":
+    <ul>
+      <li>Review of the ICU <tt>playout.h</tt> header revealed that this is an
+          experimental facility.</li>
+      <li>Tom updated the Google Doc to change the consideration column value
+          from "Not yet" to "No" and added a note about the facility being
+          experimental.</li>
+    </ul>
+  </li>
+  <li>"ICU I/O":
+    <ul>
+      <li>Tom stated this is not an SG16 concern.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next telecon is scheduled for 3/23; the agenda is
+      TBD.</li>
 </ul>
 
 
