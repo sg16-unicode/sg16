@@ -20,8 +20,8 @@ We also provide input on other proposals within WG21 and WG14 when those proposa
 touch on topics listed in
 [P1253 - Guidelines for when a WG21 proposal should be reviewed by SG16][P1253].
 
-The following sections list papers and projects related to Unicode and text processing
-within WG21 and WG14.
+The following sections list projects, Unicode papers, and ISO papers that fall
+under the purview of SG16.
 
 
 # Active Projects
@@ -32,16 +32,32 @@ Boost.Text  | What a c++ standard Unicode library might look like<br/>[Code repo
 ztd.text    | The premiere library for handling text in different encoding forms and reducing transcoding bugs in your C++ software<br/>[Code repository](https://github.com/soasis/text)<br/>[Documentation](https://ztdtext.readthedocs.io/en/latest)
 
 
-# WG21 (C++) Papers
+# Unicode papers
 
-## Active Papers and Projects
+Document Number | Title
+--------------- | -----
+[L2/21-038][]   | Clarify guidance for use of a BOM as a UTF-8 encoding signature
 
-WG Number     | Title/Notes/Links
+
+# ISO/IEC JTC1/SC2/WG2 (Unicode) Papers
+
+## Active Papers
+
+WG21 Number   | Title/Notes/Links
 ------------- | -----
-[P2558][]     | Add @, $, and ` to the basic character set
+[WG2-N5168][] | Name aliases and UTF-16 encoding scheme are inconsistent with the Unicode Standard<br/>Per [WG2-N5175][], [WG2-N5174][] contains the proposed resolution.<br/>
+
+
+# ISO/IEC JTC1/SC22/WG21 (C++) Papers
+
+## Active Papers
+
+WG21 Number   | Title/Notes/Links
+------------- | -----
+[P2558][]     | Add @, $, and \` to the basic character set
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
-[P2513][]     | char8_t Compatibility and Portability Fixes
-[P2460][]     | Relax requirements on wchar_t to match existing practices
+[P2513][]     | char8\_t Compatibility and Portability Fixes
+[P2460][]     | Relax requirements on wchar\_t to match existing practices
 [P2419][]     | Clarify handling of encodings in localized formatting of chrono types
 [P2362][]     | Remove non-encodable wide character literals and multicharacter wide character literals
 [P2361][]     | Unevaluated strings literals
@@ -60,7 +76,7 @@ WG Number     | Title/Notes/Links
 
 ## Accepted C++23 Papers
 
-WG Number     | Title/Notes/Links
+WG21 Number   | Title/Notes/Links
 ------------- | -----
 [P2372][]     | Fixing locale handling in chrono formatters
 [P2316][]     | Consistent character literal encoding
@@ -74,7 +90,7 @@ WG Number     | Title/Notes/Links
 
 ## Accepted C++20 Papers
 
-WG Number     | Title/Notes/Links
+WG21 Number   | Title/Notes/Links
 ------------- | -----
 [P1892][]     | Extended locale-specific presentation specifiers for std::format
 [P1868][]     | 🦄 width: clarifying units of width and precision in std::format
@@ -89,9 +105,9 @@ WG Number     | Title/Notes/Links
 
 The following papers are no longer being pursued.
 
-WG Number     | Title/Notes/Links
+WG21 Number   | Title/Notes/Links
 ------------- | -----
-~~[P2498][]~~ | ~~Forward compatibility of text_encoding with additional encoding registries~~<br/>(Dropped by the author following lack of consensus for a change in LEWG)
+~~[P2498][]~~ | ~~Forward compatibility of text\_encoding with additional encoding registries~~<br/>(Dropped by the author following lack of consensus for a change in LEWG)
 ~~[P2491][]~~ | ~~Text encodings follow-up~~<br/>(The concerns raised in this paper were avoided by changes made in R10 of [P1885][])
 ~~[P2297][]~~ | ~~Wording improvements for encodings and character sets~~<br/>(The goals of this paper were mostly addressed via [P2314][])
 ~~[P2194][]~~ | ~~The character set of C++ source code is Unicode~~<br/>(The goals of this paper are now being pursued via [P2314][] and [P2297][])
@@ -106,11 +122,11 @@ WG Number     | Title/Notes/Links
 ~~[P0169][]~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 
 
-# WG14 (C) Papers
+# ISO/IEC JTC1/SC22/WG14 (C) Papers
 
 ## Active Papers
 
-WG Number     | Title/Notes/Links
+WG14 Number   | Title/Notes/Links
 ------------- | -----
 [N2940][]     | Removing trigraphs??!
 [N2939][]     | Identifier Syntax Fixes
@@ -124,7 +140,7 @@ WG Number     | Title/Notes/Links
 
 ## Accepted C23 Papers
 
-WG Number     | Title/Notes/Links
+WG14 Number   | Title/Notes/Links
 ------------- | -----
 [N2728][]     | char16\_t & char32\_t string literals shall be UTF-16 & UTF-32 \| r0
 [N2594][]     | Mixed Wide String Literal Concatenation
@@ -132,7 +148,7 @@ WG Number     | Title/Notes/Links
 
 ## Inactive Papers
 
-WG Number     | Title/Notes/Links
+WG14 Number   | Title/Notes/Links
 ------------- | -----
 ~~[N2916][]~~ | ~~C Identifier Security using Unicode Standard Annex 39~~<br/>Superseded by [N2932][])
 ~~[N2777][]~~ | ~~C Identifier Syntax using Unicode Standard Annex 31~~<br/>(Superseded by [N2836][])
@@ -145,6 +161,10 @@ WG Number     | Title/Notes/Links
 ~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superseded by [N2653][])
 
 
+[L2/21-038]: https://www.unicode.org/L2/L2021/21038-bom-guidance.pdf
+[WG2-N5168]: https://www.unicode.org/wg2/docs/n5168R1-ISO10646.pdf
+[WG2-N5174]: https://www.unicode.org/wg2/docs/n5174-namesaliases.pdf
+[WG2-N5175]: https://www.unicode.org/wg2/docs/n5175-cdam1.2-repertoire-update.pdf
 [N2940]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2940.pdf
 [N2939]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2939.pdf
 [N2932]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2932.htm
