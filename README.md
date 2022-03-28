@@ -45,7 +45,8 @@ Document Number | Title
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
-[WG2-N5168][] | Name aliases and UTF-16 encoding scheme are inconsistent with the Unicode Standard<br/>Per [WG2-N5175][], [WG2-N5174][] contains the proposed resolution.<br/>
+[WG2-N5168][] | Name aliases and UTF-16 encoding scheme are inconsistent with the Unicode Standard<br/>Per [WG2-N5175][], [WG2-N5174][] contains the proposed resolution.
+[WG2-N5174][] | Proposed changes concerning Character Name Aliases in ISO/IEC 10646<br/>This is the proposed resolution for [WG2-N5168][].
 
 
 # ISO/IEC JTC1/SC22/WG21 (C++) Papers
