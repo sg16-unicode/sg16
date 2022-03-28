@@ -41,8 +41,6 @@ WG Number     | Title/Notes/Links
 [P2558][]     | Add @, $, and ` to the basic character set
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
 [P2513][]     | char8_t Compatibility and Portability Fixes
-[P2498][]     | Forward compatibility of text_encoding with additional encoding registries
-[P2491][]     | Text encodings follow-up
 [P2460][]     | Relax requirements on wchar_t to match existing practices
 [P2419][]     | Clarify handling of encodings in localized formatting of chrono types
 [P2362][]     | Remove non-encodable wide character literals and multicharacter wide character literals
@@ -93,6 +91,8 @@ The following papers are no longer being pursued.
 
 WG Number     | Title/Notes/Links
 ------------- | -----
+~~[P2498][]~~ | ~~Forward compatibility of text_encoding with additional encoding registries~~<br/>(Dropped by the author following lack of consensus for a change in LEWG)
+~~[P2491][]~~ | ~~Text encodings follow-up~~<br/>(The concerns raised in this paper were avoided by changes made in R10 of [P1885][])
 ~~[P2297][]~~ | ~~Wording improvements for encodings and character sets~~<br/>(The goals of this paper were mostly addressed via [P2314][])
 ~~[P2194][]~~ | ~~The character set of C++ source code is Unicode~~<br/>(The goals of this paper are now being pursued via [P2314][] and [P2297][])
 ~~[P2178][]~~ | ~~Misc lexing and string handling improvements~~<br/>(The goals of this paper are now being pursued via [P1854][], [P2223][], [P2295][], [P2297][], [P2348][], [P2316][], [P2361][], [P2362][], and [P2460][])
