@@ -27,7 +27,6 @@ WG21 Number     | Title | Revisions
 [P1080R0][]     | SG16: Unicode meeting summaries 2018/03/28 - 2018/04/25 | [R0][P1080R0]
 [P1041R3][]     | Make char16\_t/char32\_t string literals be UTF-16/32 | [R3][P1041R3] [R1][P1041R1] [R0][P1041R0]
 [P1025R1][]     | Update The Reference To The Unicode Standard | [R1][P1025R1] [R0][P1025R0]
-[P0482R6][]     | char8\_t: A type for UTF-8 characters and strings | [R6][P0482R6] [R5][P0482R5] [R4][P0482R4] [R3][P0482R3] [R2][P0482R2] [R1][P0482R1] [R0][P0482R0]
 
 
 # WG14 Papers (C)
@@ -39,13 +38,6 @@ WG14 Number     | Title | Revisions
 
 [N2231]: https://rawgit.com/sg16-unicode/sg16/master/papers/n2231.html
 [N2653]: https://rawgit.com/sg16-unicode/sg16/master/papers/n2653.html
-[P0482R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r0.html
-[P0482R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r1.html
-[P0482R2]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r2.html
-[P0482R3]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r3.html
-[P0482R4]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r4.html
-[P0482R5]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r5.html
-[P0482R6]: https://rawgit.com/sg16-unicode/sg16/master/papers/p0482r6.html
 [P1025R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1025r0.html
 [P1025R1]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1025r1.html
 [P1041R0]: https://rawgit.com/sg16-unicode/sg16/master/papers/p1041r0.md
