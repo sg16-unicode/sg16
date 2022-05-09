@@ -1,11 +1,7 @@
 # WG21 SG16 Unicode study group
 SG16 is an ISO/IEC JTC1/SC22/WG21 C++ study group tasked with improving Unicode and text processing support within the C++ standard.
 
-If you would like to contribute to the discussion, please join us on
-[<img src="http://slack.com/favicon.ico" height="16"/>Slack](https://cpplang.slack.com/messages/sg16_unicode)
-at https://cpplang.slack.com/messages/sg16_unicode
-(an invitation can be requested at https://cpplang.now.sh)
-and subcribe to our mailing list at
+If you would like to contribute to the discussion, please subcribe to our mailing list at
 https://lists.isocpp.org/mailman/listinfo.cgi/sg16.
 
 Meetings are generally held twice a month; invitations are sent to the mailing list.
