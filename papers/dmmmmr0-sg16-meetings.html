@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2022-01-12 through 2022-03-09</title>
+<title>SG16: Unicode meeting summaries 2022-01-12 through 2022-05-11</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2022-03-26</td>
+    <td>2022-05-14</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2022-01-12 through 2022-03-09</h1>
+<h1>SG16: Unicode meeting summaries 2022-01-12 through 2022-05-11</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -107,6 +107,12 @@ snapshot of select meeting summaries from that repository.
       February 23rd, 2022</a></li>
   <li><a href="#2022_03_09">
       March 9th, 2022</a></li>
+  <li><a href="#2022_04_13">
+      April 13th, 2022</a></li>
+  <li><a href="#2022_04_27">
+      April 27th, 2022</a></li>
+  <li><a href="#2022_05_11">
+      May 11th, 2022</a></li>
 </ul>
 
 <p>
@@ -1577,6 +1583,666 @@ Previously published SG16 meeting summary papers:
   </li>
   <li>Tom stated that the next telecon is scheduled for 3/23; the agenda is
       TBD.</li>
+</ul>
+
+
+<h1 id="2022_04_13">April 13th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2558">P2558R0: Add @, $, and ` to the basic character set</a>
+    <ul>
+      <li>Initial review.</li>
+    </ul>
+  </li>
+  <li><a href="https://rawcdn.githack.com/sg16-unicode/sg16-meetings/c84e3e4eef341795fb9ac44824525a3a89583fa7/presentations/2022-04-13-d2572r0.html">D2572R0: std::format() fill character allowances</a>
+    <ul>
+      <li>Initial review.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charles Barto</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Peter Bindels</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2558">P2558R0: Add @, $, and ` to the basic character set</a>
+    <ul>
+      <li>PBrett asked whether this proposal is an SG16 concern.</li>
+      <li>Tom replied that we are the encoding experts and best equipped within
+          the committee to evaluate whether these changes will have consequences
+          for source character sets used in practice; our affirmation of the
+          proposal will hopefully ease progress through other groups.</li>
+      <li>Charlie asked for confirmation that SG22 will review the paper as
+          well.</li>
+      <li>Steve replied affirmatively and stated WG14 has already adopted the
+          proposal for C.</li>
+      <li>Someone (apologies, the editor neglected to record who) noted the
+          existence of
+          <a href="https://wg21.link/p2342">P2342: For a Few Punctuators More</a>
+          and that it argues that these characters could be used as new
+          operators.</li>
+      <li>Tom responded that P2342 is an example of a paper that is not an SG16
+          concern; once the characters are available in the source character
+          set, how they are used is an EWG concern.</li>
+      <li>Hubert observed that this introduces a requirement that these
+          characters be encoded as a single code unit.</li>
+      <li>Jens acknowledged and noted that this is required by
+          <a href="http://eel.is/c++draft/lex.charset#6">[lex.charset]p6</a>
+          for all characters in the basic literal character set.</li>
+      <li>Jens requested that the paper prose discuss this requirement.</li>
+      <li>Steve agreed to add such prose.</li>
+      <li>Jens stated that he does not know if this requirement would be
+          problematic for any existing character sets.</li>
+      <li>Steve replied that there are infrequently used EBCDIC code pages
+          that lack them.</li>
+      <li>Jens asked if those code pages also lack other characters.</li>
+      <li>Steve responded that they probably do.</li>
+      <li>Charlie asked if those problematic EBCDIC code pages have unused
+          code points that could be used for these characters.</li>
+      <li>Tom suggested that digraphs could be introduced to support those
+          code pages if needed.</li>
+      <li>Jens replied that digraphs can't be used inside character or string
+          literals.</li>
+      <li>Steve suggested this concern can be addressed if these characters
+          start getting used within the standard.</li>
+      <li>Jens reported that the addition of these characters to the basic
+          character set makes them ineligible to be specified via a
+          <em>universal-character-name</em> (UCN) outside of a character or
+          string literal due to
+          <a href="http://eel.is/c++draft/lex.charset#3">[lex.charset]p3</a>.</li>
+      <li>PBrett suggested that restriction could be lifted.</li>
+      <li>Charlie stated that existing uses of '$' are probably limited to
+          identifiers and symbol renaming via attributes, pragma directives,
+          or <tt>asm</tt> labels.</li>
+      <li>Hubert reported they may appear in preprocessor stringization.</li>
+      <li>PBrett reported they may appear in header names as well.</li>
+      <li>Jens noticed that use of a UCN to <tt>#include</tt> a source file
+          named with one of these characters would become ill-formed.</li>
+      <li>PBrett reiterated support for lifting restrictions on use of UCNs
+          to name characters from the basic character set with the rationale
+          that we shouldn't ban things that are only bad ideas.</li>
+      <li>Charlie stated that, if such incompatibilities were to cause
+          problems in practice, then lifting that restriction would be the
+          obvious solution.</li>
+      <li>Steve suggested such concerns can be addressed after the paper is
+          approved; we know programmers want to use these characters.</li>
+      <li>Tom asked Steve if he knows whether the UCN concern was discussed
+          in WG14.</li>
+      <li>Steve replied that it was not.</li>
+      <li>Hubert asked when UCNs are translated in identifiers and other
+          preprocessor tokens.</li>
+      <li>Jens replied, during translation phase 3 except in quoted contexts;
+          so translation occurs as a <em>preprocessing-token</em> is
+          formed.</li>
+      <li>PBrett observed that the new UCN restrictions would be limited to
+          <em>h-char</em> and <em>q-char</em> sequences since these characters
+          aren't otherwise usable outside quoted contexts.</li>
+      <li>Jens replied that they may also appear in a
+          <em>preprocessing-token</em> used in stringization.</li>
+      <li>Hubert stated that a UCN specifying one of these characters would
+          become ill-formed during stringization.</li>
+      <li>Hubert added that, likewise, use of a UCN to specify '$' in an
+          identfier would become ill-formed.</li>
+      <li>Tom asked whether that matters since use of '$' in an identifier is
+          already an extension.</li>
+      <li>Jens noted that these characters currently match the
+          "each non-whitespace character that cannot be one of the above"
+          case of
+          <a href="http://eel.is/c++draft/lex.pptoken#nt:preprocessing-token"><em>preprocessing-token</em></a>.</li>
+      <li>Jens requested that this discussion be included in the paper.</li>
+      <li>PBrett asked whether <em>h-char</em> and <em>q-char</em> sequences
+          remain a backward compatibility concern.</li>
+      <li>Jens replied that they do, but that UCNs in such sequneces already
+          have implementation-defined behavior; what UCNs mean in
+          <em>h-char</em> and <em>q-char</em> sequences isn't really
+          defined.</li>
+      <li><em>[ Editor's note: Per
+          <a href="http://eel.is/c++draft/lex.phases#1.3">[lex.phases]p1.3</a>,
+          UCNs are not recognized and replaced in <em>h-char-sequence</em> and
+          <em>q-char-sequence</em> sequences and, per
+          <a href="http://eel.is/c++draft/lex.header#1">[lex.header]p1</a>,
+          these sequences are mapped in an implementation-defined manner.
+          ]</em></li>
+      <li>Tom suggested that it might be worth updating the paper to describe
+          how existing implementations behave with respect to UCNs in
+          preprocessor token concatenation, stringization and <tt>#include</tt>
+          scenarios.</li>
+      <li>Jens asked if there are other ways in which these characters might
+          plausibly be used today.</li>
+      <li>Tom replied that Objective-C uses '@'.</li>
+      <li>Jens mentioned the possibility of concerns being raised regarding
+          the imposition of single code unit encoding for these characters on
+          the execution character set.</li>
+      <li>Tom asked Hubert if he was aware of any EBCDIC related concerns.</li>
+      <li>Hubert replied that his colleagues in WG14 did not express such
+          concerns and that he is confident that they would have if they had
+          any.</li>
+      <li>Hubert noted that locales that don't support these characters would
+          no longer be strictly conforming but could still be supported as
+          extensions.</li>
+      <li>Tom summarized the discussion; there are requests to Steve to update
+          the prose for several of the items discussed, but that there do not
+          appear to be any objections to the paper direction.</li>
+    </ul>
+  </li>
+  <li><a href="https://rawcdn.githack.com/sg16-unicode/sg16-meetings/c84e3e4eef341795fb9ac44824525a3a89583fa7/presentations/2022-04-13-d2572r0.html">D2572R0: std::format() fill character allowances</a>
+    <ul>
+      <li>Tom provided an overview of the topic and prior discussions.</li>
+      <li>Tom asked for additional categories of characters that should be
+          represented in the introductory table.</li>
+      <li>Tom stated that Zero-Width Joiner (ZWJ) and
+          Zero-Width Non-Joiner (ZWNJ) cases were not added because he thought
+          they were not interesting.</li>
+      <li>Tom noted that lone surrogates should not be possible.</li>
+      <li>PBrett suggested the bidirectional override characters.</li>
+      <li><em>[ Editor's note: the bidirectional override characters are
+           U+2066 through U+202E. ]</em></li>
+      <li>Tom agreed to add right-to-left and left-to-right examples.</li>
+      <li>Tom stated that extending fill character support to arbitrary
+          extended grapheme clusters (EGCs) in the future would presumably
+          impose an ABI break.</li>
+      <li>Mark agreed that it would; at least one implementation only stores
+          a single code unit as the current wording appears to specify.</li>
+      <li>Charlie agreed and noted that another implementation stores the fill
+          character as a code unit sequence with a maximum length of 4 code
+          units for UTF-8.</li>
+      <li>Tom noted that, for the "Estimated display width restrictions"
+          section, there is no good or right solution.</li>
+      <li>Tom asked if characters with an estimated width other than one were
+          to be banned, how that would be accomplished without imposing
+          undesirable overhead.</li>
+      <li>PBindels noted that the ZWSP case is interesting; if it were given
+          an estimated-width of 0, then an infinite amount of padding would be
+          required.</li>
+      <li>Charlie stated that the estimated width is not intended to be
+          accurate; it is best effort.</li>
+      <li>Charlie stated that, in the "Existing practice" section,
+          <tt>std::format_error</tt> is now thrown for the cases that
+          previously produced the stack overflow for MSVC.</li>
+      <li>Charlie noted that the diagnostic is somewhat disappointing though
+          since an invalid type is reported because the intended fill
+          character does not match the <tt>fill-and-align</tt> grammar.</li>
+      <li><em>[ Editor's note: The diagnostic produced by gcc with {fmt} is
+          likewise disappointing. ]</em></li>
+      <li>PBrett suggested that a table that demonstrates the desired output
+          inline with the proposal would be useful.</li>
+      <li>Victor stated that the paper direction makes sense and is consistent
+          with previous guidance.</li>
+      <li>Victor pondered the consequences of diagnosing fill characters with
+          an estimated width other than one; on one hand, it would be nice,
+          but on the other hand, it adds overhead and potentially restricts
+          valid use cases.</li>
+      <li>PBrett suggested that fill characters with an estimated width other
+          than one could be conditionally supported.</li>
+      <li>PBrett stated that his preferred approach would be to diagnose at
+          run-time (e.g., throw an exception) when alignment requirements
+          could not be achieved due to the estimated width of the fill
+          character.</li>
+      <li>PBindels reviewed the "Proposal" section and stated:
+        <ul>
+          <li>The first point to restrict to a single UCS scalar value seems
+              sensible.</li>
+          <li>The third and fourth points appear to be consistent with what
+              implementations currently do.</li>
+          <li>The second point is the questionable one.</li>
+        </ul>
+      </li>
+      <li>PBrett suggested that the number of fill characters inserted could
+          be unspecified when the fill character has an estimated width other
+          than one.</li>
+      <li>PBindels replied that he considered that as well, but since the
+          actual width is dependent on font selection, a consistent result may
+          not be achieved anyway.</li>
+      <li>Charlie reminded the group that the estimated widths are not
+          currently specified by any standard.</li>
+      <li>Charlie observed that diagnosing fill characters with an estimated
+          width other than one will have the potential effect of rendering
+          existing code invalid if estimated widths are changed in the
+          future.</li>
+      <li>PBrett suggested another possibility that, if the fill character has
+          an estimated width of two, then perform the alignment as if the fill
+          character and all characters in the format argument have an estimated
+          width of one; this would enable idiographic characters to be
+          formatted properly.</li>
+      <li>Charlie responded that, if such a feature is desirable, then it would
+          be preferable to add a flag to opt-in to it rather than inferring it
+          based on the chosen fill character.</li>
+      <li>Tom agreed and noted that idiographic characters are just one special
+          case.</li>
+      <li>Charlie stated that, for table style alignment, it is likely
+          preferrable to emit a field separator character explicitly in the
+          format string rather than to rely on the fill and align
+          capabilities.</li>
+      <li>PBindels asserted that there is value to having well-defined portable
+          behavior across implementations, so unspecified and
+          implementation-defined behaviors should be avoided where
+          possible.</li>
+      <li>Hubert asked if Victor has good examples of this facility being used
+          with format arguments that have characters with estimated widths
+          other than one regardless of fill character.</li>
+      <li>Victor replied affirmatively, but stated he did not recall specific
+          examples; such cases involved terminal output.</li>
+      <li>Tom reported vague recollections of such examples being present in
+          Victor's original papers.</li>
+      <li>PBrett stated that support for certain languages remains a concern
+          for him and reported seeing Japanese characters reliably displayed in
+          terminals in tabular formats.</li>
+      <li>Tom asked if he knew how the programmers were facilitating such
+          output.</li>
+      <li>PBrett replied that he did not.</li>
+      <li>PBindels asked if it would be feasible to research what features
+          would be useful for such languages.</li>
+      <li>PBrett replied that it isn't feasible for him to do so due to the
+          number of possible solutions; he would like to allow implementations
+          to be creative and see what the results bring.</li>
+      <li>PBindels again emphasized a desire for portable behavior.</li>
+      <li>Charlie agreed and stated that a creative solution in one
+          implementation might produce an error in another.</li>
+      <li>Tom asked Peter Brett if it would suffice for an implementation to
+          provide a flag to opt-in to an alternate behavior.</li>
+      <li>PBrett lamented the absence of attendees that are experts in
+          non-Latin based languages.</li>
+      <li>Hubert questioned the frequency with which a programmer would want
+          to use a fill character with an estimated width other than one;
+          the programmer would presumably need to be able to specify a
+          fill-remainder character or otherwise provide their own padding.</li>
+      <li>Victor agreed with the goal of specifying consistent behavior and
+          suggested standardizing the demonstrated existing behavior in which
+          a fill character is assumed to have an estimated width of one.</li>
+      <li>Charlie noted that a programmer can implement their own fancy
+          formatter that produces a result that is then embedded using
+          standard formatters.</li>
+      <li>Tom stated that it sounds like we have a few possible extension
+          mechanisms that can be used for experimentation, work arounds, or
+          future standard behavior.</li>
+      <li>Tom reported that he is leaning towards Victor's suggestion of
+          specifying the currently demonstrated implementation experience.</li>
+      <li>PBindels indicated he would be content with any of the demonstrated
+          outputs so long as behavior is consistent across implementations.</li>
+      <li>PBrett expressed concern about specifying particular behavior in the
+          absence of more diverse expertise in SG16.</li>
+      <li>PBindels stated that he would reach out within his organization to
+          try to find people with more diverse experience that would be
+          interested in attending.</li>
+    </ul>
+  </li>
+  <li>Tom reported that the next meeting will be on 2022-04-27.</li>
+</ul>
+
+
+<h1 id="2022_04_27">April 27th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2286r7">P2286R7: Formatting Ranges</a>
+    <ul>
+      <li>Review recent updates and confirm direction.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2558r1">P2558R1: Add @, $, and ` to the basic character set</a>
+    <ul>
+      <li>Review recent updates.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2286r7">P2286R7: Formatting Ranges</a>
+    <ul>
+      <li><em>[ Editor's note: D2286R7 was the active paper under discussion
+          at the telecon. The agenda and links used here reference P2286R7
+          since the links to the draft paper were not shared publicly. The
+          published document may differ from the reviewed draft revision.
+          ]</em></li>
+      <li>PBrett provided an introduction.</li>
+      <li>Victor explained that LWG reviewed the wording and conditionally
+          approved the paper subject to SG16 review.</li>
+      <li>PBrett recalled concerns raised in the past regarding the use of
+          Unicode properties.</li>
+      <li>Victor replied that implementors were present during the LWG review
+          and did not express any objections or concerns.</li>
+      <li>Victor noted that Hubert provided some wording tweaks during the
+          LWG review.</li>
+      <li>PBrett presented wording updates Tom
+          <a href="https://lists.isocpp.org/sg16/2022/04/3111.php">proposed on the SG16 mailing list</a>.</li>
+      <li>PBrett expressed a preference for Tom's wording relative to the
+          current wording.</li>
+      <li>Victor stated that he is ok with Tom's wording so long as it is
+          equivalent to the current wording in the paper for the Unicode
+          case.</li>
+      <li>Victor stated that he would prefer not to defer to other format
+          facilities for the description of how hexadecimal values are
+          formatted.</li>
+      <li>Hubert expressed a desire to document spacing and non-printable
+          characters by their encoded values as opposed to their character
+          names or glyphs.</li>
+      <li>Hubert explained that doing so would free the library from having
+          to be aware of the literal encoding selected at compile-time.</li>
+      <li>Tom acknowledged the concern; the set of spacing and non-printable
+          characters, or their encoded values may differ for one literal
+          encoding vs another.</li>
+      <li>Hubert noted that the concern applies to both EBCDIC and Windows
+          code pages.</li>
+      <li>Hubert stated that the proposed wording could produce strange
+          results in cases where unnecessary shift states are present.</li>
+      <li>PBrett observed that the current wording does not state which
+          encoding is used in cases where printable characters overlap with
+          control characters in a related encoding, but the proposed wording
+          does.</li>
+      <li>Jens noticed that the proposed wording states that the literal
+          encoding is used to construct <em>E</em>, but not to interpret
+          <em>S</em>.</li>
+      <li>Tom acknowledged the omission and stated that it needs to be
+          corrected.</li>
+      <li>PBrett returned to his example where a locale encoding overlays
+          graphical characters over control characters and noted that the
+          overlayed characters would be interpreted in the literal
+          encoding.</li>
+      <li>Hubert reported that his implementations are not affected by
+          overlay concerns and that locale support can be added later if
+          motivated.</li>
+      <li>Zach asked if the method for determining whether <em>S</em> is in a
+          Unicode encoding matches the method specified for
+          <tt>std::format()</tt> in C++20.</li>
+      <li>Tom replied that he didn't recall how it was specified.</li>
+      <li><em>[ Editor's note: It does not appear to be specified. The relevant
+          wording simply states "For a string in a Unicode encoding, ...". See
+          <a href="http://eel.is/c++draft/format#string.std-11">[format.string.std]p11</a>,
+          <a href="http://eel.is/c++draft/format#string.std-12">[format.string.std]p12</a>,
+          and
+          <a href="http://eel.is/c++draft/format#string.std-14">[format.string.std]p14</a>.
+          Improvements appear to be warranted. ]</em></li>
+      <li>Jens stated that, with the exception of the use of <em>CE</em> for
+          string <em>S</em>, this is well-specified so long as it matches the
+          desired behavior.</li>
+      <li>Tom noted that <tt>std::format()</tt> is intentionally locale
+          independent.</li>
+      <li>Hubert reported that his implementations will likely assume a certain
+          literal encoding rather than storing the literal encoding actually
+          used at compile-time; that encoding is likely to be EBCDIC 1047 or,
+          for ASCII contexts, ISO-8859-1.</li>
+      <li>Hubert expressed his understanding of the design intent to be that an
+          escaped sequence can be interpreted to reproduce the original byte
+          sequence.</li>
+      <li>Hubert suggested that it may be worth adding a note to that
+          effect.</li>
+      <li>Tom acknowledged the intent and noted that his wording fails to
+          reflect that intent for stateful encodings since state transitions in
+          <em>S</em> should be reflected as escape sequences rather than
+          interpreted when constructing <em>E</em>.</li>
+      <li>PBrett asked for other concerns.</li>
+      <li>Tom noted that there is the issue of handling boundaries of ill-formed
+          code unit sequences and asked if anyone wanted to argue for addressing
+          that now.</li>
+      <li>PBrett expressed a preference not to address it now.</li>
+      <li>Hubert suggested it could be unspecified or
+          implementation-defined.</li>
+      <li>Tom replied that it is more-or-less implied at present.</li>
+      <li>PBrett agreed.</li>
+      <li>Tom summarized the discussion; we agree that we want revised wording
+          for this case but that we don't quite have what we want yet.</li>
+      <li>Tom said he will inform LWG that we'll continue iterating on the
+          wording with the intent to have something approved by our next
+          meeting in two weeks.</li>
+      <li>Hubert agreed with the summary.</li>
+      <li>Victor gave a thumbs up.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2558r1">P2558R1: Add @, $, and ` to the basic character set</a>
+    <ul>
+      <li><em>[ Editor's note: D2558R1 was the active paper under discussion at
+          the telecon. The agenda and links used here reference P2558R1 since
+          the links to the draft paper were ephemeral. The published document
+          may differ from the reviewed draft revision. ]</em></li>
+      <li>Steve reported that the prose was updated to record the results of
+          prior discussions in order to better explain the intent; the wording
+          has not been changed.</li>
+      <li>Steve presented the paper and noted that section 3 is new.</li>
+      <li>Tom suggested adding a comment in
+          section 3.1 (Universal Character Name)
+          to indicate the character corresponding to <tt>\u0060</tt>.</li>
+      <li>PBrett reported a typo in
+          section 3.4, "sting literal" should be "string literal".</li>
+      <li>PBrett noted that, with respect to existing use of these characters,
+          they are usually used for convenience where another mechanism could
+          be used.</li>
+      <li>Steve agreed and noted that such use generally occurs in contexts
+          that require some kind of magic and where they can generally be
+          escaped in some way.</li>
+      <li>Tom stated that, with regard to raw string literals, a reason to
+          exclude the new characters in the delimiter portion is because these
+          characters might acquire meaning in the future that could become
+          problematic.</li>
+      <li>Tom expressed a preference to exclude <tt>`</tt> for now so that we
+          can preserve it for use as a new type of string literal.</li>
+      <li><em>[ Editor's note: Such exclusion is unnecessary; the raw string
+          literal delimiter pattern is bounded by a double quote and a
+          parenthesis. Allowing use of <tt>`</tt> in between those poses no
+          ambiguity for a hypothetical new string literal delimited by
+          <tt>`</tt>. ]</em></li>
+      <li>Tom suggested the paper explicitly note that the proposed changes
+          enable these characters to portably be used in character literals
+          by virtue of being encoded as a single code unit.</li>
+      <li>Steve agreed to update the paper.</li>
+      <li>PBrett reported another typo in
+          section 3.3, "invarient" should be "invariant".</li>
+      <li>Jens expressed a continuing interest in the paper showing examples
+          of behavioral changes.</li>
+      <li>Hubert noted that such examples should be added to annex C.</li>
+      <li>Steve reported two known compatibility issues:
+        <ul>
+          <li>Use of a UCN to name one of these characters in
+              stringification.</li>
+          <li>Use of a UCN to name one of these characters as an argument to
+              a function-like macro that does not use the corresponding
+              parameter.</li>
+        </ul>
+      </li>
+      <li>Steve stated that SG22 may want to review these updates.</li>
+      <li>Steve suggested it may suffice to forward an updated paper via an
+          SG16 mailing list review.</li>
+      <li>Tom agreed.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be May 11th and will hopefully
+      include review of an updated revision of
+      D2572R0 (std::format() fill character allowances).</li>
+</ul>
+
+
+<h1 id="2022_05_11">May 11th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2286r8">P2286R8: Formatting Ranges</a>
+    <ul>
+      <li>Review and approve final wording updates.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2558r1">P2558R1: Add @, $, and ` to the basic character set</a>
+    <ul>
+      <li>Continue review pending the availability of an updated revision.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charles Barto</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2286r8">P2286R8: Formatting Ranges</a>
+    <ul>
+      <li><em>[ Editor's note: D2286R8 was the active paper under discussion at
+          the telecon. The agenda and links used here reference P2286R8 since
+          the links to the draft paper were ephemeral.  The published document
+          may differ from the reviewed draft revision. ]</em></li>
+      <li>Victor summarized recent wording changes worked out on the SG16
+          mailing list.</li>
+      <li>Victor asked if "code point" should be preferred over "character" in
+          the proposed wording for [format.string.escaped]p2.</li>
+      <li>Tom replied that he is unaware of any normative use of "code point"
+          in the standard today.</li>
+      <li>Victor responded that it is used in the wording for format field
+          width estimation.</li>
+      <li>Hubert stated that the usage there is in a Unicode specific context
+          and that "character" is probably most appropriate here.</li>
+      <li>Hubert pointed out that, in [format.string.escaped]p2.3, it is odd
+          that <em>c</em> is defined as a character, but then compared with
+          UCS scalar values.</li>
+      <li>Jens agreed and proposed substituting "character" for
+          "UCS scalar value" in paragraph 2.3.1 and in the header of the
+          associated table.</li>
+      <li>Jens suggested doing likewise in paragraph 2.3.3.</li>
+      <li>Hubert argued that a change is not needed in 2.3.3 due to the use of
+          "corresponds".</li>
+      <li>Tom noted the use in that paragraph is also a Unicode specific
+          context.</li>
+      <li>Tom asked Charles if he continues to have concerns regarding the lack
+          of specification for determining the boundaries of ill-formed code
+          unit sequences.</li>
+      <li>Charles replied that he does and that he would like to see it
+          addressed via a reference to the
+          <a href="https://encoding.spec.whatwg.org">WHATWG Encoding Standard</a>.</li>
+      <li>Tom responded with uncertainty whether such a normative reference is
+          possible given the lack of versioning around that standard.</li>
+      <li>Charles suggested that the method specified in the WHATWG standard
+          could be replicated in the C++ standard; we want the "maximal subpart"
+          behavior described by policy option 2 in
+          <a href="http://unicode.org/review/pr-121.html">Unicode PR-121</a>.</li>
+      <li>Hubert asked if that policy is defined for all UTF encodings.</li>
+      <li>Charles replied that it is.</li>
+      <li>PBrett asked what the motivation is for rigorously specifying how the
+          boundaries of ill-formed code unit sequences are determined.</li>
+      <li>Charles replied that the goal is to ensure consistent output, but then
+          noticed that, in this case, the method used does not appear to be
+          observable since each code unit of the sequence is written to the
+          output anyway.</li>
+      <li>Tom agreed that it should not matter for self-synchronizing
+          encodings.</li>
+      <li>Charles noted that this will be the first instance of Unicode UCD
+          properties being normatively required by the C++ standard.</li>
+      <li>Charles suggested that, if we're ok with such normative use, we could
+          revisit the wording for estimated format field widths to make the
+          uses there normative as well.</li>
+      <li><em>[ Editor's note:
+          <a href="http://eel.is/c++draft/format.string.std#11">[format.string.std]p11</a>
+          specifies normative encouragement of behavior that depends on UCD
+          properties in order to identify extended grapheme cluster boundaries.
+          ]</em></li>
+      <li><em>[ Editor's note: This would not be the first normative use of the
+          UCD properties;
+          <a href="http://eel.is/c++draft/lex.name#1">[lex.name]p1</a>
+          requires the <tt>XID_Start</tt> and <tt>XID_Continue</tt> properties
+          to determine identifier boundaries and validity. ]</em></li>
+      <li>Jens requested that such changes not be handled via this paper.</li>
+      <li>Steve asked how much data is required for the new uses of the
+          <tt>General_Category</tt> and <tt>Grapheme_Extend</tt>
+          properties.</li>
+      <li>Victor replied that the necessary data fits in ~1K.</li>
+      <li>Charles agreed and shared a
+          <a href="https://github.com/microsoft/STL/blob/main/stl/inc/__msvc_format_ucd_tables.hpp">link to code</a>
+          used to implement a grapheme break algorithm that uses the
+          <tt>Grapheme_Cluster_Break</tt> and <tt>Extended_Pictographic</tt>
+          properties.</li>
+      <li>Charles noted that some creative packing is necessary to get the
+          size that small.</li>
+      <li>Tom expressed surprise that <tt>Grapheme_Extend</tt> is small.</li>
+      <li>Victor replied that it is composed of a number of compressable
+          ranges.</li>
+      <li><em>[ Editor's note: The set of all characters that satisfy the
+          <tt>Grapheme_Extend=yes</tt> property can be viewed
+          <a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AGrapheme_Extend%3DYes%3A%5D&g=&i=">here</a>;
+          that set comprises 2090 code points in Unicode 14. ]</em></li>
+      <li><b>Poll: Forward D2286R8 to LWG with 2.3.1 and associated table
+          revised to substitute "character" for "UCS scalar value" as
+          discussed for inclusion in C++23</b>
+        <ul>
+          <li><b>Attendance: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2558r1">P2558R1: Add @, $, and ` to the basic character set</a>
+    <ul>
+      <li><em>[ Editor's note: D2558R1 was the active paper under discussion at
+          the telecon. The agenda and links used here reference P2558R1 since
+          the links to the draft paper were ephemeral. The published document
+          may differ from the reviewed draft revision. ]</em></li>
+      <li>Steve introduced the changes made since the last review; just the
+          addition of annex C wording.</li>
+      <li><b>Poll: Forward D2558R1 to EWG for inclusion in C++26</b>
+        <ul>
+          <li><b>Attendance: 8 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus in favor.</b></li>
+      <li>Steve stated that he would follow up with SG22 with regard to issues
+          found that were not discussed in WG14.</li>
+      <li><em>[ Editor's note: Steve did so via a
+          <a href="https://lists.isocpp.org/liaison/2022/05/1071.php">post to the C liaison list</a>.
+          ]</em></li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting is scheduled for May 25th.</li>
 </ul>
 
 
