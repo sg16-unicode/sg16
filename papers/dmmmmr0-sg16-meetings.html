@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2022-01-12 through 2022-05-11</title>
+<title>SG16: Unicode meeting summaries 2022-01-12 through 2022-05-25</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2022-05-14</td>
+    <td>2022-05-29</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2022-01-12 through 2022-05-11</h1>
+<h1>SG16: Unicode meeting summaries 2022-01-12 through 2022-05-25</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -113,6 +113,8 @@ snapshot of select meeting summaries from that repository.
       April 27th, 2022</a></li>
   <li><a href="#2022_05_11">
       May 11th, 2022</a></li>
+  <li><a href="#2022_05_25">
+      May 25th, 2022</a></li>
 </ul>
 
 <p>
@@ -2235,6 +2237,8 @@ Previously published SG16 meeting summary papers:
             </table>
           </li>
           <li><b>Consensus in favor.</b></li>
+        </ul>
+      </li>
       <li>Steve stated that he would follow up with SG22 with regard to issues
           found that were not discussed in WG14.</li>
       <li><em>[ Editor's note: Steve did so via a
@@ -2243,6 +2247,262 @@ Previously published SG16 meeting summary papers:
     </ul>
   </li>
   <li>Tom stated that the next meeting is scheduled for May 25th.</li>
+</ul>
+
+
+<h1 id="2022_05_25">May 25th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://rawcdn.githack.com/sg16-unicode/sg16-meetings/ad0a0ed160ef6216954c699ba5b8497190eaf29c/presentations/2022-05-25-d2572r0.html">D2572R0: std::format() fill character allowances</a>
+    <ul>
+      <li>Continue review pending the availability of an updated revision.</li>
+    </ul>
+  </li>
+  <li><a href="https://www.unicode.org/L2/L2022/22072r-uax9-uax31-amd.pdf">L2/22-072R: Proposal for amendments to UAX#9 and UAX#31</a>
+    <ul>
+      <li>Review for familiarity and relevance to
+          <a href="https://wg21.link/p1949">P1949: C++ Identifier Syntax using Unicode Standard Annex 31</a>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charles Barto</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>In honor of a new attendee, a round of introductions was conducted.</li>
+  <li><a href="https://rawcdn.githack.com/sg16-unicode/sg16-meetings/ad0a0ed160ef6216954c699ba5b8497190eaf29c/presentations/2022-05-25-d2572r0.html">D2572R0: std::format() fill character allowances</a>
+    <ul>
+      <li>Tom presented the paper.</li>
+      <li>Robin pointed out a spelling error; "IDIOGRAPHIC" -&gt; "IDEOGRAPHIC"
+          (two occurrences).</li>
+      <li>Charlie explained that the ABI mitigation technique discussed in the
+          "Future considerations and ABI" section relies on persistence of at
+          least the fill character portion of the format string but such
+          persistence is not otherwise currently required because the format
+          string is evaluated at compile-time.</li>
+      <li>Charlie stated he could imagine ways of accomplishing the goal
+          though.</li>
+      <li>Tom asked for confirmation that the Microsoft implementation is
+          already shipping and locked into its current ABI.</li>
+      <li>Charlie confirmed that is the case.</li>
+      <li>Tom stated that he would add a note to the ABI section stating that
+          some implementations are already locked in to their current
+          behavior.</li>
+      <li>Steve commented that there are escape hatches and that other
+          extension means are possible should the need arise.</li>
+      <li>Charlie explained why implementing ABI resiliency would likely impose
+          dynamic memory management costs including possible lifetime
+          management challenges.</li>
+      <li>Jens reported finding it a bit concerning that the estimated width of
+          a character would be honored in some cases but not in others, but
+          recognized the trade offs involved.</li>
+      <li>Jens stated that boilerplate wording is needed within the format
+          section in order for the proposed use of "U+007B LEFT CURLY BRACKET"
+          and "U+007D RIGHT CURLY BRACKET" to be applicable to the literal
+          encoding.</li>
+      <li>Tom stated that the proposed wording changes to table 64 need work;
+          in "if that value is negative", it is not clear whether "value"
+          refers to "<em>n</em>" or to
+          "the width of the formatting argument".</li>
+      <li>Jens requested that "estimated" be inserted before "width" in
+          "the width of the formatting argument".</li>
+      <li>Hubert stated that "formatting argument" doesn't sound like the right
+          term in this context; it should probably be "formatted argument".</li>
+      <li>Tom reported that this term was used for consistency with wording
+          elsewhere but that he would review and try to improve.</li>
+      <li>Jens requested that the note following table 64 be modified to
+          replace "ignored" with "assumed to be 1".</li>
+      <li>Tom agreed.</li>
+    </ul>
+  </li>
+  <li><a href="https://www.unicode.org/L2/L2022/22072r-uax9-uax31-amd.pdf">L2/22-072R: Proposal for amendments to UAX#9 and UAX#31</a>
+    <ul>
+      <li>Tom provided a brief introduction.</li>
+      <li>Hubert asked if it is necessary to address the UAX31-R3 conformance
+          concern for C++23.</li>
+      <li>Tom replied that he did not believe so since the annex is
+          non-normative.</li>
+      <li><em>[ Editor's note: Zoom crashed for Tom and it took him several
+          minutes to get reconnected.
+          Jens assured him that the time missed primarily concerned the
+          flogging of a dead horse. ]</em></li>
+      <li>Jens asked what version of Unicode is expected to receive the
+          proposed amendments.</li>
+      <li>Robin replied that Unicode 15 is expected to have these updates and
+          that more significant normative changes are anticipated for
+          Unicode 16.</li>
+      <li>Robin stated that Unicode 15 is expected to be released in
+          September.</li>
+      <li>Jens observed that September would be just in time for adoption in
+          C++23.</li>
+      <li>Steve suggested that the annex could be updated to claim
+          non-conformance with UAX31-R3.</li>
+      <li>Hubert agreed and noted that we may not want to change our dated
+          UAX31 reference at that late point in the C++23 release cycle.</li>
+      <li>Jens proposed that we proceed with an NB comment on the C++23
+          committee draft to request upgrading the bibliography reference for
+          UAX31 to Unicode 15.</li>
+      <li>Jens explained that, since the new Unicode release won't be available
+          before then, it won't be possible to act on a core issue and an NB
+          comment would end up being required anyway.</li>
+      <li>Robin directed discussion to allowances for
+          U+200E LEFT-TO-RIGHT MARK (LRM) and U+200F RIGHT-TO-LEFT MARK (RLM)
+          to be used in combination with other whitespace.</li>
+      <li>Robin stated that example wording can be found in the
+          Ada 2012 reference manual;
+          <a href="http://www.ada-auth.org/standards/rm12_w_tc1/html/RM-2-2.html#p7.1">section 2.2 paragraph 7 1/3, "Lexical Elements, Separators, and Delimiters"</a>
+          states:
+          <div style="padding: .5em; background: #E9FBE9">
+          One or more other_format characters are allowed anywhere that a
+          separator is; any such characters have no effect on the meaning of
+          an Ada program.
+          </div>
+      </li>
+      <li>Jens noted that this would be a new kind of whitespace for C++ since
+          sequences of these marks by themselves would not constitute
+          whitespace.</li>
+      <li>Jens expressed curiosity regarding "implicit directional marks" as
+          discussed in L2/22-072R.</li>
+      <li>Robin replied that "implicit directional marks" is discussed in
+          <a href="https://unicode.org/reports/tr9/#Implicit_Directional_Marks">UAX #9 section 2.6, "Implicit Directional Marks"</a>.</li>
+      <li>Robin explained that, per
+          <a href="https://unicode.org/reports/tr9/#Conversion_to_Plain_Text">UAX #9 section 6.5, "Conversion to Plain Text"</a>,
+          such marks may be implicitly inserted during conversion to plain text
+          for text subject to protocol
+          <a href="https://unicode.org/reports/tr9/#HL4">UAX9-HL4</a>
+          and that Unicode 15 will recommend that protocol for source code
+          text.</li>
+      <li>Hubert asked if it would make sense to prohibit sequences consisting
+          of more than one of these marks.</li>
+      <li>Robin replied that he knew of no motivation for doing so; that the
+          presence of multiple marks should not pose any negative
+          consequences.</li>
+      <li>Jens expressed opposition to these marks constituting whitespace
+          separation in isolation.</li>
+      <li>Tom agreed.</li>
+      <li>Jens noted that specification of LRM and RLM in whitespace will have
+          to target C++26 as C++23 is now closed to new language changes.</li>
+      <li>Jens suggested that such a change could be adopted as a DR against
+          C++23 to encourage recognition of these marks as a conforming
+          extension in prior language modes.</li>
+      <li>Jens stated that a paper will be needed and that it should await the
+          availability of Unicode 15.</li>
+      <li>Tom stated he would file a SG16 github issue to track the request for
+          such a paper.</li>
+      <li><em>[ Editor's note: Tom filed
+          <a href="https://github.com/sg16-unicode/sg16/issues/74">SG16 issue 74: Extend whitespace to include NEL, LS, PS, LRM, RLM, and maybe ALM</a>.
+          ]</em></li>
+      <li>Tom noted that this isn't a particularly urgent issue to address.</li>
+      <li>Jens countered that it would be helpful to prevent obfuscated display
+          of source code and that the desire to avoid such confusion has gained
+          prominence in recent times.</li>
+      <li>Jens directed discussion towards future conformance with UAX31-R3 and
+          that there are questions about <tt>Pattern_White_Space</tt> that need
+          to be answered.</li>
+      <li>Robin asked which <tt>Pattern_White_Space</tt> characters are not
+          considered whitespace in C++.</li>
+      <li>Hubert listed them; they are all the ones outside the ASCII subset.
+        <ul>
+          <li>U+0085 NEXT LINE</li>
+          <li>U+200E LEFT-TO-RIGHT MARK</li>
+          <li>U+200F RIGHT-TO-LEFT MARK</li>
+          <li>U+2028 LINE SEPARATOR</li>
+          <li>U+2029 PARAGRAPH SEPARATOR</li>
+        </ul>
+      </li>
+      <li>Hubert noted that the above characters can only appear in comments and
+          character or string literals currently.</li>
+      <li>Jens asked if it is the intent of UAX31-R3 to require that all of the
+          characters in <tt>Pattern_White_Space</tt> be supported as
+          whitespace.</li>
+      <li>Robin replied that allowing a subset would render the requirement
+          vacuous.</li>
+      <li>Jens suggested the possibility of updating UAX31-R3 to specify a
+          minimal subset.</li>
+      <li>Robin responded that a sub-requirement like UAX31-R3a could be
+          introduced; such sub-requirements can be found elsewhere in
+          UAX #31.</li>
+      <li>Steve noted that the current normative text of UAX31-R3 allows
+          deviation by specifying a profile.</li>
+      <li>Hubert asked what motivation exists for not accepting the other
+          whitespace characters.</li>
+      <li>Steve noted existing practice and suggested this be addressed in the
+          future paper.</li>
+      <li>Jens directed discussion to conformance with the
+          <tt>Pattern_Syntax</tt> requirement of UAX31-R3.</li>
+      <li>Robin expressed a belief that C++ conforms to that.</li>
+      <li>Tom expressed curiosity with regard to the presence of <tt>.</tt> in
+          <tt>Pattern_Syntax</tt> and its use within floating point
+          literals.</li>
+      <li><em>[ Editor's note: Tom's concern stems from the following note in
+          the description of UAX31-R3. Is the use of <tt>.</tt> in
+          floating point literals considered syntax or part of a literal?</em>
+          <div style="padding: .5em; background: #E9FBE9">
+          <b>Note:</b> When meeting this requirement, all characters except
+          those that have the Pattern_White_Space or Pattern_Syntax properties
+          are available for use as identifiers or literals.
+          </div>
+          <em>]</em>
+      </li>
+      <li>Hubert stated that this kind of confusion is why he is hesitant to
+          declare conformance to UAX31-R3 prior to improved wording that will
+          hopefully appear in Unicode 16.</li>
+      <li>Jens summarized the three tasks identified so far:
+        <ul>
+          <li>For C++23, file an NB comment after the July plenary to update
+              <a href="http://eel.is/c++draft/uaxid.pattern">[uaxid.pattern]</a>
+              in annex E to state that conformance with UAX31-R3 is not claimed.
+              At the same time, update the UAX references in the bibliography
+              to refer to Unicode 15.</li>
+          <li>For C++26, author a paper to add LRM, RLM, and other
+              <tt>Pattern_White_Space</tt> characters to the set of whitespace
+              characters.
+              If support for U+061C ARABIC LETTER MARK is also desired, that
+              will require a profile to conform with UAX31-R3.</li>
+          <li>For C++26, update
+              <a href="http://eel.is/c++draft/uaxid.pattern">[uaxid.pattern]</a>
+              in annex E to claim conformance with UAX31-R3.
+              At the same time, update the UAX references in the bibliography
+              to refer to Unicode 16 (or later).</li>
+        </ul>
+      </li>
+      <li>Robin noted that Unicode 15 is planned for release on September 13th
+          per
+          <a href="https://www.unicode.org/versions/beta-15.0.0.html">https://www.unicode.org/versions/beta-15.0.0.html</a>.</li>
+      <li>Tom recalled Hubert mentioning on the mailing list that
+          U+000D CARRIAGE RETURN (CR) can now be added to the basic character
+          set.</li>
+      <li>Hubert acknowledged and opined that we can do so as part of
+          <a href="https://wg21.link/p2348">P2348: Whitespaces Wording Revamp</a>.</li>
+      <li>Tom stated that CR presumably should have already been present
+          because of the existence of the <tt>\r</tt> escape sequence.</li>
+      <li>Jens explained that <tt>\r</tt> creates a requirement for literal
+          encodings but not for the basic character set nor an allowance for
+          its use in whitespace.</li>
+      <li>Tom noted that a paper will be needed that targets SG15 and discusses
+          the concerns and options available to implementations with regard to
+          UAX9-HL4 and presentation of source code that contains right-to-left
+          characters.</li>
+      <li><em>[ Editor's note: Tom filed
+          <a href="https://github.com/sg16-unicode/sg16/issues/75">SG16 issue 75: SG15 proposal for implementations that present source code to conform with UAX9-HL4</a>
+          to track producing such a paper. ]</em></li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be in two weeks, on 2022-06-08.</li>
 </ul>
 
 
