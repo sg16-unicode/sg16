@@ -130,17 +130,17 @@ WG14 Number   | Title/Notes/Links
 [N2939][]     | Identifier Syntax Fixes
 [N2932][]     | C Identifier Security using Unicode Standard Annex 39 v2<br/>(Previously [N2916 (R0)][N2916])
 [N2966][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902])
-[N2836][]     | C Identifier Syntax using Unicode Standard Annex 31<br/>(Previously [N2777 (R0)][N2777])
-[N2828][]     | Unicode Sequences More Than 21 Bits are a Constraint Violation
 [N2785][]     | Delimited escapes sequences
-[N2701][]     | @ and $ in source and execution character set
-[N2653][]     | char8\_t: A type for UTF-8 characters and strings (Revision 1)<br/>(Previously [N2231 (R0)][N2231])
 
 ## Accepted C23 Papers
 
 WG14 Number   | Title/Notes/Links
 ------------- | -----
+[N2836][]     | C Identifier Syntax using Unicode Standard Annex 31<br/>(Previously [N2777 (R0)][N2777])
+[N2828][]     | Unicode Sequences More Than 21 Bits are a Constraint Violation
 [N2728][]     | char16\_t & char32\_t string literals shall be UTF-16 & UTF-32 \| r0
+[N2701][]     | @ and $ in source and execution character set
+[N2653][]     | char8\_t: A type for UTF-8 characters and strings (Revision 1)<br/>(Previously [N2231 (R0)][N2231])
 [N2594][]     | Mixed Wide String Literal Concatenation
 [N2563][]     | Character encoding of diagnostic text
 
