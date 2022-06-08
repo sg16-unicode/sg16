@@ -100,6 +100,9 @@ WG21 Number   | Title/Notes/Links
 
 ## Inactive Papers
 
+<details>
+  <summary>Inactive papers list</summary>
+
 The following papers are no longer being pursued.
 
 WG21 Number   | Title/Notes/Links
@@ -117,6 +120,7 @@ WG21 Number   | Title/Notes/Links
 ~~[P1097][]~~ | ~~Named character escapes~~<br/>(Superseded by P2071)
 ~~[P0353][]~~ | ~~Unicode Friendly Encoding Conversions for the Standard Library~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
 ~~[P0169][]~~ | ~~regex with Unicode character types~~<br/>(This proposal is not being advocated at this time; more foundational concerns need to be addressed first)
+</details>
 
 
 # ISO/IEC JTC1/SC22/WG14 (C) Papers
@@ -146,6 +150,9 @@ WG14 Number   | Title/Notes/Links
 
 ## Inactive Papers
 
+<details>
+  <summary>Inactive papers list</summary>
+
 WG14 Number   | Title/Notes/Links
 ------------- | -----
 ~~[N2916][]~~ | ~~C Identifier Security using Unicode Standard Annex 39~~<br/>Superseded by [N2932][])
@@ -159,6 +166,7 @@ WG14 Number   | Title/Notes/Links
 ~~[N2440][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r1~~<br/>(Superseded by [N2500][])
 ~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superseded by [N2440][])
 ~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superseded by [N2653][])
+</details>
 
 
 [L2/21-038]: https://www.unicode.org/L2/L2021/21038-bom-guidance.pdf
