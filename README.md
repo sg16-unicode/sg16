@@ -147,6 +147,7 @@ WG14 Number   | Title/Notes/Links
 [N2653][]     | char8\_t: A type for UTF-8 characters and strings (Revision 1)<br/>(Previously [N2231 (R0)][N2231])
 [N2594][]     | Mixed Wide String Literal Concatenation
 [N2563][]     | Character encoding of diagnostic text
+[N2418][]     | Adding the u8 character prefix<br/>(Previously [N2198 (R0)][N2198])
 
 ## Inactive Papers
 
@@ -166,6 +167,7 @@ WG14 Number   | Title/Notes/Links
 ~~[N2440][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r1~~<br/>(Superseded by [N2500][])
 ~~[N2431][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions~~<br/>(Superseded by [N2440][])
 ~~[N2231][]~~ | ~~char8\_t: A type for UTF-8 characters and strings~~<br/>(Superseded by [N2653][])
+~~[N2198][]~~ | ~~Adding the u8 character prefix~~<br/>(Superseded by [N2418][])
 </details>
 
 
@@ -196,7 +198,9 @@ WG14 Number   | Title/Notes/Links
 [N2500]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2500.pdf
 [N2440]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2440.pdf
 [N2431]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2431.pdf
+[N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
+[N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
 [P2558]: https://wg21.link/p2558
 [P2528]: https://wg21.link/p2528
 [P2513]: https://wg21.link/p2513
