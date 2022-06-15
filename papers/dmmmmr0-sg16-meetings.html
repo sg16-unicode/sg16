@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2022-01-12 through 2022-05-25</title>
+<title>SG16: Unicode meeting summaries 2022-01-12 through 2022-06-08</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2022-05-29</td>
+    <td>2022-06-15</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2022-01-12 through 2022-05-25</h1>
+<h1>SG16: Unicode meeting summaries 2022-01-12 through 2022-06-08</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -115,6 +115,8 @@ snapshot of select meeting summaries from that repository.
       May 11th, 2022</a></li>
   <li><a href="#2022_05_25">
       May 25th, 2022</a></li>
+  <li><a href="#2022_06_08">
+      June 8th, 2022</a></li>
 </ul>
 
 <p>
@@ -2503,6 +2505,266 @@ Previously published SG16 meeting summary papers:
     </ul>
   </li>
   <li>Tom stated that the next meeting will be in two weeks, on 2022-06-08.</li>
+</ul>
+
+
+<h1 id="2022_06_08">June 8th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://rawcdn.githack.com/sg16-unicode/sg16-meetings/b37ca29e4d5802aeccaf3fe14568ee7427b2c19e/presentations/2022-06-08-d2572r0.html">D2572R0: std::format() fill character allowances</a>
+    <ul>
+      <li>Final review pending the availability of an updated revision.</li>
+    </ul>
+  </li>
+  <li>Discuss survey questions to suggest for the 2023 C++ Developer Survey
+    <ul>
+      <li>Review questioned and topics suggested in the
+          <a href="https://lists.isocpp.org/sg16/2022/06/3214.php">mailing list discussion</a>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Hubert Tong</li>
+  <li>Inbal Levi</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://rawcdn.githack.com/sg16-unicode/sg16-meetings/b37ca29e4d5802aeccaf3fe14568ee7427b2c19e/presentations/2022-06-08-d2572r0.html">D2572R0: std::format() fill character allowances</a>
+    <ul>
+      <li>PBrett lamented the lack of a published revision with a "P"
+          designation and change history that reflects the evolution of the
+          design and wording.</li>
+      <li>Tom stated, in response to preferences expressed by Victor on the
+          mailing list, that he will add a drafting note regarding the change
+          of "specifier" to "option" in the description of the <em>align</em>
+          grammar production so that LWG will be sure to review.</li>
+      <li>Jens requested that the drafting note regarding note renumbering be
+          removed since the LaTeX machinery will handle that automatically.</li>
+      <li>Tom stated that he would add a note following the format examples
+          that mentions that the clown face emoji has an estimated length of
+          two.</li>
+      <li>PBrett suggested adding an example with a formatting argument that
+          contains a character with an estimated width other than one;
+          essentially an example that swaps the fill character and formatting
+          argument in example <tt>s7</tt>.</li>
+      <li>Jens requested that note X be modified to drop "estimated" and to
+          replace "width of the fill character" with "width of <b>any</b>
+          fill character".</li>
+      <li>Jens expressed distaste for the existing wording in
+          <a href="http://eel.is/c++draft/format.string.std#11">[format.string.std]p11</a>
+          that states "estimated width of ... UCS scalar values";
+          UCS scalar values are not characters.</li>
+      <li>Hubert noted a missing "the" in the same paragraph;
+          "the sum of <b>the</b> estimated widths".</li>
+      <li><b>Poll 1: Revise D2572R0 "std::format() fill character allowances"
+             as discussed, and forward the paper so revised to LEWG as the
+             recommended resolution of LWG3576 and LWG3639.</b>
+        <ul>
+          <li><b>Attendance: 8 (2 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus in favor.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Discuss survey questions to suggest for the 2023 C++ Developer Survey
+    <ul>
+      <li>PBrett proposed separating the survey questions into two categories:
+        <ul>
+          <li>The form of the source code; how the source code is written.</li>
+          <li>The facilities used to perform text processing.</li>
+        </ul>
+      </li>
+      <li>PBrett suggested that questions about tools might comprise an
+          additional category.</li>
+      <li>Inbal suggested asking for input on what topics most urgently require
+          solutions in the standard.</li>
+      <li>Tom replied that a free form question could be used for that and that
+          the current developer survey presents such free form responses as a
+          word cloud.</li>
+      <li>PBrett asserted that the questions should address the topics we most
+          want to learn about.</li>
+      <li>PBrett suggested asking what facilities programmers are using in
+          place of standard facilities like <tt>std::regex</tt> and
+          <tt>std::locale</tt> that are known to have significant design
+          issues.</li>
+      <li>Hubert noted that the standard notion of locale encompasses both
+          interface and locale identification; a programmer may use
+          <tt>std::locale</tt> or the C locale facilities for locale
+          identification, but then use alternate facilities for locale dependent
+          behavior.</li>
+      <li>PBrett pondered whether the facilities programmers actively use to
+          support internationalization and localization is one of the topics we
+          are most ignorant of.</li>
+      <li>Hubert responded that there is speculation that programmers avoid the
+          standard facilities but that we don't have data to confirm that.</li>
+      <li>Steve stated that Bloomberg actively avoids the standard locale
+          related facilities.</li>
+      <li>Victor suggested it might be helpful to ask if programmers are
+          intentionally using the standard locale facilities and noted that many
+          do so inadvertently.</li>
+      <li>Victor noted that the questions need to consider C and C++ locale
+          facilities as distinct facilities.</li>
+      <li>PBrett suggested structuring the questions as:
+        <ul>
+          <li>"Do you provide internationalization support", and</li>
+          <li>"If so, how do you provide internationalization support".</li>
+        </ul>
+      </li>
+      <li>Victor stated that those questions should include multiple selection
+          responses that include C, C++, POSIX, etc...</li>
+      <li>PBrett suggested adding ICU and other popular packages.</li>
+      <li>PBrett asked for additional topics that we might be particularly
+          ignorant about.</li>
+      <li>Steve suggested asking if programmers are still having to work with
+          multiple character encodings within their main application and, if so:
+        <ul>
+          <li>whether they transcode at application boundaries and work
+              exclusively with Unicode internally, or</li>
+          <li>whether they work directly with data in whatever character
+              encoding it is provided in.</li>
+        </ul>
+      </li>
+      <li>PBrett suggested it would be useful to know how often programmers
+          use regular expressions where the pattern is not known until
+          run-time.</li>
+      <li>Victor pondered whether Hana coerced Peter to ask that question.</li>
+      <li>PBrett responded that she did not, but that the question does concern
+          whether and to what extent CTRE is a suitable substitute for
+          <tt>std::regex</tt>.</li>
+      <li>Steve agreed that it would be useful to understand what the
+          requirements for a replacement are.</li>
+      <li>Charlie stated that a replacement would need to be more ABI resilient
+          but that there is no need to pass compiled regular expression objects
+          across module boundaries.</li>
+      <li>Steve suggested asking which regular expression languages programmers
+          are using.</li>
+      <li>PBrett responded that question requires an "I don't know" response
+          option.</li>
+      <li>Tom asked if it would be helpful to know how many programmers are
+          using <tt>TCHAR</tt> in Windows environments.</li>
+      <li>Charlie reported suspicion that many programmers are still using
+          that.</li>
+      <li>Tom wondered what we might do with such data if we had it.</li>
+      <li>PBrett suggested it would be interesting to know what libraries
+          programmers are using for Unicode algorithm support and string
+          classes.</li>
+      <li>Tom asserted that that question would need to be multiple choice with
+          an "other" option.</li>
+      <li>Tom recalled one of the questions Peter had suggested on the mailing
+          list, "what language(s) do you use in identifiers and comments?", and
+          asked whether the question was intended to probe the languages used or
+          whether characters outside the basic character set are being
+          used.</li>
+      <li>PBrett replied that the interest is in the language; the goal is to
+          find out which scripts are being used.</li>
+      <li>Tom recalled one of the questions Zach suggested,
+          "How often do you use multiple Unicode normalization forms in the
+          same program?" and commented that this is similar to the encoding
+          question; whether programmers normalize at program boundaries or not
+          normalize at all.</li>
+      <li>Steve stated this is an important consideration for deciding if
+          normalization belongs in the type system.</li>
+      <li>Tom mentioned that Zach also posed questions about collation
+          support.</li>
+      <li>Steve replied that collation needs depend on context; data in a
+          database is likely to be ordered in a locale independent manner but
+          may need to be reordered for presentation in a user's locale.</li>
+      <li>Inbal asked if serialization is within the purview of SG16.</li>
+      <li>Tom replied that it could be for producing and consuming text
+          formats.</li>
+      <li>Inbal stated that, given a list of keywords, it would be possible to
+          scrape stackoverflow.com for related questions.</li>
+      <li>Tom wondered about asking if programmers place locale constraints on
+          their users; for example, whether they require use of UTF-8.</li>
+      <li>Hubert responded that such a question won't garner a 100% yes answer,
+          so may not be so helpful.</li>
+      <li>Tom replied that it might be useful to help guide where we invest
+          effort; if lots of products support non-UTF-8 environments, then we
+          know to focus more broadly.</li>
+      <li>Hubert agreed with that perspective.</li>
+      <li>PBrett stated that a transcoding facility remains high on our
+          priority list and asked if the question about internal encodings and
+          translation at program boundaries was intended to probe actual
+          need.</li>
+      <li>Tom responded that he had not thought about that relationship
+          concretely.</li>
+      <li>Steve suggested that question is more related to how many programmers
+          need to operate directly on text in multiple encodings and if
+          facilities are needed to do so.</li>
+      <li>Hubert stated that gathering interest in a rope class would be
+          useful.</li>
+      <li>Tom asked if that would be for the case of stringing together blocks
+          of text that are differently encoded.</li>
+      <li>Hubert responded affirmatively.</li>
+      <li>PBrett noted such a type is also useful in cases where buffers are in
+          different places.</li>
+      <li>Tom pondered what we would do with data regarding which character
+          types are in use; for example, whether we would choose not to focus
+          on <tt>char32_t</tt> as anything other than a code point type.</li>
+      <li>Steve suggested asking if programmers use <tt>signed char</tt> and
+          <tt>unsigned char</tt> for text as opposed to for use as small
+          integers like <tt>int8_t</tt> and <tt>uint8_t</tt> or for other forms
+          of bit manipulation.</li>
+      <li>Hubert responded that <tt>unsigned char</tt> is likely used for
+          UTF-8.</li>
+      <li>Victor responded that <tt>unsigned char</tt> is often used for
+          <tt>uint8_t</tt> and that this causes formatting confusion.</li>
+      <li>Inbal asked if C and C++ compatibility is important.</li>
+      <li>Tom replied that it is helpful to decide if we need low level C
+          utilities that are exposed via C++ wrappers.</li>
+      <li>Tom added that JeanHeyd has been pursuing the approach of getting low
+          level facilities for transcoding through WG14 before continuing work
+          on transcoding support in WG21.</li>
+      <li>PBrett raised the question of which kind of C string interfaces are
+          important; null terminated vs Pascal strings.</li>
+      <li>PBrett mentioned WG14 Annex K and noted that Microsoft can't ship it
+          due to conflicts with their historical secure function
+          implementation.</li>
+      <li>Hubert returned to the topic of localization and stated it would be
+          useful to know if programmers customize locale formatting or just
+          rely on default formatting.</li>
+      <li>Tom stated that he will draft a Google doc with an initial set of
+          questions based on this discussion that we can all comment on and
+          contribute to.</li>
+      <li>Further discussion ensued regarding stability vs the need to evolve
+          and fix defects.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be on 2022-06-22 and that, if we
+      make good progress refining and suggesting survey questions in the
+      interim, then we'll probably continue this discussion then.</li>
 </ul>
 
 
