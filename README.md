@@ -133,7 +133,7 @@ WG14 Number   | Title/Notes/Links
 [N2940][]     | Removing trigraphs??!
 [N2939][]     | Identifier Syntax Fixes
 [N2932][]     | C Identifier Security using Unicode Standard Annex 39 v2<br/>(Previously [N2916 (R0)][N2916])
-[N2966][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902])
+[N2999][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r8<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902], [N2966 (R7)][N2966])
 [N2785][]     | Delimited escapes sequences
 
 ## Accepted C23 Papers
@@ -159,6 +159,7 @@ WG14 Number   | Title/Notes/Links
 ~~[N2916][]~~ | ~~C Identifier Security using Unicode Standard Annex 39~~<br/>Superseded by [N2932][])
 ~~[N2875][]~~ | ~~Unicode Length Modifiers~~<br/>(Superseded by [N2983][])
 ~~[N2777][]~~ | ~~C Identifier Syntax using Unicode Standard Annex 31~~<br/>(Superseded by [N2836][])
+~~[N2966][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r7~~<br/>(Superseded by [N2999][])
 ~~[N2902][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r6~~<br/>(Superseded by [N2966][])
 ~~[N2730][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r5~~<br/>(Superseded by [N2902][])
 ~~[N2620][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r4~~<br/>(Superseded by [N2730][])
@@ -175,6 +176,7 @@ WG14 Number   | Title/Notes/Links
 [WG2-N5168]: https://www.unicode.org/wg2/docs/n5168R1-ISO10646.pdf
 [WG2-N5174]: https://www.unicode.org/wg2/docs/n5174-namesaliases.pdf
 [WG2-N5175]: https://www.unicode.org/wg2/docs/n5175-cdam1.2-repertoire-update.pdf
+[N2999]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2999.htm
 [N2983]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2983.pdf
 [N2966]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2966.htm
 [N2940]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2940.pdf
