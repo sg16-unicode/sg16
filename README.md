@@ -51,6 +51,7 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2572][]     | std::format() fill character allowances
 [P2558][]     | Add @, $, and \` to the basic character set
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
 [P2513][]     | char8\_t Compatibility and Portability Fixes
@@ -203,6 +204,7 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P2572]: https://wg21.link/p2572
 [P2558]: https://wg21.link/p2558
 [P2528]: https://wg21.link/p2528
 [P2513]: https://wg21.link/p2513
