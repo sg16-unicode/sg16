@@ -54,16 +54,8 @@ WG21 Number   | Title/Notes/Links
 [P2572][]     | std::format() fill character allowances
 [P2558][]     | Add @, $, and \` to the basic character set
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
-[P2513][]     | char8\_t Compatibility and Portability Fixes
-[P2460][]     | Relax requirements on wchar\_t to match existing practices
-[P2419][]     | Clarify handling of encodings in localized formatting of chrono types
-[P2362][]     | Remove non-encodable wide character literals and multicharacter wide character literals
 [P2361][]     | Unevaluated strings literals
 [P2348][]     | Whitespaces Wording Revamp
-[P2295][]     | Support for UTF-8 as a portable source file encoding
-[P2290][]     | Delimited escapes sequences
-[P2093][]     | Formatted output
-[P2071][]     | Named universal character escapes
 [P1953][]     | Unicode Identifiers And Reflection
 [P1885][]     | Naming Text Encodings to Demystify Them
 [P1854][]     | Conversion to execution encoding should not lead to loss of meaning
@@ -76,12 +68,20 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2513][]     | char8\_t Compatibility and Portability Fixes
+[P2460][]     | Relax requirements on wchar\_t to match existing practices
+[P2419][]     | Clarify handling of encodings in localized formatting of chrono types
 [P2372][]     | Fixing locale handling in chrono formatters
+[P2362][]     | Remove non-encodable wide character literals and multicharacter wide character literals
 [P2316][]     | Consistent character literal encoding
 [P2314][]     | Character sets and encodings
+[P2295][]     | Support for UTF-8 as a portable source file encoding
+[P2290][]     | Delimited escapes sequences
 [P2246][]     | Character encoding of diagnostic text
 [P2223][]     | Trimming whitespaces before line splicing
 [P2201][]     | Mixed string literal concatenation
+[P2093][]     | Formatted output
+[P2071][]     | Named universal character escapes
 [P2029][]     | Proposed resolution for core issues 411, 1656, and 2333; numeric and universal character escapes in character and string literals
 [P1949][]     | C++ Identifier Syntax using Unicode Standard Annex 31
 [P1072][]     | basic\_string::resize\_and\_overwrite
