@@ -132,8 +132,6 @@ WG14 Number   | Title/Notes/Links
 ------------- | -----
 [N3031][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r9<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902], [N2966 (R7)][N2966], [N2999 (R8)][N2999])
 [N3016][]     | Unicode Length Modifiers v3
-[N2940][]     | Removing trigraphs??!
-[N2939][]     | Identifier Syntax Fixes
 [N2932][]     | C Identifier Security using Unicode Standard Annex 39 v2<br/>(Previously [N2916 (R0)][N2916])
 [N2785][]     | Delimited escapes sequences
 
@@ -141,6 +139,8 @@ WG14 Number   | Title/Notes/Links
 
 WG14 Number   | Title/Notes/Links
 ------------- | -----
+[N2940][]     | Removing trigraphs??!
+[N2939][]     | Identifier Syntax Fixes
 [N2836][]     | C Identifier Syntax using Unicode Standard Annex 31<br/>(Previously [N2777 (R0)][N2777])
 [N2828][]     | Unicode Sequences More Than 21 Bits are a Constraint Violation
 [N2728][]     | char16\_t & char32\_t string literals shall be UTF-16 & UTF-32 \| r0
