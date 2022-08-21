@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2022-06-22 through 2022-06-22</title>
+<title>SG16: Unicode meeting summaries 2022-06-22 through 2022-07-27</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2022-06-15</td>
+    <td>2022-08-20</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2022-06-22 through 2022-06-22</h1>
+<h1>SG16: Unicode meeting summaries 2022-06-22 through 2022-07-27</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -97,8 +97,10 @@ snapshot of select meeting summaries from that repository.
 </p>
 
 <ul>
-  <li><a href="#2022_06-22">
+  <li><a href="#2022_06_22">
       June 22nd, 2022</a></li>
+  <li><a href="#2022_07_27">
+      July 27th, 2022</a></li>
 </ul>
 
 <p>
@@ -127,16 +129,464 @@ Previously published SG16 meeting summary papers:
 <h2>Draft agenda:</h2>
 
 <ul>
+  <li>Continue discussion of survey questions for the 2023 C++ Developer Survey.
+    <ul>
+      <li>Revise, add, and remove questions from the
+          <a href="https://docs.google.com/document/d/1lRU7uErn2Vc7LOGG2H3PrzCvmf69u8S_v-43by_Vb9c/edit?usp=sharing">draft survey document</a>.
+    </ul>
+  </li>
 </ul>
 
 <h2>Attendees:</h2>
 
 <ul>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
 </ul>
 
 <h2>Meeting summary:</h2>
 
 <ul>
+  <li>Continue discussion of survey questions for the 2023 C++ Developer Survey:
+    <ul>
+      <li><em>[ Editor's note: The active revision at the start of the meeting
+          can be viewed by selecting <tt>File</tt> | <tt>Version history</tt> |
+          <tt>See version history</tt>, then selecting the version named
+          "pre 2022-06-22 meeting", then clicking the rightward facing triangle
+          next to the version name to "expand detailed versions"; this latter
+          step is necessary to exclude detailed edits that otherwise interfere
+          with numbering of the questions. ]</em></li>
+      <li>Tom asked attendees to nominate questions to be removed from
+          consideration.</li>
+      <li>PBrett suggested removing
+          Q1 (What character encoding(s) do you use for source files?)
+          since we already have consensus for moving towards UTF-8 encoded
+          source files.</li>
+      <li>PBrett asked how answers to Q1 would affect our decision making.</li>
+      <li>Jens concurred and asked hypothetically whether responses would
+          entice us to, for example, add a translation phase 1 option to
+          support GB18030 as we are doing for UTF-8 via
+          <a href="https://wg21.link/p2295">P2295 (Support for UTF-8 as a portable source file encoding)</a>.</li>
+      <li>Jens noted that implementations that support non-UTF-8 source files
+          will continue to support them and argued that there is nothing to be
+          done within the standard.</li>
+      <li>Hubert suggested an alternative formulation that asks which scripts
+          programmers are using in their source files and for which they might
+          be using specific encodings.</li>
+      <li>Jens noted that
+          <a href="https://wg21.link/p2528">P2528 (C++ Identifier Security using Unicode Standard Annex 39)</a>
+          assumes that everyone is using Unicode for their source file encoding
+          and that encoding does not imply which scripts are being used.</li>
+      <li>Jens stated that use of a particular encoding such as ISO8859-1 does
+          restrict what scripts can be used and that such information could
+          potentially be used in confusability analysis.</li>
+      <li>Jens suggested the question could probe which scripts are used in
+          conjunction with a non-Unicode encoding.</li>
+      <li>PBrett noted the existence of the Big-5 encoding and that it is being
+          phased out in favor of GB18030 and UTF-8.</li>
+      <li>PBrett asked if we are at risk of discussing whether support for
+          additional encodings should be mandated.</li>
+      <li>Hubert responded negatively and stated that the question is intended
+          to probe the extent to which substantial use of non-Unicode encodings
+          remains.</li>
+      <li>Tom stated that it sounds like we have not identified a use case for
+          this question.</li>
+      <li>Tom struck Q1 from the draft document.</li>
+      <li>PBrett expressed uncertainty as to what
+          Q2 (What character encoding(s) do you use for string literals?)
+          is intended to ask and stated that it might be interpreted as asking
+          if <tt>L</tt>, <tt>u8</tt>, <tt>u</tt>, or <tt>U</tt> prefixed
+          literals are being used.</li>
+      <li>Tom replied that the question is intended to ascertain what encodings
+          are being used for the encoding of ordinary (non-prefixed) literals
+          in order to learn about trends occurring in the ecosystem.</li>
+      <li>Hubert noted that we now assume that if string literals are UTF-8,
+          then the locale encoding is as well.</li>
+      <li>PBrett expressed a feeling of persistent saltiness over that
+          assumption.</li>
+      <li>Jens stated that only <tt>std::format</tt> is currently pushing us
+          towards Unicode in this way.</li>
+      <li>Tom stated that we seem to have no use case for this question.</li>
+      <li>Tom struck Q2 from the draft document.</li>
+      <li>PBrett suggested removing
+          Q10 (How are the project(s) that you work on organized for Unicode
+              normalization?)
+          on the basis that few programmers are aware of Unicode
+          normalization.</li>
+      <li>Tom responded that the question is intended to provide input
+          regarding whether normalization should be reflected in the type
+          system.</li>
+      <li>Steve stated that it doesn't matter for most programmers, but that
+          it matters immensely for a few.</li>
+      <li>PBrett suggested it is not a good candidate question if we believe it
+          impacts few programmers.</li>
+      <li>Tom struck Q10 from the draft document.</li>
+      <li>PBrett opined that
+          Q13 (Do your project(s) use regular expressions for which the search
+              pattern is not known at compile-time?)
+          is important to determine if programmers create regular expressions
+          using user input.</li>
+      <li>PBrett stated that it probes whether
+          <a href="https://compile-time-regular-expressions.readthedocs.io/en/latest">CTRE</a>
+          is a suitable replacement for <tt>std::regex</tt>.</li>
+      <li>PBrett stated that
+          Q14 (Which regular expression languages do you use?)
+          appears to duplicate
+          Q12 (What libraries do you use for regular expression support?).</li>
+      <li>Tom replied that Q14 is intended to ask which regular expression
+          languages are being used; for example, which of the six languages
+          supported by <tt>std::regex</tt> are being used.</li>
+      <li>Hubert stated that Q12 could be useful to determine whether collation
+          support is useful and noted that use of POSIX languages may imply
+          better locale support needs.</li>
+      <li>Jens observed that programmers might use those languages for other
+          reasons.</li>
+      <li>PBrett replied that programmers tend to use whatever language the
+          regular expression facility they are already using supports.</li>
+      <li>Tom struck Q14 from the draft document.</li>
+      <li>Jens asserted that
+          Q15 (Do you use the signed char or unsigned char types for text
+              processing?)
+          is not interesting.</li>
+      <li>Hubert asked if that concern is motivated by the lack of standard
+          library support.</li>
+      <li>Jens replied that iostream supports signed and unsigned char
+          types.</li>
+      <li>Tom stated that the question is intended to help determine whether
+          these types should be used exclusively as small integer types as
+          opposed to character types.</li>
+      <li>Jens opined that programmers should use <tt>char</tt>,
+          <tt>char8_t</tt>, etc... for character types.</li>
+      <li>PBrett noted that <tt>unsigned char</tt> is commonly used as a
+          character type in C.</li>
+      <li>Tom stated that this reflects a policy issue regarding whether we
+          intend to extend the standard library to support use of these types
+          for text and stated we have no such intent.</li>
+      <li>Jens agreed, noted that the aliasing is unfortunate, and expressed
+          support for not making the situation worse.</li>
+      <li>Tom struck Q15 from the draft document.</li>
+      <li>Jens expressed support for asking programmers how they support
+          internationalization and localization.</li>
+      <li>PBrett suggested dropping
+          Q19 (What libraries do you use for collation?).</li>
+      <li>Jens countered with a suggestion to merge
+          Q17 (What libraries or operating system features do you use for
+              language translation?),
+          Q18 (What libraries do you use for localization?),
+          and Q19.</li>
+      <li>Tom agreed to do so.</li>
+      <li>Tom pondered whether it is worth asking about prohibition of standard
+          library facilities.</li>
+      <li>PBrett responded that we can infer avoidance of the standard library
+          when programmers state that they use, for example, ICU, but not the
+          standard library facilities.</li>
+      <li>Steve stated that the explicit locale capabilities present in
+          <tt>std::format</tt> are representative of what programmers want.</li>
+      <li>PBrett asked about adding a free form field for programmers to state
+          how they support localization.</li>
+      <li>Tom responded that it is difficult to extract data from free form
+          entries.</li>
+      <li>Steve stated that it is useful to know that no one uses, for example,
+          <tt>stdcoll()</tt>.</li>
+      <li>Tom asked if the "discourage or prohibit" language should be
+          retained.</li>
+      <li>Jens replied negatively and stated that we want to know what they do
+          use.</li>
+      <li>Hubert stated that
+          Q16 (Do you use the C and C++ locale features?)
+          is useful to know if, or to what extent, programmers depend on the C
+          and C++ locale for identification purposes.</li>
+      <li>Tom agreed to simplify Q16.</li>
+      <li>Tom pondered what we would use the responses to questions about
+          languages and scripts for.</li>
+      <li>PBrett replied that Visual Studio Code has
+          <a href="https://unicode.org/reports/tr9/#HL4">UAX#9 HL4</a>
+          features intended to help with display of bidirectional text in
+          source files; that information could be used for SG15 guidance.</li>
+      <li>Jens stated that the standard allows identifiers, literals, and
+          comments to be written in many kinds of scripts; support for
+          languages such as Japanese is intentional.</li>
+      <li>Jens added that he favors developing guidelines to encourage features
+          like those that Visual Studio Code offers.</li>
+      <li>Tom noted that guidance will be forthcoming from the Unicode Source
+          Code Ad-Hoc Group.</li>
+      <li>PBrett concluded that it sounds like we already know we want to
+          support these features; the data could help establish urgency.</li>
+      <li>Jens agreed, but noted that implementors can decide for themselves
+          what is and is not urgent.</li>
+      <li>Tom struck Q3 and Q4 from the draft document.</li>
+      <li>Tom opined that
+          Q5 (Do you use characters other than the basic character set in
+             identifiers)
+          is probably irrelevant following the adoption of
+          <a href="https://wg21.link/p1949">P1949 (C++ Identifier Syntax using Unicode Standard Annex 31)</a>.</li>
+      <li>Steve indicated that language specific concerns are best addressed in
+          a code style guide.</li>
+      <li>Tom struck Q5 from the draft document.</li>
+      <li>Discussion ensued regarding poll bias and privacy concerns.</li>
+      <li>PBrett suggested we could ask which region of the world respondents
+          are located in.</li>
+      <li>Jens replied that such a question might be one that the Standard C++
+          Foundation is interested in asking anyway; it may not need to be
+          included within our quota of questions.</li>
+      <li>Hubert suggested it would be useful to emphasize culture as opposed
+          to geographical location.</li>
+      <li>PBrett expressed a preference for asking which nation the respondent
+          is in.</li>
+      <li>Tom suggested asking respondents what their native language is.</li>
+      <li>Jens replied negatively; there are many languages spoken in
+          India.</li>
+      <li>Tom proposed striking
+          Q6 (Do the projects you work on limit locale selection in deployment
+             environments to those that use a specific character encoding?)
+          on the basis that mainframes aren't going away any time soon.</li>
+      <li>Tom struck Q6 from the draft document.</li>
+      <li>PBrett suggested merging
+          Q7 (What libraries do you use for text processing?),
+          Q8 (How are the project(s) that you work on organized for text
+             processing?), and
+          Q9 (If your project(s) convert text to and from an internal encoding,
+             what encoding(s) are used for the internal encoding?)
+          based on an expectation that use of framework libraries like QT
+          sufficiently answer these questions.</li>
+      <li>Jens noted that we already have agreement that we want utilities to
+          convert to/from UTF-8 and possibly UTF-16.</li>
+      <li>Tom asked for clarification that such agreement is relative to locale
+          dependent encodings.</li>
+      <li>Steve replied yes, but also to other specified encodings.</li>
+      <li>PBrett asserted that these questions have already been probed by
+          JeanHeyd.</li>
+      <li>Tom explained that
+          Q7 (What libraries do you use for text processing?)
+          is really intended to ascertain what features are supported via
+          non-standard libraries because the standard does not provide adequate
+          support for them.</li>
+      <li>Jens suggested asking that question instead.</li>
+      <li>Tom agreed to rephrase Q7 accordingly.</li>
+      <li>Jens suggested asking what text processing features people most need;
+          whether that be transcoding, Unicode algorithms, or something
+          else.</li>
+      <li>Jens noted that regular expression support could be added to that
+          list differentiated by compile-time vs run-time support.</li>
+      <li>Steve asserted that a laundry list would be ok.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting is scheduled for July 13th but that we
+      need new papers.</li>
+</ul>
+
+
+<h1 id="2022_07_27">July 27th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3016.pdf">WG14 N3016: Unicode Length Modifiers v3</a>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Eskil Steenberg</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Marcus Johnson</li>
+  <li>Peter Brett</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3016.pdf">WG14 N3016: Unicode Length Modifiers v3</a>:
+    <ul>
+      <li>PBrett introduced the topic and invited Marcus to present his
+          paper.</li>
+      <li>Marcus discussed the motivation for the paper; the desire to be able
+          to easily format text in a Unicode encoding.</li>
+      <li>Tom provided a summary of the WG14 review of the paper during the
+          recent WG14 meeting.</li>
+      <li>PBrett described how <tt>gettext()</tt> is used; a string in the
+          string literal encoding is provided and a string in the current
+          locale encoding is produced.</li>
+      <li>Tom stated that there is effectively a contract that the string
+          produced by <tt>gettext()</tt> is encoded in the current locale
+          encoding.</li>
+      <li>PBrett confirmed.</li>
+      <li>PBrett asked how <tt>printf()</tt> would handle formatting a UTF-16
+          encoded argument.</li>
+      <li>Tom replied that the existing practice for <tt>wchar_t</tt> based
+          arguments is to convert them to the current locale encoding.</li>
+      <li>Tom asked if motivation exists for an alternative behavior.</li>
+      <li>Jens asked for an example of alternative behavior.</li>
+      <li>Tom replied that the string literal encoding could be used to guide
+          conversions instead of the current locale and noted that this would
+          match the behavior chosen for <tt>std::format()</tt> when the string
+          literal encoding is a Unicode encoding.</li>
+      <li>Tom explained that such behavior would require preserving the string
+          literal encoding for each translation unit and then somehow passing
+          that information to <tt>printf()</tt>.</li>
+      <li>Jens noted that <tt>std::printf()</tt> and <tt>gettext()</tt> have
+          different encoding expectations; the former expects the formatting
+          string to be in the current locale encoding while the latter expects
+          something else.</li>
+      <li><em>[ Editor's note: The
+          <a href="https://man7.org/linux/man-pages/man3/gettext.3.html">GNU gettext man page</a>
+          states:</em>
+          <blockquote class="quote">
+            The <tt>msgid</tt> argument identifies the message to be translated.
+            By convention, it is the English version of the message, with
+            non-ASCII characters replaced by ASCII approximations.
+          </blockquote>
+          <em>]</em></li>
+      <li>PBrett stated that it is rare in his experience for a string literal
+          to be passed as the format string to <tt>printf()</tt>.</li>
+      <li>Victor replied that in the code base he works on, approximately 50%
+          of <tt>printf()</tt> calls pass a string literal.</li>
+      <li>Tom surmised that Victor's experience may reflect an assumption of
+          UTF-8 as both the string literal encoding and the locale
+          encoding.</li>
+      <li>Victor replied that third party libraries are more likely to not
+          assume UTF-8.</li>
+      <li>Jens asked if there is motivation to introduce a
+          <tt>u8printf()</tt>.</li>
+      <li>Tom replied that adding such an interface is an option.</li>
+      <li>Jens expressed belief that we have consensus that the future is UTF-8
+          and that transcoding operations should occur at program
+          boundaries.</li>
+      <li>PBrett expressed acceptance of library UB as a result of passing a
+          format string to <tt>printf()</tt> that is not encoded in the
+          expected encoding.</li>
+      <li>Jens asked how <tt>printf()</tt> implementations recognize the '%'
+          character today.</li>
+      <li>Hubert responded that <tt>printf()</tt> is required to be locale
+          sensitive and that the code point value of the '%' character may vary
+          across encodings.</li>
+      <li>Eskil professed that implementations simply search for a code unit
+          that matches the ASCII encoding of '%'.</li>
+      <li>Jens argued that is an unlikely implementation choice for an
+          EBCDIC-based system.</li>
+      <li>Hubert explained that the '%' character encoding is non-varying
+          across EBCDIC code pages so a simple search for a code unit that
+          matches the EBCDIC encoding works on such systems.</li>
+      <li>Jens surmised that, for implementations that support a locale
+          encoding that is unrelated to the string literal encoding, there must
+          exist a compile time decision regarding calls to
+          <tt>printf()</tt>.</li>
+      <li>Hubert responded affirmatively and stated that the <tt>printf()</tt>
+          family of functions have multiple entry points on z/OS.</li>
+      <li><em>[ Editor's note: The z/OS C run-time library provides
+          EBCDIC-based implementations and ASCII-based implementations.
+          The latter exist to support an ASCII environment on z/OS systems.
+          See IBM's
+          <a href="https://www.ibm.com/docs/en/zos/2.3.0?topic=table-enhanced-ascii-support">Enhanced ASCII support documentation</a>.
+          ]</em></li>
+      <li>PBrett reported having seen cases where, if <tt>printf()</tt> was not
+          locale sensitive, the results produced would not have matched
+          expectations.</li>
+      <li>Tom agreed that we have established that the format string must match
+          the locale encoding.</li>
+      <li>Eskil stated that, ideally, the string literal and locale encodings
+          would match.</li>
+      <li>Hubert agreed but noted that the locale encoding is controlled by the
+          program user as opposed to the program author.</li>
+      <li>Eskil observed that character conversions are not desirable in all
+          cases and provided production of a JPEG header as an example.</li>
+      <li>Jens noted that there is no current proposal to implicitly convert
+          the <tt>printf()</tt> format string to the locale encoding.</li>
+      <li>Eskil and others agreed that such a proposal would be
+          ill-advised.</li>
+      <li>PBrett concluded that the current <tt>printf()</tt> behavior matches
+          the needs of the paper; it must alreadly be locale encoding aware, so
+          conversion between UTF encodings and the locale encoding is
+          reasonable.</li>
+      <li>Hubert agreed assuming requisite functionality as proposed in
+          JeanHeyd's transcoding facilities.</li>
+      <li>Hubert stated that it would be necessary to specify how transcoding
+          errors are handled.</li>
+      <li>Tom expressed a belief that the C standard already specifies how such
+          errors are handled via delegation to functions like
+          <tt>wcrtomb()</tt>.</li>
+      <li>Hubert responded with a belief that the C standard requires that
+          well-formed multibyte strings and well-formed wide strings always be
+          interconvertible without loss.</li>
+      <li>Tom expressed surprise that such a requirement exist.</li>
+      <li>PBrett noted that the wording would need to specify whether the
+          precision flag applies to code units, code points, or extended
+          grapheme clusters (EGCs).</li>
+      <li>PBrett stated that additional flags could select either code units,
+          code points, or EGCs.</li>
+      <li>PBrett asserted that the grapheme break algorithm is not too onerous
+          a requirement.</li>
+      <li>Tom asserted that the precision flag must specify code units for
+          consistency with other uses of precision flags and that written code
+          units should not split code points or EGCs.</li>
+      <li>Hubert explained that the number of code units read from the input must
+          not exceed the specified precision for security reasons.</li>
+      <li>Discussion ensued regarding the possibility of buffer overflows and
+          existing uses of the precision flag.</li>
+      <li>Victor asked if the precision flag currently specifies the maximum
+          number of input characters when performing wide character
+          conversions.</li>
+      <li>Hubert responded affirmatively but suggested verifying.</li>
+      <li>PBrett noted that, for existing uses, code units is equivalent to
+          characters.</li>
+      <li>Tom explained his understanding of the precision flag; that if the
+          precision is <em>X</em>, then up to <em>X</em> code units are read,
+          but only the complete code unit sequences are written.</li>
+      <li>Hubert responded that, if the input string had <em>X</em> code
+          points, but the number of code units to write differs, then the same
+          number of characters written would not match <em>X</em>.</li>
+      <li>PBrett asserted that it is common to use the precision to limit
+          output.</li>
+      <li>Tom checked
+          <a href="https://cppreference.com">https://cppreference.com</a>
+          and reported that it claims that the `%s` specifier uses the
+          precision to limit the maximum number of bytes to write.</li>
+      <li>Eskil expressed a preference towards designing for the future and
+          that legal output always be produced.</li>
+      <li>Hubert checked the C standard and reported that the precision
+          specifies the maximum number of output code units in the target
+          encoding and that partial characters are not written.</li>
+      <li>Victor summarized; the precision is the amount of output to write
+          and the remainder of what was read is discarded.</li>
+      <li>PBrett asserted that programmers expect the precision to express
+          display width.</li>
+      <li>Hubert responded that existing behavior hasn't matched that
+          expectation for as long as multibyte encodings have existed.</li>
+      <li>Hubert pondered whether field width has a meaning in this case.</li>
+      <li>PBrett replied that field width fills and that precision
+          truncates.</li>
+      <li>PBrett asserted that what code authors really want is the ability to
+          specify display width.</li>
+      <li>Tom asked if there is agreement that <tt>printf()</tt> does not
+          currently have the ability to specify display width.</li>
+      <li>PBrett and Eskil responded negatively.</li>
+      <li>Discussion ensued regarding EGCs and display width.</li>
+      <li>Eskil expressed a preference that the C standard provide base level
+          functionality and that additional functionality be built as
+          libraries.</li>
+      <li>Eskil asserted that there isn't always a single best solution.</li>
+      <li>Hubert noted that, with regard to code points vs EGCs, splitting an
+          EGC can produce misleading output.</li>
+      <li>PBrett noted that virtually all programs need to interact with text
+          in some capacity.</li>
+      <li>Eskil stated that some capabilities are fundamental and provided the
+          example of formatting a number.</li>
+      <li>Eskil stated that, with regard to string types, there are uses for a
+          size+pointer string type,
+          a size+buffer string type,
+          a size+capacity+buffer string type,
+          a string-with-allocator string type,
+          and more.</li>
+    </ul>
+  </li>
+  <li>Tom indicated that the next meeting is scheduled for August 10th and that
+      the agenda is yet to be determined.</li>
 </ul>
 
 
