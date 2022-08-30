@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2022-06-22 through 2022-07-27</title>
+<title>SG16: Unicode meeting summaries 2022-06-22 through 2022-08-24</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2022-08-20</td>
+    <td>2022-08-29</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2022-06-22 through 2022-07-27</h1>
+<h1>SG16: Unicode meeting summaries 2022-06-22 through 2022-08-24</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -101,6 +101,8 @@ snapshot of select meeting summaries from that repository.
       June 22nd, 2022</a></li>
   <li><a href="#2022_07_27">
       July 27th, 2022</a></li>
+  <li><a href="#2022_08_24">
+      August 24th, 2022</a></li>
 </ul>
 
 <p>
@@ -545,7 +547,7 @@ Previously published SG16 meeting summary papers:
           output.</li>
       <li>Tom checked
           <a href="https://cppreference.com">https://cppreference.com</a>
-          and reported that it claims that the `%s` specifier uses the
+          and reported that it claims that the <tt>%s</tt> specifier uses the
           precision to limit the maximum number of bytes to write.</li>
       <li>Eskil expressed a preference towards designing for the future and
           that legal output always be produced.</li>
@@ -587,6 +589,301 @@ Previously published SG16 meeting summary papers:
   </li>
   <li>Tom indicated that the next meeting is scheduled for August 10th and that
       the agenda is yet to be determined.</li>
+</ul>
+
+
+<h1 id="2022_08_24">August 24th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Initial planning for Kona.</li>
+  <li><a href="https://wg21.link/p2626r0">P2626R0: charN_t incremental adoption: Casting pointers of UTF character types</a>.
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Initial planning for Kona.
+    <ul>
+      <li>Tom stated that there will likely be NB comments for SG16 to address
+          and that they are unlikely to be available in a timeframe that would
+          allow us to discuss them before the Kona meeting begins.</li>
+      <li>Tom explained that, if few people will be present in Kona, that he is
+          inclined not to reserve a room, but rather to have both in-person and
+          remote attendees join a Zoom meeting for discussions.</li>
+      <li>PBrett suggested that any such meetings should be planned for early
+          morning Kona time in order for remote attendees in Europe and the US
+          east coast to be able to attend.</li>
+      <li>Jens explained his current plans and expectations for room setup and
+          audio capabilities.</li>
+      <li>Jens cautioned that the conference wifi may not handle many in-person
+          attendees using Zoom at the same time.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2626r0">P2626R0: charN_t incremental adoption: Casting pointers of UTF character types</a>:
+    <ul>
+      <li>Corentin presented the paper.
+        <ul>
+          <li><tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt> are
+              useful for their encoding assurances, but lack support in the
+              standard library.</li>
+          <li>Unfortunately, we can't just assume UTF-8 with <tt>char</tt>-based
+              types and avoid use of the UTF variants.</li>
+          <li>Some form of interconvertibility between <tt>char</tt>,
+              <tt>wchar_t</tt>, and the UTF character types is needed for the
+              latter types to be incrementally adopted.</li>
+          <li>Copying the content of an array of one character type to an array
+              of another character type just because existing code needs to
+              access it by the latter type is expensive.</li>
+          <li>None of the current language facilities enable zero cost
+              interconvertibility.</li>
+          <li>The proposed functions are intended to have a narrow
+              contract.</li>
+          <li>The names of the functions are intended to reflect the
+              partitioning of character types that are always used with UTF data
+              and other character types.</li>
+          <li>The functions are intended to provide interoperability in constant
+              expressions.</li>
+          <li>The <tt>basic_string_view</tt> and <tt>span</tt> interfaces are
+              provided for convenience.</li>
+          <li>The alias barrier based conversion operations that ICU uses are
+              non-conforming, probably don't work reliably, and probably can't
+              be made to work in the C++ core language.</li>
+          <li><em>[ Editor's note: See
+              <a href="https://github.com/sg16-unicode/sg16/issues/67">SG16 issue #67</a>
+              for more background information regarding the ICU alias barriers.
+              ]</em></li>
+          <li>An interoperability solution is needed for the UTF character types
+              to be adopted in practice.·</li>
+        </ul>
+      </li>
+      <li>Victor asked how the proposed functions would work on a system where,
+          for example, <tt>wchar_t</tt> is not the same size as
+          <tt>char16_t</tt>.</li>
+      <li>Corentin responded that the functions are constrained such that the
+          source and target types must have the same size and alignment; a call
+          is ill-formed otherwise.</li>
+      <li>Victor requested that the paper be updated to explicitly state early
+          in the paper what properties of the types must match for the
+          operations to be well-formed.</li>
+      <li>Hubert stated that there are memory model concerns that may make this
+          feature not worth pursuing; the proposed functions provide a very
+          sharp feature.</li>
+      <li>Tom asked Corentin why he felt SG1 might want to review the
+          paper.</li>
+      <li>Corentin responded that his understanding is that SG1 is generally
+          consulted regarding the C++ abstract machine, the memory model, and
+          concurrency concerns.</li>
+      <li>Jens explained that the concerns the paper raises have more to do with
+          the object model than the memory model and that these concerns fall
+          more under CWG than SG1.</li>
+      <li>Jens noted that
+          <a href="https://wg21.link/p2590">P2590 (Explicit lifetime management)</a>,
+          a paper with related concerns, was reviewed by LWG and CWG, but not
+          by SG1.</li>
+      <li>Jens added that
+          <a href="https://wg21.link/p2590">P2590</a>
+          completed work that began with
+          <a href="https://wg21.link/p0593">P0593 (Implicit creation of objects for low-level object manipulation)</a>
+          and that paper also targeted LWG and CWG.</li>
+      <li>Corentin asked if the paper represents a good direction.</li>
+      <li>Hubert stated that the proposed semantics are such that, if these
+          functions were called to replace a subobject, that the enclosing
+          complete object would be destroyed.</li>
+      <li><em>[ Editor's note: Hubert provided a reference to the relevant
+          wording in
+          <a href="http://eel.is/c++draft/basic.life#1">[basic.life]p1</a>
+          in a follow up
+          <a href="https://lists.isocpp.org/sg16/2022/08/3359.php">post to the SG16 mailing list</a>.
+          ]</em></li>
+      <li>Hubert repeated his assertion that the proposed semantics have sharp
+          edges.</li>
+      <li>Hubert noted that there are on-going concerns involving
+          <tt>start_lifetime_as()</tt> and base classes.</li>
+      <li>Jens commented that the complete object would only be saved from
+          destruction if there is a <em>provides storage</em> relationship
+          (<a href="http://eel.is/c++draft/basic#intro.object-3">[intro.object]p3</a>)
+          between the subobject and the target type.</li>
+      <li>Jens suggested that a better approach might be to add
+          <tt>constexpr</tt> support to <tt>start_lifetime_as_array()</tt>.</li>
+      <li>Jens added that it might be possible for
+          <tt>start_lifetime_as_array()</tt> to offer additional guarantees in
+          cases where an underlying type is shared.</li>
+      <li>Tom stated that there is a complicated relationship between the core
+          language possibilities and how that impacts the library interface
+          possibilities.</li>
+      <li>Tom expressed a preference for specifying an ideal library interface
+          that then drives the core language needs.</li>
+      <li>Hubert expressed uncertainty with regard to how to word restrictions
+          around usage of an enclosing object following a change of type for a
+          subobject; use or destruction of the subobject via the enclosing
+          object would have to be avoided.</li>
+      <li>Corentin said he would try to address that.</li>
+      <li>Corentin stressed that, once an object's type is changed, the memory
+          for that object cannot be accessed as though an object of the
+          previous type is there.</li>
+      <li>Hubert reiterated that a change of type for a subobject becomes very
+          complicated.</li>
+      <li>Jens asked if the paper includes examples that are reflective of how
+          this facility would be used in something like real world code.</li>
+      <li>Jens noted that the mailing list discussion indicated that conversion
+          in one direction must be followed by a conversion back.</li>
+      <li>Corentin expressed uncertainty regarding what limitations must be
+          imposed and voiced an assumption that, since the character types are
+          trivial, there is more flexibility.</li>
+      <li>Jens stated that the core language has moved towards objects of a
+          trivial type being destroyed at the same point as other types; in the
+          past objects of a trivial type could be accessed after their point of
+          destruction until their storage was destroyed.</li>
+      <li>Jens noted that there may be wording that states that destruction of
+          a trivial object where an object of another type is present results
+          in undefined behavior and provided
+          <a href="http://eel.is/c++draft/basic.life#6">[basic.life]p6</a>
+          as a reference.</li>
+      <li>Tom described his understanding of how constant evaluation works in
+          terms of interterpretation of an AST; constant evaluators can
+          currently rely on the type system; changing the type of an object
+          could lead to undefined behavior within the evaluator.</li>
+      <li>Hubert agreed with Tom's description and stated that multiple
+          implementors should be consulted.</li>
+      <li>Corentin suggested that such problems might be avoided via dependence
+          on an underlying type relationship.</li>
+      <li>PBrett asked why the object type is so problematic and why, if a
+          region of memory contains bytes that represent UTF-8 encoded text, it
+          can't simply be accessed as an array of <tt>char8_t</tt>.</li>
+      <li>Tom explained that constant evaluation is based on the C++ object
+          model and that the concept of memory regions don't apply there.</li>
+      <li>Corentin further explained that compiler optimizers use
+          <a href="https://en.wikipedia.org/wiki/Alias_analysis#Type-based_alias_analysis">type based alias analysis (TBAA)</a>
+          to eliminate re-reading memory and
+          <a href="https://en.wikipedia.org/wiki/Dead_store">dead stores</a>
+          (writes to memory that will never be observed according to the
+          abstract machine) based on the type system.</li>
+      <li>PBrett suggested that such alias restrictions could be removed.</li>
+      <li>Hubert responded that doing so would impact performance.</li>
+      <li>Jens noted that <tt>char8_t</tt> raised the abstraction level in C++
+          but not in C since <tt>char8_t</tt> is a type alias of
+          <tt>unsigned char</tt> there.</li>
+      <li>PBrett stated that the issue with the object model must be solved in
+          order to specify a zero cost abstraction.</li>
+      <li>Hubert explained that there is a trade off; using both
+          <tt>wchar_t</tt> and <tt>char16_t</tt> increases costs, but the
+          latter provides encoding and portability guarantees.</li>
+      <li>PBrett opined that this suggests that use of the UTF character types
+          is not zero cost.</li>
+      <li>Jens responded that C++ opted to add those types as fundamental types
+          in order to support overload resolution.</li>
+      <li>Hubert explained the competing costs; restricting aliasing improves
+          performance at the cost of having to workaround the type system.</li>
+      <li>Jens noted that <tt>memcpy()</tt> can be used to workaround the type
+          system.</li>
+      <li>Tom noted that <tt>memcpy()</tt> can even be optimized away in some
+          cases.</li>
+      <li>PBrett pondered whether the abstractions adopted for UTF character
+          types were the right choice and noted that a library facility could
+          have provided the same encoding guarantees while using <tt>char</tt>
+          internally.</li>
+      <li>Tom explained that doing so wasn't an option for <tt>char8_t</tt>
+          since UTF-8 string literals were already part of the core
+          language.</li>
+      <li>Steve explained that we use the type system to annotate how a block
+          of memory is used and that <tt>char8_t</tt> provided the ability to
+          annotate a block of memory as holding UTF-8 data.</li>
+      <li>Steve asserted that making the UTF character types aliasing types
+          would impose costs like those he has seen with code that loops over
+          <tt>std::byte</tt>; the aliasing behavior hurts code generation.</li>
+      <li>Steve noted that there are good libraries available that do use
+          <tt>char</tt> and translate between code units and code points.</li>
+      <li>Corentin stated that the choice to make <tt>char8_t</tt> a
+          non-aliasing type was intentional and that any such change would
+          further harm adoption.</li>
+      <li>Corentin asserted that a way to use <tt>char8_t</tt> with historic
+          <tt>char</tt>-based interfaces is needed or it just won't get used,
+          but we'll still be left with the problems that motivated its
+          introduction in the first place.</li>
+      <li>Corentin opined that strong types are needed to support the
+          <a href="https://nedbatchelder.com/text/unipain/unipain.html#35">Unicode sandwich model</a>.</li>
+      <li>Corentin expressed a belief that this is solvable, implementable,
+          and therefore should be specified.</li>
+      <li>Jens suggested that an alternative UTF-8 design could have been based
+          on something like <tt>std::span&lt;char8_t&gt;</tt> over a sequence
+          of <tt>unsigned char</tt>.</li>
+      <li>Jens opined that code unit types are not particularly interesting
+          since an individual code unit by itself conveys little meaning.</li>
+      <li>Jens noted that the proposed library interfaces have rough edges and
+          expressed skepticism regarding a need for anything UTF specific since
+          the underlying functionality is not encoding dependent.</li>
+      <li>Steve agreed that the desire expressed in the paper is a special case
+          of the problem where we want to get objects of one type out of a
+          region of memory that holds objects of another type.</li>
+      <li>Steve also agreed that the underlying storage for a text type is not
+          interesting; the interface provided is.</li>
+      <li>Steve noted that none of the suggested library solutions would have
+          avoided the string literal concerns.</li>
+      <li>Hubert provided a list of what he termed "a few uncomfortable facts":
+        <ul>
+          <li>Reading object representations is allowed but the existing
+              wording is not satisfactory and fixing it will be hard.</li>
+          <li>Implementations don't always follow the standard; for example,
+              Clang's support for placement new is non-conforming.</li>
+          <li>Implementations sometimes implement behavior that can't be
+              expressed in the standard.</li>
+          <li>Determining that wording is sufficient requires that multiple
+              implementations are completed based on the wording.</li>
+        </ul>
+      </li>
+      <li>Corentin, referring to earlier discussion regarding the possibility
+          of making <tt>start_lifetime_as_array</tt> constexpr, noted that,
+          since the memory location is provided by a parameter of type
+          <tt>void*</tt>, any original source object type information is not
+          present.</li>
+    </ul>
+  </li>
+  <li>Tom reported that the Unicode Source Code Ad Hoc Group suggested that
+      SG16 author a paper to discuss the issues that have been reported
+      following adoption of
+      <a href="https://wg21.link/p1949">P1949</a>
+      for C++23 as a defect report and the migration from
+      <a href="https://unicode.org/reports/tr31/#Immutable_Identifier_Syntax">immutable identifier syntax</a>
+      to
+      <a href="https://unicode.org/reports/tr31/#Default_Identifier_Syntax">default identifier syntax</a>
+      in order to assist implementors with migration techniques, particularly
+      in light of the intent for a future Unicode standard to introduce to
+      default identifiers some currently excluded characters that are included
+      in immutable identifiers.
+    <ul>
+      <li>Jens stated that he would like to understand more about the issues
+          reported and requested that it be added to the agenda for a future
+          meeting.</li>
+      <li>Hubert expressed an interest in understanding more about the
+          discussion going on between WG21 and the Unicode Consortium.</li>
+      <li>Steve volunteered to add writing such a paper to his todo list.</li>
+      <li>Tom said he would file an SG16 issue to track the reported issues
+          and submission of a paper.</li>
+      <li><em>[ Editor's note: Tom filed
+          <a href="https://github.com/sg16-unicode/sg16/issues/79">SG16 issue #79</a>.
+          ]</em></li>
+    </ul>
+  </li>
+  <li>Tom stated that the next SG16 meeting is scheduled for September 14th
+      and will likely include further discussion of
+      <a href="https://wg21.link/p2626r0">P2626R0</a>
+      and the above requests for more information about the identifier issues
+      and collaboration with the Unicode Consortium.</li>
 </ul>
 
 
