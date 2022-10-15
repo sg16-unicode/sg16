@@ -11,7 +11,7 @@ WG21 Number     | Title | Revisions
 [P2512R0][]     | SG16: Unicode meeting summaries 2021-06-09 through 2021-12-15 | [R0][P2512R0]
 [P2397R0][]     | SG16: Unicode meeting summaries 2021-04-14 through 2021-05-26 | [R0][P2397R0]
 [P2352R0][]     | SG16: Unicode meeting summaries 2020-12-09 through 2021-03-24 | [R0][P2352R0]
-[P2263R0][]     | A call for a WG21 managed chat service | [R0][P2263R0]
+[P2263R1][]     | A call for a WG21 managed chat service | [R1][P2263R1] [R0][P2263R0]
 [P2253R0][]     | SG16: Unicode meeting summaries 2020-09-09 through 2020-11-11 | [R0][P2253R0]
 [P2217R0][]     | SG16: Unicode meeting summaries 2020-06-10 through 2020-08-26 | [R0][P2217R0]
 [P2179R0][]     | SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27 | [R0][P2179R0]
@@ -45,7 +45,8 @@ WG14 Number     | Title | Revisions
 [P2179R0]: https://rawcdn.githack.com/sg16-unicode/sg16/50ab7ddd142974f365fe60cc8fc57d6ef00f0ab0/papers/p2179r0.html
 [P2217R0]: https://rawcdn.githack.com/sg16-unicode/sg16/50ab7ddd142974f365fe60cc8fc57d6ef00f0ab0/papers/p2217r0.html
 [P2253R0]: https://rawcdn.githack.com/sg16-unicode/sg16/50ab7ddd142974f365fe60cc8fc57d6ef00f0ab0/papers/p2253r0.html
-[P2263R0]: https://rawcdn.githack.com/sg16-unicode/sg16/50ab7ddd142974f365fe60cc8fc57d6ef00f0ab0/papers/p2263r0.html
+[P2263R1]: https://rawcdn.githack.com/sg16-unicode/sg16/50ab7ddd142974f365fe60cc8fc57d6ef00f0ab0/papers/p2263r0.html
+[P2263R0]: https://rawcdn.githack.com/sg16-unicode/sg16/d6f25829c10a200aec15705e860abe985c634c84/papers/p2263r1.html
 [P2352R0]: https://rawcdn.githack.com/sg16-unicode/sg16/50ab7ddd142974f365fe60cc8fc57d6ef00f0ab0/papers/p2352r0.html
 [P2397R0]: https://rawcdn.githack.com/sg16-unicode/sg16/50ab7ddd142974f365fe60cc8fc57d6ef00f0ab0/papers/p2397r0.html
 [P2512R0]: https://rawcdn.githack.com/sg16-unicode/sg16/50ab7ddd142974f365fe60cc8fc57d6ef00f0ab0/papers/p2512r0.html
