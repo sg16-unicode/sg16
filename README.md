@@ -51,6 +51,8 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2675][]     | LWG3780: The Paper (format's width estimation is too approximate and not forward compatible)
+[P2653][]     | Update Annex E based on Unicode 15.0 UAX 31
 [P2626][]     | charN\_t incremental adoption: Casting pointers of UTF character types
 [P2572][]     | std::format() fill character allowances
 [P2558][]     | Add @, $, and \` to the basic character set
@@ -211,6 +213,8 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P2675]: https://wg21.link/p2675
+[P2653]: https://wg21.link/p2653
 [P2626]: https://wg21.link/p2626
 [P2572]: https://wg21.link/p2572
 [P2558]: https://wg21.link/p2558
