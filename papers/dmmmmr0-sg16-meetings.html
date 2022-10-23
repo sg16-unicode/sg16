@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2022-10-12 through 2022-10-12</title>
+<title>SG16: Unicode meeting summaries 2022-10-12 through 2022-10-19</title>
 </head>
 
 <style type="text/css">
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2022-10-12 through 2022-10-12</h1>
+<h1>SG16: Unicode meeting summaries 2022-10-12 through 2022-10-19</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -99,6 +99,8 @@ snapshot of select meeting summaries from that repository.
 <ul>
   <li><a href="#2022_10_12">
       October 12th, 2022</a></li>
+  <li><a href="#2022_10_19">
+      October 19th, 2022</a></li>
 </ul>
 
 <p>
@@ -433,6 +435,329 @@ Previously published SG16 meeting summary papers:
       2022-10-26 meeting and suggested rescheduling meetings for 2022-10-19 and
       2022-11-02 with the intent to focus on addressing NB comments in advance
       of the Kona meeting; there were no objections.</li>
+</ul>
+
+
+<h1 id="2022_10_19">October 19th, 2022</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li> NB comment processing.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Peter Bindels</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>US-02:
+      <a href="http://eel.is/c++draft/defns.multibyte">[defns.multibyte]</a>:
+    <ul>
+      <li>Steve presented the concern:
+        <ul>
+          <li>The definition of multibyte character refers to the locale
+              dependent execution character set.</li>
+          <li>Changing this might be difficult, but removing the reference to
+              "execution character set" might help.</li>
+        </ul>
+      </li>
+      <li>Hubert stated that the use of "multibyte character" in the library
+          wording is consistent with the definition.</li>
+      <li>Tom asked if Hubert is suggesting that this is not a defect.</li>
+      <li>Hubert responded affirmatively.</li>
+      <li>Steve stated that he would agree if the definition was in the library
+          section.</li>
+      <li>Jens explained that there used to be a terms and definitions section
+          in the library wording but that ISO required it to be merged with the
+          section in the core wording back in the C++17 time frame.</li>
+      <li>Hubert noted that the only use of "multibyte character" is in the
+          library wording.</li>
+      <li>Corentin responded that there are indirect uses of it via
+          "multibyte string" and "NTMBS" in the definition of the <tt>main</tt>
+          function in
+          <a href="http://eel.is/c++draft/basic.start.main">[basic.start.main]</a>.</li>
+      <li>Corentin noted that all uses of it are intended to refer to the
+          locale encoding.</li>
+      <li>Tom asked if it would make sense to strike the term so that it is
+          inherited from the C standard.</li>
+      <li>Jens expressed a preference not to do so.</li>
+      <li>Steve stated that doing so might have unintended consequences.</li>
+      <li>Tom summarized the sentiment expressed so far; we're leaning towards
+          this not being a defect but that there are opportunities for
+          improvement via editorial changes.</li>
+      <li>Tom suggested that any such editorial changes be left up to the
+          CWG.</li>
+      <li>Jens replied that the CWG is likely to decline to make any changes
+          without a proposed change.</li>
+      <li>Corentin asked if an editorial pull request could be submitted.</li>
+      <li>Jens replied affirmatively.</li>
+      <li>Hubert stated that the concern that Corentin raised regarding use of
+          "multibyte character" with <tt>main</tt> is an issue.</li>
+      <li>Jens asserted that would be a different core issue.</li>
+      <li><b>Poll 1: SG16 suggests to consider US-02 as "not a defect", but to
+          improve the presentation by editorially moving the definition of
+          "multibyte character" to
+          <a href="http://eel.is/c++draft/multibyte.strings">[multibyte.strings]</a>.</b>
+        <ul>
+          <li><b>Attendees: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li><em>[ Editor's note: Corentin submitted a pull request that
+          implements the polled direction at
+          <a href="https://github.com/cplusplus/draft/pull/5910">https://github.com/cplusplus/draft/pull/5910</a>.
+          ]</em></li>
+    </ul>
+  </li>
+  <li>US-38:
+      <a href="https://eel.is/c++draft/format.string.escaped">[format.string.escaped]</a>:
+    <ul>
+      <li>Hubert presented the concern:
+        <ul>
+          <li>The feature description claims to provide a larger scope than it
+              serves; the design doesn't suffice to address all logging
+              scenarios.</li>
+          <li>It is not clear that the escaped string is required to be usable
+              as a string literal.</li>
+        </ul>
+      </li>
+      <li>Victor opined that the proposed change to replace "logging" with
+          "technical logging" makes sense.</li>
+      <li>Victor expressed a preference against the second bullet regarding
+          visually distinguishing equivalent text that is differently
+          encoded.</li>
+      <li>Victor stated that the primary motivation for the feature was to
+          produce a character sequence that would not interfere with the
+          formatting of ranges.</li>
+      <li>Victor noted that the feature has existing experience with both
+          Python and Rust and that the chosen design is modeled after
+          Rust.</li>
+      <li>Victor asserted that the proposed change to allow for future addition
+          of alternative escaping methods is unnecessary since other extension
+          methods are already available.</li>
+      <li>Jens stated that the concern seems mostly related to the first
+          sentence of
+          <a href="https://eel.is/c++draft/format.string.escaped">[format.string.escaped]</a>:
+        <blockquote class="quote">
+        A character or string can be formatted as <i>escaped</i> to make it more
+        suitable for debugging or for logging.
+        </blockquote>
+      </li>
+      <li>Jens continued; and the request is to make it clear that the escaped
+          result shall be valid for interpretation as a string literal and that
+          "logging" be replaced with "technical logging".</li>
+      <li>Hubert agreed, but noted there is still a question of whether visually
+          distinct output is desired.</li>
+      <li>Hubert reiterated; the first priority is that the escaped result is a
+          valid string literal, and a secondary priority is that text that might
+          not be visually distinct be made so.</li>
+      <li>Jens stated that the minimal change would be to change that first
+          sentence.</li>
+      <li>Jens noted that no actual defect has been identified.</li>
+      <li>Hubert stated that SG16 may not be the best place to fully resolve the
+          comment; the question of extension remains and is more of a LEWG
+          consideration.</li>
+      <li>Jens suggested that, for LWG's benefit, SG16 should propose a change
+          to that first sentence.</li>
+      <li>Corentin stated that NB comment FR-05 similarly states that the intent
+          of the feature is not clear.</li>
+      <li>Corentin asserted there are further questions regarding the escaping
+          of grapheme clusters and that it is not clear what is intended to be
+          escaped and for what purpose.</li>
+      <li>Corentin expressed concern that the currently specified behavior of
+          escaping all combining characters disadvantages some languages more
+          than others and provided Korean as an example.</li>
+      <li>Victor acknowledged that US-38 and FR-05 both state that the intent
+          is not clear, but noted that their proposed resolutions are not in
+          agreement.</li>
+      <li>Victor agreed with Corentin that users of scripts that require more
+          use of combining characters should not be penalized.</li>
+      <li>Victor stated that the Python form of the feature does not escape
+          combining characters and that can result in interference with range
+          separators.</li>
+      <li>Victor noted that the original proposal only escaped lone combining
+          characers and acknowledged that the switch to the Rust approach might
+          have gone too far.</li>
+      <li>Hubert disagreed with the notion that a failure to escape does not
+          harm the technical debugging use case.</li>
+      <li>Mark reported experience with use cases where text content is only
+          available via an image; perhaps a screen shot captured with a
+          phone.</li>
+      <li>Mark stated that he has only experienced a need for escaped
+          characters in cases where the text was not correctly encoded.</li>
+      <li>Mark noted it is a valid question as to whether the standard library
+          should default to producing visually indistinct text.</li>
+      <li>Tom stated that a goal of maximizing visual distinction would require
+          escaping all characters not in the basic character set.</li>
+      <li>Corentin replied that it would be terrible to escape all non-ASCII
+          characters but that doing so would not be worse than escaping all
+          combining characters.</li>
+      <li>Corentin expressed a preference towards either maximizing escaping or
+          minimizing it.</li>
+      <li>Hubert stated that the scripts like Korean provide strong motivation
+          for a minimally escaped form.</li>
+      <li>Hubert noted that there are still valid reasons for wanting a
+          visually distinct form via an easy opt-in.</li>
+      <li>Victor reiterated that the primary goal of the escaped form was to
+          avoid interference with the formatted range output.</li>
+      <li>Victor suggested that desires for other use cases be pursued via new
+          papers rather than NB comments.</li>
+      <li>Victor asserted that it is useful to have ill-formed code units
+          escaped.</li>
+      <li>Mark expressed a preference towards not escaping combining characters
+          due to the readability harm it would impose on scripts like
+          Korean.</li>
+      <li>Corentin asserted that all use cases can't be satisfied with this
+          single facility but that extensions can satisfy more post-C++23.</li>
+      <li>Corentin expressed a preference towards a default that maintains
+          readability for more languages and that more extensive escaping can be
+          pursued separately.</li>
+      <li>Hubert opined that a sequence of combining characters that immediately
+          follow an escaped character is sufficient evidence of an error to
+          justify escaping them.</li>
+      <li>Corentin repeated that it is useful to escape non-printable
+          characters.</li>
+      <li>Corentin stated that the grapheme breaking algorithm is potentially
+          expensive, but then backtracked with an observation that it is
+          sufficient to check for the <tt>Grapheme_Extend=Yes</tt> character
+          property to identify combining characters that may need to be
+          escaped.</li>
+      <li><b>*Poll 2.1: [US-38] SG16 agrees that the formatted code units in
+          the escaped string are intended to be usable as a string literal that
+          reproduces the input.</b>
+        <ul>
+          <li><b>Attendees: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 2.2: [US-38] SG16 agrees that the escaped string is intended
+          to be readable for its textual content in any Unicode script.</b>
+        <ul>
+          <li><b>Attendees: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 2.3: [US-38] SG16 agrees that separators and non-printable
+          characters
+          (<a href="https://eel.is/c++draft/format.string.escaped">[format.string.escaped]p(2.2.1.2)</a>)
+          shall be escaped in the escaped string.</b>
+        <ul>
+          <li><b>Attendees: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 2.4: [US-38] SG16 agrees that combining code points shall
+          not be escaped unless there is no leading code point or the previous
+          character was escaped.</b>
+        <ul>
+          <li><b>Attendees: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li>Tom stated that he would provide examples for each of the polls when
+          reporting the SG16 consensus once the NB comment github repository
+          is populated.</li>
+      <li>Tom suggested that anyone that works on proposed wording include
+          examples.</li>
+    </ul>
+  </li>
+  <li>US-64:
+      <a href="https://eel.is/c++draft/uaxid.pattern">[uaxid.pattern]</a>:
+    <ul>
+      <li>Tom noted that FR-09, if adopted, will make this NB comment moot.</li>
+      <li>Corentin explained the motivation for the FR-09 comment; that the
+          annex is light on information, that many of the requirements don't
+          apply to C++, and that the ones that do could be noted in
+          <a href="http://eel.is/c++draft/lex.name">[lex.name]</a>.</li>
+      <li>Steve responded that an explicit record of a negative answer to a
+          question is useful.</li>
+      <li>Steve explained that it would be difficult to identify Unicode
+          requirement conformance information if it was spread throughout the
+          standard wording.</li>
+      <li>Tom observed that differing opinions are clearly present with regard
+          to the utility of the annex and stated that, due to time constraints,
+          discussion will be limited to US-64 for now; discussion of FR-09 will
+          be scheduled for a future meeting.</li>
+      <li>Steve expressed an expectation of agreement that UAX #31 is intended
+          to apply to general purpose programming languages.</li>
+      <li>Hubert expressed a desire for more details and noted that conformance
+          is not currently claimed.</li>
+      <li>Tom provided a link to Unicode document
+          <a href="https://www.unicode.org/L2/L2022/22179-uax31-36-draft-6-post-pri450.pdf">L2/22-179</a>;
+          it contains highlighted markup of the changes that were accepted for
+          Unicode 15.</li>
+      <li>Tom noted the changes added to the beginning of chapter 4,
+          "Pattern Syntax":
+          <blockquote class="quote">
+          Most programming languages have a concept of whitespace as part of
+          their lexical structure, as well as some set of characters that are
+          disallowed in identifiers but have syntactic use, such as arithmetic
+          operators. Beyond general programming languages, there are also ...
+          </blockquote>
+          and the changes to the "Modifications" section at the end of the
+          document:
+          <blockquote class="quote">
+          <ul>
+            <li>Section 4, Pattern Syntax
+              <ul>
+                <li>Clarified that this section is applicable to programming
+                    languages.</li>
+              </ul>
+            </li>
+          </ul>
+          </blockquote>
+      </li>
+      <li>Jens observed that the NB comment is missing a reference to the
+          updated Unicode document that clarifies applicability to general
+          purpose programming languages.</li>
+      <li>Jens suggested that the annex could state that
+          <a href="http://eel.is/c++draft/lex.name">[lex.name]</a>
+          defines a profile.</li>
+      <li>Hubert expressed a preference to continue claiming non-conformance
+          pending a clear specification of a conforming profile.</li>
+      <li>Steve expressed contentedness with a change to just claim
+          non-conformance.</li>
+      <li>Jens observed that consensus appeared to be aligning with the
+          proposed change from the NB comment as opposed to the one proposed in
+          <a href="https://wg21.link/p2653r0">P2653R0 (Update Annex E based on Unicode 15.0 UAX 31)</a>.</li>
+      <li>Steve asked if such a change could be applied editorially.</li>
+      <li>Tom opined that it could be.</li>
+      <li>Jens expressed a desire for CWG to review first and stated that, if a
+          paper revision can be made available quickly, that he would schedule
+          it for CWG review later in the week.</li>
+      <li>Steve agreed to prepare a revision.</li>
+      <li><b>Poll 3: [US-64] SG16 agrees with resolving the issue in the
+          direction presented in the comment.</b>
+        <ul>
+          <li><b>Attendees: 8</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom discussed plans for the next SG16 meeting:
+    <ul>
+      <li>Review of the GB and FR draft NB comments identified 7 comments for
+          SG16 to review</li>
+      <li>It is not yet known if additional NB comments from other NBs will
+          require review.</li>
+      <li>The next meeting is scheduled for 2022-11-02.</li>
+      <li>Once an agenda is sent, please discuss in email in advance of the
+          meeting in order to reduce review time during the meeting.</li>
+    </ul>
+  </li>
 </ul>
 
 
