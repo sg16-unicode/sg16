@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2022-10-23</td>
+    <td>2022-11-03</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -462,8 +462,7 @@ Previously published SG16 meeting summary papers:
 <h2>Meeting summary:</h2>
 
 <ul>
-  <li>US-02:
-      <a href="http://eel.is/c++draft/defns.multibyte">[defns.multibyte]</a>:
+  <li><a href="https://github.com/cplusplus/nbballot/issues/474">US 2-029 3.35 [defns.multibyte] Give context for "execution character set"</a>:
     <ul>
       <li>Steve presented the concern:
         <ul>
@@ -506,9 +505,9 @@ Previously published SG16 meeting summary papers:
       <li>Hubert stated that the concern that Corentin raised regarding use of
           "multibyte character" with <tt>main</tt> is an issue.</li>
       <li>Jens asserted that would be a different core issue.</li>
-      <li><b>Poll 1: SG16 suggests to consider US-02 as "not a defect", but to
-          improve the presentation by editorially moving the definition of
-          "multibyte character" to
+      <li><b>Poll 1: [US 2-029] SG16 suggests to consider this issue as
+          "not a defect", but to improve the presentation by editorially moving
+          the definition of "multibyte character" to
           <a href="http://eel.is/c++draft/multibyte.strings">[multibyte.strings]</a>.</b>
         <ul>
           <li><b>Attendees: 8</b></li>
@@ -521,8 +520,7 @@ Previously published SG16 meeting summary papers:
           ]</em></li>
     </ul>
   </li>
-  <li>US-38:
-      <a href="https://eel.is/c++draft/format.string.escaped">[format.string.escaped]</a>:
+  <li><a href="https://github.com/cplusplus/nbballot/issues/515">US 38-098 22.14.6.4p1 [format.string.escaped] Escaping for debugging and logging</a>:
     <ul>
       <li>Hubert presented the concern:
         <ul>
@@ -571,17 +569,17 @@ Previously published SG16 meeting summary papers:
           consideration.</li>
       <li>Jens suggested that, for LWG's benefit, SG16 should propose a change
           to that first sentence.</li>
-      <li>Corentin stated that NB comment FR-05 similarly states that the intent
-          of the feature is not clear.</li>
+      <li>Corentin stated that NB comment FR-005-134 similarly states that the
+          intent of the feature is not clear.</li>
       <li>Corentin asserted there are further questions regarding the escaping
           of grapheme clusters and that it is not clear what is intended to be
           escaped and for what purpose.</li>
       <li>Corentin expressed concern that the currently specified behavior of
           escaping all combining characters disadvantages some languages more
           than others and provided Korean as an example.</li>
-      <li>Victor acknowledged that US-38 and FR-05 both state that the intent
-          is not clear, but noted that their proposed resolutions are not in
-          agreement.</li>
+      <li>Victor acknowledged that US 38-098 and FR-005-134 both state that the
+          intent is not clear, but noted that their proposed resolutions are not
+          in agreement.</li>
       <li>Victor agreed with Corentin that users of scripts that require more
           use of combining characters should not be penalized.</li>
       <li>Victor stated that the Python form of the feature does not escape
@@ -634,7 +632,7 @@ Previously published SG16 meeting summary papers:
           sufficient to check for the <tt>Grapheme_Extend=Yes</tt> character
           property to identify combining characters that may need to be
           escaped.</li>
-      <li><b>*Poll 2.1: [US-38] SG16 agrees that the formatted code units in
+      <li><b>Poll 2.1: [US 38-098] SG16 agrees that the formatted code units in
           the escaped string are intended to be usable as a string literal that
           reproduces the input.</b>
         <ul>
@@ -642,14 +640,14 @@ Previously published SG16 meeting summary papers:
           <li><b>No objection to unanimous consent.</b></li>
         </ul>
       </li>
-      <li><b>Poll 2.2: [US-38] SG16 agrees that the escaped string is intended
+      <li><b>Poll 2.2: [US 38-098] SG16 agrees that the escaped string is intended
           to be readable for its textual content in any Unicode script.</b>
         <ul>
           <li><b>Attendees: 8</b></li>
           <li><b>No objection to unanimous consent.</b></li>
         </ul>
       </li>
-      <li><b>Poll 2.3: [US-38] SG16 agrees that separators and non-printable
+      <li><b>Poll 2.3: [US 38-098] SG16 agrees that separators and non-printable
           characters
           (<a href="https://eel.is/c++draft/format.string.escaped">[format.string.escaped]p(2.2.1.2)</a>)
           shall be escaped in the escaped string.</b>
@@ -658,7 +656,7 @@ Previously published SG16 meeting summary papers:
           <li><b>No objection to unanimous consent.</b></li>
         </ul>
       </li>
-      <li><b>Poll 2.4: [US-38] SG16 agrees that combining code points shall
+      <li><b>Poll 2.4: [US 38-098] SG16 agrees that combining code points shall
           not be escaped unless there is no leading code point or the previous
           character was escaped.</b>
         <ul>
@@ -673,11 +671,11 @@ Previously published SG16 meeting summary papers:
           examples.</li>
     </ul>
   </li>
-  <li>US-64:
-      <a href="https://eel.is/c++draft/uaxid.pattern">[uaxid.pattern]</a>:
+  <li><a href="https://github.com/cplusplus/nbballot/issues/542">US 64-132 Annex E.4 Whitespace and pattern rules</a>:
     <ul>
-      <li>Tom noted that FR-09, if adopted, will make this NB comment moot.</li>
-      <li>Corentin explained the motivation for the FR-09 comment; that the
+      <li>Tom noted that FR-009-024, if adopted, will make this NB comment
+          moot.</li>
+      <li>Corentin explained the motivation for the FR-009-024 comment; that the
           annex is light on information, that many of the requirements don't
           apply to C++, and that the ones that do could be noted in
           <a href="http://eel.is/c++draft/lex.name">[lex.name]</a>.</li>
@@ -688,8 +686,8 @@ Previously published SG16 meeting summary papers:
           standard wording.</li>
       <li>Tom observed that differing opinions are clearly present with regard
           to the utility of the annex and stated that, due to time constraints,
-          discussion will be limited to US-64 for now; discussion of FR-09 will
-          be scheduled for a future meeting.</li>
+          discussion will be limited to US 64-132 for now; discussion of
+          FR-009-024 will be scheduled for a future meeting.</li>
       <li>Steve expressed an expectation of agreement that UAX #31 is intended
           to apply to general purpose programming languages.</li>
       <li>Hubert expressed a desire for more details and noted that conformance
@@ -738,7 +736,7 @@ Previously published SG16 meeting summary papers:
           paper revision can be made available quickly, that he would schedule
           it for CWG review later in the week.</li>
       <li>Steve agreed to prepare a revision.</li>
-      <li><b>Poll 3: [US-64] SG16 agrees with resolving the issue in the
+      <li><b>Poll 3: [US 64-132] SG16 agrees with resolving the issue in the
           direction presented in the comment.</b>
         <ul>
           <li><b>Attendees: 8</b></li>
