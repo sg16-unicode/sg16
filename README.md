@@ -26,6 +26,7 @@ Project     | Description/Links
 ----------- | -----
 Boost.Text  | What a c++ standard Unicode library might look like<br/>[Code repository](https://github.com/tzlaine/text)<br/>[Documentation](https://tzlaine.github.io/text/doc/html/index.html)
 ztd.text    | The premiere library for handling text in different encoding forms and reducing transcoding bugs in your C++ software<br/>[Code repository](https://github.com/soasis/text)<br/>[Documentation](https://ztdtext.readthedocs.io/en/latest)
+text\_view  | A C++ Concepts based character encoding and code point enumeration library<br/>[Code repository](https://github.com/tahonermann/text_view)
 
 
 # Unicode papers
