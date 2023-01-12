@@ -135,7 +135,7 @@ WG21 Number   | Title/Notes/Links
 WG14 Number   | Title/Notes/Links
 ------------- | -----
 [N3046][]     | $ in Identifiers
-[N3031][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r9<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902], [N2966 (R7)][N2966], [N2999 (R8)][N2999])
+[N3075][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r10<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902], [N2966 (R7)][N2966], [N2999 (R8)][N2999], [N3031 (R9)][N3031])
 [N3016][]     | Unicode Length Modifiers v3
 [N2932][]     | C Identifier Security using Unicode Standard Annex 39 v2<br/>(Previously [N2916 (R0)][N2916])
 [N2785][]     | Delimited escapes sequences
@@ -162,6 +162,7 @@ WG14 Number   | Title/Notes/Links
 
 WG14 Number   | Title/Notes/Links
 ------------- | -----
+~~[N3031][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r9~~<br/>(Superseded by [N3075][])
 ~~[N2999][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r8~~<br/>(Superseded by [N3031][])
 ~~[N2983][]~~ | ~~Unicode Length Modifiers v2~~<br/>(Superseded by [N3016][])
 ~~[N2966][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r7~~<br/>(Superseded by [N2999][])
@@ -185,6 +186,7 @@ WG14 Number   | Title/Notes/Links
 [WG2-N5174]: https://www.unicode.org/wg2/docs/n5174-namesaliases.pdf
 [WG2-N5175]: https://www.unicode.org/wg2/docs/n5175-cdam1.2-repertoire-update.pdf
 [N3046]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3046.pdf
+[N3075]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3075.htm
 [N3031]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3031.htm
 [N3016]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3016.pdf
 [N2999]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2999.htm
