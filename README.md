@@ -52,6 +52,14 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2758][]     | Emitting messages at compile time
+[P2749][]     | Down with ”character”
+[P2741][]     | user-generated static_assert messages
+[P2736][]     | Referencing the Unicode Standard
+[P2729][]     | Unicode in the Library, Part 2: Normalization
+[P2728][]     | Unicode in the Library, Part 1: UTF Transcoding
+[P2713][]     | Escaping improvements in std::format
+[P2693][]     | Formatting thread::id and stacktrace
 [P2675][]     | LWG3780: The Paper (format's width estimation is too approximate and not forward compatible)
 [P2653][]     | Update Annex E based on Unicode 15.0 UAX 31
 [P2626][]     | charN\_t incremental adoption: Casting pointers of UTF character types
@@ -216,6 +224,14 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P2758]: https://wg21.link/p2758
+[P2749]: https://wg21.link/p2749
+[P2741]: https://wg21.link/p2741
+[P2736]: https://wg21.link/p2736
+[P2729]: https://wg21.link/p2729
+[P2728]: https://wg21.link/p2728
+[P2713]: https://wg21.link/p2713
+[P2693]: https://wg21.link/p2693
 [P2675]: https://wg21.link/p2675
 [P2653]: https://wg21.link/p2653
 [P2626]: https://wg21.link/p2626
