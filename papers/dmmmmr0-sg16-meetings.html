@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-01-11</title>
+<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-01-25</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-01-15</td>
+    <td>2023-02-09</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-01-11</h1>
+<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-01-25</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -99,6 +99,8 @@ snapshot of select meeting summaries from that repository.
 <ul>
   <li><a href="#2023_01_11">
       January 11th, 2023</a></li>
+  <li><a href="#2023_01_25">
+      January 25th, 2023</a></li>
 </ul>
 
 <p>
@@ -353,6 +355,277 @@ Previously published SG16 meeting summary papers:
   </li>
   <li>Tom reported that the meeting will be on 2023-01-25 and will prioritize
       further review of P2736R0 and then D2749R0.</li>
+</ul>
+
+
+<h1 id="2023_01_25">January 25th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Planning for NOT Issaquah.</li>
+  <li><a href="https://wg21.link/p2736r0">P2736R0: Referencing the Unicode Standard</a>.</li>
+  <li><a href="https://wg21.link/p2749r0">P2749R0: Down with ”character”</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Nathan Owen</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>A round of introductions was conducted for Nathan; though he had attended
+      previous meetings, we had never formally introduced ourselves.</li>
+  <li>Planning for NOT Issaquah.
+    <ul>
+      <li>Tom explained that, due to competing priorities and a shortage of
+          conference rooms, the only time slot available was for an evening
+          session and, per previous discussion, an evening session time slot
+          would be challenging for remote attendees; as a result, SG16 will
+          not host an in-person meeting, but Tom is open to hosting another
+          telecon next week before Issaquah to continue paper review.</li>
+      <li>Zach agreed with meeting next week, but argued that an in-person
+          meeting in Issaquah should still be held.</li>
+      <li>PBrett opined that there would be few attendees.</li>
+      <li>Corentin stated that a number of people that will have opinions on
+          his papers will be present in Issaquah.</li>
+      <li>Corentin asserted we should plan to meet in Varna.</li>
+      <li>PBrett stated that Zach's
+          <a href="https://wg21.link/p2728r0">P2728R0: Unicode in the Library, Part 1: UTF Transcoding</a>
+          and
+          <a href="https://wg21.link/p2729r0">P2729R0: Unicode in the Library, Part 2: Normalization</a>
+          require SG16 review from an interface perspective.</li>
+      <li>Tom agreed with Peter.</li>
+      <li>Steve suggested that it would be useful to get early feedback from
+          LEWG for Zach's papers.</li>
+      <li>Steve noted that we don't want to spend months in review and then
+          have LEWG question the design later.</li>
+      <li>Corentin stated that we should ensure people are aware that these
+          papers target C++26 and that time slots will be available in Varna
+          and later meetings.</li>
+      <li>Steve agreed that we should not host an official SG16 meeting in
+          Issaquah.</li>
+      <li>Tom stated that we will proceed with a telecon next week and no
+          meeting in Issaquah.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2736r0">P2736R0: Referencing the Unicode Standard</a>:
+    <ul>
+      <li>Corentin explained the changes made, as suggested by Jens, to provide
+          a definition for UCS-2 as needed for <tt>std::codecvt_utf8</tt> and
+          <tt>std::codecvt_utf16</tt>.</li>
+      <li>Corentin stated that the UCS-2 definition is specified in terms of
+          scalar values so as to exclude lone surrogates.</li>
+      <li>Corentin noted that the previous wording did not address how lone
+          surrogates were to be handled.</li>
+      <li>Hubert suggested moving where "only" appears in the UCS-2
+          wording.</li>
+      <li>Corentin reported that various grammar and spelling issues pointed
+          out by Jens were corrected.</li>
+      <li>Corentin stated that the prior discussion of the
+          <tt>__STDC_ISO_10646__</tt> predefined macro was inconclusive.</li>
+      <li>Hubert recalled a suggestion to treat this macro the same as
+          <tt>__STDC_VERSION__</tt>.</li>
+      <li>Fraser asked if <tt>__STDC_ISO_10646__</tt> could be removed from the
+          C++ standard and noted that implementations could still define it
+          since it is a reserved identifier.</li>
+      <li>Corentin expressed reluctance to doing so as part of this paper since
+          this paper is not intended to make design changes.</li>
+      <li>Corentin stated that he plans to work with SG22 and WG14 regarding the
+          intended use of the macro.</li>
+      <li>Corentin asserted that a minimal change suffices for now to remove the
+          reliance on ISO/IEC 10646.</li>
+      <li>Hubert replied that the proposed change isn't the minimal solution
+          since it diverges from the C standard.</li>
+      <li>Hubert clarified that the suggestion wasn't to reference the C
+          standard, but rather to leave the definition rather meaningless so
+          that implementors lean on C for meaning.</li>
+      <li>Corentin asked if the suggestion was to just make the macro
+          implemenation-defined.</li>
+      <li>Tom replied that he thought that was what Fraser had suggested.</li>
+      <li>Fraser confirmed.</li>
+      <li>Jens asserted that the wording should preserve the condition that the
+          macro, if defined, has a value with a particular syntactical
+          form.</li>
+      <li><b>Poll 1.1: Whether <tt>__STDC_ISO_10646__</tt> is predefined and if
+          so, what its value is, are implementation-defined, retaining the
+          mandated <tt>yyyymmL</tt> form.</b>
+        <ul>
+          <li><b>Attendees: 11 (3 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">6</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li>Hubert noted some existing occurrences of "Unicode encoding" in the
+          wording for [lex.string.escaped].</li>
+      <li>Corentin reported that he did not see a reason to update that
+          wording.</li>
+      <li>Hubert stated that the relevant encodings should be restricted to
+          UTF-8, UTF-16, and UTF-32 because the formal definition of
+          "Unicode encoding" is too inclusive.</li>
+      <li>Discussion ensued regarding encoding form vs encoding scheme and the
+          observation that, for <tt>std::format</tt> with a wide format string,
+          <tt>wchar_t</tt> elements correspond to an encoding form.</li>
+      <li>PBrett asked if the wording can just state
+          "UTF-8, UTF-16, or UTF-32".</li>
+      <li>Corentin agreed to make that change.</li>
+      <li>Jens lamented the loss of wording in [lex.name] regarding what
+          <tt>XID_Start</tt> and <tt>XID_Continue</tt> are and where to find
+          their definitions.</li>
+      <li>Jens asserted a note should be retained to direct readers to their
+          definitions.</li>
+      <li>Corentin opined that a note isn't needed since the terms are in a
+          normative reference.</li>
+      <li>Jens replied that such a note is present for other properties such as
+          <tt>Grapheme_Extend</tt>.</li>
+      <li>Corentin stated that he is fine with retaining a note.</li>
+      <li>PBrett asked about following the existing pattern in
+          [format.string.escaped] for the <tt>General_Category</tt> and
+          <tt>Grapheme_Extend</tt> properties where it is stated
+          "as described by table 12 of UAX #44".</li>
+      <li>Zack expressed concern about the stability of text files.</li>
+      <li>Tom suggested more generic wording like
+          "as described in the Unicode character database".</li>
+      <li>Jens agreed with that approach.</li>
+      <li>Fraser noted that internet searches for <tt>XID_Start</tt> yield good
+          results.</li>
+      <li>Corentin edited the paper to update the wording.</li>
+      <li><b>Poll 1.2: Forward P2736R1, amended as discussed, to CWG and LWG as
+          the recommended resolution of NB comments FR-010-133 and
+          FR-021-013.</b>
+        <ul>
+          <li><b>Attendees: 10 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">7</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2749r0">P2749R0: Down with ”character”</a>:
+    <ul>
+      <li><em>[ Editor's note: D2749R0 was the active paper under discussion
+          at the telecon.
+          The agenda and links used here reference P2749R0 since the links to
+          the draft paper were ephemeral.
+          The published document may differ from the reviewed draft revision.
+          ]</em></li>
+      <li>Corentin provided an introduction:
+        <ul>
+          <li>The wording substitutes "Unicode scalar value" for "character"
+              in many places, but retains the latter in some contexts.</li>
+          <li>This removes the "translation character set" indirection.</li>
+          <li>The changes were mechanically applied.</li>
+        </ul>
+      </li>
+      <li>PBrett expressed support for the improved specificity.</li>
+      <li>Corentin began reviewing the wording changes.</li>
+      <li>Tom noted that Jens had previously requested an overview of the final
+          state we are driving towards with these kinds of changes.</li>
+      <li>Corentin replied that the motivation section addresses some of those
+          concerns.</li>
+      <li>Jens stated that he finds the proposed wording confusing since
+          "character" ends up getting mixed in with Unicode terminology.</li>
+      <li>Corentin explained that he has concerns about introducing a lot of
+          churn that doesn't help to improve clarity.</li>
+      <li>Fraser stated that additional specificity is probably needed to
+          clarify which characters constitute new-line and whitespace.</li>
+      <li>Jens noted that, with the exception of new-line, that characters are
+          specified using Unicode code points.</li>
+      <li>Jens noted that
+          <a href="https://wg21.link/p2348">P2348 (Whitespaces Wording Revamp)</a>
+          is relevant.</li>
+      <li>Corentin explained that he intentionally did not modify the
+          specification of whitespace in this paper.</li>
+      <li>Corentin expressed a desire for agreement on the replacement of
+          "elements of the translation character set".</li>
+      <li>PBrett noticed an editorial issue in [lex.charset] for
+          <em>n-char</em>; the updated wording retains "set" from the intended
+          substitution of "Unicode code point" for "member of the translation
+          character set".</li>
+      <li>Jens observed that a change in [lex.phases] to substitute
+          "Unicode scalar value" for
+          ".. elements of the translation character set" retains a reference to
+          [lex.charset] that no longer makes sense.</li>
+      <li>Jens opined that the note in [lex.charset] that describes the
+          difference between "code points" and "scalar values" should be
+          retained.</li>
+      <li>Hubert stated that the location of that note is a little odd since it
+          doesn't encapsulate the notion of "abstract character".</li>
+      <li>Hubert observed that the updates to [lex.phases]p3 only updated one of
+          the two uses of "space character".</li>
+      <li>Corentin asked for opinions regarding a footnote in [lex.name] that
+          discusses representation of characters outside the basic character set
+          in external identifiers.</li>
+      <li>Hubert stated that the footnote could use some updates.</li>
+      <li>Tom opined that the footnote should just be removed.</li>
+      <li>Jens noted that
+          <a href="http://eel.is/c++draft/implimits#2.6">[implimits]p(2.6)</a>
+          does specify a minimum limit for the number of significant characters
+          in an external identifier.</li>
+      <li>PBrett stated that the the uses of "character" in that annex need to
+          be addressed.</li>
+      <li>Corentin asked if CWG would be content with the removal of that
+          footnote.</li>
+      <li>Jens replied that he does not know but that he personally does not see
+          value in retaining it; the note probably serviced its value 20 some
+          years ago.</li>
+      <li>Jens observed that "characters" would have to be interpreted as code
+          points for the purposes of the external identifier limit.</li>
+      <li>Tom noted the implication that, if UTF-8 was used for the encoding of
+          external identifiers, a worst case limit must be assumed such that a
+          limit of 1024 code points implies a limit of 4096 code units.</li>
+    </ul>
+  </li>
+  <li>Tom reported that SG16 will meet in one week, on 2023-02-01 in order to
+      squeeze in one more review of P2749R0 before the WG21 meeting in
+      Issaquah.</li>
 </ul>
 
 
