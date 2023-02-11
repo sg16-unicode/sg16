@@ -55,15 +55,10 @@ WG21 Number   | Title/Notes/Links
 [P2758][]     | Emitting messages at compile time
 [P2749][]     | Down with ”character”
 [P2741][]     | user-generated static_assert messages
-[P2736][]     | Referencing the Unicode Standard
 [P2729][]     | Unicode in the Library, Part 2: Normalization
 [P2728][]     | Unicode in the Library, Part 1: UTF Transcoding
-[P2713][]     | Escaping improvements in std::format
-[P2693][]     | Formatting thread::id and stacktrace
-[P2675][]     | LWG3780: The Paper (format's width estimation is too approximate and not forward compatible)
 [P2653][]     | Update Annex E based on Unicode 15.0 UAX 31
 [P2626][]     | charN\_t incremental adoption: Casting pointers of UTF character types
-[P2572][]     | std::format() fill character allowances
 [P2558][]     | Add @, $, and \` to the basic character set
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
 [P2361][]     | Unevaluated strings literals
@@ -80,6 +75,11 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2736][]     | Referencing the Unicode Standard
+[P2713][]     | Escaping improvements in std::format
+[P2693][]     | Formatting thread::id and stacktrace
+[P2675][]     | LWG3780: The Paper (format's width estimation is too approximate and not forward compatible)
+[P2572][]     | std::format() fill character allowances
 [P2513][]     | char8\_t Compatibility and Portability Fixes
 [P2460][]     | Relax requirements on wchar\_t to match existing practices
 [P2419][]     | Clarify handling of encodings in localized formatting of chrono types
