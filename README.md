@@ -145,6 +145,7 @@ WG14 Number   | Title/Notes/Links
 [N3046][]     | $ in Identifiers
 [N3095][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions \| r11<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902], [N2966 (R7)][N2966], [N2999 (R8)][N2999], [N3031 (R9)][N3031], [N3075 (R10)][N3075])
 [N3016][]     | Unicode Length Modifiers v3
+[N2948][]     | Accessing the command line arguments outside of main()
 [N2932][]     | C Identifier Security using Unicode Standard Annex 39 v2<br/>(Previously [N2916 (R0)][N2916])
 [N2785][]     | Delimited escapes sequences
 
@@ -202,6 +203,7 @@ WG14 Number   | Title/Notes/Links
 [N2999]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2999.htm
 [N2983]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2983.pdf
 [N2966]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2966.htm
+[N2948]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2948.pdf
 [N2940]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2940.pdf
 [N2939]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2939.pdf
 [N2932]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2932.htm
