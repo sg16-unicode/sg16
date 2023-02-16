@@ -52,6 +52,7 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2773][]     | Considerations for Unicode algorithms
 [P2758][]     | Emitting messages at compile time
 [P2749][]     | Down with ”character”
 [P2741][]     | user-generated static_assert messages
@@ -228,6 +229,7 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P2773]: https://wg21.link/p2773
 [P2758]: https://wg21.link/p2758
 [P2749]: https://wg21.link/p2749
 [P2741]: https://wg21.link/p2741
