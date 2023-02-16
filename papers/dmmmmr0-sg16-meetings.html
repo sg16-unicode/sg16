@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-01-25</title>
+<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-02-02</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-02-09</td>
+    <td>2023-02-16</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-01-25</h1>
+<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-02-02</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -101,6 +101,8 @@ snapshot of select meeting summaries from that repository.
       January 11th, 2023</a></li>
   <li><a href="#2023_01_25">
       January 25th, 2023</a></li>
+  <li><a href="#2023_02_02">
+      February 2nd, 2023</a></li>
 </ul>
 
 <p>
@@ -626,6 +628,274 @@ Previously published SG16 meeting summary papers:
   <li>Tom reported that SG16 will meet in one week, on 2023-02-01 in order to
       squeeze in one more review of P2749R0 before the WG21 meeting in
       Issaquah.</li>
+</ul>
+
+
+<h1 id="2023_02_02">February 2nd, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2749r0">P2749R0: Down with ”character”</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Mark de Wever</li>
+  <li>Mark Zeren</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom announced that this telecon is SG16's 100th!</li>
+  <li>Corentin noted that LEWG is considering hosting an evening session in
+      Issaquah to discuss Zach's
+      <a href="https://wg21.link/p2728r0">P2728R0: Unicode in the Library, Part 1: UTF Transcoding</a>
+      and
+      <a href="https://wg21.link/p2729r0">P2729R0: Unicode in the Library, Part 2: Normalization</a>
+      papers.</li>
+  <li>Steve expressed support for early LEWG review so as to avoid a situation
+      in which SG16 forwards a paper with interfaces that LEWG does not approve
+      of; such cases have occurred with other study groups.</li>
+  <li>PBrett noted that there are sometimes competing perspectives between what
+      domain experts value and what LEWG values.</li>
+  <li>PBrett acknowledged the possibility that LEWG will approve of Zach's
+      design, that SG16 proceeds with making changes during its review, and that
+      LEWG finds that it does not approve of the changed direction.</li>
+  <li><a href="https://wg21.link/p2749r0">P2749R0: Down with ”character”</a>:
+    <ul>
+      <li><em>[ Editor's note: D2749R0 was the active paper under discussion at
+          the telecon.
+          The agenda and links used here reference P2749R0 since the links to
+          the draft paper were ephemeral.
+          The published document may differ from the reviewed draft revision.
+          ]</em></li>
+      <li>Tom provided a summary of the last telecon.</li>
+      <li>Tom raised two concerns to be addressed.
+        <ul>
+          <li>Comments that Jens raised in a
+              <a href="https://lists.isocpp.org/sg16/2023/01/3693.php">post to the SG16 mailing list</a>.</li>
+          <li>Whether the paper should take a dependency on
+              <a href="https://wg21.link/p2348">P2348 (Whitespaces Wording Revamp)</a>.</li>
+        </ul>
+      </li>
+      <li>Corentin explained that, with regard to Jens' concern about
+          inconsistent use of the "Unicode code point" and "character" terms,
+          that the changes made to mechanically replace "character" in 10-20
+          pages of wording were quite extensive.</li>
+      <li>Corentin stated that, in cases where the wording refers to a specific
+          character, such as U+0020 SPACE, that the term "character" is
+          appropriate.</li>
+      <li>Corentin acknowledged Jens' concerns, but noted that the updated
+          wording does reduce ambiguity.</li>
+      <li>Corentin claimed that the proposal includes a minimal change and that
+          additional changes could be done editorially at a later time.</li>
+      <li>Tom reported having spent time reviewing the changes and that he found
+          the various uses of "Unicode scalar value", "Unicode code point", and
+          "character" rather confusing.</li>
+      <li>Tom expressed concern that the differences are subtle and that it
+          might be unfair to place the project editor in the position of having
+          to deal with those differences; at least not without clearly specified
+          guidelines.</li>
+      <li>PBrett responded that the project editor shouldn't make such changes
+          since they can have normative impact.</li>
+      <li>Corentin reiterated that his goal with the paper is to remove the
+          "translation character set" terminology in C++23 to avoid its
+          appearance in new teaching materials.</li>
+      <li>Tom suggested modifying the paper title to append "in lexing" since
+          that better matches the scope of the proposed changes.</li>
+      <li>Tom suggested reviewing the wording to ensure consistent terminology
+          use.</li>
+      <li>The group started reviewing the changes to [lex.phases].</li>
+      <li>PBrett noted that people complain about the Unicode terms, but that
+          their use is well justified in an international standard.</li>
+      <li>PBrett noted the use of "character" in association with new-line and
+          asked whether new-line could consist of multiple code points.</li>
+      <li>Tom responded that, since the translation input is now specified in
+          terms of Unicode code points, that we can define exactly what a
+          new-line character is.</li>
+      <li>Hubert agreed and stated that would provide a better basis for
+          defining whitespace.</li>
+      <li>Steve noted that <tt>\n</tt> can have platform impact in some contexts
+          but that it doesn't in lexing.</li>
+      <li>Corentin replied that more significant changes would be required to
+          substitute U+000A LINE FEED for "new-line character" and that there
+          would still be remaining uses of "character".</li>
+      <li>PBrett stated it could be a conscious choice to leave those cases to a
+          later paper like P2348.</li>
+      <li>Hubert responded that the motivation for asking for additional work is
+          to avoid increasing internal friction within the standard wording as
+          the paper does now.</li>
+      <li>Corentin expressed concern regarding incorporating work from P2348 due
+          to concerns CWG had with that paper.</li>
+      <li>Steve noted that, in lexing context, specifying new-line is not
+          observable.</li>
+      <li>Fraser asked if new-line characters are observable in raw string
+          literals.</li>
+      <li>Hubert replied negatively and explained that, in a raw string literal,
+          new-line is mapped to <tt>\n</tt> in the execution character set.</li>
+      <li>Steve stated issues with that were fixed.</li>
+      <li>Tom stated that there are related CWG issues.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://wg21.link/cwg1655">CWG issue 1655 (Line endings in raw string literals)</a>
+          and
+          <a href="https://wg21.link/cwg1709">CWG issue 1709 (Stringizing raw string literals containing newline)</a>.
+          ]</em></li>
+      <li>Corentin pondered whether it is necessary to consider both papers at
+          the same time.</li>
+      <li>Hubert recommended sending a message to the CWG mailing list to ask
+          about that.</li>
+      <li>Corentin noted the substitution of a Unicode code point reference in
+          place of "backslash character".</li>
+      <li>Corentin mentioned that the changes are intended to allow "code point"
+          to be used for non-Unicode character sets; hence "Unicode code point"
+          is used in contexts specific to Unicode.</li>
+      <li>Tom expressed uncertainty about the addition of "abstract" in
+          [lex.phases]p1.</li>
+      <li>Corentin responded that abstract characters are used to explain
+          mapping between character sets.</li>
+      <li>Tom agreed, but stated that wording is missing to tie the input to a
+          sequence of abstract characters.</li>
+      <li>Fraser suggested adding a statement to specify that the lexer
+          processes a sequence of Unicode code points.</li>
+      <li>Hubert noted that the current wording limits the effort required to
+          document how input is mapped to a sequence of characters.</li>
+      <li>Corentin acknowledged that wording could be added to state that the
+          implementation-defined mapping produces a sequence of Unicode scalar
+          values.</li>
+      <li>Corentin pointed out how "space character" and "whitespace character"
+          is used differently in [lex.phases]p3.</li>
+      <li>Mark observed that the changes to [lex.phases]p3 substituted
+          "multi-Unicode code point" for "multi-character".</li>
+      <li>Hubert suggested substituting
+          "token comprising multiple Unicode code points" instead.</li>
+      <li>Tom expressed support for substituting "U+0020 SPACE character" for
+          "space character".</li>
+      <li>Corentin observed that "character" can be omitted in the
+          substitution.</li>
+      <li>Hubert agreed.</li>
+      <li>Tom suggested that, in [lex.charset], "code points" could be
+          substituted for "characters" in
+          "The basic character set is a subset ... consisting of 96 characters".</li>
+      <li>Hubert replied that such a substitution would introduce a category
+          error; the basic character set is intended to be a set of abstract
+          characters and is used as such in some places.</li>
+      <li>Tom suggested "The basic character set is a subset of the abstract
+          characters included in the Unicode character set".</li>
+      <li>Hubert suggested a simpler change;
+          "the basic character set consists of the 96 characters specified in [lex.charset.basic]".</li>
+      <li>Tom stated that the changes to the note in [lex.charset]p6 should
+          state "Unicode code point" instead of just "code point" for
+          consistency.</li>
+      <li>PBrett opined that, with only 15 minutes remaining, that he did not
+          think we'll be ready to forward the paper.</li>
+      <li>Tom agreed and stated that he doesn't feel that we have sufficiently
+          reviewed the paper to be confident in polling it.</li>
+      <li>Tom noted that our goal is not to make a perfect standard, but rather
+          to make improvements; we can poll forwarding it knowing that more
+          work will be needed.</li>
+      <li>PBrett suggested polling to continue work and then poll a recommended
+          resolution for the related NB comment in C++23.</li>
+      <li>Steve asked what the motivation is for getting this change in
+          C++23.</li>
+      <li>Corentin responded that he is motivated to remove
+          "translation character set" before it appears in training
+          materials.</li>
+      <li><b>Poll 1.1: P2749R0 "Down with 'character'" should be included in the
+          IS only if the updates to whitespace specification described in P2348
+          "Whitespaces Wording Revamp" are also included.</b>
+        <ul>
+          <li><b>Attendees: 7 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Weak consensus.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 1.2: Forward P2749R0 "Down with 'character'", revised as
+          discussed, to CWG for C++23 as the recommended resolution of ballot
+          comment FR-020-014.</b>
+        <ul>
+          <li><b>Attendees: 7</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 1.3: Recommend rejection of ballot comment FR-020-014 as no
+          consensus for change.</b>
+        <ul>
+          <li><b>Attendees: 7 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Discussion ensued regarding how to prioritize papers for review following the Issaquah meeting and ended with the following tentative prioritization schedule:
+    <ul>
+      <li><a href="https://wg21.link/p2741r1">P2741R1 (user-generated static_assert messages)</a>.</li>
+      <li><a href="https://wg21.link/p2758r0">P2758R0 (Emitting messages at compile time)</a>.</li>
+      <li><a href="https://wg21.link/p2773r0">P2773R0 (Considerations for Unicode algorithms)</a>.</li>
+      <li><a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding)</a>.</li>
+      <li><a href="https://wg21.link/p2729r0">P2729R0 (Unicode in the Library, Part 2: Normalization)</a>.</li>
+      <li><a href="https://wg21.link/p2348r3">P2348R3 (Whitespaces Wording Revamp)</a>.</li>
+      <li><a href="https://wg21.link/p2749r0">P2749R0 (Down with ”character”)</a>.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will take place on 2023-02-22.</li>
 </ul>
 
 
