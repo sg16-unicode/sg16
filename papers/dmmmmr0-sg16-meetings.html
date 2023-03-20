@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-02-22</title>
+<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-03-08</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-03-09</td>
+    <td>2023-03-20</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-02-22</h1>
+<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-03-08</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -105,6 +105,8 @@ snapshot of select meeting summaries from that repository.
       February 1st, 2023</a></li>
   <li><a href="#2023_02_22">
       February 22nd, 2023</a></li>
+  <li><a href="#2023_03_08">
+      March 8th, 2023</a></li>
 </ul>
 
 <p>
@@ -1147,6 +1149,353 @@ Previously published SG16 meeting summary papers:
   </li>
   <li>Tom reported that the next meeting will be 2023-03-08 and that we will
       continue discussion of this paper.</li>
+</ul>
+
+
+<h1 id="2023_03_08">March 8th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2773r0">P2773R0: Considerations for Unicode algorithms</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owen</li>
+  <li>Peter Brett</li>
+  <li>Robin Leroy</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2773r0">P2773R0: Considerations for Unicode algorithms</a>:
+    <ul>
+      <li>PBrett introduced the agenda.</li>
+      <li>Robin provided an overview of tailoring:
+        <ul>
+          <li><em>[ Editor's note: Robin shared his notes following the meeting;
+              they can be found
+              <a href="https://docs.google.com/document/d/12fKu7-p35oH-sP06Hq4SzdZUbOzdtk9hHyCP4Abtl5g/edit">here</a>.
+              ]</em></li>
+          <li>Points 3 and 5 of the "TL;DR" portion of the paper are related to
+              tailoring.</li>
+          <li>Normalization is noted as a priority in the paper and that is a
+              good thing as there are examples of languages and products that do
+              not handle normalization well.</li>
+          <li>The Unicode standard provides examples of tailoring, but those
+              examples are not prescriptive.</li>
+          <li>Tailoring does not mean "language dependent"; it permits many
+              kinds of transformations.</li>
+          <li>Case folding has exactly one case of language specific behavior;
+              Turkic case folding.</li>
+            <ul>
+              <li>"I" -&gt; "ı"
+                  (U+0049 LATIN CAPITAL LETTER I -&gt; U+0131 LATIN SMALL LETTER DOTLESS I)<br/>
+                  "İ" -&gt; "i"
+                  (U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE -&gt; U+0069 LATIN SMALL LETTER I)</li>
+              <li>ICU supports this behavior via a boolean flag on case folding
+                  interfaces.</li>
+              <li>Case folding was intended to support identifier
+                  equivalence.</li>
+            </ul>
+          </li>
+          <li>NFKC case folding does not include language specific
+              tailoring.</li>
+          <li>UAX #29 provides examples of language-dependent grapheme cluster
+              tailoring, but at present, that isn't done in practice.
+            <ul>
+              <li>The CLDR technical committee is experimenting with a
+                  language-independent tailoring of grapheme clusters with a
+                  different behavior for Indic scripts.
+                  That work has not been forwarded to the UTC yet, but is
+                  intended to eventually be used as the new default default
+                  behavior.</li>
+              <li>Changes to
+                  <a href="https://unicode.org/reports/tr29">UAX #29 (Unicode Text Segmentation)</a>
+                  are likely to be proposed.</li>
+            </ul>
+          </li>
+          <li>ICU supports tailoring for line breaking beyond what is stated in
+              the Unicode Standard:
+            <ul>
+              <li>Support for dictionary based layout for Thai.</li>
+              <li>Machine learning based layout for Burmese, Chinese, Japanese,
+                  and Thai.</li>
+              <li>Different line breaking rules for numbers.</li>
+            </ul>
+          </li>
+          <li>Line breaking behavior can be script based as opposed to language
+              based.</li>
+          <li>Case mapping includes language specific tailoring.</li>
+          <li>Collation is used for sorting, but is also used for case
+              insensitive search:
+            <ul>
+              <li>The French word "ŒUF" is primary-equal to "oeuf" for collation,
+                  but case-folding would not produce a match.</li>
+              <li>The German word "fuer" matches "für" in German, but not in
+                  French.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Fraser shared in chat:
+          "my favourite tailoring (for collation) is that in traditional name
+          collation in Scotland, surnames starting "Mc" (e.g. McAdam) sort as
+          if they begin "Mac" (so McAdam and MacAdam sort equivalently)."</li>
+      <li>PBrett noted that, in some Scandinavian dictionaries, words beginning
+          with Å (U+00C5 LATIN CAPITAL LETTER A WITH RING ABOVE) get ordered
+          differently when they correspond to a place name, but not
+          otherwise.</li>
+      <li>PBrett added that, in Japanese, kanji have different meaning if they
+          form part of a person's name as opposed to part of another word.</li>
+      <li>Corentin asked for examples of production systems that handle these
+          cases correctly.</li>
+      <li>Robin replied that collation tailoring doesn't generally perform
+          natural language processing, but noted that locale specifiers may
+          include extensions for phone book order, dictionary order, or other
+          ordering forms.</li>
+      <li>PBrett stated that it is common for programmers to want to sort in
+          many different ways and shared examples of ordering by surname vs
+          address.</li>
+      <li>Robin replied that the CLDR provides data for some of those
+          applications and provided an example of ordering contacts for display
+          on a phone.</li>
+      <li>Robin noted that the non-tailored collation algorithm will produce
+          incorrect results for many languages but will still be more accurate
+          than sorting by, for example, code point values.</li>
+      <li>Corentin asserted that collation support is necessary, but that it
+          should not be considered high priority for now.</li>
+      <li>Corentin noted that support for collation is responsible for a
+          significant proportion of the data included with ICU.</li>
+      <li>Robin stated that Swift supports non-tailored EGCs and both default
+          and language dependent collation and case mapping.</li>
+      <li>Robin noted that Swift encountered some challenges with their EGC
+          segmentation and regional indicators but have not, in general, had
+          issues with instability and
+          <a href="https://unicode.org/reports/tr29">UAX #29 (Unicode Text Segmentation)</a>.</li>
+      <li>Robin reported that, with highly unstable data, programmers will
+          generally want to opt-in to updates independently of compiler
+          upgrades.</li>
+      <li>Tom observed that might be an argument for providing Unicode
+          versioned interfaces in some cases.</li>
+      <li>Robin agreed, but advised doing so only for highly unstable data.</li>
+      <li>Corentin asked about governance of the CLDR:
+        <ul>
+          <li>Is there a specification?</li>
+          <li>Is there a stability policy?</li>
+          <li>Could the CLDR be referenced from the C++ standard?</li>
+        </ul>
+      </li>
+      <li>Robin replied that he does not think the CLDR has a stability
+          policy.</li>
+      <li>Robin stated that the CLDR is released every six months, that it
+          moves fast, and that it is maintained by its own committee within
+          the Unicode Consortium.</li>
+      <li>Robin noted that the syntax used for the CLDR data is standardized via
+          <a href="https://unicode.org/reports/tr35">UTS #35 (Unicode Locale Data Markup Language (LDML))</a>.</li>
+      <li>Tom asked if UTS #35 could be used as a specification to implement an
+          interface to the CLDR as a data source.</li>
+      <li>Robin replied that it could be in principle but that compatibility
+          problems might arise if the CLDR version is not aligned with the
+          implemented version of UTS #35.</li>
+      <li>Corentin asked Robin if he agreed that it would be useful to add
+          support for non-tailored case transformations in the near term.</li>
+      <li>Robin replied that doing so would be a considerable improvement over
+          the status quo.</li>
+      <li>Robin noted that programmers that use the locale independent
+          interfaces where they should not will attract appropriate attention
+          from the internationalization proponents within their
+          organization.</li>
+      <li>PBrett observed that there is a segment of programmers that might not
+          care about collation being correct for various locales.</li>
+      <li>Corentin agreed and noted that ICU must be used today for locale
+          specific support and then observed that having locale independent
+          interfaces might prompt programmers to do the right thing.</li>
+      <li>Robin asserted that providing non-tailored interfaces would be
+          benefitial and that the standard should note their appropriate
+          use.</li>
+      <li>PBrett asked for comments regarding how tailored interfaces should
+          be provided.</li>
+      <li>Corentin replied that tailoring has different requirements and
+          requires different types.</li>
+      <li>Corentin suggested that such types can perhaps be hidden from
+          programmers; for example, views that adjust the types used based on
+          provision of a locale object.</li>
+      <li>PBrett asked if tailoring should be expressed via locale facets or if
+          it is sufficiently disjoint from locale that it should have its own
+          facility.</li>
+      <li>Corentin opined that we should not further build on
+          <tt>std::locale</tt>, but that an interface that accepts some kind of
+          locale object to opt-in to tailoring without other customization is
+          possible.</li>
+      <li>Corentin noted that ICU4X allows customization via "providers" in
+          addition to locale-based tailoring.</li>
+      <li>Corentin expressed uncertainty whether customization beyond
+          locale-based tailoring should be provided.</li>
+      <li>Robin replied that tailoring is unbounded and thus too vast a concept
+          to be used in an unqualified manner.</li>
+      <li>Robin stated that support for
+          <a href="https://unicode.org/reports/tr35">UTS #35 (Unicode Locale Data Markup Language (LDML))</a>
+          would likely be required to do more, but that probably isn't feasible
+          for the near future.</li>
+      <li>Corentin stated that <tt>std::locale</tt> facets support customization
+          but that the design can't possibly account for all tailoring
+          possibilities.</li>
+      <li>Corentin expressed a preference for an implementation-defined
+          locale-based design.</li>
+      <li>Jens stated that tailoring appears to mean a lot of things, that it
+          isn't clear why or how we would provide an interface, and that we are
+          unlikely to specify use of an AI for line breaking.</li>
+      <li>Jens opined that tailoring appears to go beyond the existing
+          facilities that do things like replacing "." with "," when formatting
+          numbers.</li>
+      <li>Jens asserted that programmers can insert their own transformations
+          and that the standard does not have to provide support other than via
+          interoperability.</li>
+      <li>Jens opined that there is not a need to invest time in that direction
+          now.</li>
+      <li>Jens agreed that there are likely cases that can be plausibly and
+          meaningfully provided based on locale.</li>
+      <li>Jens expressed skepticism that we'll pursue a replacement for
+          <tt>std::locale</tt> in the near term.</li>
+      <li>Jens expressed support for specifying some tailored algorithms when
+          the tailoring can be specified with few parameters.</li>
+      <li>Hubert shared a perspective that <tt>std::locale</tt> facets are
+          extensions of what C provides.</li>
+      <li>Hubert stated that it might have been a mistake to make
+          <tt>std::locale</tt> extensible, but such extensions remain an option
+          subject to the limitation that these objects are tied to the C
+          locale ID.</li>
+      <li>Tom asked if there is reason to believe that it is not sufficient for
+          programmers to be able to insert their own tailored transformations
+          in pipelines that they construct.</li>
+      <li>PBrett pondered whether the standard library should include non-DUCET
+          data.</li>
+      <li><em>[ Editor's note: The Default Unicode Collation Element Table
+          (DUCET) is decribed in
+          <a href="https://unicode.org/reports/tr10">UTS #10 (Unicode Collation Algorithm)</a>.
+          ]</em></li>
+      <li>Jens asked why we would provide data if we don't provide algorithms
+          that use it.</li>
+      <li>PBrett replied that the availability of the data could enable
+          programmers to use it to provide their own tailoring.</li>
+      <li>Corentin responded that, given an expectation that programmers provide
+          their own algorithms, there is nothing to provide.</li>
+      <li>Corentin noted that the more we provide, the greater the risk that
+          we'll have to break it later.</li>
+      <li>Corentin asserted that the CLDR data cannot be consumed in a similar
+          manner to timezone data.</li>
+      <li>Tom suggested that such consumption should be possible with an
+          implementation of the LDML.</li>
+      <li>Corentin responded that providing such an implementation is equivalent
+          to implementing ICU.</li>
+      <li>Corentin shared an understanding that ICU's complexity is primarily
+          due to integration with the CLDR.</li>
+      <li>Corentin expressed our task as determining how implementors can
+          provide CLDR-based tailoring using ICU or ICU4X.</li>
+      <li>Corentin noted the implication with regard to portability and
+          suggested ICU4X might provide a better building block.</li>
+      <li>Robin noted his own association with ICU4X and expressed its goal to
+          improve portability based on a more flexible and modular design.</li>
+      <li>Robin stated that ICU4X does not offer strong stability
+          guarantees.</li>
+      <li>Robin agreed with the perspective that implementing support for LDML
+          is tantamount to implementing half of ICU.</li>
+      <li>Hubert noted that the existing C++ collation support is not
+          customizable and that it simply exposes what is provided by the
+          C library.</li>
+      <li>Jens suggested it might be feasible to provide the DUCET data in a
+          pre-compiled form.</li>
+      <li><em>[ Editor's note: doing so would potentially side step the LDML
+          implementation concerns. ]</em></li>
+      <li>Jens noted that, for collation, we all have an intuitive understanding
+          that languages work differently, but that such understanding is less
+          clear for other algorithms.</li>
+      <li><b>Poll 1: Papers proposing standard library Unicode algorithms should
+          include a section discussing future extensions to support Unicode
+          locale-based tailoring.</b>
+        <ul>
+          <li><b>Attendees: 10 (2 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Unanimous consensus in favor.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 2: It is a design goal that non-tailored standard library
+          Unicode algorithms be efficiently implementable using ICU.</b>
+        <ul>
+          <li><b>Attendees: 10 (2 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus.</b></li>
+        </ul>
+      </li>
+      <li>Tom pondered concerns regarding ABI, ODR, and support for constant
+          evaluation.</li>
+      <li>Corentin noted that we haven't discussed whether we want to support
+          constant evaluation or not.</li>
+      <li>Corentin stated that the relevant ODR concerns are similar to those
+          for <tt>std::source_location</tt> and that we strongly don't care
+          about such violations.</li>
+      <li>Hubert expressed a desire to, from an implementation perspective,
+          place much of the associated data in shared libraries and not have
+          them exposed via header files.</li>
+      <li>Corentin suggested discussion is needed regarding freestanding
+          support and how that impacts support for header-only
+          implementations.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will take place on 2023-03-22 and that
+      we'll start reviewing Zach's
+      <a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding)</a>.
+    <ul>
+      <li>PBrett noted that Zach's paper will provide additional fodder for
+          discussing use of <tt>char32_t</tt> as a Unicode code point type and
+          exposure of Unicode algorithms as views.</li>
+    </ul>
+  </li>
 </ul>
 
 
