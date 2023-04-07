@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-03-08</title>
+<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-03-22</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-03-20</td>
+    <td>2023-04-06</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-03-08</h1>
+<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-03-22</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -107,6 +107,8 @@ snapshot of select meeting summaries from that repository.
       February 22nd, 2023</a></li>
   <li><a href="#2023_03_08">
       March 8th, 2023</a></li>
+  <li><a href="#2023_03_22">
+      March 22nd, 2023</a></li>
 </ul>
 
 <p>
@@ -1496,6 +1498,338 @@ Previously published SG16 meeting summary papers:
           exposure of Unicode algorithms as views.</li>
     </ul>
   </li>
+</ul>
+
+
+<h1 id="2023_03_22">March 22nd, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charles Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owens</li>
+  <li>Peter Bindels</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding</a>:
+    <ul>
+      <li>Zach provided an introduction:
+        <ul>
+          <li>The proposal provides interfaces to facilitate conversion between
+              the UTF encodings.</li>
+          <li>The intent is to provide support for ranges and iterators equally
+              well.</li>
+          <li>The proposed interfaces allow for use of SIMD operations with
+              contiguous iterators.</li>
+          <li>Transcoding algorithms are also proposed.</li>
+          <li>Special accommodations are privided for easy use of
+              null-terminated strings.</li>
+          <li>The ubquity of string literals and pointers to <tt>char</tt>
+              motivates specialized interfaces.</li>
+          <li>The proposed interfaces constrain code unit types based on size,
+              not particular character type.</li>
+          <li>Code unit types could also be constrained to particular character
+              types but algorithms are generally not so constrained; this design
+              is more general.</li>
+          <li>Most programmers are expected to use higher level interfaces, but
+              these lower level interfaces enable specialized behavior; e.g.,
+              for text chunking.</li>
+          <li>A <tt>null_sentinel_t</tt> type and a corresponding
+              <tt>null_sentinel</tt> variable enable generalized support for
+              null terminated strings.</li>
+          <li>Additional utilities like <tt>is_encoded</tt> and
+              <tt>find_invalid_encoding</tt> provide nice-to-have
+              functionality.</li>
+          <li>The <tt>transcode_to_utf8</tt> and similar functions could be
+              expanded to perform UTF validation without transcoding.</li>
+          <li>Transcoding iterators are provided for converting between UTF
+              encodings.</li>
+          <li>Error handling is configurable, but only one error handling policy
+              is currently specified; <tt>use_replacement_character</tt>.</li>
+          <li>Insert, front-insert, back-insert, and output transcoding
+              iterators are specified with associated factory functions.</li>
+          <li>It is expected that the transcoding views would be most frequently
+              used.</li>
+          <li>The <tt>as_utf</tt> family of functions return a type that, given
+              a sequence of code units in one UTF encoding, provides a view of
+              code units for another UTF encoding.</li>
+          <li>Formatter specializations are provided for the views.</li>
+          <li>The transcoding iterators wrap a range, not just a single
+              iterator, because advancing the iterator might advance the
+              underlying iterator multiple times thus requiring a sentinel to
+              recognize the end of the underlying range.</li>
+          <li>Wrapping a transcoding iterator in another transcoding iterator
+              yields a transcoding iterator from the base UTF encoding to the
+              final one; this avoids accumulating multiple levels of wrapped
+              iterators without requiring type erasure.</li>
+        </ul>
+      </li>
+      <li>Fraser reported in chat that there is a stray single quotation mark in
+          the <tt>requires</tt> expression in one of the <tt>operator==</tt>
+          declarations for <tt>utf_8_to_16_iterator</tt> in section 4.6.1,
+          "First, the basic ones".</li>
+      <li>Jens stated that the proposed factory functions are probably not
+          needed if support for class template argument deduction (CTAD) can be
+          provided.</li>
+      <li>Zach replied that he added them to follow existing precedent in the
+          standard but agreed they could be omitted.</li>
+      <li>Tom expressed surprise regarding the proposed behavior of
+          <tt>as_utf8()</tt>; he expected a function with that name to provide a
+          view that decodes UTF-8 from underlying data in order to produce code
+          points.</li>
+      <li>Zach replied that the proposed <tt>as_utf8()</tt> design provides a
+          view of UTF-8 code units (not code points) by transcoding from
+          whatever encoding the underlying data is encoded in.</li>
+      <li>Jens stated that the proposed transcoding views (e.g.,
+          <tt>utf8_view</tt>) don't appear to function like other view
+          adapters.</li>
+      <li>Hubert agreed and noted that, unlike other view or iterator adapters,
+          it appears that these views place additional semantic requirements on
+          the iterator template parameters.</li>
+      <li>Zach explained that, if <tt>as_utf8()</tt> is passed a pair of
+          pointers to <tt>char</tt> that the iterator/sentinel pair is returned
+          as is.</li>
+      <li>Hubert noted that, for <tt>utf8_view</tt>, that makes
+          <tt>utf8_iter</tt> an odd choice of name.</li>
+      <li>Jens explained that requiring transcoding work to be performed by the
+          provided <tt>utf8_iter</tt> is very surprising.</li>
+      <li>Zach replied that the design is similar to
+          <tt>std::ranges::filter_view</tt>; that view uses a filter
+          iterator.</li>
+      <li>Jens explained that there is a difference; <tt>filter_view</tt>
+          defines a member type that functions as an iterator adapter and
+          performs the work; in the proposed design, the user provided iterator
+          does the work.</li>
+      <li>Hubert noted that, if the provided iterator does all the work, then
+          the view doesn't adapt anything.</li>
+      <li>Corentin asserted that <tt>utf8_view</tt> does effectively the same
+          thing that <tt>std::ranges::subrange</tt> does.</li>
+      <li>Zach replied that there is a difference in that the transcoding views
+          add a constraint that the provided iterator satisfy
+          <tt>utf_iter</tt>.</li>
+      <li>Fraser asked if it is intended that <tt>as_utf8()</tt> should be
+          usable with, for example, a code page iterator that transcodes to
+          UTF-8.</li>
+      <li>Zach replied affirmatively.</li>
+      <li>Corentin asserted that this design is a departure from prior ranges
+          work.</li>
+      <li>Hubert observed that the transcoding algorithms, unlike the
+          transcoding iterators, do not allow for an error handler to be
+          provided and asked Zach to confirm that they are intended to be less
+          customizable and that programmers can use iterators in a loop to
+          satisfy custom requirements.</li>
+      <li>Zach confirmed and explained that the transcoding algorithms are
+          intended to provide the functionality that is most often wanted,
+          replacement character substitution, at high speed.</li>
+      <li>Hubert stated that support for segmented data that is not necessarily
+          aligned on a code unit sequence boundary requires a way to store a
+          partial code unit sequence so that it can be completed by the
+          following segment rather than substituting a replacement character for
+          the partial sequence.</li>
+      <li>Zach replied that a programmer could handle that requirement by
+          checking that the segment ends with a complete code unit sequence by
+          assigning an iterator to the end of the segment and decoding
+          backwards.</li>
+      <li>Jens suggested another approach would be to signal the end of the
+          sequence early and then check if the base iterator has reached its
+          end.</li>
+      <li>Zach repled that adding additional semantics would complicate the
+          usage experience.</li>
+      <li>Hubert noted that, with regard to performance considerations, the work
+          that JeanHeyd has been doing in WG14 offers more flexibility for error
+          handling.</li>
+      <li>Hubert asked if the transcoding iterator hierarchy unpacking is
+          exposed such that a programmer could take advantage of it.</li>
+      <li>Zach replied that he had not considered exposing it, but that doing so
+          is a possibility that could be looked into.</li>
+      <li>Zach agreed that it would be useful to have generalized support for
+          such unpacking.</li>
+      <li>Tom directed discussion towards the notion of using <tt>char32_t</tt>
+          as a general Unicode code point type.</li>
+      <li>Zach mentioned that his proposal uses <tt>uint32_t</tt>.</li>
+      <li>Robin noted that ICU's <tt>UCHAR</tt> type is an alias of
+          <tt>int32_t</tt>.</li>
+      <li>Zach explained that the <tt>value_type</tt> of the UTF-32 iterators
+          need only be a sufficiently sized integral type; not always a specific
+          type like <tt>char32_t</tt>.</li>
+      <li>Zach argued that the design should allow adaptation to the types the
+          programmer is using.</li>
+      <li>Jens asserted that the <tt>value_type</tt> of the UTF-32 converting
+          iterators should be <tt>char32_t</tt> and that programmers can provide
+          range wrappers for other types.</li>
+      <li>Steve expressed support for always using <tt>char32_t</tt> because
+          doing so enables overloading without ambiguity.</li>
+      <li>Steve conveyed agreement with use of an adapter for other types.</li>
+      <li>Fraser also expressed support for use of the <tt>charN_t</tt> types
+          with the rationale that programmers should not be punished for using
+          the right types.</li>
+      <li>Fraser acknowledged that the design should not encourage casts.</li>
+      <li>PBindels stated in chat, "I value new code getting warnings / errors
+          on bad conversions, over legacy code getting support without
+          casts."</li>
+      <li>JeanHeyd reported that his implementation supports a configuration
+          option that allows for use of a Unicode code point type other than
+          <tt>char32_t</tt> and that every time he tries to exercise it that
+          things break.</li>
+      <li>JeanHeyd provided a link in chat to the documentation for the
+          configuration option;
+          <a href="https://ztdtext.readthedocs.io/en/latest/config.html#config-ztd-text-unicode-code-point-distinct-type">https://ztdtext.readthedocs.io/en/latest/config.html#config-ztd-text-unicode-code-point-distinct-type</a>.</li>
+      <li>JeanHeyd added that, for older code bases, casts end up getting used
+          regardless.</li>
+      <li>JeanHeyd suggested that, if a choice has to be made, <tt>char32_t</tt>
+          be preferred but with a possible opt-in option for use of another type
+          by a minority of users.</li>
+      <li>Zach stated that a template parameter could be added to types like
+          <tt>utf_8_to_32_iterator</tt> to allow for a custom
+          <tt>value_type</tt>.</li>
+      <li>Zach asserted that the <tt>charN_t</tt> types are fine in some cases,
+          but that the community currently uses <tt>char</tt> and
+          <tt>wchar_t</tt> for UTF-8 and UTF-16 respectively and that it would
+          be a shame to force the <tt>charN_t</tt> types on such users.</li>
+      <li>Corentin stated that the choice of types accepted for input vs output
+          are orthogonal.</li>
+      <li>Corentin asserted that it makes sense to specify a single type for the
+          Unicode code point type for many uses, such as for working with EGCs
+          and argued that <tt>char32_t</tt> is the right type.</li>
+      <li>Corentin noted that support for historical uses could hurt
+          composability and stated that imposing questions of what type to use
+          on programmers should be avoided.</li>
+      <li>Corentin admitted that few people use <tt>char8_t</tt> and
+          <tt>char16_t</tt> and stated that we can accept use of <tt>char</tt>
+          and <tt>wchar_t</tt> with the caveat that programmers don't understand
+          what the associated encodings are.</li>
+      <li>Corentin expressed appreciation for the <tt>charN_t</tt> types having
+          well-defined associated encodings.</li>
+      <li>Jens argued that the library is too large as currently proposed and
+          that it needs to be pruned and made more orthogonal.</li>
+      <li>Jens insisted that we should be courageous; we are the standardization
+          committee and we define what the future should look like.</li>
+      <li>Jens noted that the standard containers were forward looking and the
+          legacy container-like libraries are all gone now.</li>
+      <li>Jens encouraged designing for composability by specifying elementary
+          builing blocks that can be combined.</li>
+      <li>Jens asserted that it is ok if programmers are required to write a few
+          wrappers for use with their existing projects.</li>
+      <li>Zach asked what Jens would suggest cutting.</li>
+      <li>Jens suggested removing the front, back, and insert iterators, perhaps
+          in favor of a generic adapter that facilitates use with the existing
+          front, back, and insert iterators.</li>
+      <li>Jens added that the full matrix of UTF converters should be avoided in
+          favor of conversion from one UTF encoding to a code point sequence and
+          then to another UTF encoding.</li>
+      <li>Jens expressed a desire for diagnostics on bad conversion as Peter
+          Bindels mentioned in chat.</li>
+      <li>Zach asked if that would imply issuing diagnostics for input provided
+          in other integer types.</li>
+      <li>Jens replied that a transform view can be used to explicitly support
+          those cases.</li>
+      <li>Jens stated that he wants a view that works more like other views; not
+          like <tt>as_utf8</tt> in this proposal.</li>
+      <li>Jens requested that range object adapters be proposed instead of
+          functions.</li>
+      <li>Jens explained that functions are problematic because of argument
+          dependent lookup (ADL) and that range object adapters avoid that
+          problem.</li>
+      <li>Zach replied that his implementation uses customization point objects
+          (CPOs), that the paper doesn't reflect that, but that it should.</li>
+      <li>Victor stated that the project he works on contains a massive amount
+          of code that assumes data held in <tt>char</tt>-based storage is
+          UTF-8; that and similar projects require first class support for use
+          of UTF-8 with <tt>char</tt>.</li>
+      <li>Victor reported that his project has banned use of <tt>char8_t</tt>
+          due to conflicts introduced when programmers tried to use it.</li>
+      <li>Victor stated that, based on his basic understanding of Zach's
+          proposal, the proposed design accommodates such usage.</li>
+      <li>Tom asked Victor if such first class support could be conditionally
+          provided based on the literal encoding being UTF-8.</li>
+      <li>Victor replied that doing so could make sense.</li>
+      <li>Victor indicated that, without good support for use of UTF-8 with
+          <tt>char</tt>, his project would probably recommend against use of
+          the facility.</li>
+      <li>Corentin reported having considered implicit first class support for
+          UTF-8 and <tt>char</tt> when the literal encoding is UTF-8, noted that
+          such code is not portable, but expressed hope that such code would
+          fail compilation rather than produce mojibake.</li>
+      <li>Corentin suggested decreasing the size of the library by first
+          focusing on a view and then adding eager converters and inserters
+          later.</li>
+      <li>Corentin expressed appreciation for the focus on UTF encodings vs
+          support for all encodings.</li>
+      <li>Tom stated that his and JeanHeyd's prior work on a <tt>text_view</tt>
+          type that uses codecs satisfied a number of the composability
+          concerns that Jens raised.</li>
+      <li>JeanHeyd agreed that codecs provide more flexibility.</li>
+      <li>JeanHeyd noted that bulk speed is attainable with his, Tom's and
+          Zach's designs.</li>
+      <li>JeanHeyd stated that codecs impose performance overhead relative to
+          iterators due to state management but that good QoI can mitigate those
+          costs.</li>
+      <li>JeanHeyd observed that <tt>short</tt>, <tt>int</tt>, <tt>wchar_t</tt>,
+          and other types have historically been used for text because the
+          <tt>charN_t</tt> types weren't available.</li>
+      <li>JeanHeyd asserted that whether and how programmers migrate to
+          <tt>charN_t</tt> types depends on how difficult we make such a
+          transition.</li>
+      <li>JeanHeyd suggested that <tt>charN_t</tt> types be used by default due
+          to their overloading abilities and strong encoding associations.</li>
+      <li>JeanHeyd declared that, for <tt>char</tt> and <tt>wchar_t</tt>, one
+          has to assume an encoding and, most of the time, that works out ok,
+          but when it doesn't, it is a problem.</li>
+      <li>JeanHeyd commented that the codec approach works well for handling
+          <tt>char</tt> and <tt>wchar_t</tt>, but less well with iterators.</li>
+      <li>JeanHeyd insisted that the missing library support for
+          <tt>charN_t</tt> is an impediment.</li>
+      <li>JeanHeyd reported that the work he is doing is more encompassing.</li>
+      <li>Fraser asked whether anyone has written a paper regarding the pain
+          points with using the <tt>charN_t</tt> types.</li>
+      <li>Corentin replied that standard library support is missing.</li>
+      <li>Jens provided specific examples of missing support; <tt>printf()</tt>,
+          <tt>std::format()</tt>, and <tt>std::iostreams</tt>.</li>
+      <li>JeanHeyd agreed that the most significant problem is the inability to
+          conveniently print data held in those types.</li>
+      <li>Corentin agreed that the lack of support for <tt>charN_t</tt> types in
+          <tt>std::format()</tt> is a big issue.</li>
+      <li>Steve replied that we would have to figure out what it means to print
+          <tt>char32_t</tt>.</li>
+      <li>Tom suggested we might be able to specify it for
+          <tt>std::print()</tt>.</li>
+      <li>Steve tentatively agreed but noted a need to consider locale
+          impact.</li>
+      <li>Victor agreed that locale issues need to be addressed.</li>
+      <li>Steve noted that these are the reasons that Python 3 moved to the
+          <tt>C.UTF-8</tt> locale by default.</li>
+      <li><em>[ Editor's note: The Python 3 migration to the <tt>C.UTF-8</tt>
+          locale was proposed in
+          <a href="https://peps.python.org/pep-0538">PEP 538 (Coercing the legacy C locale to a UTF-8 based locale)</a>.
+          ]</em></li>
+      <li>JeanHeyd noted that there is still a lot of code in the wild that
+          assumes ASCII.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will be on April 12th and that we'll
+      continue discussion of this paper.</li>
+  <li>Tom suggested we should review the prior work on <tt>text_view</tt> given
+      how long it has been since we've discussed it.</li>
 </ul>
 
 
