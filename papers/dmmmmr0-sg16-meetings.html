@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-04-12</title>
+<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-04-26</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-04-27</td>
+    <td>2023-05-03</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-04-12</h1>
+<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-04-26</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -111,6 +111,8 @@ snapshot of select meeting summaries from that repository.
       March 22nd, 2023</a></li>
   <li><a href="#2023_04_12">
       April 12th, 2023</a></li>
+  <li><a href="#2023_04_26">
+      April 26th, 2023</a></li>
 </ul>
 
 <p>
@@ -2127,6 +2129,376 @@ Previously published SG16 meeting summary papers:
       <li><a href="https://wg21.link/p2758r0">P2758R0: Emitting messages at compile time</a>.</li>
     </ul>
   </li>
+</ul>
+
+
+<h1 id="2023_04_26">April 26th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://www.unicode.org/L2/L2023/23107-terminal-suppt.pdf">L2/23-107: Proper Complex Script Support in Text Terminals</a>:
+    <ul>
+      <li>Determine interest for participation in a potential new UTC
+          project.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2779r0">P2779R0: Make basic_string_view’s range construction conditionally explicit</a>:
+    <ul>
+      <li>Determine whether to commit SG16 time to discussing this paper.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2741r1">P2741R1: user-generated static_assert messages</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owen</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://www.unicode.org/L2/L2023/23107-terminal-suppt.pdf">L2/23-107: Proper Complex Script Support in Text Terminals</a>:
+    <ul>
+      <li>Tom provided an introduction:
+        <ul>
+          <li>The paper authors seek to specify a protocol for the display of
+              complex scripts in traditional text-based terminals.</li>
+          <li>Such a protocol could improve text formatting behavior beyond
+              what has been achieved with
+              <a href="https://wg21.link/p1868">P1868 (🦄 width: clarifying units of width and precision in std::format)</a>
+              and
+              <a href="https://wg21.link/p2675">P2675 (LWG3780: The Paper (format's width estimation is too approximate and not forward compatible))</a>.</li>
+          <li>The paper proposes the creation of a new project within the
+              UTC.</li>
+          <li>Robin Leroy indicated that, should a new UTC project be approved,
+              volunteers to participate in it would be welcome.</li>
+          <li>Anyone interested should reach out to Robin.</li>
+        </ul>
+      </li>
+      <li>Fraser stated that the paper is an interesting read regardless of any
+          interest in participation in a UTC project.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2779r0">P2779R0: Make basic_string_view’s range construction conditionally explicit</a>:
+    <ul>
+      <li>Tom stated that, in his opinion, the paper does not raise SG16
+          concerns; however, the paper lists SG16 as an audience and Victor
+          requested that SG16 review it.</li>
+      <li>Tom explained that the discussion today is only intended to determine
+          whether SG16 should spend time on this paper prior to receiving a
+          request from the LEWG chair.</li>
+      <li>Victor opined that SG16 should review because the paper proposes the
+          use of <tt>std::char_traits</tt> to detect a string-like type.</li>
+      <li>Tom observed that the proposed wording doesn't actually reference
+          <tt>std::char_traits</tt>.</li>
+      <li>Fraser asked for confirmation that the question in front of SG16 is
+          whether to weight in on this use of <tt>std::char_traits</tt>.</li>
+      <li>Victor confirmed.</li>
+      <li>Tom commented that the proposed wording only appears to use a traits
+          type to name specializations of <tt>std::basic_string_view</tt> in
+          order to opt them into the proposed <tt>is_string_view_like</tt>
+          trait.</li>
+      <li>Victor directed Tom to look at the wording for option 2.</li>
+      <li>Corentin stated that he has been considering writing a paper to
+          prohibit user specializations of <tt>std::char_traits</tt>.</li>
+      <li>Zach commented that traits types can be awkward; especially with
+          SFINAE.</li>
+      <li>Tom observed that the proposed wording only checks whether both types
+          have a matching member type named <tt>traits_type</tt>; it doesn't
+          check for <tt>std::char_traits</tt> specifically.</li>
+      <li>Corentin requested a poll to encourage LEWG not to rely on
+          <tt>std::char_traits</tt>.</li>
+      <li>Tom asked if anyone was opposed to such a poll.</li>
+      <li>Jens noted that the proposal just performs a type tag comparison and
+          doesn't inspect the type definition.</li>
+      <li>Jens emphasized that this is just a heuristic intended to identify
+          types that are semantically similar to <tt>std::string_view</tt>.</li>
+      <li>Jens commented that if a better heuristic were to be found, that would
+          be great, but otherwise the proposed heuristic seems conservatively
+          correct.</li>
+      <li>Jens stated that he does not see an SG16 concern here.</li>
+      <li>Zach expressed a preference towards waiting for the paper author to
+          present before any polls are taken.</li>
+      <li>Zach stated that the <tt>traits_type</tt> name is not great for
+          enabling this heuristic, but is not as bad as examining
+          <tt>std::char_traits</tt> directly.</li>
+      <li>Corentin suggested that option 2 might not be needed given the option
+          1 approach to explicitly opt in using a different name.</li>
+      <li>Jens noted that the proposed wording for option 1 subsumes option
+          2.</li>
+      <li>Victor noticed that the paper lists Folly's <tt>fbstring</tt> type
+          and asserted that the implicit opt-in would not be wanted by its
+          maintainers.</li>
+      <li>Victor expressed a desire to deprecate <tt>std::char_traits</tt>.</li>
+      <li>Tom agreed with Zach that the paper author should be granted an
+          opportunity to present his perspective before SG16 takes further
+          action.</li>
+      <li>Tom said he would reach out to the paper author to see if he would
+          like to present.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2741r1">P2741R1: user-generated static_assert messages</a>:
+    <ul>
+      <li>Corentin introduced the paper:
+        <ul>
+          <li>The paper proposes an extension to <tt>static_assert</tt> to
+              enable the optional message to be provided by a constant
+              expression evaluated at compile-time.</li>
+          <li>Barry Revzin's
+              <a href="https://wg21.link/p2758r0">P2758R0 (Emitting messages at compile time)</a>
+              proposes some additional <tt>consteval</tt> functions that do
+              similarly.</li>
+          <li>The functionality these papers propose is not an SG16 concern,
+              but the encoding used for the messages is.</li>
+          <li>The only encoding that is currently known at compile-time for
+              strings in <tt>char</tt>-based storage is the ordinary literal
+              encoding.</li>
+          <li>There is a question of whether the proposed features should also
+              support <tt>wchar_t</tt>, <tt>char8_t</tt>, <tt>char16_t</tt>,
+              and/or <tt>char32_t</tt>.</li>
+        </ul>
+      </li>
+      <li>Victor noticed that the paper contains an example that uses
+          <tt>std::format</tt> in an expression that requires constant
+          evaluation despite the current lack of <tt>constexpr</tt> support for
+          it in the standard and no current proposal to add such support.</li>
+      <li>Corentin acknowledged that limitation but noted that the
+          <tt>format</tt> implementation in
+          <a href="https://github.com/fmtlib/fmt">libfmt</a>
+          has such support.</li>
+      <li>Corentin explained that the proposed addition to
+          <tt>static_assert</tt> is that the message parameter accept
+          string-like types that have appropriate <tt>data()</tt> and
+          <tt>size()</tt> member functions.</li>
+      <li>Corentin noted that this suffices to enable any string produced
+          during constant evaluation to be provided by wrapping it in a
+          <tt>std::string_view</tt>-like type.</li>
+      <li>Corentin stated that there is an open question of whether string-like
+          types with non-contiguous storage should be supported.</li>
+      <li>Corentin added that, as proposed, text in <tt>char8_t</tt>-based
+          storage can also be used.</li>
+      <li>Zach asked why <tt>std::format</tt> doesn't support constant
+          evaluation.</li>
+      <li>Corentin replied that the question should be directed to EWG, but
+          noted some existing constant evaluation limitations; that
+          floating-point types aren't supported for example.</li>
+      <li>Zach asked what an implementation would do when trying to present
+          the message to a user.</li>
+      <li>Corentin responded that it would have to convert the message from
+          the literal encoding to the encoding used to display text to a
+          user.</li>
+      <li>Corentin noted that this would add a new conversion requirement to
+          compilers.</li>
+      <li><em>[ Editor's note: Implementations are currently required to
+          convert from the source file encoding to the various literal
+          encodings, but do not necessarily need to be able to convert from
+          those literal encodings to any other encoding. ]</em></li>
+      <li>Zach commented that the proposed wording makes the design clear and
+          that he has no concerns. </li>
+      <li>Victor stated that <tt>std::format</tt> could support
+          <tt>constexpr</tt> now given that is has been shown to be
+          implementable.</li>
+      <li>Victor asserted that the ordinary literal encoding is the right
+          choice for text in <tt>char</tt>-based storage.</li>
+      <li>Victor commented that the only question for SG16 is whether to add
+          support just for <tt>char</tt> or for all of the character types.</li>
+      <li>Jens observed a parsing issue in the proposed wording that will
+          require disambiguation; a string literal matches both
+          <i>unevaluated-string</i> and <i>constant-expression</i>.</li>
+      <li>Jens suggested that, if text in <tt>char8_t</tt>-based storage is
+          supported for the <i>constant-expression</i> case, then UTF-8 string
+          literals should also be supported for the <i>unevaluated-string</i>
+          case so that such literals don't fall into the former case.</li>
+      <li>Corentin suggested that EWG should decide whether pointers to
+          null-terminated strings should be supported.</li>
+      <li><em>[ Editor's note: Discussion ensued regarding unevaluated strings,
+          UCNs, conversion to literal encodings, and whether two grammar
+          productions are really required; the editor failed to record an
+          accurate record of the discussion. ]</em></li>
+      <li>Jens requested that the wording be rebased on the current working
+          draft.</li>
+      <li>Jens noted that the pointer+size interface is preferred for the
+          constant evaluation case and that therefore creates motivation for
+          treating string literals as a special case.</li>
+      <li>Jens noticed that the proposed wording suggests that the
+          <i>constant-expression</i> argument is evaluated multiple times.</li>
+      <li>Jens identified an additional wording issue;
+          "possibly const-qualified type is <tt>char</tt>* or <tt>char8_t</tt>*"
+          should be something like
+          "pointer to possibly const-qualified <tt>char</tt> or <tt>char8_t</tt>."</li>
+      <li>Mark asked Victor if the libfmt <tt>format</tt> implementation supports
+          floating-point types in constant evaluation.</li>
+      <li>Victor confirmed that it does, but that it doesn't use
+          <tt>to_chars()</tt> to do so.</li>
+      <li>Corentin spoke towards the motivation to support character types
+          other than <tt>char</tt>:
+        <ul>
+          <li>Support for <tt>u8""</tt> and <tt>char8_t</tt> ensures the
+              availability of an encoding that supports all characters.</li>
+          <li>Support for <tt>L""</tt> and <tt>wchar_t</tt> enables the use of
+              existing <tt>constexpr</tt> string building functions used on
+              Windows.</li>
+        </ul>
+      </li>
+      <li>Tom asked if it is necessary to allow encoding prefixes for the
+          <i>unevaluated-string</i> case and noted that
+          <a href="https://wg21.link/p2361">P2361 (Unevaluated strings)</a>
+          argued that such allowances are not needed.</li>
+      <li>Corentin replied that the only motivation would be to prevent such
+          expressions from falling into the <i>constant-expression</i>
+          case.</li>
+      <li>Jens noted that falling into that case would render the program
+          ill-formed since string literals don't have a type that satisfies the
+          requirements for <tt>data()</tt> and <tt>size()</tt> members.</li>
+      <li>Tom responded that the <i>constant-expression</i> case could also
+          support pointers to null-terminated strings.</li>
+      <li>Zach asked if the requirements could be specified in terms of
+          <tt>std::data()</tt> and <tt>std::size()</tt>.</li>
+      <li>Corentin replied that such support would require including standard
+          headers.</li>
+      <li>Jens observed that use of <tt>std::data()</tt> and
+          <tt>std::size()</tt> with the arrays produced by string literals
+          would create ambiguity regarding the presence or absence of a null
+          terminator in the string data.</li>
+      <li>Zach lamented the absence of a trait to differentiate string
+          literals from other kinds of expressions.</li>
+      <li>Jens replied that any such solution would require extensions into
+          the type system.</li>
+      <li>Jens reported that the last line of the proposed wording refers to
+          a <i>string-literal</i> that is not present in the
+          <i>static_assert-declaration</i>.</li>
+      <li>Victor expressed a preference for avoiding null-terminated strings
+          and sticking to the proposed pointer+size design.</li>
+      <li>Jens requested that the wording be aligned across other declarations
+          with regard to the requirements to display messages at compile-time
+          and advised discussing with the author of
+          <a href="https://wg21.link/p1301">P1301 ([[nodiscard("should have a reason")]])</a>.</li>
+      <li><b>Poll 1: Text produced during constant evaluation in char-based
+          storage that is provided to the compiler shall be encoded in the
+          literal encoding.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Strong consensus in favor.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 2: static_assert(cond, constant-expression) should support
+          expressions that produce a range of <tt>char</tt> result.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 3: static_assert(cond, constant-expression) should support
+          expressions that produce a range of <tt>wchar_t</tt> result.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>A: Would like to see more motivation.</b></li>
+          <li><b>Consensus against.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 4: static_assert(cond, constant-expression) should support
+          expressions that produce a range of <tt>char8_t</tt> result.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>SA: We shouldn't complicate the feature; <tt>char</tt>
+              should suffice.</b></li>
+          <li><b>No consensus.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 5: static_assert(cond, constant-expression) should support
+          expressions that produce a range of <tt>char16_t</tt> or
+          <tt>char32_t</tt> result.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be on 2023-05-10 and that an agenda
+      is yet to be determined.</li>
 </ul>
 
 
