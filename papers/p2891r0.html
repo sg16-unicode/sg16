@@ -1,0 +1,2871 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<head>
+<title>SG16: Unicode meeting summaries 2023-01-11 through 2023-05-10</title>
+</head>
+
+<style type="text/css">
+
+table#header th,
+table#header td
+{
+    text-align: left;
+}
+
+tt {
+    font-family: monospace;
+}
+
+/* Thanks to Elias Kosunen for the following CSS suggestions! */
+
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    line-height: 125%;
+}
+
+html, body {
+    background-color: #eee;
+}
+
+h1, h2, h3, h4, h5, p, span, li, dt, dd {
+    color: #333;
+}
+
+p, li {
+    line-height: 140%;
+}
+
+body {
+    padding: 1em;
+    max-width: 1600px;
+}
+
+p, li {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-font-smoothing: antialiased !important;
+    text-rendering: optimizelegibility !important;
+    letter-spacing: .01em;
+}
+
+h1, h2, h3 {
+    margin-bottom: 1em;
+    letter-spacing: .03em;
+}
+
+blockquote.quote
+{
+    margin-left: 0em;
+    border-style: solid;
+    background-color: lemonchiffon;
+    color: #000000;
+    border: 1px solid black;
+}
+
+</style>
+
+<body style="max-width: 8.5in">
+
+<table id="header">
+  <tr>
+    <th>Document Number:</th>
+    <td>P2891R0</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>2023-05-16</td>
+  </tr>
+  <tr>
+    <th>Audience:</th>
+    <td>SG16</td>
+  </tr>
+  <tr>
+    <th>Reply-to:</th>
+    <td>Tom Honermann &lt;tom@honermann.net&gt;</td>
+  </tr>
+</table>
+
+
+<h1>SG16: Unicode meeting summaries 2023-01-11 through 2023-05-10</h1>
+
+<p>
+Summaries of SG16 meetings are maintained at
+<a href="https://github.com/sg16-unicode/sg16-meetings">
+https://github.com/sg16-unicode/sg16-meetings</a>.  This paper contains a
+snapshot of select meeting summaries from that repository.
+</p>
+
+<ul>
+  <li><a href="#2023_01_11">
+      January 11th, 2023</a></li>
+  <li><a href="#2023_01_25">
+      January 25th, 2023</a></li>
+  <li><a href="#2023_02_01">
+      February 1st, 2023</a></li>
+  <li><a href="#2023_02_22">
+      February 22nd, 2023</a></li>
+  <li><a href="#2023_03_08">
+      March 8th, 2023</a></li>
+  <li><a href="#2023_03_22">
+      March 22nd, 2023</a></li>
+  <li><a href="#2023_04_12">
+      April 12th, 2023</a></li>
+  <li><a href="#2023_04_26">
+      April 26th, 2023</a></li>
+  <li><a href="#2023_05_10">
+      May 10th, 2023</a></li>
+</ul>
+
+<p>
+Previously published SG16 meeting summary papers:
+<ul>
+  <li><a href="https://wg21.link/p1080">P1080: SG16: Unicode meeting summaries 2018/03/28 - 2018/04/25</a></li>
+  <li><a href="https://wg21.link/p1137">P1137: SG16: Unicode meeting summaries 2018/05/16 - 2018/06/20</a></li>
+  <li><a href="https://wg21.link/p1237">P1237: SG16: Unicode meeting summaries 2018/07/11 - 2018/10/03</a></li>
+  <li><a href="https://wg21.link/p1422">P1422: SG16: Unicode meeting summaries 2018/10/17 - 2019/01/09</a></li>
+  <li><a href="https://wg21.link/p1666">P1666: SG16: Unicode meeting summaries 2019/01/23 - 2019/05/22</a></li>
+  <li><a href="https://wg21.link/p1896">P1896: SG16: Unicode meeting summaries 2019/06/12 - 2019/09/25</a></li>
+  <li><a href="https://wg21.link/p2009">P2009: SG16: Unicode meeting summaries 2019-10-09 through 2019-12-11</a></li>
+  <li><a href="https://wg21.link/p2179">P2179: SG16: Unicode meeting summaries 2020-01-08 through 2020-05-27</a></li>
+  <li><a href="https://wg21.link/p2217">P2217: SG16: Unicode meeting summaries 2020-06-10 through 2020-08-26</a></li>
+  <li><a href="https://wg21.link/p2253">P2253: SG16: Unicode meeting summaries 2020-09-09 through 2020-11-11</a></li>
+  <li><a href="https://wg21.link/p2352">P2352: SG16: Unicode meeting summaries 2020-12-09 through 2021-03-24</a></li>
+  <li><a href="https://wg21.link/p2397">P2397: SG16: Unicode meeting summaries 2021-04-14 through 2021-05-26</a></li>
+  <li><a href="https://wg21.link/p2512">P2512: SG16: Unicode meeting summaries 2021-06-09 through 2021-12-15</a></li>
+  <li><a href="https://wg21.link/p2605">P2605: SG16: Unicode meeting summaries 2022-01-12 through 2022-06-08</a></li>
+  <li><a href="https://wg21.link/p2678">P2678: SG16: Unicode meeting summaries 2022-06-22 through 2022-09-28</a></li>
+  <li><a href="https://wg21.link/p2766">P2766: SG16: Unicode meeting summaries 2022-10-12 through 2022-12-14</a></li>
+</ul>
+</p>
+
+
+<h1 id="2023_01_11">January 11th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Planning for Issaquah.</li>
+  <li><a href="https://wg21.link/p2736r0">P2736R0: Referencing the Unicode Standard</a></li>
+  <li><a href="https://isocpp.org/files/papers/D2749R0.pdf">D2749R0: Down with ”character”</a></li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Mark Zeren</li>
+  <li>Nathan Owen</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>A round of introductions was held to welcome Fraser as a new
+      attendee.</li>
+  <li>Planning for Issaquah:
+    <ul>
+      <li>Tom expressed interest in holding a meeting in Issaquah despite
+          neither he nor Peter Brett planning to attend in person.</li>
+      <li>Tom reported that Steve agreed to facilitate the in-person aspects
+          of the meeting in Issaquah.</li>
+      <li>Tom suggested aiming for a half day on Thursday.</li>
+      <li>Tom asked who planned to attend in person; three people expressed
+          such intent.</li>
+      <li>MarkZ reported that he would have a conflict at 3pm every day.</li>
+      <li>Discussion ensued regarding the merits of reserving a room vs
+          planning for in-person attendees to join via Zoom.</li>
+      <li>Steve noted that Zach's recent and upcoming papers may attract more
+          interest.</li>
+      <li>Zach noted that SG16 tends to attract a few additional attendees
+          beyond the regulars.</li>
+      <li>Tom stated he would request a room.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2736r0">P2736R0: Referencing the Unicode Standard</a>:
+    <ul>
+      <li>Tom summarized the discussion from the
+          <a href="https://github.com/sg16-unicode/sg16-meetings#december-14th-2022">2022-12-14 SG16 telecon</a>
+          concerning the <tt>__STDC_ISO_10646__</tt> predefined macro.</li>
+      <li>Corentin provided an introduction.</li>
+      <li>Corentin reported having reviewed the terminology from the Unicode
+          Standard to identify wording changes to be made.</li>
+      <li>Corentin explained that ISO/IEC 10646 uses "character" in its wording,
+          but that the proposed wording uses "abstract character" when
+          appropriate.</li>
+      <li>Corentin noted that "character" is retained for uses such as
+          "character type".</li>
+      <li>Hubert stated that the "abstract character" definition from the
+          Unicode Standard can be broadly applied and thus should only be used
+          when a broad interpretation is actually intended.</li>
+      <li>Corentin replied that "abstract character" is relevant when mapping
+          between different character sets.</li>
+      <li>Corentin indicated that "abstract character" only ended up being used
+          in one place.</li>
+      <li>Jens asserted there is a need for a term to express equivalence
+          between characters.</li>
+      <li>Tom agreed and noted that "abstract character" is useful when there
+          is more than one possible encoding for the same character;
+          as in Unicode normalization forms.</li>
+      <li>Hubert acknowledged that "abstract character" would be appropriate
+          for the mapping of source code characters to the translation
+          character set.</li>
+      <li>Jens suggested that is a QoI concern since translation phase 1
+          behavior is implementation-defined.</li>
+      <li>Hubert agreed use of the term could be avoided there if desired.</li>
+      <li>Corentin explained that the C++ standard currently contains two
+          normative references to ISO/IEC 10646, one of which is to an
+          obsolecent version for a definition of UCS-2; the proposed wording
+          replaces references to UCS-2 with a restricted form of UTF-16.</li>
+      <li>Corentin stated that references to the Unicode Standard are inclusive
+          of the annexes; normative references to the annexes are therefore
+          removed.</li>
+      <li>Corentin reported that many of the changes are mechanical;
+          "UCS" was replaced with "Unicode".</li>
+      <li>Corentin noted that the control code alias names table was removed
+          following discussion on the SG16 mailing list.</li>
+      <li>Steve pondered whether notes should be added to the C++ standard that
+          explain where to find information in the Unicode Standard.</li>
+      <li>Corentin replied that doing so can be useful;
+          for example for <tt>NameAliases.txt</tt>.</li>
+      <li>Hubert stated that "UCS Encoding Form" is more restrictive than
+          "Unicode Encoding Form"; the latter isn't limited to the common UTF
+          encodings..</li>
+      <li>Mark asked if that terminology should not then be changed.</li>
+      <li>Hubert replied that it might be necessary to add constraints or to
+          find another way to identify the relevant encodings.</li>
+      <li>Mark suggested that the first heading in Table 1 in [lex.charset]
+          could be changed to "abstract character".</li>
+      <li>Jens objected and explained that the first column lists code points
+          and the second column lists names; these are concrete character
+          references.</li>
+      <li>Corentin replied that he had not felt a need to change the use of
+          "character" in that table heading.</li>
+      <li>Jens stated that the change to remove the control code alias table
+          changes the specification with regard to allowances for the "BELL"
+          and "ALERT" names.</li>
+      <li>Corentin replied that wording was added to restrict alias names to
+          those that are specified as
+          "control", "correction", and "alternate".</li>
+      <li>Jens noted that the code page chart appears to list "BELL" as a
+          control name, but in a confusing way that is inconsistent with the
+          names in <tt>NameAliases.txt</tt>.</li>
+      <li><em>[ Editor's note: The discussion of "BELL" and "ALERT" centers
+          around how the Unicode Standard presents the alias names for U+0007.
+          The
+          <a href="https://www.unicode.org/charts/PDF/U0000.pdf">C0 Controls and Basic Latin PDF</a>
+          displays as follows.
+          <blockquote class="quote">
+<pre>0007  &lt;control&gt;
+             = BELL</pre>
+          </blockquote>
+          <a href="https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"><tt>NameAliases.txt</tt></a>
+          is more clear in its intent:
+          <blockquote class="quote">
+<pre># Note that no formal name alias for the ISO 6429 "BELL" is
+# provided for U+0007, because of the existing name collision
+# with U+1F514 BELL.
+
+0007;ALERT;control
+0007;BEL;abbreviation</pre>
+          </blockquote>
+          ]</em></li>
+      <li>Tom summarized the concern; implementors might look at the code page
+          charts and become confused or implement something other than what is
+          intended.</li>
+      <li>Corentiin replied with doubts that implementors would base their
+          implementations on the code page charts.</li>
+      <li>Zach asked if the intent can be made more explicit by reintroducing a
+          note to direct readers to <tt>NameAliases.txt</tt>.</li>
+      <li>Jens replied that a note would be helpful and that be believes the
+          existing table was originally built from content in
+          <tt>NameAliases.txt</tt>.</li>
+      <li>Steve suggested amending the proposed
+          "control, correction, or alternate" wording to add
+          "as specified in <tt>NameAliases.txt</tt>".</li>
+      <li>Jens expressed concern about duplicating content from the Unicode
+          Standard.</li>
+      <li>Zach suggested retaining the prior
+          "These names are derived from the Unicode Character Database's
+          <tt>NameAliases.txt</tt>" wording but with "derived" removed.</li>
+      <li>Corentin agreed to make a change.</li>
+      <li>Jens stated that references to the Unicode Standard should have
+          "the" capitalized.</li>
+      <li>Tom expressed a preference in favor of "Unicode code point" over
+          "Unicode scalar value" with the latter reserved for use in
+          expressing requirements.</li>
+      <li>Zach expressed indifference and noted that UCD properties won't be
+          present for surrogate code points.</li>
+      <li>Hubert stated that use of "Unicode scalar value" has the advantage
+          of avoiding the question of whether non-scalar values need to be
+          considered in the given context.</li>
+      <li>Steve noted that "Unicode scalar value" implies a precondition that,
+          if violated, could lead to undefined behavior.</li>
+      <li>Jens suggested that references to chapters of the Unicode Standard
+          should use both numbers and names for resiliency against changes.</li>
+      <li>Corentin explained that references to UCS-2 were replaced with
+          references to UTF-16 with additional restrictions to limit encoded
+          characters to those in the BMP.</li>
+      <li>Fraser replied that there is a semantic difference since UCS-2 allowed
+          encoding surrogate code points.</li>
+      <li>Corentin responded that the previous wording was not clear how such
+          code points were to be handled.</li>
+      <li>Hubert pointed out that, in the proposed wording for the
+          <tt>codecvt</tt> facets, the first bullet describes the artifacts
+          produced by an encoding where as the second bullet names an
+          encoding.</li>
+      <li>Hubert stated that both bullets should be written such that they can be
+          easily read as specifying encodings.</li>
+      <li>Jens suggested retaining UCS-2 teminology by adding a definition of
+          it that specifies it as a restricted form of UTF-16.</li>
+      <li>Zach expressed a preference for the currently proposed wording with
+          the category error corrected.</li>
+      <li>Hubert suggested that the wording state that the facet only maps
+          from that code point range and nothing else.</li>
+      <li>Tom observed that, if the UTF-8 text has characters that map outside
+          the BMP, the wording doesn't say what happens.</li>
+      <li>Hubert stated that we need to make it clear that just converting to
+          UTF-16 isn't acceptible.</li>
+      <li>Corentin explained that he did not remove the UAX #31 reference since
+          Steve is working on related changes.</li>
+      <li>Corentin expressed uncertainty whether a separate UAX #31 reference
+          is needed.</li>
+      <li>Corentin observed that some unintended <tt>tcode</tt> LaTeX markup
+          appears in one of the bibliography entries proposed for removal.</li>
+      <li>Zach returned discussion to the <tt>__STDC_ISO_10646__</tt> predefined
+          macro, noted that it is inherited from C, and opined that there is
+          nothing to be done for it.</li>
+      <li>Jens replied that the wording essentially states that <tt>wchar_t</tt>
+          must be at least 21 bits for the macro to be defined.</li>
+      <li>Hubert observed that the proposed change loses the requirement that
+          storing a wide character stores a value that matches that character's
+          Unicode scalar value.</li>
+      <li>Hubert explained that this behavior is the design flaw that makes it
+          not possible for a compiler to predefine this macro; the value held
+          in an object of type <tt>wchar_t</tt> has a locale dependent
+          interpretation.</li>
+      <li>Zach suggested that restricting the implication to the encoding of
+          wide character literals might be an improvement.</li>
+      <li>Hubert suggested this might be a matter worth discussing in SG22.</li>
+      <li>Zach asked if the wording could just defer to the C standard.</li>
+      <li>Jens replied that we can do so for library wording, but not for core
+          wording.</li>
+      <li>Jens stated that we could match the wording in the C standard.</li>
+      <li>Steve noted a misspelling of 10646 in the first paragraph of the
+          Motivation section: "10446".</li>
+    </ul>
+  </li>
+  <li><a href="https://isocpp.org/files/papers/D2749R0.pdf">D2749R0: Down with ”character”</a>:
+    <ul>
+      <li> Discussion was postponed due to lack of time.</li>
+    </ul>
+  </li>
+  <li>Tom reported that the meeting will be on 2023-01-25 and will prioritize
+      further review of P2736R0 and then D2749R0.</li>
+</ul>
+
+
+<h1 id="2023_01_25">January 25th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>Planning for NOT Issaquah.</li>
+  <li><a href="https://wg21.link/p2736r0">P2736R0: Referencing the Unicode Standard</a>.</li>
+  <li><a href="https://wg21.link/p2749r0">P2749R0: Down with ”character”</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark Zeren</li>
+  <li>Nathan Owen</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>A round of introductions was conducted for Nathan; though he had attended
+      previous meetings, we had never formally introduced ourselves.</li>
+  <li>Planning for NOT Issaquah.
+    <ul>
+      <li>Tom explained that, due to competing priorities and a shortage of
+          conference rooms, the only time slot available was for an evening
+          session and, per previous discussion, an evening session time slot
+          would be challenging for remote attendees; as a result, SG16 will
+          not host an in-person meeting, but Tom is open to hosting another
+          telecon next week before Issaquah to continue paper review.</li>
+      <li>Zach agreed with meeting next week, but argued that an in-person
+          meeting in Issaquah should still be held.</li>
+      <li>PBrett opined that there would be few attendees.</li>
+      <li>Corentin stated that a number of people that will have opinions on
+          his papers will be present in Issaquah.</li>
+      <li>Corentin asserted we should plan to meet in Varna.</li>
+      <li>PBrett stated that Zach's
+          <a href="https://wg21.link/p2728r0">P2728R0: Unicode in the Library, Part 1: UTF Transcoding</a>
+          and
+          <a href="https://wg21.link/p2729r0">P2729R0: Unicode in the Library, Part 2: Normalization</a>
+          require SG16 review from an interface perspective.</li>
+      <li>Tom agreed with Peter.</li>
+      <li>Steve suggested that it would be useful to get early feedback from
+          LEWG for Zach's papers.</li>
+      <li>Steve noted that we don't want to spend months in review and then
+          have LEWG question the design later.</li>
+      <li>Corentin stated that we should ensure people are aware that these
+          papers target C++26 and that time slots will be available in Varna
+          and later meetings.</li>
+      <li>Steve agreed that we should not host an official SG16 meeting in
+          Issaquah.</li>
+      <li>Tom stated that we will proceed with a telecon next week and no
+          meeting in Issaquah.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2736r0">P2736R0: Referencing the Unicode Standard</a>:
+    <ul>
+      <li>Corentin explained the changes made, as suggested by Jens, to provide
+          a definition for UCS-2 as needed for <tt>std::codecvt_utf8</tt> and
+          <tt>std::codecvt_utf16</tt>.</li>
+      <li>Corentin stated that the UCS-2 definition is specified in terms of
+          scalar values so as to exclude lone surrogates.</li>
+      <li>Corentin noted that the previous wording did not address how lone
+          surrogates were to be handled.</li>
+      <li>Hubert suggested moving where "only" appears in the UCS-2
+          wording.</li>
+      <li>Corentin reported that various grammar and spelling issues pointed
+          out by Jens were corrected.</li>
+      <li>Corentin stated that the prior discussion of the
+          <tt>__STDC_ISO_10646__</tt> predefined macro was inconclusive.</li>
+      <li>Hubert recalled a suggestion to treat this macro the same as
+          <tt>__STDC_VERSION__</tt>.</li>
+      <li>Fraser asked if <tt>__STDC_ISO_10646__</tt> could be removed from the
+          C++ standard and noted that implementations could still define it
+          since it is a reserved identifier.</li>
+      <li>Corentin expressed reluctance to doing so as part of this paper since
+          this paper is not intended to make design changes.</li>
+      <li>Corentin stated that he plans to work with SG22 and WG14 regarding the
+          intended use of the macro.</li>
+      <li>Corentin asserted that a minimal change suffices for now to remove the
+          reliance on ISO/IEC 10646.</li>
+      <li>Hubert replied that the proposed change isn't the minimal solution
+          since it diverges from the C standard.</li>
+      <li>Hubert clarified that the suggestion wasn't to reference the C
+          standard, but rather to leave the definition rather meaningless so
+          that implementors lean on C for meaning.</li>
+      <li>Corentin asked if the suggestion was to just make the macro
+          implemenation-defined.</li>
+      <li>Tom replied that he thought that was what Fraser had suggested.</li>
+      <li>Fraser confirmed.</li>
+      <li>Jens asserted that the wording should preserve the condition that the
+          macro, if defined, has a value with a particular syntactical
+          form.</li>
+      <li><b>Poll 1.1: Whether <tt>__STDC_ISO_10646__</tt> is predefined and if
+          so, what its value is, are implementation-defined, retaining the
+          mandated <tt>yyyymmL</tt> form.</b>
+        <ul>
+          <li><b>Attendees: 11 (3 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">6</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li>Hubert noted some existing occurrences of "Unicode encoding" in the
+          wording for [lex.string.escaped].</li>
+      <li>Corentin reported that he did not see a reason to update that
+          wording.</li>
+      <li>Hubert stated that the relevant encodings should be restricted to
+          UTF-8, UTF-16, and UTF-32 because the formal definition of
+          "Unicode encoding" is too inclusive.</li>
+      <li>Discussion ensued regarding encoding form vs encoding scheme and the
+          observation that, for <tt>std::format</tt> with a wide format string,
+          <tt>wchar_t</tt> elements correspond to an encoding form.</li>
+      <li>PBrett asked if the wording can just state
+          "UTF-8, UTF-16, or UTF-32".</li>
+      <li>Corentin agreed to make that change.</li>
+      <li>Jens lamented the loss of wording in [lex.name] regarding what
+          <tt>XID_Start</tt> and <tt>XID_Continue</tt> are and where to find
+          their definitions.</li>
+      <li>Jens asserted a note should be retained to direct readers to their
+          definitions.</li>
+      <li>Corentin opined that a note isn't needed since the terms are in a
+          normative reference.</li>
+      <li>Jens replied that such a note is present for other properties such as
+          <tt>Grapheme_Extend</tt>.</li>
+      <li>Corentin stated that he is fine with retaining a note.</li>
+      <li>PBrett asked about following the existing pattern in
+          [format.string.escaped] for the <tt>General_Category</tt> and
+          <tt>Grapheme_Extend</tt> properties where it is stated
+          "as described by table 12 of UAX #44".</li>
+      <li>Zack expressed concern about the stability of text files.</li>
+      <li>Tom suggested more generic wording like
+          "as described in the Unicode character database".</li>
+      <li>Jens agreed with that approach.</li>
+      <li>Fraser noted that internet searches for <tt>XID_Start</tt> yield good
+          results.</li>
+      <li>Corentin edited the paper to update the wording.</li>
+      <li><b>Poll 1.2: Forward P2736R1, amended as discussed, to CWG and LWG as
+          the recommended resolution of NB comments FR-010-133 and
+          FR-021-013.</b>
+        <ul>
+          <li><b>Attendees: 10 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">7</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2749r0">P2749R0: Down with ”character”</a>:
+    <ul>
+      <li><em>[ Editor's note: D2749R0 was the active paper under discussion
+          at the telecon.
+          The agenda and links used here reference P2749R0 since the links to
+          the draft paper were ephemeral.
+          The published document may differ from the reviewed draft revision.
+          ]</em></li>
+      <li>Corentin provided an introduction:
+        <ul>
+          <li>The wording substitutes "Unicode scalar value" for "character"
+              in many places, but retains the latter in some contexts.</li>
+          <li>This removes the "translation character set" indirection.</li>
+          <li>The changes were mechanically applied.</li>
+        </ul>
+      </li>
+      <li>PBrett expressed support for the improved specificity.</li>
+      <li>Corentin began reviewing the wording changes.</li>
+      <li>Tom noted that Jens had previously requested an overview of the final
+          state we are driving towards with these kinds of changes.</li>
+      <li>Corentin replied that the motivation section addresses some of those
+          concerns.</li>
+      <li>Jens stated that he finds the proposed wording confusing since
+          "character" ends up getting mixed in with Unicode terminology.</li>
+      <li>Corentin explained that he has concerns about introducing a lot of
+          churn that doesn't help to improve clarity.</li>
+      <li>Fraser stated that additional specificity is probably needed to
+          clarify which characters constitute new-line and whitespace.</li>
+      <li>Jens noted that, with the exception of new-line, that characters are
+          specified using Unicode code points.</li>
+      <li>Jens noted that
+          <a href="https://wg21.link/p2348">P2348 (Whitespaces Wording Revamp)</a>
+          is relevant.</li>
+      <li>Corentin explained that he intentionally did not modify the
+          specification of whitespace in this paper.</li>
+      <li>Corentin expressed a desire for agreement on the replacement of
+          "elements of the translation character set".</li>
+      <li>PBrett noticed an editorial issue in [lex.charset] for
+          <em>n-char</em>; the updated wording retains "set" from the intended
+          substitution of "Unicode code point" for "member of the translation
+          character set".</li>
+      <li>Jens observed that a change in [lex.phases] to substitute
+          "Unicode scalar value" for
+          ".. elements of the translation character set" retains a reference to
+          [lex.charset] that no longer makes sense.</li>
+      <li>Jens opined that the note in [lex.charset] that describes the
+          difference between "code points" and "scalar values" should be
+          retained.</li>
+      <li>Hubert stated that the location of that note is a little odd since it
+          doesn't encapsulate the notion of "abstract character".</li>
+      <li>Hubert observed that the updates to [lex.phases]p3 only updated one of
+          the two uses of "space character".</li>
+      <li>Corentin asked for opinions regarding a footnote in [lex.name] that
+          discusses representation of characters outside the basic character set
+          in external identifiers.</li>
+      <li>Hubert stated that the footnote could use some updates.</li>
+      <li>Tom opined that the footnote should just be removed.</li>
+      <li>Jens noted that
+          <a href="http://eel.is/c++draft/implimits#2.6">[implimits]p(2.6)</a>
+          does specify a minimum limit for the number of significant characters
+          in an external identifier.</li>
+      <li>PBrett stated that the the uses of "character" in that annex need to
+          be addressed.</li>
+      <li>Corentin asked if CWG would be content with the removal of that
+          footnote.</li>
+      <li>Jens replied that he does not know but that he personally does not see
+          value in retaining it; the note probably serviced its value 20 some
+          years ago.</li>
+      <li>Jens observed that "characters" would have to be interpreted as code
+          points for the purposes of the external identifier limit.</li>
+      <li>Tom noted the implication that, if UTF-8 was used for the encoding of
+          external identifiers, a worst case limit must be assumed such that a
+          limit of 1024 code points implies a limit of 4096 code units.</li>
+    </ul>
+  </li>
+  <li>Tom reported that SG16 will meet in one week, on 2023-02-01 in order to
+      squeeze in one more review of P2749R0 before the WG21 meeting in
+      Issaquah.</li>
+</ul>
+
+
+<h1 id="2023_02_01">February 1st, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2749r0">P2749R0: Down with ”character”</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Mark de Wever</li>
+  <li>Mark Zeren</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom announced that this telecon is SG16's 100th!</li>
+  <li>Corentin noted that LEWG is considering hosting an evening session in
+      Issaquah to discuss Zach's
+      <a href="https://wg21.link/p2728r0">P2728R0: Unicode in the Library, Part 1: UTF Transcoding</a>
+      and
+      <a href="https://wg21.link/p2729r0">P2729R0: Unicode in the Library, Part 2: Normalization</a>
+      papers.</li>
+  <li>Steve expressed support for early LEWG review so as to avoid a situation
+      in which SG16 forwards a paper with interfaces that LEWG does not approve
+      of; such cases have occurred with other study groups.</li>
+  <li>PBrett noted that there are sometimes competing perspectives between what
+      domain experts value and what LEWG values.</li>
+  <li>PBrett acknowledged the possibility that LEWG will approve of Zach's
+      design, that SG16 proceeds with making changes during its review, and that
+      LEWG finds that it does not approve of the changed direction.</li>
+  <li><a href="https://wg21.link/p2749r0">P2749R0: Down with ”character”</a>:
+    <ul>
+      <li><em>[ Editor's note: D2749R0 was the active paper under discussion at
+          the telecon.
+          The agenda and links used here reference P2749R0 since the links to
+          the draft paper were ephemeral.
+          The published document may differ from the reviewed draft revision.
+          ]</em></li>
+      <li>Tom provided a summary of the last telecon.</li>
+      <li>Tom raised two concerns to be addressed.
+        <ul>
+          <li>Comments that Jens raised in a
+              <a href="https://lists.isocpp.org/sg16/2023/01/3693.php">post to the SG16 mailing list</a>.</li>
+          <li>Whether the paper should take a dependency on
+              <a href="https://wg21.link/p2348">P2348 (Whitespaces Wording Revamp)</a>.</li>
+        </ul>
+      </li>
+      <li>Corentin explained that, with regard to Jens' concern about
+          inconsistent use of the "Unicode code point" and "character" terms,
+          that the changes made to mechanically replace "character" in 10-20
+          pages of wording were quite extensive.</li>
+      <li>Corentin stated that, in cases where the wording refers to a specific
+          character, such as U+0020 SPACE, that the term "character" is
+          appropriate.</li>
+      <li>Corentin acknowledged Jens' concerns, but noted that the updated
+          wording does reduce ambiguity.</li>
+      <li>Corentin claimed that the proposal includes a minimal change and that
+          additional changes could be done editorially at a later time.</li>
+      <li>Tom reported having spent time reviewing the changes and that he found
+          the various uses of "Unicode scalar value", "Unicode code point", and
+          "character" rather confusing.</li>
+      <li>Tom expressed concern that the differences are subtle and that it
+          might be unfair to place the project editor in the position of having
+          to deal with those differences; at least not without clearly specified
+          guidelines.</li>
+      <li>PBrett responded that the project editor shouldn't make such changes
+          since they can have normative impact.</li>
+      <li>Corentin reiterated that his goal with the paper is to remove the
+          "translation character set" terminology in C++23 to avoid its
+          appearance in new teaching materials.</li>
+      <li>Tom suggested modifying the paper title to append "in lexing" since
+          that better matches the scope of the proposed changes.</li>
+      <li>Tom suggested reviewing the wording to ensure consistent terminology
+          use.</li>
+      <li>The group started reviewing the changes to [lex.phases].</li>
+      <li>PBrett noted that people complain about the Unicode terms, but that
+          their use is well justified in an international standard.</li>
+      <li>PBrett noted the use of "character" in association with new-line and
+          asked whether new-line could consist of multiple code points.</li>
+      <li>Tom responded that, since the translation input is now specified in
+          terms of Unicode code points, that we can define exactly what a
+          new-line character is.</li>
+      <li>Hubert agreed and stated that would provide a better basis for
+          defining whitespace.</li>
+      <li>Steve noted that <tt>\n</tt> can have platform impact in some contexts
+          but that it doesn't in lexing.</li>
+      <li>Corentin replied that more significant changes would be required to
+          substitute U+000A LINE FEED for "new-line character" and that there
+          would still be remaining uses of "character".</li>
+      <li>PBrett stated it could be a conscious choice to leave those cases to a
+          later paper like P2348.</li>
+      <li>Hubert responded that the motivation for asking for additional work is
+          to avoid increasing internal friction within the standard wording as
+          the paper does now.</li>
+      <li>Corentin expressed concern regarding incorporating work from P2348 due
+          to concerns CWG had with that paper.</li>
+      <li>Steve noted that, in lexing context, specifying new-line is not
+          observable.</li>
+      <li>Fraser asked if new-line characters are observable in raw string
+          literals.</li>
+      <li>Hubert replied negatively and explained that, in a raw string literal,
+          new-line is mapped to <tt>\n</tt> in the execution character set.</li>
+      <li>Steve stated issues with that were fixed.</li>
+      <li>Tom stated that there are related CWG issues.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://wg21.link/cwg1655">CWG issue 1655 (Line endings in raw string literals)</a>
+          and
+          <a href="https://wg21.link/cwg1709">CWG issue 1709 (Stringizing raw string literals containing newline)</a>.
+          ]</em></li>
+      <li>Corentin pondered whether it is necessary to consider both papers at
+          the same time.</li>
+      <li>Hubert recommended sending a message to the CWG mailing list to ask
+          about that.</li>
+      <li>Corentin noted the substitution of a Unicode code point reference in
+          place of "backslash character".</li>
+      <li>Corentin mentioned that the changes are intended to allow "code point"
+          to be used for non-Unicode character sets; hence "Unicode code point"
+          is used in contexts specific to Unicode.</li>
+      <li>Tom expressed uncertainty about the addition of "abstract" in
+          [lex.phases]p1.</li>
+      <li>Corentin responded that abstract characters are used to explain
+          mapping between character sets.</li>
+      <li>Tom agreed, but stated that wording is missing to tie the input to a
+          sequence of abstract characters.</li>
+      <li>Fraser suggested adding a statement to specify that the lexer
+          processes a sequence of Unicode code points.</li>
+      <li>Hubert noted that the current wording limits the effort required to
+          document how input is mapped to a sequence of characters.</li>
+      <li>Corentin acknowledged that wording could be added to state that the
+          implementation-defined mapping produces a sequence of Unicode scalar
+          values.</li>
+      <li>Corentin pointed out how "space character" and "whitespace character"
+          is used differently in [lex.phases]p3.</li>
+      <li>Mark observed that the changes to [lex.phases]p3 substituted
+          "multi-Unicode code point" for "multi-character".</li>
+      <li>Hubert suggested substituting
+          "token comprising multiple Unicode code points" instead.</li>
+      <li>Tom expressed support for substituting "U+0020 SPACE character" for
+          "space character".</li>
+      <li>Corentin observed that "character" can be omitted in the
+          substitution.</li>
+      <li>Hubert agreed.</li>
+      <li>Tom suggested that, in [lex.charset], "code points" could be
+          substituted for "characters" in
+          "The basic character set is a subset ... consisting of 96 characters".</li>
+      <li>Hubert replied that such a substitution would introduce a category
+          error; the basic character set is intended to be a set of abstract
+          characters and is used as such in some places.</li>
+      <li>Tom suggested "The basic character set is a subset of the abstract
+          characters included in the Unicode character set".</li>
+      <li>Hubert suggested a simpler change;
+          "the basic character set consists of the 96 characters specified in [lex.charset.basic]".</li>
+      <li>Tom stated that the changes to the note in [lex.charset]p6 should
+          state "Unicode code point" instead of just "code point" for
+          consistency.</li>
+      <li>PBrett opined that, with only 15 minutes remaining, that he did not
+          think we'll be ready to forward the paper.</li>
+      <li>Tom agreed and stated that he doesn't feel that we have sufficiently
+          reviewed the paper to be confident in polling it.</li>
+      <li>Tom noted that our goal is not to make a perfect standard, but rather
+          to make improvements; we can poll forwarding it knowing that more
+          work will be needed.</li>
+      <li>PBrett suggested polling to continue work and then poll a recommended
+          resolution for the related NB comment in C++23.</li>
+      <li>Steve asked what the motivation is for getting this change in
+          C++23.</li>
+      <li>Corentin responded that he is motivated to remove
+          "translation character set" before it appears in training
+          materials.</li>
+      <li><b>Poll 1.1: P2749R0 "Down with 'character'" should be included in the
+          IS only if the updates to whitespace specification described in P2348
+          "Whitespaces Wording Revamp" are also included.</b>
+        <ul>
+          <li><b>Attendees: 7 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Weak consensus.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 1.2: Forward P2749R0 "Down with 'character'", revised as
+          discussed, to CWG for C++23 as the recommended resolution of ballot
+          comment FR-020-014.</b>
+        <ul>
+          <li><b>Attendees: 7</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 1.3: Recommend rejection of ballot comment FR-020-014 as no
+          consensus for change.</b>
+        <ul>
+          <li><b>Attendees: 7 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Discussion ensued regarding how to prioritize papers for review following the Issaquah meeting and ended with the following tentative prioritization schedule:
+    <ul>
+      <li><a href="https://wg21.link/p2741r1">P2741R1 (user-generated static_assert messages)</a>.</li>
+      <li><a href="https://wg21.link/p2758r0">P2758R0 (Emitting messages at compile time)</a>.</li>
+      <li><a href="https://wg21.link/p2773r0">P2773R0 (Considerations for Unicode algorithms)</a>.</li>
+      <li><a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding)</a>.</li>
+      <li><a href="https://wg21.link/p2729r0">P2729R0 (Unicode in the Library, Part 2: Normalization)</a>.</li>
+      <li><a href="https://wg21.link/p2348r3">P2348R3 (Whitespaces Wording Revamp)</a>.</li>
+      <li><a href="https://wg21.link/p2749r0">P2749R0 (Down with ”character”)</a>.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will take place on 2023-02-22.</li>
+</ul>
+
+
+<h1 id="2023_02_22">February 22nd, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2773r0">P2773R0: Considerations for Unicode algorithms</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owens</li>
+  <li>Peter Brett</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2773r0">P2773R0: Considerations for Unicode algorithms</a>:
+    <ul>
+      <li>PBrett suggested that Corentin provide a brief introductory overview
+          by speaking to each of the points in the "TL;DR" section.</li>
+      <li>Corentin presented an overview:
+        <ul>
+          <li>The paper is guided by experience obtained through
+              prototyping.</li>
+          <li>The paper is informed by expectations of performance
+              requirements.</li>
+          <li>Views are a good fit for Unicode algorithms.</li>
+          <li>It is not clear what invariants would be desirable for a new text
+              container.</li>
+          <li>Unicode does not impose constraints on what code points may follow
+              other ones; new code points can be inserted effectively
+              anywhere.</li>
+          <li>The paper assumes the availability of transcoding interfaces.</li>
+          <li>Normalization should be an early focus.</li>
+          <li>The existing interfaces for uppercase and lowercase operations in
+              the C++ standard do not suffice to address the needs of all
+              languages.</li>
+          <li>The existing interfaces for case insensitive operations in the C++
+              standard are likewise insufficient.</li>
+          <li>Text operations need to be easy for programmers to use with UTF-8
+              encoded text.</li>
+          <li>Interfaces for text operations should not be replicated for every
+              encoding of Unicode code points.</li>
+          <li>It should be possible to, for example, perform casing and
+              normalization operations without having to materialize a code
+              point sequence in between the operations.</li>
+          <li>The standard lacks localization facilities sufficient to support
+              tailoring.</li>
+          <li>Interfaces that support tailoring should be implemented using
+              ICU4X.</li>
+          <li>Interfaces for the non-tailored algorithms may be provided as
+              <tt>constexpr</tt> since they are locale invariant.</li>
+          <li>Providing views implemented with ICU would be challenging and
+              would limit performance opportunities and iterator
+              categories.</li>
+          <li>Interfaces that support tailored algorithms with an interface
+              similar to that used for non-tailored interfaces can be added
+              later.</li>
+          <li>Non-tailored interfaces are useful despite their being
+              insufficient for user presentation purposes in general.</li>
+          <li>There are no known use cases for performing normalization for
+              non-Unicode encodings like EBCDIC or Shift-JIS.</li>
+          <li>Code unit sequences should be validated by default on consumption;
+              for safety reasons.</li>
+          <li>Standardized interfaces should not be constrained by what ICU is
+              capable of providing.</li>
+          <li>Implementation via ICU should be supported when doing so doesn't
+              limit potentially better solutions.</li>
+          <li>Implementation via ICU prohibits <tt>constexpr</tt> and
+              <tt>noexcept</tt>.</li>
+          <li>Standardized interfaces should take advantage of ranges and
+              views.</li>
+          <li>Size hints are useful for reserving memory in order to avoid
+              reallocations.</li>
+          <li>It is important and reasonable to optimize table lookups for most
+              character properties.</li>
+          <li>In place mutation of text does not perform well.</li>
+          <li>UTF decoding and encoding is inexpensive even when not optimized;
+              it might not be necessary to design every interface to support
+              maximum optimization possibilities.</li>
+        </ul>
+      </li>
+      <li>Zach stated that normalization is a relatively expensive operation
+          and is therefore best suited to eager transformations.</li>
+      <li>Victor commented in the chat that lazy operations often limit
+          optimizations like SIMD.</li>
+      <li>Jens also commented in the chat that range filters are probably at
+          odds with SIMD, noted that table lookups aren't SIMD-friendly, and
+          pondered how much the Unicode algorithms benefit from SIMD.</li>
+      <li>Zach noted that maintaining multiple levels of enclosed iterators
+          can be painful.</li>
+      <li>Zach reflected on prior discussions regarding requirements to be able
+          to implement Unicode functionality using ICU and asked how important
+          such implementability is.</li>
+      <li><em>[ Editor's note:
+          <a href="https://wg21.link/p1238">P1238R1 (SG16: Unicode Direction)</a>
+          lists as a constraint that implementors cannot afford to rewrite ICU.
+          ]</em></li>
+      <li>Tom responded that his prior statements were partially motivated by
+          politics; a desire to assure implementors that SG16's efforts would
+          not culminate in a requirement for them to implement all Unicode
+          functionality on their own.</li>
+      <li>PBrett indicated that he is not worried regarding implementability
+          via ICU.</li>
+      <li>Tom noted that the pipeline approach presented in the paper allows
+          combining transformations in ways that may be order dependent.</li>
+      <li>Tom asked Robin to confirm that case folding and normalization
+          operations are order dependent.</li>
+      <li>Robin noted that case folding does not depend on tailoring and
+          confirmed that there are order dependencies;
+          <tt>toCasefold(toNFKC(S))</tt> does not produce the same result as
+          <tt>toNFKC_Casefold(S)</tt>.</li>
+      <li><em>[ Editor's note: In later correspondence, Robin noted that Turkic
+          case folding (I -&gt; ı, İ -&gt; i) is usually not performed for
+          non-Turkic languages as noted in
+          <a href="https://www.unicode.org/Public/UCD/latest/ucd/CaseFolding.txt">CaseFolding.txt</a>.
+          ]</em></li>
+      <li>Robin stated that, for canonical normalization, it is common to
+          normalize at program boundaries, but that compatibility normalization
+          might need to be done locally.</li>
+      <li>Tom noted the implication; programmers can't expect to combine
+          transformations arbitrarily and get the "right" result.</li>
+      <li>Jens replied that this means special algorithms are needed for some
+          transformations.</li>
+      <li>Jens stated that the range pipeline approach is idiomatic and seems
+          amenable to these transformations.</li>
+      <li>Jens noted that ranges was tranformational in its ability to avoid
+          the need for intermediate storage.</li>
+      <li>Jens cautioned that this ability comes with the cost that the
+          transformations be interruptible.</li>
+      <li>Jens expressed appreciation for the syntax that views enable but that
+          he would like to understand the performance trade off with respect to
+          eager transformations.</li>
+      <li>Jens asserted it would be useful to have some performance data in a
+          paper.</li>
+      <li>Jens acknowledged that normalization as a view adapter would require
+          some local memory, but noted that might be cache advantageous.</li>
+      <li>Steve expressed concern over including normalization as a pipeline
+          stage; if normalization iterators have to bounce between various
+          buffers, performance may suffer.</li>
+      <li>Jens noted that views can be materialized when it is advantageous to
+          do so.</li>
+      <li>PBrett reported that he has applications for normalization views.</li>
+      <li>Corentin stated that it is probably advantageous to materialize a
+          view if it will be iterated more than once.</li>
+      <li>Corentin reported having implemented a normalization view and that he
+          did not find the implementation to be too difficult.</li>
+      <li>Corentin noted that normalization can benefit from limits like those
+          specified in the stream-safe text format.</li>
+      <li><em>[ Editor's note: The stream-safe text format is described in
+          <a href="https://unicode.org/reports/tr15">UAX #15 (Unicode Normalization Forms)</a>.
+          ]</em></li>
+      <li>Corentin commented that normalization can be expensive, but only when
+          transformations are actually necessary; characters corresponding to
+          some of the <tt>General_Category</tt> classes can be recognized and
+          copied without further lookup.</li>
+      <li>Victor stated that, with regard to implementability with ICU and the
+          benefits of range based interfaces, good performance is more
+          important.</li>
+      <li>Victor advised creating a reference implementation so that performance
+          can be evaluated relative to ICU.</li>
+      <li>Victor noted that we do not want another experience like
+          <tt>std::regex</tt> where the implementations available exhibit poor
+          performance.</li>
+      <li>Zach reported having compared performance between his
+          <a href="https://tzlaine.github.io/text/doc/html/index.html">Boost.Text</a>
+          implementation and ICU and found his implementation initially lagged
+          ICU performance by 50 times.</li>
+      <li>Zach explained that he was able to improve performance after studying
+          the implementation in ICU, but that his implementation was still 10
+          times as expensive as ICU.</li>
+      <li>Zach asserted that we should not expect implementors to match ICU
+          performance.</li>
+      <li>Zach declared that we don't want to specify a facility that will pose
+          a decade long implementation challenge as happened with
+          <tt>std::from_chars()</tt> and <tt>std::to_chars()</tt>.</li>
+      <li>Zach noted that the lazy range approach can be implemented using
+          ICU.</li>
+      <li>Zach suggested that we can specify both eager and view based
+          implementations.</li>
+      <li>PBrett provided a use case for lazy normalization; Unicode regular
+          expression matching can perform better with NFKD normalized text and
+          it can be advantageous to only normalize until a match is found.</li>
+      <li>Corentin replied to Victor's request for a reference implementation
+          that he would make his prototype work available, but that better
+          implementations are possible.</li>
+      <li>Corentin expressed skepticism that there isn't room to improve on
+          ICU performance.</li>
+      <li>Tom asked Robin if the CLDR follows
+          <a href="https://www.rfc-editor.org/info/bcp47">BCP-47</a>.</li>
+      <li>Robin replied that they are maintained in sync and that the CLDR uses
+          some extensions defined in BCP-47.</li>
+      <li>Robin stated that, with regard to standardizing localization support,
+          localization is fundamentally not stable since it tracks evolving
+          human behavior.</li>
+      <li>Robin noted that, since the C++ standard is updated every 3 years, it
+          will always trail localization changes.</li>
+      <li><em>[ Editor's note: Robin noted in later offline discussion that
+          CLDR releases occur at least every six months. ]</em></li>
+      <li>Tom asked if some of the locale properties specified in BCP-47 are
+          stable.</li>
+      <li>Robin replied that BCP-47 specifies a syntax and that it has some
+          stability assurances.</li>
+      <li><em>[ Editor's note: Robin provided additional detail in offline
+          correspondence following the telecon; The relation between Unicode
+          language and locale identifiers and BCP-47 is documented in the
+          "BCP 47 Conformance" section of
+          <a href="https://unicode.org/reports/tr35">UTS #35 (Unicode Locale Data Markup Language (LDML))</a>
+          and stability is discussed in the
+          "Stability of IANA Registry Entries"
+          section of BCP-47 in
+          <a href="https://www.rfc-editor.org/rfc/rfc5646.html">RFC 5646</a>.
+          The
+          <a href="https://www.iso.org/iso-3166-country-codes.html">ISO 3166</a>
+          standard responsible for assigning country codes also implements a
+          transition policy for changes to country codes as described at
+          <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Transitional_reservations">https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Transitional_reservations</a>.
+          ]</em></li>
+      <li>Corentin recalled discussion of Zach's papers in Issaquah and noted
+          that the level of stability guarantees is not sufficient for ABI
+          purposes.</li>
+      <li>Robin reported that the line breaking algorithm changes frequently
+          but that other algorithmes, like grapheme breaking, change less
+          frequently.</li>
+      <li>Robin advised focusing on use cases when considering the Unicode
+          algorithms as different use cases may have different concerns.</li>
+      <li>Robin noted that case folding has stability concerns and that it is
+          stable for NFKC normalized text.</li>
+      <li>Zach pondered whether it is reasonable to standardize something like
+          a case-insensitive search.</li>
+    </ul>
+  </li>
+  <li>Tom reported that the next meeting will be 2023-03-08 and that we will
+      continue discussion of this paper.</li>
+</ul>
+
+
+<h1 id="2023_03_08">March 8th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2773r0">P2773R0: Considerations for Unicode algorithms</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owen</li>
+  <li>Peter Brett</li>
+  <li>Robin Leroy</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2773r0">P2773R0: Considerations for Unicode algorithms</a>:
+    <ul>
+      <li>PBrett introduced the agenda.</li>
+      <li>Robin provided an overview of tailoring:
+        <ul>
+          <li><em>[ Editor's note: Robin shared his notes following the meeting;
+              they can be found
+              <a href="https://docs.google.com/document/d/12fKu7-p35oH-sP06Hq4SzdZUbOzdtk9hHyCP4Abtl5g/edit">here</a>.
+              ]</em></li>
+          <li>Points 3 and 5 of the "TL;DR" portion of the paper are related to
+              tailoring.</li>
+          <li>Normalization is noted as a priority in the paper and that is a
+              good thing as there are examples of languages and products that do
+              not handle normalization well.</li>
+          <li>The Unicode standard provides examples of tailoring, but those
+              examples are not prescriptive.</li>
+          <li>Tailoring does not mean "language dependent"; it permits many
+              kinds of transformations.</li>
+          <li>Case folding has exactly one case of language specific behavior;
+              Turkic case folding.</li>
+            <ul>
+              <li>"I" -&gt; "ı"
+                  (U+0049 LATIN CAPITAL LETTER I -&gt; U+0131 LATIN SMALL LETTER DOTLESS I)<br/>
+                  "İ" -&gt; "i"
+                  (U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE -&gt; U+0069 LATIN SMALL LETTER I)</li>
+              <li>ICU supports this behavior via a boolean flag on case folding
+                  interfaces.</li>
+              <li>Case folding was intended to support identifier
+                  equivalence.</li>
+            </ul>
+          </li>
+          <li>NFKC case folding does not include language specific
+              tailoring.</li>
+          <li>UAX #29 provides examples of language-dependent grapheme cluster
+              tailoring, but at present, that isn't done in practice.
+            <ul>
+              <li>The CLDR technical committee is experimenting with a
+                  language-independent tailoring of grapheme clusters with a
+                  different behavior for Indic scripts.
+                  That work has not been forwarded to the UTC yet, but is
+                  intended to eventually be used as the new default default
+                  behavior.</li>
+              <li>Changes to
+                  <a href="https://unicode.org/reports/tr29">UAX #29 (Unicode Text Segmentation)</a>
+                  are likely to be proposed.</li>
+            </ul>
+          </li>
+          <li>ICU supports tailoring for line breaking beyond what is stated in
+              the Unicode Standard:
+            <ul>
+              <li>Support for dictionary based layout for Thai.</li>
+              <li>Machine learning based layout for Burmese, Chinese, Japanese,
+                  and Thai.</li>
+              <li>Different line breaking rules for numbers.</li>
+            </ul>
+          </li>
+          <li>Line breaking behavior can be script based as opposed to language
+              based.</li>
+          <li>Case mapping includes language specific tailoring.</li>
+          <li>Collation is used for sorting, but is also used for case
+              insensitive search:
+            <ul>
+              <li>The French word "ŒUF" is primary-equal to "oeuf" for collation,
+                  but case-folding would not produce a match.</li>
+              <li>The German word "fuer" matches "für" in German, but not in
+                  French.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Fraser shared in chat:
+          "my favourite tailoring (for collation) is that in traditional name
+          collation in Scotland, surnames starting "Mc" (e.g. McAdam) sort as
+          if they begin "Mac" (so McAdam and MacAdam sort equivalently)."</li>
+      <li>PBrett noted that, in some Scandinavian dictionaries, words beginning
+          with Å (U+00C5 LATIN CAPITAL LETTER A WITH RING ABOVE) get ordered
+          differently when they correspond to a place name, but not
+          otherwise.</li>
+      <li>PBrett added that, in Japanese, kanji have different meaning if they
+          form part of a person's name as opposed to part of another word.</li>
+      <li>Corentin asked for examples of production systems that handle these
+          cases correctly.</li>
+      <li>Robin replied that collation tailoring doesn't generally perform
+          natural language processing, but noted that locale specifiers may
+          include extensions for phone book order, dictionary order, or other
+          ordering forms.</li>
+      <li>PBrett stated that it is common for programmers to want to sort in
+          many different ways and shared examples of ordering by surname vs
+          address.</li>
+      <li>Robin replied that the CLDR provides data for some of those
+          applications and provided an example of ordering contacts for display
+          on a phone.</li>
+      <li>Robin noted that the non-tailored collation algorithm will produce
+          incorrect results for many languages but will still be more accurate
+          than sorting by, for example, code point values.</li>
+      <li>Corentin asserted that collation support is necessary, but that it
+          should not be considered high priority for now.</li>
+      <li>Corentin noted that support for collation is responsible for a
+          significant proportion of the data included with ICU.</li>
+      <li>Robin stated that Swift supports non-tailored EGCs and both default
+          and language dependent collation and case mapping.</li>
+      <li>Robin noted that Swift encountered some challenges with their EGC
+          segmentation and regional indicators but have not, in general, had
+          issues with instability and
+          <a href="https://unicode.org/reports/tr29">UAX #29 (Unicode Text Segmentation)</a>.</li>
+      <li>Robin reported that, with highly unstable data, programmers will
+          generally want to opt-in to updates independently of compiler
+          upgrades.</li>
+      <li>Tom observed that might be an argument for providing Unicode
+          versioned interfaces in some cases.</li>
+      <li>Robin agreed, but advised doing so only for highly unstable data.</li>
+      <li>Corentin asked about governance of the CLDR:
+        <ul>
+          <li>Is there a specification?</li>
+          <li>Is there a stability policy?</li>
+          <li>Could the CLDR be referenced from the C++ standard?</li>
+        </ul>
+      </li>
+      <li>Robin replied that he does not think the CLDR has a stability
+          policy.</li>
+      <li>Robin stated that the CLDR is released every six months, that it
+          moves fast, and that it is maintained by its own committee within
+          the Unicode Consortium.</li>
+      <li>Robin noted that the syntax used for the CLDR data is standardized via
+          <a href="https://unicode.org/reports/tr35">UTS #35 (Unicode Locale Data Markup Language (LDML))</a>.</li>
+      <li>Tom asked if UTS #35 could be used as a specification to implement an
+          interface to the CLDR as a data source.</li>
+      <li>Robin replied that it could be in principle but that compatibility
+          problems might arise if the CLDR version is not aligned with the
+          implemented version of UTS #35.</li>
+      <li>Corentin asked Robin if he agreed that it would be useful to add
+          support for non-tailored case transformations in the near term.</li>
+      <li>Robin replied that doing so would be a considerable improvement over
+          the status quo.</li>
+      <li>Robin noted that programmers that use the locale independent
+          interfaces where they should not will attract appropriate attention
+          from the internationalization proponents within their
+          organization.</li>
+      <li>PBrett observed that there is a segment of programmers that might not
+          care about collation being correct for various locales.</li>
+      <li>Corentin agreed and noted that ICU must be used today for locale
+          specific support and then observed that having locale independent
+          interfaces might prompt programmers to do the right thing.</li>
+      <li>Robin asserted that providing non-tailored interfaces would be
+          benefitial and that the standard should note their appropriate
+          use.</li>
+      <li>PBrett asked for comments regarding how tailored interfaces should
+          be provided.</li>
+      <li>Corentin replied that tailoring has different requirements and
+          requires different types.</li>
+      <li>Corentin suggested that such types can perhaps be hidden from
+          programmers; for example, views that adjust the types used based on
+          provision of a locale object.</li>
+      <li>PBrett asked if tailoring should be expressed via locale facets or if
+          it is sufficiently disjoint from locale that it should have its own
+          facility.</li>
+      <li>Corentin opined that we should not further build on
+          <tt>std::locale</tt>, but that an interface that accepts some kind of
+          locale object to opt-in to tailoring without other customization is
+          possible.</li>
+      <li>Corentin noted that ICU4X allows customization via "providers" in
+          addition to locale-based tailoring.</li>
+      <li>Corentin expressed uncertainty whether customization beyond
+          locale-based tailoring should be provided.</li>
+      <li>Robin replied that tailoring is unbounded and thus too vast a concept
+          to be used in an unqualified manner.</li>
+      <li>Robin stated that support for
+          <a href="https://unicode.org/reports/tr35">UTS #35 (Unicode Locale Data Markup Language (LDML))</a>
+          would likely be required to do more, but that probably isn't feasible
+          for the near future.</li>
+      <li>Corentin stated that <tt>std::locale</tt> facets support customization
+          but that the design can't possibly account for all tailoring
+          possibilities.</li>
+      <li>Corentin expressed a preference for an implementation-defined
+          locale-based design.</li>
+      <li>Jens stated that tailoring appears to mean a lot of things, that it
+          isn't clear why or how we would provide an interface, and that we are
+          unlikely to specify use of an AI for line breaking.</li>
+      <li>Jens opined that tailoring appears to go beyond the existing
+          facilities that do things like replacing "." with "," when formatting
+          numbers.</li>
+      <li>Jens asserted that programmers can insert their own transformations
+          and that the standard does not have to provide support other than via
+          interoperability.</li>
+      <li>Jens opined that there is not a need to invest time in that direction
+          now.</li>
+      <li>Jens agreed that there are likely cases that can be plausibly and
+          meaningfully provided based on locale.</li>
+      <li>Jens expressed skepticism that we'll pursue a replacement for
+          <tt>std::locale</tt> in the near term.</li>
+      <li>Jens expressed support for specifying some tailored algorithms when
+          the tailoring can be specified with few parameters.</li>
+      <li>Hubert shared a perspective that <tt>std::locale</tt> facets are
+          extensions of what C provides.</li>
+      <li>Hubert stated that it might have been a mistake to make
+          <tt>std::locale</tt> extensible, but such extensions remain an option
+          subject to the limitation that these objects are tied to the C
+          locale ID.</li>
+      <li>Tom asked if there is reason to believe that it is not sufficient for
+          programmers to be able to insert their own tailored transformations
+          in pipelines that they construct.</li>
+      <li>PBrett pondered whether the standard library should include non-DUCET
+          data.</li>
+      <li><em>[ Editor's note: The Default Unicode Collation Element Table
+          (DUCET) is decribed in
+          <a href="https://unicode.org/reports/tr10">UTS #10 (Unicode Collation Algorithm)</a>.
+          ]</em></li>
+      <li>Jens asked why we would provide data if we don't provide algorithms
+          that use it.</li>
+      <li>PBrett replied that the availability of the data could enable
+          programmers to use it to provide their own tailoring.</li>
+      <li>Corentin responded that, given an expectation that programmers provide
+          their own algorithms, there is nothing to provide.</li>
+      <li>Corentin noted that the more we provide, the greater the risk that
+          we'll have to break it later.</li>
+      <li>Corentin asserted that the CLDR data cannot be consumed in a similar
+          manner to timezone data.</li>
+      <li>Tom suggested that such consumption should be possible with an
+          implementation of the LDML.</li>
+      <li>Corentin responded that providing such an implementation is equivalent
+          to implementing ICU.</li>
+      <li>Corentin shared an understanding that ICU's complexity is primarily
+          due to integration with the CLDR.</li>
+      <li>Corentin expressed our task as determining how implementors can
+          provide CLDR-based tailoring using ICU or ICU4X.</li>
+      <li>Corentin noted the implication with regard to portability and
+          suggested ICU4X might provide a better building block.</li>
+      <li>Robin noted his own association with ICU4X and expressed its goal to
+          improve portability based on a more flexible and modular design.</li>
+      <li>Robin stated that ICU4X does not offer strong stability
+          guarantees.</li>
+      <li>Robin agreed with the perspective that implementing support for LDML
+          is tantamount to implementing half of ICU.</li>
+      <li>Hubert noted that the existing C++ collation support is not
+          customizable and that it simply exposes what is provided by the
+          C library.</li>
+      <li>Jens suggested it might be feasible to provide the DUCET data in a
+          pre-compiled form.</li>
+      <li><em>[ Editor's note: doing so would potentially side step the LDML
+          implementation concerns. ]</em></li>
+      <li>Jens noted that, for collation, we all have an intuitive understanding
+          that languages work differently, but that such understanding is less
+          clear for other algorithms.</li>
+      <li><b>Poll 1: Papers proposing standard library Unicode algorithms should
+          include a section discussing future extensions to support Unicode
+          locale-based tailoring.</b>
+        <ul>
+          <li><b>Attendees: 10 (2 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Unanimous consensus in favor.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 2: It is a design goal that non-tailored standard library
+          Unicode algorithms be efficiently implementable using ICU.</b>
+        <ul>
+          <li><b>Attendees: 10 (2 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus.</b></li>
+        </ul>
+      </li>
+      <li>Tom pondered concerns regarding ABI, ODR, and support for constant
+          evaluation.</li>
+      <li>Corentin noted that we haven't discussed whether we want to support
+          constant evaluation or not.</li>
+      <li>Corentin stated that the relevant ODR concerns are similar to those
+          for <tt>std::source_location</tt> and that we strongly don't care
+          about such violations.</li>
+      <li>Hubert expressed a desire to, from an implementation perspective,
+          place much of the associated data in shared libraries and not have
+          them exposed via header files.</li>
+      <li>Corentin suggested discussion is needed regarding freestanding
+          support and how that impacts support for header-only
+          implementations.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will take place on 2023-03-22 and that
+      we'll start reviewing Zach's
+      <a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding)</a>.
+    <ul>
+      <li>PBrett noted that Zach's paper will provide additional fodder for
+          discussing use of <tt>char32_t</tt> as a Unicode code point type and
+          exposure of Unicode algorithms as views.</li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2023_03_22">March 22nd, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charles Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>JeanHeyd Meneide</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owens</li>
+  <li>Peter Bindels</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding</a>:
+    <ul>
+      <li>Zach provided an introduction:
+        <ul>
+          <li>The proposal provides interfaces to facilitate conversion between
+              the UTF encodings.</li>
+          <li>The intent is to provide support for ranges and iterators equally
+              well.</li>
+          <li>The proposed interfaces allow for use of SIMD operations with
+              contiguous iterators.</li>
+          <li>Transcoding algorithms are also proposed.</li>
+          <li>Special accommodations are privided for easy use of
+              null-terminated strings.</li>
+          <li>The ubquity of string literals and pointers to <tt>char</tt>
+              motivates specialized interfaces.</li>
+          <li>The proposed interfaces constrain code unit types based on size,
+              not particular character type.</li>
+          <li>Code unit types could also be constrained to particular character
+              types but algorithms are generally not so constrained; this design
+              is more general.</li>
+          <li>Most programmers are expected to use higher level interfaces, but
+              these lower level interfaces enable specialized behavior; e.g.,
+              for text chunking.</li>
+          <li>A <tt>null_sentinel_t</tt> type and a corresponding
+              <tt>null_sentinel</tt> variable enable generalized support for
+              null terminated strings.</li>
+          <li>Additional utilities like <tt>is_encoded</tt> and
+              <tt>find_invalid_encoding</tt> provide nice-to-have
+              functionality.</li>
+          <li>The <tt>transcode_to_utf8</tt> and similar functions could be
+              expanded to perform UTF validation without transcoding.</li>
+          <li>Transcoding iterators are provided for converting between UTF
+              encodings.</li>
+          <li>Error handling is configurable, but only one error handling policy
+              is currently specified; <tt>use_replacement_character</tt>.</li>
+          <li>Insert, front-insert, back-insert, and output transcoding
+              iterators are specified with associated factory functions.</li>
+          <li>It is expected that the transcoding views would be most frequently
+              used.</li>
+          <li>The <tt>as_utf</tt> family of functions return a type that, given
+              a sequence of code units in one UTF encoding, provides a view of
+              code units for another UTF encoding.</li>
+          <li>Formatter specializations are provided for the views.</li>
+          <li>The transcoding iterators wrap a range, not just a single
+              iterator, because advancing the iterator might advance the
+              underlying iterator multiple times thus requiring a sentinel to
+              recognize the end of the underlying range.</li>
+          <li>Wrapping a transcoding iterator in another transcoding iterator
+              yields a transcoding iterator from the base UTF encoding to the
+              final one; this avoids accumulating multiple levels of wrapped
+              iterators without requiring type erasure.</li>
+        </ul>
+      </li>
+      <li>Fraser reported in chat that there is a stray single quotation mark in
+          the <tt>requires</tt> expression in one of the <tt>operator==</tt>
+          declarations for <tt>utf_8_to_16_iterator</tt> in section 4.6.1,
+          "First, the basic ones".</li>
+      <li>Jens stated that the proposed factory functions are probably not
+          needed if support for class template argument deduction (CTAD) can be
+          provided.</li>
+      <li>Zach replied that he added them to follow existing precedent in the
+          standard but agreed they could be omitted.</li>
+      <li>Tom expressed surprise regarding the proposed behavior of
+          <tt>as_utf8()</tt>; he expected a function with that name to provide a
+          view that decodes UTF-8 from underlying data in order to produce code
+          points.</li>
+      <li>Zach replied that the proposed <tt>as_utf8()</tt> design provides a
+          view of UTF-8 code units (not code points) by transcoding from
+          whatever encoding the underlying data is encoded in.</li>
+      <li>Jens stated that the proposed transcoding views (e.g.,
+          <tt>utf8_view</tt>) don't appear to function like other view
+          adapters.</li>
+      <li>Hubert agreed and noted that, unlike other view or iterator adapters,
+          it appears that these views place additional semantic requirements on
+          the iterator template parameters.</li>
+      <li>Zach explained that, if <tt>as_utf8()</tt> is passed a pair of
+          pointers to <tt>char</tt> that the iterator/sentinel pair is returned
+          as is.</li>
+      <li>Hubert noted that, for <tt>utf8_view</tt>, that makes
+          <tt>utf8_iter</tt> an odd choice of name.</li>
+      <li>Jens explained that requiring transcoding work to be performed by the
+          provided <tt>utf8_iter</tt> is very surprising.</li>
+      <li>Zach replied that the design is similar to
+          <tt>std::ranges::filter_view</tt>; that view uses a filter
+          iterator.</li>
+      <li>Jens explained that there is a difference; <tt>filter_view</tt>
+          defines a member type that functions as an iterator adapter and
+          performs the work; in the proposed design, the user provided iterator
+          does the work.</li>
+      <li>Hubert noted that, if the provided iterator does all the work, then
+          the view doesn't adapt anything.</li>
+      <li>Corentin asserted that <tt>utf8_view</tt> does effectively the same
+          thing that <tt>std::ranges::subrange</tt> does.</li>
+      <li>Zach replied that there is a difference in that the transcoding views
+          add a constraint that the provided iterator satisfy
+          <tt>utf_iter</tt>.</li>
+      <li>Fraser asked if it is intended that <tt>as_utf8()</tt> should be
+          usable with, for example, a code page iterator that transcodes to
+          UTF-8.</li>
+      <li>Zach replied affirmatively.</li>
+      <li>Corentin asserted that this design is a departure from prior ranges
+          work.</li>
+      <li>Hubert observed that the transcoding algorithms, unlike the
+          transcoding iterators, do not allow for an error handler to be
+          provided and asked Zach to confirm that they are intended to be less
+          customizable and that programmers can use iterators in a loop to
+          satisfy custom requirements.</li>
+      <li>Zach confirmed and explained that the transcoding algorithms are
+          intended to provide the functionality that is most often wanted,
+          replacement character substitution, at high speed.</li>
+      <li>Hubert stated that support for segmented data that is not necessarily
+          aligned on a code unit sequence boundary requires a way to store a
+          partial code unit sequence so that it can be completed by the
+          following segment rather than substituting a replacement character for
+          the partial sequence.</li>
+      <li>Zach replied that a programmer could handle that requirement by
+          checking that the segment ends with a complete code unit sequence by
+          assigning an iterator to the end of the segment and decoding
+          backwards.</li>
+      <li>Jens suggested another approach would be to signal the end of the
+          sequence early and then check if the base iterator has reached its
+          end.</li>
+      <li>Zach repled that adding additional semantics would complicate the
+          usage experience.</li>
+      <li>Hubert noted that, with regard to performance considerations, the work
+          that JeanHeyd has been doing in WG14 offers more flexibility for error
+          handling.</li>
+      <li>Hubert asked if the transcoding iterator hierarchy unpacking is
+          exposed such that a programmer could take advantage of it.</li>
+      <li>Zach replied that he had not considered exposing it, but that doing so
+          is a possibility that could be looked into.</li>
+      <li>Zach agreed that it would be useful to have generalized support for
+          such unpacking.</li>
+      <li>Tom directed discussion towards the notion of using <tt>char32_t</tt>
+          as a general Unicode code point type.</li>
+      <li>Zach mentioned that his proposal uses <tt>uint32_t</tt>.</li>
+      <li>Robin noted that ICU's <tt>UCHAR</tt> type is an alias of
+          <tt>int32_t</tt>.</li>
+      <li>Zach explained that the <tt>value_type</tt> of the UTF-32 iterators
+          need only be a sufficiently sized integral type; not always a specific
+          type like <tt>char32_t</tt>.</li>
+      <li>Zach argued that the design should allow adaptation to the types the
+          programmer is using.</li>
+      <li>Jens asserted that the <tt>value_type</tt> of the UTF-32 converting
+          iterators should be <tt>char32_t</tt> and that programmers can provide
+          range wrappers for other types.</li>
+      <li>Steve expressed support for always using <tt>char32_t</tt> because
+          doing so enables overloading without ambiguity.</li>
+      <li>Steve conveyed agreement with use of an adapter for other types.</li>
+      <li>Fraser also expressed support for use of the <tt>charN_t</tt> types
+          with the rationale that programmers should not be punished for using
+          the right types.</li>
+      <li>Fraser acknowledged that the design should not encourage casts.</li>
+      <li>PBindels stated in chat, "I value new code getting warnings / errors
+          on bad conversions, over legacy code getting support without
+          casts."</li>
+      <li>JeanHeyd reported that his implementation supports a configuration
+          option that allows for use of a Unicode code point type other than
+          <tt>char32_t</tt> and that every time he tries to exercise it that
+          things break.</li>
+      <li>JeanHeyd provided a link in chat to the documentation for the
+          configuration option;
+          <a href="https://ztdtext.readthedocs.io/en/latest/config.html#config-ztd-text-unicode-code-point-distinct-type">https://ztdtext.readthedocs.io/en/latest/config.html#config-ztd-text-unicode-code-point-distinct-type</a>.</li>
+      <li>JeanHeyd added that, for older code bases, casts end up getting used
+          regardless.</li>
+      <li>JeanHeyd suggested that, if a choice has to be made, <tt>char32_t</tt>
+          be preferred but with a possible opt-in option for use of another type
+          by a minority of users.</li>
+      <li>Zach stated that a template parameter could be added to types like
+          <tt>utf_8_to_32_iterator</tt> to allow for a custom
+          <tt>value_type</tt>.</li>
+      <li>Zach asserted that the <tt>charN_t</tt> types are fine in some cases,
+          but that the community currently uses <tt>char</tt> and
+          <tt>wchar_t</tt> for UTF-8 and UTF-16 respectively and that it would
+          be a shame to force the <tt>charN_t</tt> types on such users.</li>
+      <li>Corentin stated that the choice of types accepted for input vs output
+          are orthogonal.</li>
+      <li>Corentin asserted that it makes sense to specify a single type for the
+          Unicode code point type for many uses, such as for working with EGCs
+          and argued that <tt>char32_t</tt> is the right type.</li>
+      <li>Corentin noted that support for historical uses could hurt
+          composability and stated that imposing questions of what type to use
+          on programmers should be avoided.</li>
+      <li>Corentin admitted that few people use <tt>char8_t</tt> and
+          <tt>char16_t</tt> and stated that we can accept use of <tt>char</tt>
+          and <tt>wchar_t</tt> with the caveat that programmers don't understand
+          what the associated encodings are.</li>
+      <li>Corentin expressed appreciation for the <tt>charN_t</tt> types having
+          well-defined associated encodings.</li>
+      <li>Jens argued that the library is too large as currently proposed and
+          that it needs to be pruned and made more orthogonal.</li>
+      <li>Jens insisted that we should be courageous; we are the standardization
+          committee and we define what the future should look like.</li>
+      <li>Jens noted that the standard containers were forward looking and the
+          legacy container-like libraries are all gone now.</li>
+      <li>Jens encouraged designing for composability by specifying elementary
+          builing blocks that can be combined.</li>
+      <li>Jens asserted that it is ok if programmers are required to write a few
+          wrappers for use with their existing projects.</li>
+      <li>Zach asked what Jens would suggest cutting.</li>
+      <li>Jens suggested removing the front, back, and insert iterators, perhaps
+          in favor of a generic adapter that facilitates use with the existing
+          front, back, and insert iterators.</li>
+      <li>Jens added that the full matrix of UTF converters should be avoided in
+          favor of conversion from one UTF encoding to a code point sequence and
+          then to another UTF encoding.</li>
+      <li>Jens expressed a desire for diagnostics on bad conversion as Peter
+          Bindels mentioned in chat.</li>
+      <li>Zach asked if that would imply issuing diagnostics for input provided
+          in other integer types.</li>
+      <li>Jens replied that a transform view can be used to explicitly support
+          those cases.</li>
+      <li>Jens stated that he wants a view that works more like other views; not
+          like <tt>as_utf8</tt> in this proposal.</li>
+      <li>Jens requested that range object adapters be proposed instead of
+          functions.</li>
+      <li>Jens explained that functions are problematic because of argument
+          dependent lookup (ADL) and that range object adapters avoid that
+          problem.</li>
+      <li>Zach replied that his implementation uses customization point objects
+          (CPOs), that the paper doesn't reflect that, but that it should.</li>
+      <li>Victor stated that the project he works on contains a massive amount
+          of code that assumes data held in <tt>char</tt>-based storage is
+          UTF-8; that and similar projects require first class support for use
+          of UTF-8 with <tt>char</tt>.</li>
+      <li>Victor reported that his project has banned use of <tt>char8_t</tt>
+          due to conflicts introduced when programmers tried to use it.</li>
+      <li>Victor stated that, based on his basic understanding of Zach's
+          proposal, the proposed design accommodates such usage.</li>
+      <li>Tom asked Victor if such first class support could be conditionally
+          provided based on the literal encoding being UTF-8.</li>
+      <li>Victor replied that doing so could make sense.</li>
+      <li>Victor indicated that, without good support for use of UTF-8 with
+          <tt>char</tt>, his project would probably recommend against use of
+          the facility.</li>
+      <li>Corentin reported having considered implicit first class support for
+          UTF-8 and <tt>char</tt> when the literal encoding is UTF-8, noted that
+          such code is not portable, but expressed hope that such code would
+          fail compilation rather than produce mojibake.</li>
+      <li>Corentin suggested decreasing the size of the library by first
+          focusing on a view and then adding eager converters and inserters
+          later.</li>
+      <li>Corentin expressed appreciation for the focus on UTF encodings vs
+          support for all encodings.</li>
+      <li>Tom stated that his and JeanHeyd's prior work on a <tt>text_view</tt>
+          type that uses codecs satisfied a number of the composability
+          concerns that Jens raised.</li>
+      <li>JeanHeyd agreed that codecs provide more flexibility.</li>
+      <li>JeanHeyd noted that bulk speed is attainable with his, Tom's and
+          Zach's designs.</li>
+      <li>JeanHeyd stated that codecs impose performance overhead relative to
+          iterators due to state management but that good QoI can mitigate those
+          costs.</li>
+      <li>JeanHeyd observed that <tt>short</tt>, <tt>int</tt>, <tt>wchar_t</tt>,
+          and other types have historically been used for text because the
+          <tt>charN_t</tt> types weren't available.</li>
+      <li>JeanHeyd asserted that whether and how programmers migrate to
+          <tt>charN_t</tt> types depends on how difficult we make such a
+          transition.</li>
+      <li>JeanHeyd suggested that <tt>charN_t</tt> types be used by default due
+          to their overloading abilities and strong encoding associations.</li>
+      <li>JeanHeyd declared that, for <tt>char</tt> and <tt>wchar_t</tt>, one
+          has to assume an encoding and, most of the time, that works out ok,
+          but when it doesn't, it is a problem.</li>
+      <li>JeanHeyd commented that the codec approach works well for handling
+          <tt>char</tt> and <tt>wchar_t</tt>, but less well with iterators.</li>
+      <li>JeanHeyd insisted that the missing library support for
+          <tt>charN_t</tt> is an impediment.</li>
+      <li>JeanHeyd reported that the work he is doing is more encompassing.</li>
+      <li>Fraser asked whether anyone has written a paper regarding the pain
+          points with using the <tt>charN_t</tt> types.</li>
+      <li>Corentin replied that standard library support is missing.</li>
+      <li>Jens provided specific examples of missing support; <tt>printf()</tt>,
+          <tt>std::format()</tt>, and <tt>std::iostreams</tt>.</li>
+      <li>JeanHeyd agreed that the most significant problem is the inability to
+          conveniently print data held in those types.</li>
+      <li>Corentin agreed that the lack of support for <tt>charN_t</tt> types in
+          <tt>std::format()</tt> is a big issue.</li>
+      <li>Steve replied that we would have to figure out what it means to print
+          <tt>char32_t</tt>.</li>
+      <li>Tom suggested we might be able to specify it for
+          <tt>std::print()</tt>.</li>
+      <li>Steve tentatively agreed but noted a need to consider locale
+          impact.</li>
+      <li>Victor agreed that locale issues need to be addressed.</li>
+      <li>Steve noted that these are the reasons that Python 3 moved to the
+          <tt>C.UTF-8</tt> locale by default.</li>
+      <li><em>[ Editor's note: The Python 3 migration to the <tt>C.UTF-8</tt>
+          locale was proposed in
+          <a href="https://peps.python.org/pep-0538">PEP 538 (Coercing the legacy C locale to a UTF-8 based locale)</a>.
+          ]</em></li>
+      <li>JeanHeyd noted that there is still a lot of code in the wild that
+          assumes ASCII.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will be on April 12th and that we'll
+      continue discussion of this paper.</li>
+  <li>Tom suggested we should review the prior work on <tt>text_view</tt> given
+      how long it has been since we've discussed it.</li>
+</ul>
+
+
+<h1 id="2023_04_12">April 12th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding)</a>:
+    <ul>
+      <li>Continue discussion.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Jens Maurer</li>
+  <li>Nathan Owens</li>
+  <li>Peter Brett</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2728r0">P2728R0 (Unicode in the Library, Part 1: UTF Transcoding)</a>:
+    <ul>
+      <li>Zach spoke to concerns raised in the previous discussion regarding
+          the need for output iterators:
+        <ul>
+          <li>There is a need for programs that use UTF-8 internally to convert
+              to and from UTF-16 in <tt>wchar_t</tt> for Windows and
+              <tt>char16_t</tt> for ICU.</li>
+          <li>The proposed "out" and "insert" transcoding iterators implement a
+              push model; the others implement a pull model.</li>
+          <li>The "out" and "insert" transcoding iterators are useful to store
+              the output of an eagerly evaluated pipeline.</li>
+        </ul>
+      </li>
+      <li>PBrett stated that, for an eager algorithm, the size of the range is
+          known.</li>
+      <li>Zach disagreed that the final size is necessarily known, but noted
+          that it is often possible to predict an approximate size.</li>
+      <li>Tom asserted that output iterators don't work for transcoding since a
+          failure to assign a complete code unit sequence results in silent
+          data loss or UB or similar.</li>
+      <li>Zach suggested that the iterator destructors could perform some kind
+          of flush operation.</li>
+      <li>Zach agreed that the output iterators could be removed from the
+          proposal but that he had encountered situations where he couldn't
+          both use a view and efficiently compute an output size.</li>
+      <li>Jens asserted that the existing <tt>std::back_insert_iterator</tt>,
+          <tt>std::front_insert_iterator</tt>, and <tt>std::insert_iterator</tt>
+          types should suffice for the proposed back insert, front insert, and
+          insert iterators.</li>
+      <li>Jens observed that there has so far not been much demonstrated
+          motivation for push-based iterators but stated that a general output
+          iterator abstraction should be developed if compelling use cases are
+          identified.</li>
+      <li>Jens recalled prior consensus for specifying Unicode algorithms that
+          operate on code points rather than on code units.</li>
+      <li>Jens concluded that the output of any kind of eager algorithm should
+          therefore be a sequence of code points that are then piped into
+          encoding iterators.</li>
+      <li>Jens stated that he is strongly opposed to adding the full matrix of
+          transcoding iterators.</li>
+      <li>Corentin requested stronger motivation for transcoding output
+          iterators.</li>
+      <li>Corentin noted that the size of a range that has iterators that only
+          model <tt>std::input_iterator</tt> is never known prior to iterating
+          it.</li>
+      <li>Corentin observed that non-sized ranges exist in C++23 and
+          programmers have so far been ok with that.</li>
+      <li>Corentin suggested that <tt>std::ranges::to()</tt> should suffice and
+          should perform similarly to direct use of an output iterator.</li>
+      <li>Zach replied that output iterators are essentially never needed with
+          ranges.</li>
+      <li>Corentin asked when an output iterator would be preferred over a
+          range.</li>
+      <li>Zach replied that performance experiments demonstrated that output
+          buffers performed better for eager algorithms.</li>
+      <li>Corentin expressed concern that output iterators add complexity but
+          don't provide an order of magnitude performance improvement.</li>
+      <li>Zach stated that output iterators are somewhat odd, but that they
+          aren't particularly complicated.</li>
+      <li>Corentin countered that their specification would still require
+          spending additional time in wording review that would come at the
+          expense of something else.</li>
+      <li>Zach reiterated his willingness to drop them for now and to revisit
+          later if needed.</li>
+      <li>PBrett expressed support for deferring features that are not essential
+          so as to narrow the proposal to the feature set that will provide the
+          most value to the community.</li>
+      <li>Zach stated that it is an option to not include eager algorithms at
+          all but that doing so leaves performance on the table.</li>
+      <li>Tom acknowledged that views are not well optimized today and suggested
+          that might change in the future.</li>
+      <li>Jens indicated low expectations with regard to teaching optimizers the
+          peculiarities of views and noted the lack of improvements for, for
+          example, string concatenation.</li>
+      <li>Jens opined that implementors tend to be better off focussing on SPEC
+          benchmarks.</li>
+      <li>Jens explained that the incremental processing of view pipelines
+          requires intermediate state that is difficult to lower to a
+          vectorizable loop.</li>
+      <li>Jens observed that vectorizing optimizers still lag the performance
+          achieved by hand vectorized UTF-8 decoders.</li>
+      <li>Zach agreed with Jens in chat;
+          "I am just as skeptical as Jens about the optimization prospects."</li>
+      <li>Jens stated that the paper would benefit from more rationale that
+          motivates including the individual features in the C++ standard.</li>
+      <li>Jens observed that we appear to have consensus to at least provide
+          views.</li>
+      <li>Jens expressed uncertainty whether it is reasonable to provide
+          normalization as a view or whether an eager algorithm is required.</li>
+      <li>Corentin agreed that lack of support for eager algorithms does leave
+          performance on the table and estimated the difference as between 2x
+          to 5x.</li>
+      <li>Zach agreed, but argued the cost is closer to 2x.</li>
+      <li>Corentin noted that the performance difference matters more in some
+          cases; several MB of text might be needed before the difference
+          becomes noticeable.</li>
+      <li>Corentin asserted that quick and simple interfaces are needed in the
+          standard to fill the existing functionality gap but that they don't
+          need to be the fastest possible implementation.</li>
+      <li>PBrett reported that
+          <a href="https://wg21.link/p2300">P2300 (<tt>std::execution</tt>)</a>
+          includes a simple set of algorithms with an expectation that
+          implementations will pattern match and optimize accordingly.</li>
+      <li>PBrett asked whether implementors could provide, as a QoI concern,
+          specialized implementations.</li>
+      <li>Zach responded that such improvements are possible and reported that
+          ICU avoids decoding for some operations.</li>
+      <li>Zach stated that recognition of operations in pipelines will probably
+          not be feasible.</li>
+      <li>Tom suggested a case that can be specialized; a transcode algorithm
+          where the inputs and outputs operate on contiguous storage.</li>
+      <li>Zach agreed, but noted that dropping a chunk-by operation into a
+          pipeline will prevent use of those kinds of specializations.</li>
+      <li>PBrett observed that <tt>std::ranges::to()</tt> is always eager and,
+          at the end of a pipeline, it seems technically possible to optimize
+          based on the input and output types.</li>
+      <li>Zach agreed and noted that library authors can handle that for simple
+          cases.</li>
+      <li>Jens noted that the ranges library is often proscriptive about types
+          used and that use of features like <tt>decltype</tt> can interfere
+          with specialization.</li>
+      <li>Jens provided an example; the result of
+          <tt>std::ranges::views::take(R, n)</tt> is a specialization of
+          <tt>std::span</tt> if <tt>R</tt> is a <tt>std::span</tt>.</li>
+      <li>Corentin reported having used ranges to optimize based on type in his
+          prototypes.</li>
+      <li>Corentin mentioned that text transformations tend not to produce
+          sized ranges, but that their outputs usually have a size that is
+          proportional to their input.</li>
+      <li>Robin explained that, with regard to normalization, there is an upper
+          bound of 3x on the possible size of the output, but acknowledged that
+          is still well above the size usually required in practice.</li>
+      <li><b>Poll 1: SG16 would like to see a version of P2728 without eager
+          algorithms.</b>
+        <ul>
+          <li><b>Attendees: 10 (3 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus in favor.</b></li>
+        </ul>
+      </li>
+      <li>Zach explained that, with regard to the <tt>as_utfN()</tt> factory
+          functions behaving differently from those for other views, it is
+          because they are defined in terms of any UTF iterator and a sentinel;
+          this is what allows any iterator that produces UTF code units to be
+          used.</li>
+      <li>Jens expressed an expectation that an interface that requires a range
+          of UTF-32 code points would use a concept that requires a range with
+          corresponding constraints on its <tt>value_type</tt> and that
+          programmers could provide their own views in that case.</li>
+      <li>Corentin agreed.</li>
+      <li>Tom stated that <tt>as_utf8()</tt> doesn't seem to actually do
+          anything.</li>
+      <li>Zach replied that it selects a transcoding iterator to implement
+          transcoding from the UTF input iterator to UTF-8 and noted that the
+          input iterator might not produce UTF-8 code units.</li>
+      <li>Tom suggested a better name for such a function might be
+          <tt>to_utf8()</tt>.</li>
+      <li>Zach explained part of the motivation for use of the <tt>utf_iter</tt>
+          concept as in <tt>as_utf8()</tt>; since the algorithms work on code
+          points, its use enables implicit conversions that would otherwise
+          require an explicit call to <tt>as_utf32()</tt> or similar.</li>
+      <li>Jens acknowledged the utility of such conversions based on the
+          <tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt>, but not
+          for other types where the encoding is not clear.</li>
+      <li>Jens requested that a revision of the paper include a view that
+          behaves similarly to existing views in the standard.</li>
+      <li>Jens also requested confirmation that normalization can be reasonably
+          implemented as a view.</li>
+      <li>Zach replied that he did not implement normalization or collation as
+          a view.</li>
+      <li>PBrett stated that collation can be performed by comparing two
+          ranges.</li>
+      <li>Zach replied that it doesn't make sense to implement reduction as a
+          view.</li>
+      <li>Zach stated that views didn't seem like a good match for
+          normalization due to the state requirements.</li>
+      <li>Corentin reported success having implemented normalization as a view.</li>
+      <li><b>Poll 2: UTF transcoding interfaces provided by the C++ standard
+          library should operate on <tt>charN_t</tt> types, with support for
+          other types provided by adapters, possibly with a special case for
+          <tt>char</tt> and <tt>wchar_t</tt> when their associated literal
+          encodings are UTF.</b>
+        <ul>
+          <li><b>Attendees: 9 (2 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus in favor.</b></li>
+          <li><b>SA: There is a precondition that input is intended to be UTF-8
+              and that isn't avoided by adding a wrapper; this doesn't help
+              programmers to find bugs.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 3: <tt>char32_t</tt> should be used as the Unicode code point
+          type within the C++ standard library implementations of Unicode
+          algorithms.</b>
+        <ul>
+          <li><b>Attendees: 9 (2 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">6</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Strong consensus in favor.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will take place 2023-04-26 and will
+      include review of:
+    <ul>
+      <li><a href="https://wg21.link/p2741r1">P2741R1: user-generated static_assert messages</a>.</li>
+      <li><a href="https://wg21.link/p2758r0">P2758R0: Emitting messages at compile time</a>.</li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2023_04_26">April 26th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://www.unicode.org/L2/L2023/23107-terminal-suppt.pdf">L2/23-107: Proper Complex Script Support in Text Terminals</a>:
+    <ul>
+      <li>Determine interest for participation in a potential new UTC
+          project.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2779r0">P2779R0: Make basic_string_view’s range construction conditionally explicit</a>:
+    <ul>
+      <li>Determine whether to commit SG16 time to discussing this paper.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2741r1">P2741R1: user-generated static_assert messages</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owen</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://www.unicode.org/L2/L2023/23107-terminal-suppt.pdf">L2/23-107: Proper Complex Script Support in Text Terminals</a>:
+    <ul>
+      <li>Tom provided an introduction:
+        <ul>
+          <li>The paper authors seek to specify a protocol for the display of
+              complex scripts in traditional text-based terminals.</li>
+          <li>Such a protocol could improve text formatting behavior beyond
+              what has been achieved with
+              <a href="https://wg21.link/p1868">P1868 (🦄 width: clarifying units of width and precision in std::format)</a>
+              and
+              <a href="https://wg21.link/p2675">P2675 (LWG3780: The Paper (format's width estimation is too approximate and not forward compatible))</a>.</li>
+          <li>The paper proposes the creation of a new project within the
+              UTC.</li>
+          <li>Robin Leroy indicated that, should a new UTC project be approved,
+              volunteers to participate in it would be welcome.</li>
+          <li>Anyone interested should reach out to Robin.</li>
+        </ul>
+      </li>
+      <li>Fraser stated that the paper is an interesting read regardless of any
+          interest in participation in a UTC project.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2779r0">P2779R0: Make basic_string_view’s range construction conditionally explicit</a>:
+    <ul>
+      <li>Tom stated that, in his opinion, the paper does not raise SG16
+          concerns; however, the paper lists SG16 as an audience and Victor
+          requested that SG16 review it.</li>
+      <li>Tom explained that the discussion today is only intended to determine
+          whether SG16 should spend time on this paper prior to receiving a
+          request from the LEWG chair.</li>
+      <li>Victor opined that SG16 should review because the paper proposes the
+          use of <tt>std::char_traits</tt> to detect a string-like type.</li>
+      <li>Tom observed that the proposed wording doesn't actually reference
+          <tt>std::char_traits</tt>.</li>
+      <li>Fraser asked for confirmation that the question in front of SG16 is
+          whether to weight in on this use of <tt>std::char_traits</tt>.</li>
+      <li>Victor confirmed.</li>
+      <li>Tom commented that the proposed wording only appears to use a traits
+          type to name specializations of <tt>std::basic_string_view</tt> in
+          order to opt them into the proposed <tt>is_string_view_like</tt>
+          trait.</li>
+      <li>Victor directed Tom to look at the wording for option 2.</li>
+      <li>Corentin stated that he has been considering writing a paper to
+          prohibit user specializations of <tt>std::char_traits</tt>.</li>
+      <li>Zach commented that traits types can be awkward; especially with
+          SFINAE.</li>
+      <li>Tom observed that the proposed wording only checks whether both types
+          have a matching member type named <tt>traits_type</tt>; it doesn't
+          check for <tt>std::char_traits</tt> specifically.</li>
+      <li>Corentin requested a poll to encourage LEWG not to rely on
+          <tt>std::char_traits</tt>.</li>
+      <li>Tom asked if anyone was opposed to such a poll.</li>
+      <li>Jens noted that the proposal just performs a type tag comparison and
+          doesn't inspect the type definition.</li>
+      <li>Jens emphasized that this is just a heuristic intended to identify
+          types that are semantically similar to <tt>std::string_view</tt>.</li>
+      <li>Jens commented that if a better heuristic were to be found, that would
+          be great, but otherwise the proposed heuristic seems conservatively
+          correct.</li>
+      <li>Jens stated that he does not see an SG16 concern here.</li>
+      <li>Zach expressed a preference towards waiting for the paper author to
+          present before any polls are taken.</li>
+      <li>Zach stated that the <tt>traits_type</tt> name is not great for
+          enabling this heuristic, but is not as bad as examining
+          <tt>std::char_traits</tt> directly.</li>
+      <li>Corentin suggested that option 2 might not be needed given the option
+          1 approach to explicitly opt in using a different name.</li>
+      <li>Jens noted that the proposed wording for option 1 subsumes option
+          2.</li>
+      <li>Victor noticed that the paper lists Folly's <tt>fbstring</tt> type
+          and asserted that the implicit opt-in would not be wanted by its
+          maintainers.</li>
+      <li>Victor expressed a desire to deprecate <tt>std::char_traits</tt>.</li>
+      <li>Tom agreed with Zach that the paper author should be granted an
+          opportunity to present his perspective before SG16 takes further
+          action.</li>
+      <li>Tom said he would reach out to the paper author to see if he would
+          like to present.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2741r1">P2741R1: user-generated static_assert messages</a>:
+    <ul>
+      <li>Corentin introduced the paper:
+        <ul>
+          <li>The paper proposes an extension to <tt>static_assert</tt> to
+              enable the optional message to be provided by a constant
+              expression evaluated at compile-time.</li>
+          <li>Barry Revzin's
+              <a href="https://wg21.link/p2758r0">P2758R0 (Emitting messages at compile time)</a>
+              proposes some additional <tt>consteval</tt> functions that do
+              similarly.</li>
+          <li>The functionality these papers propose is not an SG16 concern,
+              but the encoding used for the messages is.</li>
+          <li>The only encoding that is currently known at compile-time for
+              strings in <tt>char</tt>-based storage is the ordinary literal
+              encoding.</li>
+          <li>There is a question of whether the proposed features should also
+              support <tt>wchar_t</tt>, <tt>char8_t</tt>, <tt>char16_t</tt>,
+              and/or <tt>char32_t</tt>.</li>
+        </ul>
+      </li>
+      <li>Victor noticed that the paper contains an example that uses
+          <tt>std::format</tt> in an expression that requires constant
+          evaluation despite the current lack of <tt>constexpr</tt> support for
+          it in the standard and no current proposal to add such support.</li>
+      <li>Corentin acknowledged that limitation but noted that the
+          <tt>format</tt> implementation in
+          <a href="https://github.com/fmtlib/fmt">libfmt</a>
+          has such support.</li>
+      <li>Corentin explained that the proposed addition to
+          <tt>static_assert</tt> is that the message parameter accept
+          string-like types that have appropriate <tt>data()</tt> and
+          <tt>size()</tt> member functions.</li>
+      <li>Corentin noted that this suffices to enable any string produced
+          during constant evaluation to be provided by wrapping it in a
+          <tt>std::string_view</tt>-like type.</li>
+      <li>Corentin stated that there is an open question of whether string-like
+          types with non-contiguous storage should be supported.</li>
+      <li>Corentin added that, as proposed, text in <tt>char8_t</tt>-based
+          storage can also be used.</li>
+      <li>Zach asked why <tt>std::format</tt> doesn't support constant
+          evaluation.</li>
+      <li>Corentin replied that the question should be directed to EWG, but
+          noted some existing constant evaluation limitations; that
+          floating-point types aren't supported for example.</li>
+      <li>Zach asked what an implementation would do when trying to present
+          the message to a user.</li>
+      <li>Corentin responded that it would have to convert the message from
+          the literal encoding to the encoding used to display text to a
+          user.</li>
+      <li>Corentin noted that this would add a new conversion requirement to
+          compilers.</li>
+      <li><em>[ Editor's note: Implementations are currently required to
+          convert from the source file encoding to the various literal
+          encodings, but do not necessarily need to be able to convert from
+          those literal encodings to any other encoding. ]</em></li>
+      <li>Zach commented that the proposed wording makes the design clear and
+          that he has no concerns. </li>
+      <li>Victor stated that <tt>std::format</tt> could support
+          <tt>constexpr</tt> now given that is has been shown to be
+          implementable.</li>
+      <li>Victor asserted that the ordinary literal encoding is the right
+          choice for text in <tt>char</tt>-based storage.</li>
+      <li>Victor commented that the only question for SG16 is whether to add
+          support just for <tt>char</tt> or for all of the character types.</li>
+      <li>Jens observed a parsing issue in the proposed wording that will
+          require disambiguation; a string literal matches both
+          <i>unevaluated-string</i> and <i>constant-expression</i>.</li>
+      <li>Jens suggested that, if text in <tt>char8_t</tt>-based storage is
+          supported for the <i>constant-expression</i> case, then UTF-8 string
+          literals should also be supported for the <i>unevaluated-string</i>
+          case so that such literals don't fall into the former case.</li>
+      <li>Corentin suggested that EWG should decide whether pointers to
+          null-terminated strings should be supported.</li>
+      <li><em>[ Editor's note: Discussion ensued regarding unevaluated strings,
+          UCNs, conversion to literal encodings, and whether two grammar
+          productions are really required; the editor failed to record an
+          accurate record of the discussion. ]</em></li>
+      <li>Jens requested that the wording be rebased on the current working
+          draft.</li>
+      <li>Jens noted that the pointer+size interface is preferred for the
+          constant evaluation case and that therefore creates motivation for
+          treating string literals as a special case.</li>
+      <li>Jens noticed that the proposed wording suggests that the
+          <i>constant-expression</i> argument is evaluated multiple times.</li>
+      <li>Jens identified an additional wording issue;
+          "possibly const-qualified type is <tt>char</tt>* or <tt>char8_t</tt>*"
+          should be something like
+          "pointer to possibly const-qualified <tt>char</tt> or <tt>char8_t</tt>."</li>
+      <li>Mark asked Victor if the libfmt <tt>format</tt> implementation supports
+          floating-point types in constant evaluation.</li>
+      <li>Victor confirmed that it does, but that it doesn't use
+          <tt>to_chars()</tt> to do so.</li>
+      <li>Corentin spoke towards the motivation to support character types
+          other than <tt>char</tt>:
+        <ul>
+          <li>Support for <tt>u8""</tt> and <tt>char8_t</tt> ensures the
+              availability of an encoding that supports all characters.</li>
+          <li>Support for <tt>L""</tt> and <tt>wchar_t</tt> enables the use of
+              existing <tt>constexpr</tt> string building functions used on
+              Windows.</li>
+        </ul>
+      </li>
+      <li>Tom asked if it is necessary to allow encoding prefixes for the
+          <i>unevaluated-string</i> case and noted that
+          <a href="https://wg21.link/p2361">P2361 (Unevaluated strings)</a>
+          argued that such allowances are not needed.</li>
+      <li>Corentin replied that the only motivation would be to prevent such
+          expressions from falling into the <i>constant-expression</i>
+          case.</li>
+      <li>Jens noted that falling into that case would render the program
+          ill-formed since string literals don't have a type that satisfies the
+          requirements for <tt>data()</tt> and <tt>size()</tt> members.</li>
+      <li>Tom responded that the <i>constant-expression</i> case could also
+          support pointers to null-terminated strings.</li>
+      <li>Zach asked if the requirements could be specified in terms of
+          <tt>std::data()</tt> and <tt>std::size()</tt>.</li>
+      <li>Corentin replied that such support would require including standard
+          headers.</li>
+      <li>Jens observed that use of <tt>std::data()</tt> and
+          <tt>std::size()</tt> with the arrays produced by string literals
+          would create ambiguity regarding the presence or absence of a null
+          terminator in the string data.</li>
+      <li>Zach lamented the absence of a trait to differentiate string
+          literals from other kinds of expressions.</li>
+      <li>Jens replied that any such solution would require extensions into
+          the type system.</li>
+      <li>Jens reported that the last line of the proposed wording refers to
+          a <i>string-literal</i> that is not present in the
+          <i>static_assert-declaration</i>.</li>
+      <li>Victor expressed a preference for avoiding null-terminated strings
+          and sticking to the proposed pointer+size design.</li>
+      <li>Jens requested that the wording be aligned across other declarations
+          with regard to the requirements to display messages at compile-time
+          and advised discussing with the author of
+          <a href="https://wg21.link/p1301">P1301 ([[nodiscard("should have a reason")]])</a>.</li>
+      <li><b>Poll 1: Text produced during constant evaluation in char-based
+          storage that is provided to the compiler shall be encoded in the
+          literal encoding.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Strong consensus in favor.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 2: static_assert(cond, constant-expression) should support
+          expressions that produce a range of <tt>char</tt> result.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 3: static_assert(cond, constant-expression) should support
+          expressions that produce a range of <tt>wchar_t</tt> result.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>A: Would like to see more motivation.</b></li>
+          <li><b>Consensus against.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 4: static_assert(cond, constant-expression) should support
+          expressions that produce a range of <tt>char8_t</tt> result.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>SA: We shouldn't complicate the feature; <tt>char</tt>
+              should suffice.</b></li>
+          <li><b>No consensus.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 5: static_assert(cond, constant-expression) should support
+          expressions that produce a range of <tt>char16_t</tt> or
+          <tt>char32_t</tt> result.</b>
+        <ul>
+          <li><b>Attendees: 6</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting will be on 2023-05-10 and that an agenda
+      is yet to be determined.</li>
+</ul>
+
+
+<h1 id="2023_05_10">May 10th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2728r3">P2728R3 (Unicode in the Library, Part 1: UTF Transcoding)</a>.
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Eddie Nolan</li>
+  <li>Fraser Gordon</li>
+  <li>Nathan Owens</li>
+  <li>Jens Maurer</li>
+  <li>Peter Brett</li>
+  <li>Robert Leahy</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>A round of introductions was held in honor of a new attendee,
+      Eddie Nolan.</li>
+  <li><a href="https://wg21.link/p2728r3">P2728R3 (Unicode in the Library, Part 1: UTF Transcoding)</a>:
+    <ul>
+      <li>PBrett introduced the topics for today.</li>
+      <li>Zach provided an introduction to the latest revision:
+        <ul>
+          <li>Use case 4 in section 4.4 illustrates use with
+              <tt>std::print()</tt> and <tt>std::cerr</tt>.</li>
+          <li>The <tt>code_unit</tt> concept still relies on <tt>sizeof()</tt>
+              pending changes to infer encoding based on <tt>charN_t</tt> types;
+              that change is still in progress awaiting fixes to existing
+              tests.</li>
+        </ul>
+      </li>
+      <li>Victor pointed out an error in section 4.4; the call to
+          <tt>std::print()</tt> is missing the required format string.</li>
+      <li>Corentin asked how encoding is handled for the
+          <tt>operator&lt;&lt;</tt> ostream inserter.</li>
+      <li>Zach responded that <tt>as_utf8</tt> produces a <tt>utf_view</tt>
+          specialization for which specializations of <tt>std::formatter</tt>
+          and overloads of <tt>operator&lt;&lt;</tt> are defined.</li>
+      <li>Zach noted that the current paper revision specifies <tt>utf_view</tt>
+          but that prior revisions specified distinct templates for
+          <tt>utf8_view</tt>, <tt>utf16_view</tt>, and <tt>utf32_view</tt>.</li>
+      <li>Zach explained that <tt>utf_view</tt> is able to produce UTF-8 from
+          whatever encoding it adapts.</li>
+      <li>Corentin stated that some kind of string-like type is needed to enable
+          formatting.</li>
+      <li>Zach noted the potential for additional views such as a
+          <tt>toupper_view</tt> that performs case conversions.</li>
+      <li>Corentin responded that it should not be necessary to provide
+          <tt>operator&lt;&lt;</tt> overloads for every view; a generic
+          formatting mechanism is needed.</li>
+      <li>Zach explained that the goal is to provide interoperation with
+          streaming and formatting and asserted that we need a conveient way to
+          format these types.</li>
+      <li>Zach agreed that a <tt>printable_view</tt> or similar could be
+          provided, but asserted it would be preferable to just be able to
+          format them directly.</li>
+      <li>Victor stated that generic formatters can be provided assuming a
+          mechanism to determine the proper source and destination
+          encoding.</li>
+      <li>Victor observed that, when the changes to infer encoding based on
+          <tt>charN_t</tt> types is complete, that there won't be any support
+          for <tt>char</tt> and <tt>wchar_t</tt>.</li>
+      <li>Zach confirmed the observation and noted this reflects prior
+          consensus in prior polls.</li>
+      <li>Robin posted the text of the relevant poll in the chat:
+          <blockquote class="quote">
+Poll 2: UTF transcoding interfaces provided by the C++ standard library should
+operate on <tt>charN_t</tt> types, with support for other types provided by
+adapters, possibly with a special case for <tt>char</tt> and <tt>wchar_t</tt>
+when their associated literal encodings are UTF.
+          </blockquote>
+      </li>
+      <li>PBrett interpreted the poll as meaning that the author can choose to
+          provide support for <tt>char</tt> and <tt>wchar_t</tt> as code units
+          when the associated literal encoding is a UTF encoding.</li>
+      <li>Zach suggested those types could be supported with another
+          adapter.</li>
+      <li>Tom stated that, with regard to another adapter, there is a question
+          of whether such an adapter should be implicitly used or require
+          explicit syntax.</li>
+      <li>Zach expressed disfavor twoards dependence on the literal encoding
+          for portability reasons.</li>
+      <li>Tom acknowledged that existing use of the literal encoding to infer
+          an encoding for <tt>char-</tt>based text is an imperfect
+          heuristic.</li>
+      <li>PBrett expressed support for having a <tt>std::formatter</tt>
+          specialization that supports these views, but expressed discomfort
+          with ostream support for <tt>operator&lt;&lt;</tt> since there is no
+          indication of what encoding to use.</li>
+      <li>PBrett asked what the proposed <tt>operator&lt;&lt;</tt> actually
+          does.</li>
+      <li>Zach replied that it prints octets one at a time.</li>
+      <li>PBrett explained that <tt>std::print()</tt> doesn't necessarily just
+          write octets.</li>
+      <li>Zach asked if <tt>std::print()</tt> is equivalent to streaming the
+          result of a call to <tt>std::format()</tt>.</li>
+      <li>PBrett replied negatively.</li>
+      <li><em>[ Editor's note: See the <i>Effects</i> description for
+          <tt>std::vprint_unicode()</tt> in
+          <a href="http://eel.is/c++draft/print.fun#7">[print.fun]p7</a>;
+          the <tt>std::print()</tt> family of functions have specialized
+          behavior when the target stream is a Unicode capable terminal.
+          ]</em></li>
+      <li>Zach opined that stream support is very useful and suggested
+          <tt>operator&lt;&lt;</tt> could be conditionally supported for
+          non-ASCII based systems.</li>
+      <li>Zach stated that he is most concerned with ensuring that
+          <tt>std::format()</tt> and <tt>std::print()</tt> work as
+          intended.</li>
+      <li>Jens summarized the status quo; <tt>std::print()</tt> does not
+          currently support <tt>char8_t</tt>-based text as either the format
+          string or as a format argument.</li>
+      <li>Jens observed that handling of <tt>char8_t</tt> encoded data as
+          proposed is novel since it effectively passes <tt>char8_t</tt>-encoded
+          data as <tt>char</tt>-based input to <tt>std::print()</tt>.</li>
+      <li>Jens asserted that transcoding should be performed or the print
+          attempt should be ill-formed.</li>
+      <li>Jens acknowledged the encoding questions will certainly be revisited
+          at some point.</li>
+      <li>Corentin stated that the lack of support for <tt>charN_t</tt> in
+          <tt>std::format()</tt> is a separate issue that awaits someone doing
+          the work needed.</li>
+      <li>Zach explained that the new paper revision moves
+          <tt>null_sentinel_t</tt> from the <tt>std::uc</tt> namespace to
+          <tt>std</tt>.</li>
+      <li>Zach noted that <tt>null_sentinel_t</tt> equality is determined by
+          comparison with a value constructed object of the other type.</li>
+      <li>Zach asserted that <tt>null_sentinel_t</tt> is important for support
+          of string literals.</li>
+      <li>Corentin suggested that <tt>null_sentinel_t</tt> could be split off
+          to a separate paper for SG9 and EWG to review since it doesn't need
+          to be tied to Unicode.</li>
+      <li>PBrett observed that there is an implicit vs explicit tradeoff with
+          regard to <tt>null_sentinel_t</tt>; some functions take sized ranges
+          and support embedded null characters while others don't.</li>
+      <li>PBrett noted this presents the possibility of a string being
+          inadvertently truncated.</li>
+      <li>Zach agreed that unintented truncation can occur with
+          <tt>utf_view</tt>.</li>
+      <li>PBrett asked to confirm that such truncation can only occur when a
+          single pointer is passed to the constructor.</li>
+      <li>Zach confirmed and directed attention to the <tt>utf_range_like</tt>
+          concept.</li>
+      <li>Victor stated that <tt>null_sentinel_t</tt> makes sense as a generic
+          facility but that the proposed <tt>base()</tt> member function seems
+          specific to this use case.</li>
+      <li>Zach agreed that the member is specific to the ability to navigate a
+          hierarchy of transformed ranges.</li>
+      <li>Steve agreed that something like <tt>null_sentinel_t</tt> is needed
+          to have a good story for support of null terminated strings.</li>
+      <li>Steve stated that requiring explicit syntax just adds noise if
+          practical use requires having to be explicit all the time.</li>
+      <li>Tom asked if ranges already has a concept for layered range
+          transformations and navigation between them; if so, SG9 could comment
+          on the usefulness of the proposed <tt>base()</tt> member
+          function.</li>
+      <li>Zach noted that views often provide a <tt>base()</tt> member function;
+          likewise with iterators such as <tt>reverse_iterator</tt>.</li>
+      <li>Tom asked if there is precedent for a range-or-iterator concept like
+          <tt>utf_range_like</tt>.</li>
+      <li>Jens replied negatively.</li>
+      <li>Tom suggested taking the <tt>base()</tt> and range-or-iterator
+          concept concerns to SG9 to see if they have comments or if there is
+          existing practice that we should align with.</li>
+      <li>Jens stated that <tt>null_sentinel_t</tt> seems useful but that it
+          should be moved to the <tt>std::ranges</tt> namespace.</li>
+      <li>Jens argued that there is no need to move <tt>null_sentinel_t</tt> to
+          a separate paper now; that can be done later if it would be
+          helpful.</li>
+      <li>Jens requested the removal of the <tt>base()</tt> member since there
+          is no base to begin with and noted that there are other means to
+          accomplish the purpose it is intended to serve.</li>
+      <li>Jens stated that any chaining will be on the range level rather than
+          the iterator level.</li>
+      <li>Corentin agreed with Jens.</li>
+      <li>Corentin noted that sized range types like <tt>std::string_view</tt>
+          are advantageous since the size is maintained; calls to
+          <tt>strlen()</tt> are avoided.</li>
+      <li>Zach stated that Eric Niebler has demonstrated the effectiveness of
+          sentinels.</li>
+      <li>Zach commented that Jens is probably right regarding removal of the
+          <tt>base()</tt> member.</li>
+      <li><b>Poll 1: Separate <tt>std::null_sentinel_t</tt> from P2728 into a
+          separate paper for SG9 and LEWG; SG16 does not need to see it
+          again.</b>
+        <ul>
+          <li><b>Attendees: 12 (3 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus; author's discretion for how to continue.</b></li>
+        </ul>
+      </li>
+      <li>Zach began reviewing the proposed constants and utility functions in
+          section 5.4.</li>
+      <li>Zach stated that <tt>replacement_character</tt> is useful to
+          have.</li>
+      <li>Zach explained that the <tt>starts_encoded()</tt> and
+          <tt>ends_encoded()</tt> functions are just for convenience.</li>
+      <li>Tom asked why <tt>starts_encoded()</tt> requires a range rather than
+          supporting the range-or-iterator approach offered with
+          <tt>utf_range_like</tt> and what the criteria is for determining when
+          the range-or-iterator approach should be used.</li>
+      <li>Jens expressed a preference that these remain range-only.</li>
+      <li>Zach agreed with Jens and explained that these are low level
+          functions that don't require a high level of ergonomics.</li>
+      <li>PBrett noticed that there is an <tt>is_low_surrogate()</tt> function,
+          but that a corresponding <tt>is_high_surrogate()</tt> is absent and
+          argued that neither or both should be provided.</li>
+      <li>Steve stated in chat:
+          "If we don't provide <tt>is_high_surrogate</tt> we have to explain
+          that forever, even if it's low value."</li>
+      <li>Zach reported a mistake in use case 3 in section 4.3;
+          <tt>is_lead_code_unit()</tt> is used, but is no longer proposed with
+          the other utility functions.</li>
+      <li>Corentin stated that the proposed utility functions provide a subset
+          of Unicode character properties that programmers don't really want to
+          know about.</li>
+      <li>Corentin suggested that, if support for use case 3 is desirable, it
+          might be better to provide a type that maintains the required state
+          internally instead of users having to use <tt>is_lead_code_unit()</tt>
+          and such on their own.</li>
+      <li>Fraser suggested changing the names to <tt>is_lead_surrogate()</tt>
+          and <tt>is_trail_surrogate()</tt> because it is difficult to remember
+          what is meant by high and low.</li>
+      <li>Victor stated in chat:
+          "I'd prefer to stick with established terminology and not invent new
+          terms, even if they are marginally clearer."</li>
+      <li>Robert agreed with Victor in chat.</li>
+      <li>Jens offered a quote from Unicode 15 section 3.8:
+        <blockquote class="quote">
+        D71 <i>High-surrogate code point</i>: A Unicode code point in the range
+        U+D800 to U+DBFF.<br/>
+        &hellip;<br/>
+        D73 <i>Low-surrogate code point</i>: A Unicode code point in the range
+        U+DC00 to U+DFFF.<br/>
+        </blockquote>
+      </li>
+      <li>Fraser countered with a quote from from later in the same section:
+        <blockquote class="quote">
+        D75 <i>Surrogate pair</i>: &hellip;
+          <ul>
+            <li>&hellip;</li>
+            <li>Sometimes high-surrogate code units are referred to as
+                <i>leading surrogates</i>.
+                Low-surrogate code units are then referred to as
+                <i>trailing surrogates</i>.
+                This is analogous to usage in UTF-8, which has
+                <i>leading bytes</i> and <i>trailing bytes</i>.
+            </li>
+            <li>&hellip;</li>
+          </ul>
+        </blockquote>
+      </li>
+      <li>Jens opined that a clear scope for the utility functions is needed
+          in order to avoid design-by-committee.</li>
+      <li>Jens suggested that <tt>is_scalar_value()</tt> and
+          <tt>is_code_point()</tt> might be appropriate, but noted that
+          <tt>is_assigned_code_point()</tt> would not be an elementary level
+          building block.</li>
+      <li>Jens requested an analysis of what building blocks should be
+          exposed.</li>
+      <li>Jens stated that the incremental read of a UTF-8 stream use case is
+          interesting and can be in scope, but that more design and analysis
+          is needed.</li>
+      <li>Jens asserted that the paper needs more rationale of what the scope
+          is and what the criteria is for inclusions and exclusions.</li>
+      <li>Steve indicated that the proposed functions are facilities that he
+          needs, but agreed with Jens that the streaming use cases probably
+          deserve their own paper.</li>
+      <li>Steve offered to work with Zach to move these functions into a
+          separate classification paper if Zach is interested.</li>
+      <li>Zach agreed that doing so sounds like the right approach.</li>
+      <li>PBrett stated that <tt>find_invalid_encoding()</tt> would be more
+          useful if it returned the range of invalid code units rather than
+          just an iterator to the first.</li>
+      <li>Zach agreed and noted that would be useful for replacement character
+          handling.</li>
+      <li>Tom stated that there are multiple replacement strategies to be
+          considered.</li>
+      <li><em>[ Editor's note see
+          <a href="https://www.unicode.org/review/pr-121.html">PR-121</a>
+          for a description of replacement character policies that conform to
+          the Unicode standard. ]</em></li>
+      <li>Zach stated that he would probably remove all of the utilities except
+          for <tt>replacement_character</tt>.</li>
+      <li>Tom responded that error policies need more discussion and suggested
+          that <tt>replacement_character</tt> can likely be postponed as
+          well.</li>
+      <li>Corentin noted that a replacement character policy is required since
+          Unicode algorithms only operate on code points.</li>
+      <li>Zach explained that the transcoding iterators now adapt the iteratory
+          category correctly.</li>
+      <li>Zach noted that the complete set of UTF transcoding iterators is
+          still present.</li>
+      <li>PBrett asked what the <tt>const char*</tt> parameter of
+          <tt>use_replacement_character::operator()</tt> is for.</li>
+      <li>Zach explained that an error message is passed to the function.</li>
+      <li>PBrett requested that the range of invalid code units be passed so
+          that the entire sequence can be preserved in a thrown exception.</li>
+      <li>Jens acknowledged the need for the transforming iterators to
+          implement the transcoding view, but stated a lack of motivation for
+          exposing them.</li>
+      <li>Tom agreed and requested that, if there are strong use cases for the
+          iterators, to please include the motivation for them in the
+          paper.</li>
+      <li>Zach acknowledged that the iterators can be obtained from the view
+          type.</li>
+      <li>Jens opined that the iterators seem like a step backwards given the
+          effort to move towards range-based designs.</li>
+      <li>Corentin stated that the need to store three iterators within each
+          transcoding iterator to track the beginning and end of the range as
+          well as the current position is novel; iterators generally don't know
+          where the beginning and end of a range are; ranges maintain that
+          information.</li>
+      <li><em>[ Editor's note: Further discussion regarding iterators that hold
+          references to a view occurred on the SG16 mailing list. See the
+          <a href="https://lists.isocpp.org/sg16/2023/05/3850.php">2023-05-10 dated messages in the thread with subject "Re: [SG16] New revision of P2728"</a>.
+          ]</em></li>
+      <li>Tom reported a potential ambiguity with the range-or-iterator
+          approach; string literals are arrays that satisfy range concepts but
+          that also decay to a pointer that satisfies iterator concepts.</li>
+      <li>Tom indicated that an explicit deduction guide might be needed to
+          ensure that <tt>utf_view</tt> works as intended with CTAD.</li>
+      <li>Tom and Zach agreed to take further discussion offline.</li>
+    </ul>
+  </li>
+  <li>PBrett stated that the next meeting will be on 2023-05-24 and that the
+      agenda will include the following:
+    <ul>
+      <li><a href="https://wg21.link/p2779r0">P2779R0: Make basic_string_view’s range construction conditionally explicit</a>.</li>
+      <li>Review of proposed deprecations by Alisdair (awaiting paper).</li>
+    </ul>
+  </li>
+</ul>
+
+
+</body>
