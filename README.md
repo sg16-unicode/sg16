@@ -53,25 +53,28 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
-[P2773][]     | Considerations for Unicode algorithms
 [P2758][]     | Emitting messages at compile time
 [P2749][]     | Down with ”character”
-[P2741][]     | user-generated static_assert messages
 [P2729][]     | Unicode in the Library, Part 2: Normalization
 [P2728][]     | Unicode in the Library, Part 1: UTF Transcoding
-[P2653][]     | Update Annex E based on Unicode 15.0 UAX 31
 [P2626][]     | charN\_t incremental adoption: Casting pointers of UTF character types
-[P2558][]     | Add @, $, and \` to the basic character set
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
-[P2361][]     | Unevaluated strings literals
 [P2348][]     | Whitespaces Wording Revamp
 [P1953][]     | Unicode Identifiers And Reflection
-[P1885][]     | Naming Text Encodings to Demystify Them
-[P1854][]     | Conversion to execution encoding should not lead to loss of meaning
 [P1729][]     | Text Parsing
 [P1629][]     | Standard Text Encoding
 [P1628][]     | Unicode character properties
 [P0244][]     | Text\_view: A C++ concepts and range based character encoding and code point enumeration library
+
+## Accepted C++26 Papers
+
+WG21 Number   | Title/Notes/Links
+------------- | -----
+[P2741][]     | user-generated static_assert messages
+[P2558][]     | Add @, $, and \` to the basic character set
+[P2361][]     | Unevaluated strings literals
+[P1885][]     | Naming Text Encodings to Demystify Them
+[P1854][]     | Conversion to execution encoding should not lead to loss of meaning
 
 ## Accepted C++23 Papers
 
@@ -81,6 +84,7 @@ WG21 Number   | Title/Notes/Links
 [P2713][]     | Escaping improvements in std::format
 [P2693][]     | Formatting thread::id and stacktrace
 [P2675][]     | LWG3780: The Paper (format's width estimation is too approximate and not forward compatible)
+[P2653][]     | Update Annex E based on Unicode 15.0 UAX 31
 [P2572][]     | std::format() fill character allowances
 [P2513][]     | char8\_t Compatibility and Portability Fixes
 [P2460][]     | Relax requirements on wchar\_t to match existing practices
@@ -122,6 +126,7 @@ The following papers are no longer being pursued.
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+~~[P2773][]~~ | ~~Considerations for Unicode algorithms~~<br/>(This is an informational paper and was reviewed by SG16 in February and March of 2023)
 ~~[P2498][]~~ | ~~Forward compatibility of text\_encoding with additional encoding registries~~<br/>(Dropped by the author following lack of consensus for a change in LEWG)
 ~~[P2491][]~~ | ~~Text encodings follow-up~~<br/>(The concerns raised in this paper were avoided by changes made in R10 of [P1885][])
 ~~[P2297][]~~ | ~~Wording improvements for encodings and character sets~~<br/>(The goals of this paper were mostly addressed via [P2314][])
