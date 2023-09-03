@@ -53,6 +53,10 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2873][]     | Remove Deprecated Locale Category Facets For Unicode from C++26
+[P2872][]     | Remove wstring_convert From C++26
+[P2871][]     | Remove Deprecated Unicode Conversion Facets From C++26
+[P2845][]     | Formatting of std::filesystem::path
 [P2758][]     | Emitting messages at compile time
 [P2749][]     | Down with ”character”
 [P2729][]     | Unicode in the Library, Part 2: Normalization
@@ -64,6 +68,7 @@ WG21 Number   | Title/Notes/Links
 [P1729][]     | Text Parsing
 [P1629][]     | Standard Text Encoding
 [P1628][]     | Unicode character properties
+[P1030][]     | std::filesystem::path_view
 [P0244][]     | Text\_view: A C++ concepts and range based character encoding and code point enumeration library
 
 ## Accepted C++26 Papers
@@ -240,6 +245,10 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P2873]: https://wg21.link/p2873
+[P2872]: https://wg21.link/p2872
+[P2871]: https://wg21.link/p2871
+[P2845]: https://wg21.link/p2845
 [P2773]: https://wg21.link/p2773
 [P2758]: https://wg21.link/p2758
 [P2749]: https://wg21.link/p2749
@@ -295,6 +304,7 @@ WG14 Number   | Title/Notes/Links
 [P1253]: https://wg21.link/p1253
 [P1238]: https://wg21.link/p1238
 [P1139]: https://wg21.link/p1139
+[P1030]: https://wg21.link/p1030
 [P1097]: https://wg21.link/p1097
 [P1072]: https://wg21.link/p1072
 [P1041]: https://wg21.link/p1041
