@@ -53,6 +53,7 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2909][]     | Fix formatting of code units as integers<br/>(Dude, where’s my char?)
 [P2873][]     | Remove Deprecated Locale Category Facets For Unicode from C++26
 [P2872][]     | Remove wstring_convert From C++26
 [P2871][]     | Remove Deprecated Unicode Conversion Facets From C++26
@@ -245,6 +246,7 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P2909]: https://wg21.link/p2909
 [P2873]: https://wg21.link/p2873
 [P2872]: https://wg21.link/p2872
 [P2871]: https://wg21.link/p2871
