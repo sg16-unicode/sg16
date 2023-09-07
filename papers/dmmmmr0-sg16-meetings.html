@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-05-24 through 2023-06-07</title>
+<title>SG16: Unicode meeting summaries 2023-05-24 through 2023-07-12</title>
 </head>
 
 <style type="text/css">
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-05-24 through 2023-06-07</h1>
+<h1>SG16: Unicode meeting summaries 2023-05-24 through 2023-07-12</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -101,6 +101,8 @@ snapshot of select meeting summaries from that repository.
       May 24th, 2023</a></li>
   <li><a href="#2023_06_07">
       June 7th, 2023</a></li>
+  <li><a href="#2023_07_12">
+      July 12th, 2023</a></li>
 </ul>
 
 <p>
@@ -792,6 +794,320 @@ Previously published SG16 meeting summary papers:
       vacations. ]</em></li>
   <li>Zach stated an expectation to have a new revision available in the next
       two weeks.</li>
+</ul>
+
+
+<h1 id="2023_07_12">July 12th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1030r5">P1030R5: std::filesystem::path_view</a>:
+    <ul>
+      <li>Discuss what to do in lieu of overloads with <tt>std::locale</tt> parameters.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2845r0">P2845R0: Formatting of std::filesystem::path</a>:
+    <ul>
+      <li>Continue review.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/lwg3944">LWG 3944: Formatters converting sequences of char to sequences of wchar_t</a>:
+    <ul>
+      <li>Initial review.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Charlie Barto</li>
+  <li>Fraser Gordon</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owen</li>
+  <li>Niall Douglas</li>
+  <li>Peter Brett</li>
+  <li>Robin Leroy</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1030r5">P1030R5: std::filesystem::path_view</a>:
+    <ul>
+      <li>Niall stated that, during LEWG discussion in Varna, LEWG approved
+          removal of <tt>std::locale</tt> function overloads that were added
+          for compatibility with <tt>std::filesystem::path</tt>.</li>
+      <li>Niall noted that, for each overload set that has an overload with a
+          <tt>std::locale</tt> parameter, there is an overload that does
+          not.</li>
+      <li>PBrett asked for an explanation of the concerns with the overloads
+          that work with <tt>std::locale</tt>.</li>
+      <li>Niall responded that locale support generally delegates conversion to
+          the OS where they are handled efficiently, but conversions performed
+          via <tt>std::locale</tt> impose considerable performance overhead;
+          possibly including multiple conversions on some platforms.</li>
+      <li><em>[ Editor's note: conversions controlled by <tt>std::locale</tt>
+          require use of the <tt>std::codecvt</tt> facet which, per
+          <a href="http://eel.is/c++draft/filesystems#fs.path.construct-6">[fs.path.construct]p6</a>,
+          may require multiple conversions. ]</em></li>
+      <li>Niall stated that a replacement for <tt>std::locale</tt> would be
+          welcome.</li>
+      <li>PBrett opined that, in his experience, treating paths as having an
+          encoding leads to sadness.</li>
+      <li>PBrett stated that a lossy conversion to a definitive encoding can
+          be used to display paths.</li>
+      <li>Niall noted that the proposed <tt>path_view</tt> supports a raw byte
+          encoding and provides rendering operations.</li>
+      <li>PBrett asked if the facility provides features to produce a path
+          suitable for display purposes.</li>
+      <li>Niall replied that such formatting falls more in the domain of
+          <a href="https://wg21.link/p2845">P2845 (Formatting of std::filesystem::path)</a>
+         and that he has been in discussion with Victor.</li>
+      <li>PBrett asked if there is a plan to provide a formatter for
+          <tt>path_view</tt>.</li>
+      <li>Niall suggested that such a formatter behave the same as for
+          <tt>std::filesystem::path</tt>.</li>
+      <li>Victor summarized observations made during the LEWG discussion:
+        <ul>
+          <li><tt>std::locale</tt> was present in <tt>constexpr</tt> overloads;
+              that issue is easily solved by removing the <tt>constexpr</tt>
+              specifier from those declarations.</li>
+          <li>the <tt>std::locale</tt> parameter is only present to support
+              encoding conversions, but those conversions are better handled by
+              an interface designed for such conversions.</li>
+        </ul>
+      </li>
+      <li>Victor noted that <tt>std::codecvt</tt> is not an efficient method
+          for transcoding.</li>
+      <li>Victor opined that the overloads with a <tt>std::locale</tt>
+          parameter are not known to be needed and can be added back later,
+          perhaps in a more restrictive form, if desired.</li>
+      <li>Niall asked Victor if he is suggesting that the existing
+          <tt>std::filesystem::path</tt> overloads with a <tt>std::locale</tt>
+          parameter should be deprecated.</li>
+      <li>Victor replied that he would be happy to write such a paper at some
+          future point.</li>
+      <li>Tom asked why there is a <tt>compare()</tt> overload with a
+          <tt>std::locale</tt> parameter.</li>
+      <li>Niall responded that comparisons are shallow by default and
+          <tt>compare()</tt> is provided to allow for more comprehensive
+          equivalence comparisons.</li>
+      <li>Niall explained that the <tt>std::locale</tt> parameter is used to
+          convert each path to a common form that is then compared.</li>
+      <li>PBrett expressed an assumption that the <tt>std::locale</tt>
+          parameter would be used for collation purposes using the
+          <tt>std::collate</tt> facet.</li>
+      <li>Hubert asked why collation would be relevant for equality.</li>
+      <li>PBrett asked if, given a set of <tt>path_view</tt> objects, whether
+          the <tt>compare()</tt> operation could be used to order them.</li>
+      <li>Zach responded that such collation might be better performed using
+          features outside of the <tt>std::filesystem</tt> library.</li>
+      <li>Jens stated that the wording in the paper is suggestive that only
+          the encoding is intended to be consumed from the locale object.</li>
+      <li>Jens observed that removal of the <tt>std::locale</tt> parameter
+          results in a loss of transcoding facilities, but since what was
+          provided was so thin, it isn't much of a loss.</li>
+      <li>Victor stated that the equivalent facility in <tt>path_view</tt> of
+          the <tt>std::locale</tt> based <tt>std::filesystem::path</tt>
+          construction is the locale dependent <tt>render()</tt> member
+          function.</li>
+      <li>Niall explained that the reference implementation of the locale
+          dependent <tt>render()</tt> member uses the <tt>std::locale</tt>
+          object to convert a path to UTF-8 and then compares it.</li>
+      <li>Tom expressed confusion, stated that <tt>std::locale</tt> doesn't
+          support conversion to UTF-8, and then realized the reference
+          implementation is probably using the <tt>char8_t</tt> codecvt
+          facets that don't actually convert between the locale encoding.</li>
+      <li>Niall responded that he is not aware of anyone that uses
+          <tt>std::locale</tt> with the filesystem.</li>
+      <li>Victor pondered interaction with <tt>std::format</tt> and
+          <tt>std::print</tt> and whether it would make sense for
+          <tt>path_view</tt> to also rely on the literal encoding to detect
+          UTF-8 encoding; that would enable construction with
+          <tt>char</tt>-based data to be saved as <tt>char8_t</tt>.</li>
+      <li>Tom expressed some reservations; programmers might compile with a
+          <tt>/utf-8</tt> or equivalent option, but file names produced or
+          provided at run-time might be differently encoded.</li>
+      <li>Hubert expressed concerns regarding implementation experience
+          obtained so far regarding preservation of the literal encoding for
+          use by the standard library.</li>
+      <li><b>Poll 1: Modify P1030R6 "std::filesystem::path_view" to restore
+          function overloads with locale parameters.</b>
+        <ul>
+          <li><b>Attendees: 12 (4 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">4</th>
+                <th style="text-align:right">2</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus against.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2845r0">P2845R0: Formatting of std::filesystem::path</a>:
+    <ul>
+      <li>Tom apologized for his delinquency in producing a meeting summary for
+          the previous discussion on this paper that took place at the prior
+          SG16 meeting.</li>
+      <li>Victor summarized his understanding of the direction from the prior
+          meeting; to explore more options for quoting and escaping.</li>
+      <li>PBrett explained a desired ability to obtain a close approximation of
+          a path validly encoded for display purposes and stated that the paper
+          does not currently provide sufficient detail.</li>
+      <li>Victor asked for confirmation that Peter wants the path formatted
+          without any transformation, no loss of information, no quoting, and
+          perhaps just escaping for invalid code unit sequences.</li>
+      <li>PBrett explained that he wants three version:
+        <ul>
+          <li>one that provides the raw bytes; <tt>path_view</tt> provides that,
+              but <tt>std::filesystem::path</tt> does not.</li>
+          <li>one that understands encoding and provides the path unmodified
+              with the exception of substitution characters for invalid code
+              unit sequences.</li>
+          <li>one with quotes and escape sequences for problematic
+              characters.</li>
+        </ul>
+      </li>
+      <li>Niall stated that, for both <tt>std::filesystem::path</tt> and
+          <tt>path_view</tt>, it is possible to obtain the path as a string or
+          to visit the components with a lambda.</li>
+      <li>Jens asked for confirmation that <tt>std::format</tt> includes a
+          debug specifier that enables a string to be printed with escape
+          sequences for problematic characters.</li>
+      <li>Victor confirmed that is the case and stated that it could be used
+          for paths such that the default formatting provides the second option
+          PBrett listed.</li>
+      <li>Jens asked what the output would be for the Belarusian example in the
+          paper for arbitrary code pages used in practice.</li>
+      <li>Victor replied that, in either case, the same substitutions would be
+          performed.</li>
+      <li>Jens expressed approval and noted that behavior would be consistent
+          with choices previously made.</li>
+      <li>Mark observed that the options discussed so far, with an exception
+          for the debug specifier, would retain newline characters.</li>
+      <li>PBrett acknowledged the behavior and noted that additional
+          translations can be applied on the formatted result as needed;
+          e.g., to substitute a space for the newline character.</li>
+      <li>Niall expressed frustration regarding rendering paths in quotes since
+          quote characters are also valid path characters.</li>
+      <li>Tom acknowledged feeling similary frustrated by that.</li>
+      <li>PBrett stated that quotes would only be present when the debug
+          specifier is used.</li>
+      <li>Niall pondered whether an additional format specifier to format the
+          path with escape sequences but without quotes is warranted.</li>
+      <li>Tom responded that additional such options could be recognized by the
+          <tt>formatter</tt> specialization.</li>
+      <li>Zach asked how control characters like RTL isolates should be handled;
+          whether they should be ignored when formatting for display but
+          preserved by the debug format.</li>
+      <li>PBrett replied that he doesn't have experience with those in path
+          names but that he would expect them to be handled as a custom
+          translation.</li>
+      <li>Zach suggested such characters should probably be passed through when
+          formatting for display.</li>
+      <li>PBrett asked if the paper should be updated to address the
+          <tt>path_view</tt> proposal.</li>
+      <li>Victor replied that <tt>path_view</tt> should be handled separately
+          since there are additional complications for the byte case.</li>
+      <li>Tom stated that the consensus direction seems pretty clear for a
+          paper revision.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/lwg3944">LWG 3944: Formatters converting sequences of char to sequences of wchar_t</a>:
+    <ul>
+      <li>Mark summarized the issue:
+        <ul>
+          <li>In C++20, it was an intentional design decision to not support
+              formatting of <tt>char</tt>-based string arguments when
+              formatting for <tt>wchar_t</tt>.</li>
+          <li>In C++23, such formatting was inadvertently added via support for
+              range formatting since a range might have a <tt>char</tt> element
+              type.</li>
+        </ul>
+      </li>
+      <li>PBrett asked Mark what his preferred resolution is.</li>
+      <li>Mark replied with a preference to preserve formatting of individual
+          characters of type <tt>char</tt> in general but to disable formatting
+          of ranges with a <tt>char</tt> element type.</li>
+      <li>Mark noted that such range formatting probably wouldn't produce the
+          intended result when the characters are, for example, individual
+          UTF-8 code units.</li>
+      <li>PBrett expressed skepticism that the reported formatting was
+          intentional.</li>
+      <li>Tom asked why a different conclusion is reached for formatting of an
+          individual character vs an individual character in a range.</li>
+      <li>Hubert replied that a range of individual code units is more
+          string-like.</li>
+      <li>Niall stated that, in principle, the range could be iterated to
+          decode characters.</li>
+      <li>PBrett agreed but noted that doing so would require encoding
+          information.</li>
+      <li>Niall acknowledged the requirement and noted it could be inferred for
+          the <tt>charN_t</tt> types, but not for <tt>char</tt>.</li>
+      <li>Tom expressed a belief that support for the <tt>charN_t</tt> types is
+          disabled.</li>
+      <li>Victor confirmed that is the case.</li>
+      <li>Hubert indicated that such conversions could be enabled, but that
+          necessary facilities are not currently available at run-time;
+          something like ICU or iconv would be needed.</li>
+      <li>PBrett suggested that an escape translation could be produced.</li>
+      <li>Hubert replied that stateful encodings would require representing
+          state.</li>
+      <li>Tom asked what the downside is of disabling support for ranges that
+          have a mismatched character type as the element type.</li>
+      <li>PBrett replied that, ideally, it should be possible to format
+          everything.</li>
+      <li>Victor agreed with PBrett and stated that formatters for string-like
+          types that have a mismatched character element type could be disabled
+          and that a specifier to format a range as a string could be
+          provided.</li>
+      <li>Hubert expressed support for a protocol to opt-in to support of
+          string-like types.</li>
+      <li>Zach asked if <tt>std::vector</tt> would be considered a string-like
+          type.</li>
+      <li>Zach expressed support for disabling formatting of ranges with a
+          mismatched character element type.</li>
+      <li>Victor observed that disabling formatters for mismatched
+          <tt>std::string</tt> and <tt>std::string_view</tt> would suffice to
+          automatically disable types that derive from them.</li>
+      <li>Victor expressed support for distinguishing between string-like and
+          non-string-like types.</li>
+      <li>Mark noted that support can always be added later for a disabled
+          formatter and that disabling these formatters would be an improvement
+          over the status quo.</li>
+      <li>PBrett agreed and asked Mark if he is willing to author a proposed
+          resolution.</li>
+      <li>Mark agreed to do so.</li>
+      <li><em>[ Editor's note: Mark offered a proposed resolution that is now
+          reflected in the LWG issue. ]</em></li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will be 2023-07-26 and that the
+      agenda will cover allowances for <tt>$</tt> in identifiers, encoding for
+      the proposed <tt>std::contracts::contract_violation::comment()</tt> member
+      function, and continued review of of Zach's UTF transcoding paper if a
+      new revision becomes available.</li>
 </ul>
 
 
