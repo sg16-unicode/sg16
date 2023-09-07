@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-05-24 through 2023-07-12</title>
+<title>SG16: Unicode meeting summaries 2023-05-24 through 2023-07-26</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-09-06</td>
+    <td>2023-09-07</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-05-24 through 2023-07-12</h1>
+<h1>SG16: Unicode meeting summaries 2023-05-24 through 2023-07-26</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -103,6 +103,8 @@ snapshot of select meeting summaries from that repository.
       June 7th, 2023</a></li>
   <li><a href="#2023_07_12">
       July 12th, 2023</a></li>
+  <li><a href="#2023_07_26">
+      July 26th, 2023</a></li>
 </ul>
 
 <p>
@@ -1108,6 +1110,309 @@ Previously published SG16 meeting summary papers:
       the proposed <tt>std::contracts::contract_violation::comment()</tt> member
       function, and continued review of of Zach's UTF transcoding paper if a
       new revision becomes available.</li>
+</ul>
+
+
+<h1 id="2023_07_26">July 26th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3145.pdf">WG14 N3145: $ in Identifiers v2</a>:
+    <ul>
+      <li>Determine whether a corresponding proposal for WG21 is desired.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2811r7">P2811R7: Contract-Violation Handlers</a>:
+    <ul>
+      <li>Discuss character encoding considerations for the
+          <tt>std::contracts::contract_violation::comment()</tt> member
+          function.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/lwg3944">LWG 3944: Formatters converting sequences of char to sequences of wchar_t</a>:
+    <ul>
+      <li>Continue review pending a proposed resolution or related paper.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Corentin Jabot</li>
+  <li>Eddie Nolan</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Joshua Berne</li>
+  <li>Mark de Wever</li>
+  <li>Peter Brett</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Ville Voutilainen</li>
+  <li>Zach Laine</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3145.pdf">WG14 N3145: $ in Identifiers v2</a>:
+    <ul>
+      <li>Hubert introduced the topic.
+        <ul>
+          <li>C23 explicitly blessed <tt>$</tt> as an allowed character in
+              identifiers as an implementation-defined extension.</li>
+          <li>C has traditionally allowed this extension and support for it is
+              widely implemented.</li>
+          <li><a href="https://wg21.link/p2342">P2342 (For a Few Punctuators More)</a>
+              contains additional analysis.</li>
+          <li>Up to and including C++20, this has been a conforming extension
+              in C++ since <tt>$</tt> in an identifier would be ill-formed.</li>
+          <li>In C++20, <tt>$</tt> is a UCN and combines with adjacent
+              identifier characters to produce an ill-formed identifier.</li>
+          <li>In C++23, <tt>$</tt> is no longer a UCN and adjacency with
+              identifier characters now yields two pp-tokens, the second of
+              which renders the program ill-formed.</li>
+          <li>In C++26, <tt>$</tt> is a member of the basic character set,
+              adjacency with identifier characters continues to yield two
+              pp-tokens, but the <tt>$</tt> token may be discarded such that
+              it is never processed during translation phase 7.</li>
+        </ul>
+      </li>
+      <li>PBrett asked for clarification of what constitutes a conforming
+          extension.</li>
+      <li>Corentin observed that this extension requires the production of a
+          single pp-token when <tt>$</tt> is adjacent to an identifier
+          character.</li>
+      <li>Corentin stated that sanctioning this allowance in the standard
+          would restrict evolution of the language since it would prevent
+          use of <tt>$</tt> as an operator.</li>
+      <li>Steve noted that the status quo is that all implementations allow
+          <tt>$</tt> in identifiers by default, <tt>$</tt> is widely used in
+          identifiers, and <tt>$</tt> appears in mangled names.</li>
+      <li>Steve stated that compilers are free to issue a diagnostic and
+          produce a working executable for source code that is ill-formed
+          according to the standard.</li>
+      <li>Hubert replied that the concern is with preprocessing; if <tt>$</tt>
+          is not explicitly allowed in an identifier by the preprocessor,
+          then it is handled as a separate token and the difference is
+          observable.</li>
+      <li>Hubert stated that issuing a diagnostic only during translation
+          phase 7 would be difficult.</li>
+      <li>Hubert asserted that wording changes are in order to continue to
+          permit existing practice with <tt>$</tt> in identifiers.</li>
+      <li>Hubert acknowledged concerns regarding how to word an allowance so
+          that new uses of <tt>$</tt> are not restricted.</li>
+      <li>Hubert noted that new uses are only problematic if they are not
+          surrounded by whitespace.</li>
+      <li>Jens suggested the possibility of reverting the adoption of
+          <a href="https://wg21.link/p2558r2">P258R2 (Add @, $, and ` to the basic character set)</a>
+          for C++26.</li>
+      <li>PBrett expressed opposition to doing so since that would contradict
+          the direction established in WG14 and codified in C23.</li>
+      <li>PBrett stated that this discussion is a good start regarding how to
+          move forward.</li>
+      <li>Jens opined that the WG14 rationale is not motivating and that he is
+          therefore not motivated to follow the same direction in C++.</li>
+      <li>Tom noted that there are backward compatibility concerns for some
+          platforms due to use of <tt>$</tt> in identifiers in system
+          headers.</li>
+      <li>Corentin stated that the WG14 direction was to explicitly state that
+          it is implementation-defined whether <tt>$</tt> is allowed in an
+          identifier.</li>
+      <li></b>Poll 1: Whether DOLLAR SIGN is accepted as an identifier start
+          and/or identifier continuation character should be explictly
+          implementation-defined.</b>
+        <ul>
+          <li><b>Attendees: 12 (4 abstentions)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">2</th>
+                <th style="text-align:right">2</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>No consensus.</b></li>
+          <li><b>SA: I don't think an identifier should be
+                 implementation-defined.</b></li>
+        </ul>
+      </li>
+      <li>PBrett stated that the next step would be a proposal to EWG
+          acknowledging the guidance here.</li>
+      <li>Tom asked for opinions regarding the default modes of current
+          compilers being non-conforming.</li>
+      <li>Zach replied that all implementations offer an option to disable the
+          extension.</li>
+      <li>PBrett stated that every implementation is non-conforming in their
+          default modes in practice.</li>
+      <li>Corentin asserted that implementations should issue warnings for use
+          of the extension.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2811r7">P2811R7: Contract-Violation Handlers</a>:
+    <ul>
+      <li>Joshua introduced the topic:
+        <ul>
+          <li>SG21 is working on a specification for a contract violation
+              handler.</li>
+          <li>The proposed <tt>comment()</tt> member function of
+              <tt>std::contracts::contract_violation</tt> is intended to return
+              a string containing the source code of the violated contract
+              predicate.</li>
+          <li>The proposed encoding for the returned string is the ordinary
+              literal encoding.</li>
+        </ul>
+      </li>
+      <li>Tom expressed support for use of the ordinary literal encoding.</li>
+      <li>Tom asked if anything should be specified regarding handling of
+          characters that are not encodeable in the ordinary literal
+          encoding.</li>
+      <li>Corentin agreed with use of the ordinary literal encoding on the
+          basis that the text will be used at run-time.</li>
+      <li>Steve asked for confirmation that the feature effectively converts a
+          source code snippet to text.</li>
+      <li>Joshua confirmed.</li>
+      <li>Steve suggested that a hand wavy approach similar to that taken for
+          <tt>static_assert</tt> is likely necessary except that the string has
+          to survive until run-time and we lack a mechanism to communicate the
+          encoding.</li>
+      <li>Steve stated that the compiler should perform a best effort rendering
+          in the target encoding with the understanding that, for example, an
+          identifier might not be representable in Latin1.</li>
+      <li>Jens observed that is a different operation than stringizing.</li>
+      <li>Steve agreed.</li>
+      <li>Corentin asked what the anticipated use cases are for the
+          <tt>comment()</tt> function.</li>
+      <li>Joshua replied that the primary use case is for logging; other use
+          cases might involve using the result as a key for a map.</li>
+      <li>Joshua asserted that it is not intended to provide source code that a
+          programmer might expect to parse.</li>
+      <li>Joshua stated that the output is only intended to be sufficient for a
+          human to be able to correlate it with the original source code.</li>
+      <li>Zach ruminated on the interaction of source encoding and literal
+          encoding and how preprocessor stringifying works.</li>
+      <li>Jens noted that the <tt>assert</tt> macro is similarly expected to
+          embed source code in the output it produces.</li>
+      <li>Jens stated that the wording for <tt>assert</tt> does not capture the
+          fact that producing the output involves multiple transcoding
+          steps.</li>
+      <li><em>[ Editor's note: the transcoding steps are the conversion from the
+          encoding of the input file
+          (<a href="http://eel.is/c++draft/lex.phases#1.1">[lex.phases]p1</a>)
+          to the <i>translation character set</i>
+          (<a href="http://eel.is/c++draft/lex.charset#1">[lex.charset]p1</a>)
+          then to the <i>ordinary literal encoding</i>
+          (<a href="http://eel.is/c++draft/lex.charset#8">[lex.charset]p8</a>)
+          and then finally, if necessary, to the implementation-defined encoding
+          used to write text to the standard error stream
+          (<a href="http://eel.is/c++draft/cassert.syn">[cassert.syn]</a>
+          via reference to the C standard). ]</em></li>
+      <li>Jens observed that, for <tt>comment()</tt>, there is a possibility to
+          differentiate these steps; the compiler performs the conversion to the
+          ordinary literal encoding and the violation handler can then perform
+          additional transcoding as necessary.</li>
+      <li>Jens asserted that these are not novel problems.</li>
+      <li>Jens observed that non-encodeable characters in string literals are
+          ill-formed and that a preprocessor stringize operation that produces
+          such a string would likewise be ill-formed.</li>
+      <li>Jens posited doing similarly for contracts.</li>
+      <li>Corentin stated that doing so makes sense and then described some
+          additional encoding options:
+        <ul>
+          <li>UTF-8 in <tt>char8_t</tt>, though that doesn't improve
+              usability.</li>
+          <li>implementation-defined.</li>
+          <li>ordinary literal encoding with an escaping mechanism for
+              non-encodeable characters.</li>
+        </ul>
+      </li>
+      <li>Corentin suggested it is likely best to just let implementors do what
+          they think is best.</li>
+      <li>PBrett stated that SG21 had strong consensus for the text returned by
+          <tt>comment()</tt> being implementation-defined.</li>
+      <li>PBrett noted that, since it is implementation-defined, there is no
+          need to specify whether the content includes macro expanded text.</li>
+      <li>PBrett asserted that it is essential that the encoding be specified
+          and expressed support for the current paper direction.</li>
+      <li>PBrett agreed that UTF-8 in <tt>char8_t</tt> is an option, but that
+          the standard provides few facilities to consume it.</li>
+      <li>Hubert noted that, since C does not prohibit non-encodeable characters
+          in string literals, the stringize operation suffices for
+          <tt>assert</tt> in C.</li>
+      <li>Steve stated that it would be very suprising if a <tt>char</tt>-based
+          string with an encoding other than the ordinary literal encoding was
+          returned; a <tt>char8_t</tt>-based string should be used if a UTF-8
+          encoded string is always returned.</li>
+      <li><b>Poll 2: The value of std::contract_violation::comment should be a
+          null-terminated multi-byte string (NTMBS) in the string literal
+          encoding.</b>
+        <ul>
+          <li><b>Attendees: 12 (1 abstention)</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">8</th>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Unanimous consensus.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/lwg3944">LWG 3944: Formatters converting sequences of char to sequences of wchar_t</a>:
+    <ul>
+      <li>PBrett explained that the goal of discussing this issue is to
+          determine if we agree with the proposed resolution.</li>
+      <li>Victor expressed support for it and stated that it is consistent
+          with previous discussions.</li>
+      <li>Victor noted a minor markup issue in the proposed wording; the extent
+          of the struck text should include the trailing <tt>&gt;</tt>
+          character.</li>
+      <li><b>Poll 3: Recommend the proposed resolution to LWG3944 "Formatters
+          converting sequences of char to sequences of wchar_t" to LWG, after
+          fixing the typo.</b>
+        <ul>
+          <li><b>Attendees: 12</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li>Mark asked what the next step is for this issue.</li>
+      <li>Tom advised sending the proposed resolution to the LWG chair and
+          stated that he would work with the LWG chair to get a github issue
+          filed to record the SG16 poll.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting is scheduled for 2023-08-09.</li>
+  <li>Zach indicated that he could have a revision of
+      <a href="https://wg21.link/p2728">P2728 (Unicode in the Library, Part 1: UTF Transcoding)</a>
+      available by then.</li>
+  <li>Victor reported that he has a a new revision of
+      <a href="https://wg21.link/p2845">P2845: Formatting of std::filesystem::path</a>
+      available.</li>
 </ul>
 
 
