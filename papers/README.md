@@ -6,6 +6,7 @@ ISO JTC1/SC22 WG21 and WG14 papers:
 
 WG21 Number     | Title | Revisions
 --------------- | ----- | ----
+[P2995R0][]     | SG16: Unicode meeting summaries 2023-05-24 through 2023-09-27 | [R0][P2995R0]
 [P2891R0][]     | SG16: Unicode meeting summaries 2023-01-11 through 2023-05-10 | [R0][P2891R0]
 [P2766R0][]     | SG16: Unicode meeting summaries 2022-10-12 through 2022-12-14 | [R0][P2766R0]
 [P2678R0][]     | SG16: Unicode meeting summaries 2022-06-22 through 2022-09-28 | [R0][P2678R0]
@@ -56,3 +57,4 @@ WG14 Number     | Title | Revisions
 [P2678R0]: https://rawcdn.githack.com/sg16-unicode/sg16/eab1a1dc8ca9d8ada97ed0258655050173599b14/papers/p2678r0.html
 [P2766R0]: https://rawcdn.githack.com/sg16-unicode/sg16/5260b922996c88822ed0eb1538cf2a5ef9e2294a/papers/p2766r0.html
 [P2891R0]: https://rawcdn.githack.com/sg16-unicode/sg16/9104d1868f2dc0d15321b043027f9384006e932c/papers/p2891r0.html
+[P2995R0]: https://rawcdn.githack.com/sg16-unicode/sg16/647c0eb8b7b237c824ad1f42d038c2d795bc3638/papers/p2995r0.html
