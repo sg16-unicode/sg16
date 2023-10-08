@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-05-24 through 2023-09-13</title>
+<title>SG16: Unicode meeting summaries 2023-05-24 through 2023-09-27</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-09-23</td>
+    <td>2023-10-07</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-05-24 through 2023-09-13</h1>
+<h1>SG16: Unicode meeting summaries 2023-05-24 through 2023-09-27</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -109,6 +109,8 @@ snapshot of select meeting summaries from that repository.
       August 23rd, 2023</a></li>
   <li><a href="#2023_09_13">
       September 13th, 2023</a></li>
+  <li><a href="#2023_09_27">
+      September 27th, 2023</a></li>
 </ul>
 
 <p>
@@ -2168,6 +2170,300 @@ for (auto it = v.begin(); it != v.end(); ++it) {
       Unicode questions not answered in the paper.</li>
   <li>Hubert suggested that LEWG review the design before substantial effort is
       expended on formal wording.</li>
+</ul>
+
+
+<h1 id="2023_09_27">September 27th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1729r2">P1729R2: Text Parsing</a>:
+    <ul>
+      <li>Initial review.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Eddie Nolan</li>
+  <li>Elias Kosunen</li>
+  <li>Fraser Gordon</li>
+  <li>Nathan Owen</li>
+  <li>Peter Brett</li>
+  <li>Robin Leroy</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Tom announced that Steve Downey has agreed to take on a SG16 co-chair
+      role and will likely participate in a SG16 meeting chair rotation.</li>
+  <li>PBrett stated that he might have less time available for SG16 meetings
+      in the near future due to commute changes.</li>
+  <li>Tom reported that an in-person meeting for SG16 is not planned for
+      Kona.</li>
+  <li>PBrett noted that SG21 (contracts) is likely to reduce both his and
+      Tom's availability during the Kona meeting.</li>
+  <li>Fraser asked if SG16 is impacted by the recent decision to disallow ISO
+      and INCITS from hosting joint meetings.</li>
+  <li>PBrett responded that it is not.</li>
+  <li><a href="https://wg21.link/p1729r2">P1729R2: Text Parsing</a>:
+    <ul>
+      <li>Elias offered an introduction:
+        <ul>
+          <li>SG16 reviewed P1729R0 during the in-person meeting in
+              Cologne.</li>
+          <li>P1729R1 was reviewed by LEWG-I soon after, but activity then
+              stalled until recently.</li>
+          <li>There have been a lot of changes.</li>
+          <li><tt>std::scan</tt> is the parsing analog to
+              <tt>std::format</tt>.</li>
+        </ul>
+      </li>
+      <li>Elias proceded with presenting the paper.</li>
+      <li>PBrett pointed out an error in the comments in the example code in
+          section 3.1, "Basic example";
+          <tt>result.begin()</tt> should be <tt>result-&gt;begin()</tt>.</li>
+      <li>Elias reported that that error has already been corrected in an R3
+          draft.</li>
+      <li>PBrett asked whether <tt>begin()</tt> reflects the start of the
+          parsed range or the start of the remaining text.</li>
+      <li>Elias replied that it reflects the unparsed remainder.</li>
+      <li>Fraser asked why the text to be parsed is passed before the format
+          string.</li>
+      <li>Elias replied that the order is consistent with <tt>scanf()</tt>.</li>
+      <li>Tom observed that the dereference of <tt>result</tt> in the example
+          code in section 3.5, "Alternative error handling", is unconditional
+          and would presumably result in some kind of bad behavior if the scan
+          was not successful.</li>
+      <li>Elias confirmed that would result in undefined behavior, noted that
+          an exception would be thrown if <tt>result.value()</tt> was used
+          instead, and stated that the null-coalesing example avoids the bad
+          behavior.</li>
+      <li>Elias stated that the example should probably be updated.</li>
+      <li>Elias presented 3.6, "Scanning an user-defined type" and stated that,
+          with regard to encoding, his implementation assumes UTF-8, but that
+          doing so is probably not acceptable for the standard.</li>
+      <li>Victor replied that most of the matching against the format string is
+          encoding agnostic and just needs to match code units.</li>
+      <li>Victor noted that encoding issues are relevant for cases that involve
+          locale.</li>
+      <li>Victor asserted that the same encoding approach should be used as for
+          <tt>std::format</tt>; use the ordinary literal encoding.</li>
+      <li>PBrett reported that other encodings, such as EUC-KR, are still widely
+          used in some regions.</li>
+      <li>Elias presented 6.2, "<tt>scanf</tt>-like <tt>[character set]</tt>
+          matching", a future extension to support matching a range of
+          characters and asked about the potential to unintentionally close off
+          the possibility of future support for such extensions if they are not
+          provided up front.</li>
+      <li>Tom replied that he didn't have any such concerns.</li>
+      <li>Tom stated that this is regex-like behavior that could be layered on
+          in a different manner.</li>
+      <li>PBrett expressed a desire for such a feature in order to ease
+          migration from <tt>scanf()</tt>.</li>
+      <li>PBrett noted that matching a range could be locale dependent.</li>
+      <li>Victor asserted that feature additions should be motivated by usage
+          and noted that <tt>std::format()</tt> does not provide replacements
+          for all features in <tt>printf()</tt>.</li>
+      <li>Eddie asked if a range of characters might be sensitive to encoding;
+          for example, the meaning of the range <tt>[A-Z]</tt> could potentially
+          be different for EBCDIC vs ASCII.</li>
+      <li>Tom suggested revisiting such concerns with locale in mind at a later
+          time.</li>
+      <li>Tom noted that character set ranges are locale sensitive in utilities
+          like <tt>grep</tt>.</li>
+      <li>Tom directed discussion back to section 4.2, "Format strings", and
+          stated that the use of <tt>std::isspace()</tt> to scan whitespace is
+          problematic because it is only able to recognize whitespace characters
+          that are encoded as a single code unit.</li>
+      <li>Tom asked Victor to confirm that a definition of whitespace characters
+          was not required for <tt>std::format()</tt>.</li>
+      <li>Victor confirmed.</li>
+      <li>Tom suggested that, if the associated literal encoding is a standard
+          unicode encoding form, then the set of whitespace characters should be
+          defined to match one of the Unicode whitespace definitions and that
+          the set is otherwise implementation-defined.</li>
+      <li>Elias noted that Unicode specifies a lot of whitespace characters and
+          wondered how surprising recognizing them might be.</li>
+      <li>Robin stated that Unicode provides multiple whitespace character
+          definitions for use in various contexts via the <tt>White_Space</tt>
+          and <tt>Pattern_White_Space</tt> character properties.</li>
+      <li>Robin noted that <tt>Pattern_White_Space</tt> has the advantage of
+          being immutable and that it includes some invisible characters that
+          should be ignored.</li>
+      <li>Robin explained that <tt>Pattern_White_Space</tt> is intended to be
+          used for the specification of programming languages and that Unicode
+          offers a recommendation in
+          <a href="https://www.unicode.org/reports/tr31/tr31-39.html">UAX #31 of Unicode 15.1</a>.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://www.unicode.org/reports/tr31/tr31-39.html#Whitespace">section 4.1, "Whitespace"</a>
+          and, in particular,
+          <a href="https://www.unicode.org/reports/tr31/tr31-39.html#R3a">conformance requirement UAX31-R3a</a>.
+          ]</em></li>
+      <li>Tom provided a Unicode utilities link that lists all the characters
+          with <tt>Pattern_White_Space=Yes</tt>.
+        <ul>
+          <li><a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=[:Pattern_White_Space=Yes:]">https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=[:Pattern_White_Space=Yes:]</a></li>
+        </ul>
+      </li>
+      <li>PBrett lamented the "null" names for the C0 and C1 control
+          characters.</li>
+      <li>Robin filed an issue to correct the display names.
+        <ul>
+          <li><a href="https://github.com/unicode-org/unicodetools/issues/542">The UnicodeSet utility should show Name_Alias in the absence of Name</a></li>
+        </ul>
+      </li>
+      <li><em>[ Editor's note: Following the meeting, Robin shared additional
+          details regarding the categorization of whitespace in the Unicode
+          Standard. Even this is an incomplete list.
+        <ul>
+          <li><a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7BZs%7D&g=General_Category&i=White_Space%2C+Pattern_White_Space">Things that are categorized as space separators</a></li>
+          <li><a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7BName%3D%2F%5CbSPACE%5Cb%2F%7D&g=General_Category&i=White_Space%2C+Pattern_White_Space">Things that are called spaces</a></li>
+          <li><a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7BWhite_Space%7D&g=General_Category&i=White_Space%2C+Pattern_White_Space">Things that are white space</a></li>
+          <li><a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7BPattern_White_Space%7D&g=General_Category&i=White_Space%2C+Pattern_White_Space">Things that should be treated as white space in machine-readable syntaxes</a></li>
+          <li><a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7BLine_Break%3DSPACE%7D&g=General_Category&i=White_Space%2C+Pattern_White_Space">Things that behave like space for line breaking</a></li>
+          <li><a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7Bbc%3Dws%7D&g=General_Category&i=White_Space%2C+Pattern_White_Space">Things that behave like space for bidirectional ordering</a></li>
+          <li><a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7Bwb%3DWSeg_Space%7D&g=General_Category&i=White_Space%2C+Pattern_White_Space">Things that behave like space for word separation</a></li>
+        </ul>
+        ]</em>
+      </li>
+      <li>Tom asked for a clarification in the example in section 4.3.2,
+          "Fill and align"; if the format string for <tt>rK</tt> was changed
+          to <tt>"**42*"</tt> would that result in an error like in the
+          <tt>rI</tt> example?</li>
+      <li>Elias replied affirmatively.</li>
+      <li>Tom suggested it might be worth adding an additional example to make
+          that explicit.</li>
+      <li>Elias asked what the behavior should be for input that is invalidly
+          encoded and stated that he had planned to propose substitution with
+          a replacement character, but that approach is problematic for output
+          types with reference semantics like <tt>std::string_view</tt>.</li>
+      <li>Tom asked facetiously why the input wasn't sanitized before being
+          passed to <tt>std::scan</tt>.</li>
+      <li>Tom noted that this is a basic error handling question.</li>
+      <li>Victor stated that substituting a replacement character doesn't work
+          well in general since it can't be matched by most of the type
+          specific scanners.</li>
+      <li>Victor suggested treating invalidly encoded input as an error such
+          that an unsuccessful scan result is returned.</li>
+      <li>PBrett noted that ill-formed sequences could just be passed through
+          when scanning for string input.</li>
+      <li>Tom asked how the scanner would know when to stop scanning.</li>
+      <li>PBrett replied that the replacement character could be handled as a
+          character that doesn't match any other character.</li>
+      <li>Tom quipped, so it's a NaN.</li>
+      <li>PBrett agreed.</li>
+      <li>Robin suggested treating such substituted characters as the unknown
+          character, U+FFFF, with regard to Unicode properties and shared a
+          link that lists those properties.
+        <ul>
+          <li><a href="https://util.unicode.org/UnicodeJsps/character.jsp?a=FFFF&B1=Show">https://util.unicode.org/UnicodeJsps/character.jsp?a=FFFF&B1=Show</a></li>
+        </ul>
+      </li>
+      <li>Elias expressed concern about the overhead imposed by always
+          validating the encoding of the input, but noted that passing
+          ill-formed sequences through means that errors are sometimes caught
+          and sometimes not.</li>
+      <li>Eddie expressed a desire for input to be sanitized to avoid having to
+          worry about the consequences otherwise.</li>
+      <li>PBrett observed that, historically, we have required input to be
+          sanitized and noted that validating the input is helpful to avoid
+          undefined behavior.</li>
+      <li>PBrett summarized the options available; make the behavior
+          well-defined, make it undefined, or, perhaps, categorize it as
+          erroneous though we don't yet know how to apply that concept to the
+          standard library.</li>
+      <li><em>[ Editor's note: "Erroneous behavior" is a concept recently
+          discussed within WG21 in the context of
+          <a href="https://wg21.link/p2795">P2795 (Erroneous behaviour for uninitialized reads)</a>.
+          ]</em></li>
+      <li>Elias noted that scanners written for user-defined types are unlikely
+          to perform encoding validation, but that we could encourage authors to
+          delegate scanning back to <tt>std::scan</tt> as demonstrated in
+          section 3.6, "Scanning an user-defined type".</li>
+      <li>Robin reported that Unicode does have a conformance requirement that
+          ill-formed input not be treated as a character and directed the group
+          to
+          <a href="https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf#G54355">conformance clause C.10 in chapter 3 of Unicode 15</a>.
+          <blockquote class="quote">
+            When a process interprets a code unit sequence which purports to be
+            in a Unicode character encoding form, it shall treat ill-formed code
+            unit sequences as an error condition and shall not interpret such
+            sequences as characters.
+          </blockquote>
+      </li>
+      <li>PBrett interpreted the clause as motivation for erroneous
+          behavior.</li>
+      <li>Robin asked whether erroneous behavior is similar to ADA's constraints
+          and provided a link to
+          <a href="http://www.ada-auth.org/standards/22aarm/html/AA-1-1-5.html">section 1.1.5, "Classification of Errors" in the Ada 2022 standard</a>.</li>
+      <li><em>[ Editor's note: "erroneous behavior" as recently used in WG21
+          appears to correlate best with Ada's "bounded errors". ]</em></li>
+      <li>Tom provided a brief overview of the recent history of erroneous
+          behavior and its proposed use for reads of uninitialized
+          variables.</li>
+      <li><em>[ Editor's note: Robin shared a link to
+          <a href="http://www.ada-auth.org/standards/22aarm/html/AA-13-9-1.html#p9">section 13.9.1, "Data Validity", paragraph 9 in the Ada 2022 standard</a>
+          and its discussion of handling of objects with invalid
+          representations; such cases might arise due to lack of
+          initialization. ]</em></li>
+      <li>PBrett asked if there is a way to scan a single code point.</li>
+      <li>Elias replied that there is in his reference implementation but that
+          it is provided via a distinct <tt>scanner</tt> specialization for a
+          <tt>code_point</tt> type.</li>
+      <li>Elias suggested that it might be desirable to support transcoding of
+          <tt>charN_t</tt>-based types in the future.</li>
+      <li>PBrett noted that scanning of <tt>charN_t</tt>-based types does not
+          involve ambiguous encoding.</li>
+      <li>Victor expressed uncertainty regarding how to handle such transcoding
+          when the corresponding literal encoding isn't a standard Unicode
+          encoding form.</li>
+      <li>Elias stated that a programmer can handle such concerns on their own,
+          but only for a user-defined type since they would not be permitted
+          to specialize <tt>std::scanner</tt> for the <tt>charN_t</tt>
+          types.</li>
+      <li>Elias explained that locale support is opt-in the same as it is for
+          <tt>std::format</tt> and that the classic locale is used by
+          default.</li>
+      <li>Tom pondered whether it would be desirable to recognize input using
+          both the specified locale and the classic locale.</li>
+      <li>PBrett expressed strong opposition.</li>
+      <li>Tom realized use of multiple locales doesn't work at all because
+          recognition of characters used for, e.g., thousands separators and
+          decimal points would be ambiguous.</li>
+      <li>PBrett requested the addition of an example to the paper to
+          demonstrate explicit use of a locale.</li>
+      <li>PBrett asserted that it is a programmer requirement to ensure that
+          input is correctly encoded for the specified locale.</li>
+      <li>Elias directed attention to section 4.3.5, "Localized (L)", and asked
+          whether a misplaced grouping separator should result in an error.</li>
+      <li>Elias indicated that the proposed behavior is consistent with
+          iostreams.</li>
+      <li>Victor cautioned against being innovative and opined that existing
+          practice should be followed.</li>
+      <li>Victor noted that implementation of a relaxed scanner should not be
+          difficult when needed.</li>
+      <li>Tom noted the discussion of alternative options for interpretation of
+          field width units in section 4.3.4, "Width and precision" and asked
+          for motivating reasons to consider options that differ from
+          <tt>std::format</tt>.</li>
+      <li>Elias replied that the proposed behavior differs from
+          <tt>std::scanf()</tt>.</li>
+      <li>Tom asked whether the message strings described in section 4.6,
+          "Error handling" require translation or localization.</li>
+      <li>Elias replied that they are intended for use with
+          <tt>std::exception</tt> and therefore target programmers rather than
+          end users.</li>
+    </ul>
+  </li>
+  <li>Tom stated that the next meeting is scheduled for October 11th and that
+      an agenda is still to be determined.</li>
 </ul>
 
 
