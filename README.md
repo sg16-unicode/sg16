@@ -53,10 +53,8 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
-[P2909][]     | Fix formatting of code units as integers<br/>(Dude, where’s my char?)
 [P2873][]     | Remove Deprecated Locale Category Facets For Unicode from C++26
 [P2872][]     | Remove wstring_convert From C++26
-[P2871][]     | Remove Deprecated Unicode Conversion Facets From C++26
 [P2845][]     | Formatting of std::filesystem::path
 [P2758][]     | Emitting messages at compile time
 [P2749][]     | Down with ”character”
@@ -76,6 +74,8 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P2909][]     | Fix formatting of code units as integers<br/>(Dude, where’s my char?)
+[P2871][]     | Remove Deprecated Unicode Conversion Facets From C++26
 [P2741][]     | user-generated static_assert messages
 [P2558][]     | Add @, $, and \` to the basic character set
 [P2361][]     | Unevaluated strings literals
