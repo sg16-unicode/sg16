@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-10-11 through 2023-10-11</title>
+<title>SG16: Unicode meeting summaries 2023-10-11 through 2023-10-25</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-10-21</td>
+    <td>2023-11-28</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-10-11 through 2023-10-11</h1>
+<h1>SG16: Unicode meeting summaries 2023-10-11 through 2023-10-25</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -99,6 +99,8 @@ snapshot of select meeting summaries from that repository.
 <ul>
   <li><a href="#2023_10_11">
       October 11th, 2023</a></li>
+  <li><a href="#2023_10_25">
+      October 25th, 2023</a></li>
 </ul>
 
 <p>
@@ -418,6 +420,280 @@ Previously published SG16 meeting summary papers:
       favorite locale facet, <tt>std::codecvt</tt>.</li>
   <li>Hubert stated that he might soon have a paper that discusses use of
       <tt>$</tt> in identifiers.</li>
+</ul>
+
+
+<h1 id="2023_10_25">October 25th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li>charN_t, char_traits, codecvt, and iostreams:
+    <ul>
+      <li><a href="https://wg21.link/p2873r0">P2873R0: Remove Deprecated Locale Category Facets For Unicode from C++26</a>.</li>
+      <li><a href="https://wg21.link/lwg3767">LWG 3767: codecvt&lt;charN_t, char8_t, mbstate_t&gt; incorrectly added to locale</a>.</li>
+      <li><a href="https://wg21.link/lwg2959">LWG 2959: char_traits&lt;char16_t&gt;::eof is a valid UTF-16 code unit</a>.</li>
+        <ul>
+          <li><a href="https://github.com/sg16-unicode/sg16/issues/32">SG16 #32: std::char_traits&lt;char16_t&gt;::eof() requires uint_least16_t to be larger than 16 bits</a>.</li>
+        </ul>
+      </li>
+      <li><a href="https://github.com/sg16-unicode/sg16/issues/33">SG16 #33: A correct codecvt facet that works with basic_filebuf can't do UTF conversions</a>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Alisdair Meredith</li>
+  <li>Corentin Jabot</li>
+  <li>Hubert Tong</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owens</li>
+  <li>Peter Brett</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>PBrett announced that he will be retiring from C++ standardization efforts
+      for the foreseeable future starting in November.</li>
+  <li>Several people voiced disappointment and wished Peter well.</li>
+  <li>charN_t, char_traits, codecvt, and iostreams:
+    <ul>
+      <li>Tom reported having reached out to the WG21 ABI review group to ask if
+          there were any known ABI tricks that implementors might deploy if
+          <a href="https://wg21.link/lwg2959">LWG 2959 (char_traits&lt;char16_t&gt;::eof is a valid UTF-16 code unit)</a>
+          were to be fixed in the obvious way; by mapping the <tt>int_type</tt>
+          member alias to a larger type.</li>
+      <li>Tom summarized their response; no tricks were identified; suggestions
+          included defining a replacement type for the
+          <tt>std::char_traits&lt;char16_t, char, std::mb_state&gt;</tt>
+          specialization that could be explicitly used in its place.</li>
+      <li>Corentin replied that a replacement type doesn't solve the user
+          problem.</li>
+      <li>Corentin reported intent to submit a proposal to deprecate user
+          specializations of <tt>std::char_traits</tt>.</li>
+      <li>Corentin asked if Tom had asked the libc++ maintainers directly
+          regarding their thoughts on the issue.</li>
+      <li>Tom reported that he has not.</li>
+      <li>Corentin suggested that doing so might be helpful.</li>
+      <li>Tom reported having audited uses of the <tt>int_type</tt> and related
+          members of <tt>std::char_traits</tt> throughout the standard and
+          having found that they are only used within iostreams and, since the
+          standard only requires iostreams to support <tt>char</tt> and
+          <tt>wchar_t</tt>, changing <tt>int_type</tt> for the <tt>char16_t</tt>
+          specialization appears to be a viable option.</li>
+      <li><em>[ Editor's note: Tom's audit rediscovered information that was
+          already known and had been reported in
+          <a href="https://github.com/sg16-unicode/sg16/issues/32#issuecomment-433877435">a comment on SG16 issue #32</a>
+          back in 2018. ]</em></li>
+      <li>Hubert stated that the libc++ implementation of iostreams uses the
+          <tt>eof()</tt> member of <tt>std::char_traits</tt> as a sentinel value
+          to determine if a fill character has been specified via the
+          <tt>std::setfill()</tt> I/O manipulator.</li>
+      <li><em>[ Editor's note: The libc++ implementation of
+          <tt>std::basic_ios</tt> has a private data member named
+          <tt>__fill_</tt> of type <tt>int_type</tt> that is initlialized to
+          <tt>eof()</tt>.
+          When a fill character is needed, a comparison is performed against
+          <tt>eof()</tt> to determine if a fill character has been set or
+          whether the (possbily widened) default fill character should be used.
+          ]</em></li>
+      <li>Hubert noted this as an issue for the <tt>wchar_t</tt> iostream and
+          <tt>std::char_traits</tt> specializations.</li>
+      <li>Tom noted that, for <tt>wchar_t</tt> the EOF value is specified by
+          <tt>WEOF</tt> and asked if it is known to have a value other than
+          -1 anywhere.</li>
+      <li>Hubert responded that he was not aware of other values being used,
+          but that the value is problematic because programmers can use that
+          value.</li>
+      <li><em>[ Editor's note: Microsoft's <tt>wchar.h</tt> header defines
+          <tt>WEOF</tt> as <tt>((wint_t)(0xFFFF))</tt> which is equivalent to
+          <tt>-1</tt> converted to <tt>wint_t</tt> (<tt>unsigned short</tt>).
+          ]</em></li>
+      <li>Tom acknowledged the concern as applicable to the <tt>wchar_t</tt>
+          specialization and that it can be treated as a separable issue.</li>
+      <li>Corentin reported that the C++ standard appears to be missing a
+          definition for <tt>WEOF</tt>.</li>
+      <li>Jens responded that the C++ standard has an exposition value of
+          "*see below*" that is intended to redirect to the C library.</li>
+      <li>Jens noted the redirection is the same as for <tt>wint_t</tt>.</li>
+      <li><em>[ Editor's note: See
+          <a href="http://eel.is/c++draft/cwctype.syn#lib:WEOF">[cwctype.syn]</a>
+          and
+          <a href="http://eel.is/c++draft/cwchar.syn#lib:WEOF">[cwchar.syn]</a>.
+          ]</em></li>
+      <li>Tom observed that the clash with <tt>WEOF</tt> is only a problem when
+          the <tt>WEOF</tt> value is in the range of <tt>wchar_t</tt> values;
+          e.g., when <tt>WEOF</tt> is -1 and <tt>wchar_t</tt> is a signed
+          type.</li>
+      <li>Jens noted that the C standard requires that <tt>wint_t</tt> be able
+          to hold all extended character values and that Hubert's concern is
+          that C++ extends more flexibility to users in use of particular
+          values.</li>
+      <li>Tom indicated that he would work with Hubert to get an issue
+          filed.</li>
+      <li>Corentin stated that <tt>std::char_traits&lt;wchar_t&gt;</tt> also
+          suffers from the lack of an available value for EOF in implementations
+          like Microsoft's where both <tt>wchar_t</tt> and <tt>wint_t</tt> are
+          16-bit and used with UTF-16.</li>
+      <li><em>[ Editor's note: Microsoft's implementation uses an unsigned
+          16-bit type for both <tt>wchar_t</tt> and <tt>wint_t</tt>, defines
+          <tt>WEOF</tt> as <tt>((wint_t)(0xFFFF))</tt>, <tt>WCHAR_MIN</tt> as
+          <tt>0</tt>, and <tt>WCHAR_MAX</tt> as <tt>0xFFFF</tt>.
+          That leaves no values left for use as an EOF sentinel. ]</em></li>
+      <li>Hubert expressed skepticism that such implementations are
+          conforming.</li>
+      <li>Jens recalled that changes were made to allow for use of UTF-16 with
+          <tt>wchar_t</tt> at the core language level but that such allowances
+          were not extended to the standard library.</li>
+      <li><em>[ Editor's note: see
+          <a href="https://wg21.link/p2460">P2460 (Relax requirements on <tt>wchar_t</tt> to match existing practices)</a>.i
+          ]</em></li>
+      <li>Jens acknowledged that the distinction doesn't matter much since
+          existing implementations are not going to be changed.</li>
+      <li>Tom expressed a preference to fix <tt>char_traits&lt;char16_t&gt;</tt>
+          as a technically breaking change.</li>
+      <li>Jens requested that implementors be directly contacted for
+          feedback.</li>
+      <li>Hubert also encouraged Jens' request since a change would break use of
+          libc++ iostreams with <tt>char16_t</tt>.</li>
+      <li>Jens acknowledged the potential break, but noted that the ability to
+          use iostreams with <tt>char16_t</tt> might not be intentional.</li>
+      <li>Jens presented <tt>std::complex</tt> as an example of a class template
+          that has restrictions on which types are allowed as template type
+          arguments.</li>
+      <li>Alisdair stated that there are a number of class templates for which
+          instantiations are only guaranteed to work with certain types.</li>
+      <li>Tom asked for confirmation that <tt>std::regex</tt> is limited to
+          instantiations with <tt>char</tt> and <tt>wchar_t</tt>.</li>
+      <li>Alisdair confirmed that is his understanding.</li>
+      <li>Corentin noted that fixing <tt>std::regex</tt> to properly support
+          Unicode would require an ABI break.</li>
+      <li>Tom turned discussion towards the issues concerning
+          <tt>std::codecvt</tt>.</li>
+      <li>Tom asked for confirmation of his expectation that everyone is in
+          agreement that the
+          <tt>std::codecvt&lt;charN_t, char8_t, std::mbstate_t&gt;</tt>
+          specializations that should not have been added in the first place
+          should be deprecated and removed.</li>
+      <li>Victor replied with a thumbs up.</li>
+      <li>Alisdair stated that the deprecated
+          <tt>std::codecvt&lt;charN_t, char, std::mbstate_t&gt;</tt>
+          specializations are only needed by implementors that want to support
+          iostreams with the <tt>charN_t</tt> types.</li>
+      <li>Tom agreed.</li>
+      <li>Steve noted that those are specified with fixed UTF encodings.</li>
+      <li>Jens stated that, as specified, those facets have the wrong
+          semantics.</li>
+      <li>Alisdair observed that the current semantics stand in the way of an
+          implementor doing the right thing with iostreams of <tt>charN_t</tt>
+          type.</li>
+      <li>Jens agreed.</li>
+      <li>Corentin claimed that there are two questions:
+        <ul>
+          <li>Whether we think <tt>std::codecvt</tt> is useful to users and
+              whether we want to continue to support it in the standard.</li>
+          <li>How iostreams perform conversions.</li>
+        </ul>
+      </li>
+      <li>Corentin asserted that we don't have to rely on <tt>std::codecvt</tt>
+          to implement conversions.</li>
+      <li>Tom agreed, but noted that a new mechanism would presumably have to be
+          applied only for the <tt>charN_t</tt> types so as not to interfere
+          with iostreams of <tt>char</tt> and <tt>wchar_t</tt>.</li>
+      <li>Steve stated that it isn't clear that the <tt>std::codecvt</tt> facets
+          are doing what anyone wants.</li>
+      <li>Tom observed that iostreams of <tt>wchar_t</tt> are pretty much only
+          used on Windows and iostreams of <tt>char</tt> use a
+          <tt>std::codecvt</tt> facet that does nothing by default.</li>
+      <li>Alisdair requested that any proposed changes to the
+          <tt>std::codecvt</tt> facets include discussion of how the virtual
+          functions can be overridden to provide different behavior.</li>
+      <li>Alisdair asked if any changes are required to P2873.</li>
+      <li>Tom replied that he is leaning towards undeprecating those facets
+          since the <tt>char8_t</tt> facets that were intended to replace them
+          don't actually do so.</li>
+      <li>Jens reiterated that the deprecated facets have the problem that they
+          convert to the wrong encoding.</li>
+      <li>Jens stated that, once removed, they could be reintroduced with new
+          semantics.</li>
+      <li>Tom replied that the facets have already been deprecated for two
+          release cycles and that implementations diagnose them.</li>
+      <li>Mark acknowledged the deprecation but pointed out that warnings are
+          suppressed in system headers.</li>
+      <li>Tom noted that warnings will have been generated for any explicit use
+          of the deprecated specializations.</li>
+      <li>Jens observed that the deprecation has only poisoned any existing
+          <tt>charN_t</tt> iostream implementations and asserted that removing
+          them is the clearest path forward.</li>
+      <li>Jens claimed that removal sends a stonger message than deprecation for
+          any existing uses.</li>
+      <li>Corentin expressed support for removing them and then adding them
+          again later if needed.</li>
+      <li>Jens argued for focusing on cleanup in this release cycle rather than
+          considering whether we want to add support for <tt>charN_t</tt> in
+          iostreams.</li>
+      <li>Tom turned discussion to the final issue; that the deprecated
+          <tt>std::codecvt&lt;char16_t, char, std::mbstate_t&gt;</tt> facet
+          doesn't satisfy the N:1 rule for <tt>std::basic_filebuf</tt>.</li>
+      <li>Tom noted that the <tt>wchar_t</tt> specialization has this issue as
+          well.</li>
+      <li>Jens pointed out that it technically doesn't because the library does
+          not permit UTF-16 for the wide encoding.</li>
+      <li><em>[ Editor's note: see
+          <a href="http://eel.is/c++draft/character.seq.general#1.2)">[character.seq.general]p(1,2)</a>.
+          ]</em></li>
+      <li>Jens asserted that we should not address this without a paper.</li>
+      <li>Tom agreed.</li>
+      <li>Hubert expressed his perception of where consensus is headed; that we
+          are leaning towards a clean slate for a potential proposal to
+          introduce iostreams of <tt>charN_t</tt>.</li>
+      <li>Jens agreed.</li>
+      <li>Tom interpreted that as an argument for Alisdair's paper going forward
+          as is.</li>
+      <li>Corentin stated that any paper that proposes iostreams for
+          <tt>charN_t</tt> needs to explore use cases.</li>
+      <li>Jens added that such a paper must also consider the current absence of
+          <tt>std::codecvt&lt;char8_t, char, std::mbstate_t&gt;</tt>
+          specializations.</li>
+      <li>Tom agreed and argued that such specializations should not be added
+          until there is a demonstrated need for them.</li>
+      <li>Jens requested that Alisdair's paper clearly delineate what actions to
+          take now vs what would be needed by a hypothetical proposal to
+          introduce iostreams of <tt>charN_t</tt>.</li>
+      <li>Alisdair stated he would like to update the rationale so as to better
+          explain the situation to LEWG and then submit a revision for LWG for
+          the post-Kona mailing.</li>
+      <li>Steve suggested posting the revision to the SG16 mailing list for
+          additional review.</li>
+    </ul>
+  </li>
+  <li>Tom discussed scheduling for the next SG16 meeting:
+    <ul>
+      <li>Tom announced that the next regularly scheduled SG16 meeting would
+          conflict with the WG21 meeting in Kona and that the one after that
+          conflicts with Thanksgiving in the US.</li>
+      <li>Tom suggested meeting on 2023-11-15 and 2023-12-06 and then pause
+          until the new year.</li>
+      <li>Jens objected that 2023-11-15 is too close to Kona post-meeting
+          activities.</li>
+      <li>Tom suggested meeting on 2023-12-06 and 2023-12-20.</li>
+      <li>Victor stated he would not be available on 2023-12-20.</li>
+      <li>Tom proposed that we meet 2023-12-06 and evaluate then whether to meet
+          2023-12-20 or suspend until the new year.</li>
+      <li><em>[ Editor's note: in later
+          <a href="https://lists.isocpp.org/sg16/2023/10/3998.php">mailing list discussion</a>
+          it was decided the group would meet again 2023-11-29 and 2023-12-13.
+          ]</em></li>
+    </ul>
+  </li>
 </ul>
 
 
