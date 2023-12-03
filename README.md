@@ -31,8 +31,9 @@ text\_view  | A C++ Concepts based character encoding and code point enumeration
 
 # Unicode papers
 
-Document Number | Title
+Document Number | Title/Notes/Links
 --------------- | -----
+[L2/23-153][]   | Opposition to and Comment on L2/23–107
 [L2/23-107][]   | Proper Complex Script Support in Text Terminals
 [L2/21-038][]   | Clarify guidance for use of a BOM as a UTF-8 encoding signature
 
@@ -208,6 +209,7 @@ WG14 Number   | Title/Notes/Links
 
 [L2/21-038]: https://www.unicode.org/L2/L2021/21038-bom-guidance.pdf
 [L2/23-107]: https://www.unicode.org/L2/L2023/23107-terminal-suppt.pdf
+[L2/23-153]: https://www.unicode.org/L2/L2023/23153-opposition.pdf
 [WG2-N5168]: https://www.unicode.org/wg2/docs/n5168R1-ISO10646.pdf
 [WG2-N5174]: https://www.unicode.org/wg2/docs/n5174-namesaliases.pdf
 [WG2-N5175]: https://www.unicode.org/wg2/docs/n5175-cdam1.2-repertoire-update.pdf
