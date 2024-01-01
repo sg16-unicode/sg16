@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-10-11 through 2023-10-25</title>
+<title>SG16: Unicode meeting summaries 2023-10-11 through 2023-11-29</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2023-11-28</td>
+    <td>2024-01-01</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-10-11 through 2023-10-25</h1>
+<h1>SG16: Unicode meeting summaries 2023-10-11 through 2023-11-29</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -101,6 +101,8 @@ snapshot of select meeting summaries from that repository.
       October 11th, 2023</a></li>
   <li><a href="#2023_10_25">
       October 25th, 2023</a></li>
+  <li><a href="#2023_11_29">
+      November 29th, 2023</a></li>
 </ul>
 
 <p>
@@ -692,6 +694,229 @@ Previously published SG16 meeting summary papers:
           <a href="https://lists.isocpp.org/sg16/2023/10/3998.php">mailing list discussion</a>
           it was decided the group would meet again 2023-11-29 and 2023-12-13.
           ]</em></li>
+    </ul>
+  </li>
+</ul>
+
+
+<h1 id="2023_11_29">November 29th, 2023</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p2980r0">P2980R0: A motivation, scope, and plan for a physical quantities and units library</a>:
+    <ul>
+      <li>Support for a <tt>fixed_string</tt> type as referenced in the
+          <a href="https://wg21.link/p2980r0#external-dependencies">"External dependencies" section</a>.</li>
+      <li>Support for <tt>std::format</tt> and display of symbol names.</li>
+      <li>Support for <tt>wchar_t</tt>, <tt>char8_t</tt>, <tt>char16_t</tt>,
+          and <tt>char32_t</tt>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Eddie Nolan</li>
+  <li>Fraser Gordon</li>
+  <li>Lauri Vasama</li>
+  <li>Mateusz Pusz</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>A round of introductions was held for new attendee Lauri Vasama.</li>
+  <li><a href="https://wg21.link/p2980r0">P2980R0: A motivation, scope, and plan for a physical quantities and units library</a>:
+    <ul>
+      <li>Mateusz explained that the contents of this paper, as well as the
+          contents of
+          <a href="https://wg21.link/p2981">P2981 (Improving our safety with a physical quantities and units library)</a>
+          and
+          <a href="https://wg21.link/p2982">P2982 (<tt>std::quantity</tt> as a numeric type)</a>
+          are being merged into a new paper following feedback during the Kona
+          2023 meeting.</li>
+      <li>Mateusz proceded with presenting a draft version of the new paper.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p3045r0">P3045R0: Quantities and units library</a>:
+    <ul>
+      <li><em>[ Editor's note: D3045R0 was the active paper under discussion at
+          the telecon.
+          The agenda and links used here reference P3045R0 since the links to
+          the draft paper were ephemeral.
+          The published document may differ from the reviewed draft revision.
+          ]</em></li>
+      <li>Mateusz introduced the paper:
+        <ul>
+          <li>Formatting support is needed to present dimensions and units.</li>
+          <li>Unicode doesn't provide subscript and superscript characters for
+              all Latin characters, so formatting necessarily differs from
+              conventional notation in some cases.</li>
+          <li>The design currently specifies symbol names in terms of
+              <tt>char</tt> and assumes a Unicode encoding.</li>
+          <li>A <tt>fixed_string</tt> type is required to enable a unit symbol
+              to be passed as a template argument for the <tt>named_unit</tt>
+              class template.</li>
+          <li>The library only requires a <tt>fixed_string</tt> type with read
+              capabilities; mutation is not needed.</li>
+          <li>There are many implementations of a <tt>fixed_string</tt> type
+              and re-inventing yet another one for this library is not
+              desirable.</li>
+          <li>There are many design options for a <tt>fixed_string</tt> type
+              including whether mutate and resize operations are supported or
+              whether the type can be implemented with <tt>std::string</tt> and
+              a fixed allocator.</li>
+          <li><tt>std::string_view</tt> does not support mutation.</li>
+          <li>The conventional notation for SI units depends on characters that
+              are not represented in ASCII or in the basic character set.</li>
+          <li>Some users will require ASCII-only output and there is no standard
+              specification for ASCII-only symbol names.</li>
+          <li>Supporting both Unicode and non-Unicode formatting requires
+              alternative symbols.</li>
+          <li>The <tt>basic_symbol_text</tt> class template allows for both a
+              Unicode and ASCII-only representation to be provided.</li>
+        </ul>
+      </li>
+      <li>Tom mentioned that formatted output should be designed for
+          roundtripping so that the output produced is amenable to
+          scanning.</li>
+      <li>Tom noted that a proposal for text parsing is making its way through
+          the committee.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://wg21.link/p1729">P1729 (Text Parsing)</a>.
+          ]</em></li>
+      <li>Mateusz agreed that roundtripping is important to support
+          serialization to a text file and back.</li>
+      <li>Tom suggested that, in lieu of a <tt>fixed_string</tt> type, string
+          operations could be provided by layering <tt>std::string_view</tt> on
+          top of a template parameter that provides contiguous storage.</li>
+      <li>Mateusz agreed that <tt>std::array</tt> could be used.</li>
+      <li>Tom acknowledged that <tt>std::array</tt> is a structural type and
+          thus usable as a non-type template parameter.</li>
+      <li>Eddie asked if <tt>operator+</tt> and other operators could be
+          provided on top of <tt>std::array</tt>.</li>
+      <li>Mateusz replied that he believed so.</li>
+      <li>Lauri expressed concern that deduction guides might be problematic
+          due to null terminators.</li>
+      <li>Tom noted that the proposal assumes that a string literal is always
+          passed as the template argument for symbol names.</li>
+      <li>Lauri stated that the array approach won't work if there is special
+          handling of string literals.</li>
+      <li>Eddie suggested that a simple wrapper type with a <tt>std::array</tt>
+          member and a suitable deduction guide could work.</li>
+      <li>Tom suggested use of a UDL since they can only be used with a string
+          literal.</li>
+      <li>Mateusz replied that consideration should be given to this
+          functionality being user facing.</li>
+      <li>Steve stated that use of <tt>std::array</tt> instead of a more
+          specific type could lead to ambiguities later.</li>
+      <li>Lauri noted that a UDL would require another structural type.</li>
+      <li>Tom agreed and acknowledged that use of a UDL would affect the
+          interface and the user experience.</li>
+      <li>Mateusz asserted that the parameter type should have associated text
+          semantics and not just provide storage.</li>
+      <li>Tom asked how important it is that the programmer be able to control
+          whether symbols are formatted with Unicode or ASCII-only
+          characters.</li>
+      <li>Mateusz replied that there are some users that require ASCII-only
+          output and that an inability to opt-out of a full Unicode mode would
+          be a no-go.</li>
+      <li>Mateusz stated that there isn't a similar concern for iostreams since
+          a manipulator could be provided to control the mode.</li>
+      <li>Tom stated this can remain an open question for now.</li>
+      <li>Fraser suggested that the formatter could allow the programmer to
+          specify an alternate unit symbol in the format specification
+          itself.</li>
+      <li>Victor noted that <tt>std::print</tt> works with iostreams, so
+          iostream support could be provided indirectly.</li>
+      <li>Victor asked if there are interactions with locale.</li>
+      <li>Mateusz replied that the ability to provide locale support is limited
+          by the standard not providing access to the Unicode CLDR database or
+          similarly suitable locale support.</li>
+      <li>Victor recommended reserving an 'L' option specifier in the format
+          specification that would render the code ill-formed for now so as to
+          allow extension later without an ABI break.</li>
+      <li>Eddie noted that the standard already permits an implementation to
+          choose between a Unicode and ASCII symbol for iostream formatting of
+          <tt>std::chrono::duration</tt>.</li>
+      <li><em>[ Editor's note: see
+          <a href="http://eel.is/c++draft/time.duration.io#1.5">[time.duration.io]p(1,5)</a>:
+          <blockquote class="quote">
+            Otherwise, if <tt>Period::type</tt> is <tt>micro</tt>, it is
+            implementation-defined whether <i>units-suffix</t> is
+            "μs" ("\u00b5\u0073") or "us".
+          ]</em></li>
+      <li>Eddie opined that <tt>char8_t</tt> should probably be used for storage
+          of the Unicode symbol name.</li>
+      <li>Eddie asserted that the paper should substitute "basic character set"
+          for "ASCII" throughout.</li>
+      <li>Eddie noted that U+212B (ANGSTROM SIGN) has a tendency to get
+          normalized to U+00C5 (LATIN CAPITAL LETTER A WITH RING ABOVE) or
+          U+0041 (LATIN CAPITAL LETTER A) followed by
+          U+030A (COMBINING RING ABOVE).</li>
+      <li>Mateusz responded that, with regard to use of <tt>char8_t</tt>, that
+          it was suggested to him to just use <tt>char</tt>.</li>
+      <li>Tom replied that opinions differ on that.</li>
+      <li>Steve asserted that the proposal should explicitly specify the code
+          points to be used and should not rely on glyphs.</li>
+      <li>Tom noted that the language specification has been updated to be
+          explicit about code points, but that fewer such updates have been done
+          for the library specification.</li>
+      <li>Eddie asserted that normalization should be specified as well.</li>
+      <li>Tom agreed and stated a preference for NFC.</li>
+      <li>Eddie disagreed with the use of NFC since, per earlier discussion,
+          U+212B (ANGSTROM SIGN) won't be preserved.</li>
+      <li>Mateusz directed discussion to section 13.1.4.1
+          (<tt>unit_symbol_formatting</tt>) where various enumerations are
+          defined to support encapsolating formatting in the
+          <tt>unit_symbol_formatting</tt> class.</li>
+      <li>Victor commented that the enumeration types in that section should
+          have specified underlying types unless they are intended to be
+          transient.</li>
+      <li>Mateusz replied that the enumerations are only used at compile-time,
+          but agreed that adding a fixed underlying type might still make
+          sense.</li>
+      <li>Mateusz explained that <tt>space_before_unit_symbol</tt> is provided
+          as a customization point to control whether a space is inserted
+          between a value and its unit symbol by default.</li>
+      <li>Mateusz directed discussion to section 13.2.3.1
+          (<tt>std::format</tt> Grammar) and noted that the proposed grammar is
+          similar to that for <tt>std::chrono</tt> with the addition of options
+          for text encoding, and controls for inserting a solidus or separator
+          character.</li>
+      <li>Victor observed that the <tt>units-unit-modifier</tt> seems odd since,
+          as specified, it requires that if any of <tt>units-text-encoding</tt>,
+          <tt>units-unit-symbol-denominator</tt>, and
+          <tt>units-unit-symbol-separator</tt> is present, then they all must
+          be.</li>
+      <li>Victor asked whether each of those terms should appear separately in
+          square brackets.</li>
+      <li>Mateusz replied that the intent is that each term can optionally be
+          present in an unordered sequence.</li>
+      <li>Tom replied that specifying an order would avoid having to consider
+          each term being present multiple times.</li>
+    </ul>
+  </li>
+  <li>Tom raised discussion of upcoming meeting plans:
+    <ul>
+      <li>Tom stated that the next meeting is scheduled for December 13th and
+          that he would like to return to some LWG issues.</li>
+      <li><em>[ Editor's note: The December 13th meeting was canceled due to
+          lack of sufficient progress on the LWG issues to warrant additional
+          discussion. ]</em></li>
+      <li>Tom asked Mateusz if we can resume discussion of this paper on
+          January 10th.</li>
+      <li>Mateusz replied that he is not available that week.</li>
+      <li>Tom asked if January 24th would work.</li>
+      <li>Mateusz replied affirmatively.</li>
+      <li>Mateusz requested a list of items to address or consider before the
+          January 24th meeting so that he can work on them to try and get some
+          implementation experience in the meantime.</li>
     </ul>
   </li>
 </ul>
