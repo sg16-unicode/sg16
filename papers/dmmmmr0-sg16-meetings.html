@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-10-11 through 2023-11-29</title>
+<title>SG16: Unicode meeting summaries 2023-10-11 through 2024-01-10</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2024-01-01</td>
+    <td>2024-01-28</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-10-11 through 2023-11-29</h1>
+<h1>SG16: Unicode meeting summaries 2023-10-11 through 2024-01-10</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -103,6 +103,8 @@ snapshot of select meeting summaries from that repository.
       October 25th, 2023</a></li>
   <li><a href="#2023_11_29">
       November 29th, 2023</a></li>
+  <li><a href="#2024_01_10">
+      January 10th, 2024</a></li>
 </ul>
 
 <p>
@@ -929,6 +931,355 @@ Previously published SG16 meeting summary papers:
           implementation experience in the meantime.</li>
     </ul>
   </li>
+</ul>
+
+
+<h1 id="2024_01_10">January 10th, 2024</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://cplusplus.github.io/CWG/issues/2843.html">CWG 2843: Undated reference to Unicode makes C++ a moving target</a>.</li>
+  <li><a href="https://wg21.link/p2626r0">P2626R0: charN_t incremental adoption: Casting pointers of UTF character types</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Alisdair Meredith</li>
+  <li>Corentin Jabot</li>
+  <li>Eddie Nolan</li>
+  <li>Fraser Gordon</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Robin announced that the planned 2024-01-24 SG16 meeting overlaps with
+      the UTC #178 meeting and that he will therefore be unable to attend.</li>
+  <li><a href="https://cplusplus.github.io/CWG/issues/2843.html">CWG 2843: Undated reference to Unicode makes C++ a moving target</a>:
+    <ul>
+      <li>Jens provided an introduction:
+        <ul>
+          <li>Undated references refer to the latest edition of such
+              references.</li>
+          <li>The ISO prefers undated references.</li>
+          <li>WG21 negotiates the use of dated references with the ISO editors
+              based on the fact that conscious effort is required to align
+              wording and semantics with new editions.</li>
+          <li>The C++23 draft is still undergoing editorial changes in
+              conjunction with the ISO.</li>
+          <li>The C++ standard used to have a normative reference to
+              ISO/IEC 10646, but the reference was redirected to the
+              Unicode Standard following additions that required features that
+              are not specified in ISO/IEC 10646.</li>
+          <li><em>[ Editor's note: The change of normative reference was made
+              via
+              <a href="https://wg21.link/p2736r2">P2736R2 (Referencing The Unicode Standard)</a>.
+              ]</em></li>
+          <li>ISO/IEC 10646 is not identical to the relevant portions of the
+              Unicode standard.</li>
+          <li>The ISO has so far not complained about the C++ standard's use of
+              the Unicode Standard despite the ISO generally preferring to
+              refer to ISO standards.</li>
+          <li>The undated reference to the Unicode Standard is "live"; which
+              means that, as soon as a new Unicode Standard is published, the
+              reference automatically refers to that edition.</li>
+          <li>That implies that a conforming implementation of C++23 that uses
+              Unicode 15 becomes non-conforming the moment that Unicode 16 is
+              published.</li>
+          <li>Changes to Unicode algorithms could impose ABI breaks that create
+              difficulties for implementors.</li>
+          <li>The proposed resolution is to require conformance with
+              Unicode 15.</li>
+          <li>It has also been suggested that a minimum Unicode version be
+              specified with an allowance for implementors to use a more recent
+              version.</li>
+          <li>A reference to a particular Unicode version is benficial even if
+              an allowance is made for use of a later version.</li>
+          <li>Specifying both an undated and a dated reference would be
+              weird.</li>
+        </ul>
+      </li>
+      <li>Alisdair stated that issuing a DR has a similar effect to publication
+          of a new edition of an undated reference, but differs in that the
+          change happens under the auspices of WG21 rather than being imposed
+          by an unaffiliated third party.</li>
+      <li>Jens clarified that DRs are not ISO publications and that WG21 so far
+          has not made use of the ISO procedures for issuing technical
+          corrigenda for defects or amendments for enhancements.</li>
+      <li>Robin objected to the notion of the Unicode Consortium being an
+          unaffiliated third party and noted the formal liaison relationship
+          with SC22.</li>
+      <li>Steve opined that fixing the Unicode version to Unicode 15 is
+          probably fine for C++23.</li>
+      <li>Jens replied that C++23 is done with the exception of editorial
+          changes being coordinated with the ISO and that any action taken for
+          this CWG issue will target C++26.</li>
+      <li>Steve reported that he tends to start observing use of new Unicode
+          features within four to six months of the publication of a new
+          Unicode version.</li>
+      <li>Steve stated that new emoji are often the first new feature observed
+          and that such text needs to be correctly processed.</li>
+      <li>Steve asserted that waiting for the next C++ standard for support of
+          a new Unicode version isn't viable.</li>
+      <li>Steve agreed with the approach of specifying a minimum version with
+          an allowance for implementors to upgrade at their discretion.</li>
+      <li>Steve advised against implementors using different Unicode versions
+          for different C++ standard conformance modes since doing so would
+          invite ODR violations.</li>
+      <li>Corentin expressed agreement with Steve's comments.</li>
+      <li>Corentin asserted that implementors need to be able to keep up with
+          the Unicode Standard at a faster pace than the C++ standard can.</li>
+      <li>Corentin stated that it is likely not viable to support different
+          Unicode versions for different C++ standard conformance modes.</li>
+      <li>Corentin reported having tried to support multiple Unicode versions
+          in a private project and that it didn't work well.</li>
+      <li>Corentin noted that the Unicode Standard has a good history of
+          maintaining backward compatibility and that changes made often
+          address defects for which fixes are desirable.</li>
+      <li>Corentin agreed that a dated reference in the C++ standard is useful
+          to facilitate references to specific sections by number and name.</li>
+      <li>Corentin opined that guidance for implementors to handle or avoid ABI
+          issues in accordance with Unicode stability policies would be
+          useful.</li>
+      <li>Corentin suggested that a note that expresses that intent would be
+          helpful.</li>
+      <li>Corentin reported that Clang releases have stayed current with the
+          most recent Unicode versions and will continue to do so.</li>
+      <li>Alisdair expressed alignment with Jonathan's suggestion for the
+          version of the Unicode standard to be implementation-defined for
+          defect reporting purposes.</li>
+      <li>Alisdair stated a preference for not requiring a minimum version so
+          that implementors can provide options to enable backward
+          compatibility with previous releases while remaining conforming.</li>
+      <li>Eddie noted an advantage of an undated reference is that it avoids
+          potential opposition to updating the normative reference to a newer
+          version due to ABI concerns.</li>
+      <li>Eddie explained that <tt>std::format</tt> already has the potential
+          to lock in at compile-time features from the Unicode Standard that
+          don't have a stability policy.</li>
+      <li><em>[ Editor's note: Eddie later
+          <a href="https://lists.isocpp.org/sg16/2024/01/4097.php">clarified on the SG16 mailing list</a>
+          some misconceptions regarding <tt>constexpr</tt> and
+          <tt>std::format</tt>; implementors have flexibility to isolate ABI
+          concerns using <tt>if constexpr</tt>. ]</em></li>
+      <li>Eddie agreed that it would be a good idea to provide guidance to
+          implementors regarding how to isolate ABI concerns.</li>
+      <li>Robin recognized that, in the real world, modern compilers support
+          C++11 despite C++11 no longer being an active ISO standard, and
+          projects are still developed with it.</li>
+      <li>Robin cautioned that, if the version of the Unicode standard is tied
+          to the C++ standard version, then projects using an older C++ version
+          could be using a 10+ year old Unicode version and that possibility is
+          even more concerning than having to wait three years to use a newer
+          version.</li>
+      <li>Robin emphasized the Unicode Standard's stability guarantees.</li>
+      <li>Robin noted that implementations of a Unicode algorithm impose a
+          limit on what Unicode versions are compatible.</li>
+      <li>Steve provided an example of such limitations;
+          extended grapheme clusters (EGCs) were introduced after the initial
+          Unicode release and the use of such features imposes a minimum
+          version that is required.</li>
+      <li>Robin noted in the chat that EGCs were introduced in Unicode 5.1 in
+          April of 2008.</li>
+      <li>Corentin expressed support for specifying a minimum Unicode version
+          for portability reasons.</li>
+      <li>Corentin stated that he is not concerned about ABI issues at this
+          point and asserted they haven't been a practical issue for Unicode
+          concerns so far.</li>
+      <li>Mark replied that libc++ does have an ABI issue that will need to be
+          resolved; there is a table that needs to have an ABI tag applied to
+          it.</li>
+      <li>Mark expressed support for implementations being able to use newer
+          Unicode versions because that is useful for users.</li>
+      <li>Mark stated a preference for an implementation-defined version rather
+          than one which must be adhered to.</li>
+      <li>Alisdair indicated that he would be content to have market pressures
+          determine compatibility.</li>
+      <li>Alisdair stated a desire for an allowance for a conforming
+          implementation to support use of an older Unicode version for
+          compatibility with prior C++ standard versions.</li>
+      <li>Alisdair stated in chat:
+          "Conversely, I would not object to a “recommended practice” to set
+          the floor, rather than making it normative".</li>
+      <li>Eddie asked if there is an ABI impact from <tt>std::format</tt> width
+          estimation changes.</li>
+      <li>Mark replied that the width estimation in libc++ is <tt>constexpr</tt>
+          as an implementation detail.</li>
+      <li>Tom expressed a belief that width estimation has to be performed with
+          run-time field values.</li>
+      <li>Corentin acknowledged that the C++ standard may need to refer to a
+          minimum Unicode Standard version just to be able to refer to certain
+          features.</li>
+      <li>Corentin asserted that there are ways that implementors can hide
+          things behind ABI and that this includes use in <tt>constexpr</tt>
+          context.</li>
+      <li>Jens agreed with Alisdair that the Unicode version actually used in a
+          particular language mode should be implementation-defined.</li>
+      <li>Jens disagreed about not specifying a definite minimum version.</li>
+      <li>Jens explained that core language features like named universal
+          characters (<tt>\N{...}</tt>) require a minimum Unicode version in
+          order to write portable code.</li>
+      <li>Jens asserted that features that can't be reliably used across
+          implementations should be removed.</li>
+      <li>Jens observed that a consistent version of the Unicode Standard is
+          required in order for the C++ standard to be consistent.</li>
+      <li>Jens opined that the C++ standard should not reference different
+          Unicode versions for the core language and the standard library.</li>
+      <li>Tom asked if it might make sense for the minimum Unicode Standard
+          version required for implementations to conform to the C++ standard to
+          be different from the normative dated reference.</li>
+      <li>Jens replied negatively.</li>
+      <li>Jens stated that the formal text needs to provide the right guarantees
+          even if implementors all do what we consider to be the right thing;
+          the formal text must be sufficient to write portable programs.</li>
+      <li>Jens noted that the ISO will not permit the introduction of an alias
+          for a normative reference.</li>
+      <li>Jens expressed uncertainty where a Unicode version conformance
+          requirement should be specified, but stated that is likely a solvable
+          problem.</li>
+      <li>Jens observed that identifiers have a forward compatibility guarantee
+          thanks to the Unicode Standard stability policies for XID start and
+          continue properties.</li>
+      <li>Steve reported that his organization builds their internal toolchain
+          using system supplied libraries and noted this could produce a
+          non-conforming implementation due to building with older Unicode
+          libraries.</li>
+      <li>Steve indicated he is ok with that result though.</li>
+      <li>Steve noted that the Unicode Standard is a coherent specification and
+          that mixing parts from different versions of it can produce
+          non-sensical results.</li>
+      <li>Steve described "ABI problems" as shorthand for lots of different
+          problems, some of which, like virtual function table layout
+          differences, are catastrophic while other cases, like fast math
+          enabled vs disabled, are not.</li>
+      <li>Alisdair stated that he has been persuaded by Jens' arguments that a
+          dated reference to the Unicode Standard in the C++ standard with the
+          actual version being implementation-defined is a good direction.</li>
+      <li>Alisdair opined that it is still important for implementors to be
+          able to provide backwards compatibility and that he would prefer
+          normative guidance for use of the normative dated reference to be the
+          minimal version supported by an implementation.</li>
+      <li>Gordon explained that the ISO prefers undated references because ISO
+          standard editions effectively disappear when superceded and asked for
+          clarification that the Unicode Consortium handles this
+          differently.</li>
+      <li>Robin confirmed that release of a new Unicode Standard does not
+          obviate the preceding ones and provided a link to
+          <a href="https://www.unicode.org/versions">https://www.unicode.org/versions</a>
+          in the chat.</li>
+      <li>Robin asked for Jens to confirm that, with regard to named universal
+          characters, whether the concern is in regard to upgrading
+          compilers.</li>
+      <li>Jens explained that implementations might want to issue a portability
+          warning for use of a name that was added in a later Unicode Standard
+          than the dated version from the C++ Standard.</li>
+      <li>Jens reported that he wants to be able to rely on all character names
+          from, e.g., Unicode 15, being available for use across all C++
+          implementations.</li>
+      <li>Robin asked if the same concern applies to identifiers.</li>
+      <li>Jens confirmed that it does.</li>
+      <li>Robin explained that, as long as the C++ standard specifies a minimum
+          version and that implementations are permitted to use a newer version,
+          then he is content; he would not be content with the C++ standard
+          specifying a maximum version though.</li>
+      <li>Steve noted that implementations are free to accept ill-formed code as
+          long as a diagnostic is issued.</li>
+      <li>Alisdair asked whether a feature test macro with predictable values
+          can be specified.</li>
+      <li>Jens noted that the C++ standard currently provides the
+          <tt>__STDC_ISO_10646__</tt> macro with a date value.</li>
+      <li>Corentin replied that the existing macro can't be relied on at
+          compile-time because it is shared between the core language and the
+          standard library.</li>
+      <li>Robin reported that the Unicode Standard does not have a stability
+          policy for the format of the Unicode version but stated that such a
+          policy could be proposed.</li>
+      <li>Jens replied that the year and month of the release date suffices
+          assuming the Unicode Consortium doesn't start shipping new releases
+          at a rate higher than once a month.</li>
+      <li>Tom summarized his perception of the emerging consensus:
+        <ul>
+          <li>The C++ standard should have a single dated reference to the
+              Unicode Standard for consistency purposes.</li>
+          <li>A minimum Unicode version should be specified as normative
+              guidance or as a mandatory requirement.</li>
+          <li>The actual Unicode version in use by an implementation should be
+              implementation-defined and allowed to be newer than the minimum
+              version.</li>
+          <li>The Unicode version in use by an implementation may differ for
+              the core language vs the standard library; separate feature test
+              macros may be required to identify the implementation-defined
+              version.</li>
+        </ul>
+      </li>
+      <li>Jens noted that the minimum version may be increased in future C++
+          standards to accommodate references to features introduced in newer
+          versions.</li>
+      <li>Tom observed that some effort will be required to identify the
+          minimum Unicode version required for the C++ standard.</li>
+      <li>Suggestions were made to specify Unicode 15 as the minimum
+          version.</li>
+      <li><b>Poll 1: Recommend having a dated reference to Unicode in the
+          "Normative references" and add permission to implement an
+          implementation-defined version.</b>
+        <ul>
+          <li><b>Attendees: 10</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+      <li><b>Poll 2: The standard shall specify a mandatory minimum Unicode
+          version.</b>
+        <ul>
+          <li><b>Attendees: 10</b></li>
+          <li>
+            <table>
+              <tr>
+                <th style="text-align:right">SF</th>
+                <th style="text-align:right">F</th>
+                <th style="text-align:right">N</th>
+                <th style="text-align:right">A</th>
+                <th style="text-align:right">SA</th>
+              </tr>
+              <tr>
+                <th style="text-align:right">3</th>
+                <th style="text-align:right">5</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">1</th>
+                <th style="text-align:right">0</th>
+              </tr>
+            </table>
+          </li>
+          <li><b>Consensus in favor</b></li>
+          <li><b>A: I would prefer to allow implementations to use older
+              Unicode versions and still be considered conforming;
+              implementations will do so regardless.</b></li>
+        </ul>
+      </li>
+      <li>Steve summarized the consensus: we recommend having a dated reference
+          to the Unicode Standard in the "Normative references" section, a
+          minimum version requirement, and an allowance for implementors to use
+          an implementation-defined later version.</li>
+      <li>Jens stated that he will update the proposed resolution for the CWG
+          issue to reflect the SG16 consensus.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2626r0">P2626R0: charN_t incremental adoption: Casting pointers of UTF character types</a>:
+    <ul>
+      <li>Tom thanked Corentin for agreeing to defer discussion of this
+          paper.</li>
+    </ul>
+  </li>
+  <li>Tom reported that the next meeting will be in two weeks and will continue
+      review of Mateusz' paper as well as additional followup on the CWG
+      issue.</li>
 </ul>
 
 
