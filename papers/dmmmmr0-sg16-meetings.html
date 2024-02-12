@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-10-11 through 2024-01-10</title>
+<title>SG16: Unicode meeting summaries 2023-10-11 through 2024-01-24</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2024-01-28</td>
+    <td>2024-02-12</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-10-11 through 2024-01-10</h1>
+<h1>SG16: Unicode meeting summaries 2023-10-11 through 2024-01-24</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -105,6 +105,8 @@ snapshot of select meeting summaries from that repository.
       November 29th, 2023</a></li>
   <li><a href="#2024_01_10">
       January 10th, 2024</a></li>
+  <li><a href="#2024_01_24">
+      January 24th, 2024</a></li>
 </ul>
 
 <p>
@@ -850,8 +852,9 @@ Previously published SG16 meeting summary papers:
           <a href="http://eel.is/c++draft/time.duration.io#1.5">[time.duration.io]p(1,5)</a>:
           <blockquote class="quote">
             Otherwise, if <tt>Period::type</tt> is <tt>micro</tt>, it is
-            implementation-defined whether <i>units-suffix</t> is
+            implementation-defined whether <i>units-suffix</i> is
             "μs" ("\u00b5\u0073") or "us".
+          </blockquote>
           ]</em></li>
       <li>Eddie opined that <tt>char8_t</tt> should probably be used for storage
           of the Unicode symbol name.</li>
@@ -1280,6 +1283,290 @@ Previously published SG16 meeting summary papers:
   <li>Tom reported that the next meeting will be in two weeks and will continue
       review of Mateusz' paper as well as additional followup on the CWG
       issue.</li>
+</ul>
+
+
+<h1 id="2024_01_24">January 24th, 2024</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p3045r0">P3045R0: Quantities and units library</a>.</li>
+  <li><a href="https://cplusplus.github.io/CWG/issues/2843.html">CWG 2843: Undated reference to Unicode makes C++ a moving target</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Billy Baker</li>
+  <li>Corentin Jabot</li>
+  <li>Eddie Nolan</li>
+  <li>Elias Kosunen</li>
+  <li>Fraser Gordon</li>
+  <li>Lauri Vasama</li>
+  <li>Mark de Wever</li>
+  <li>Mateusz Pusz</li>
+  <li>Nathan Owen</li>
+  <li>Jens Maurer</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p3045r0">P3045R0: Quantities and units library</a>:
+    <ul>
+      <li>Mateusz provided an introduction:
+        <ul>
+          <li>There is a need for some unit types to have both a basic unit
+              symbol and one that includes characters that are not in the basic
+              literal character set.</li>
+          <li>The proposed design allows specifying multiple symbols.</li>
+          <li>We need to decide how these different symbols are specified.</li>
+        </ul>
+      </li>
+      <li>Tom asked what character types need to be supported.</li>
+      <li>Corentin recalled an LWG issue concerning the symbol used to print
+          <tt>std::chrono::duration</tt> values with a microseconds period and
+          that the issue was resolved in favor of allowing the implementation to
+          choose between two symbols.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://wg21.link/lwg3094">LWG #3094 (§[time.duration.io]p4 makes surprising claims about encoding)</a>
+          and the current wording in
+          <a href="http://eel.is/c++draft/time.duration.io#1.5">[time.duration.io]p(1.5)</a>.
+          ]</em></li>
+      <li>Corentin suggested that precedent could be followed here.</li>
+      <li>Corentin opined that there is not much motivation for
+          <tt>wchar_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt>.</li>
+      <li>Mateusz responded that there was only one such case to be addressed
+          for the chrono library but there are many such cases for the units
+          library.</li>
+      <li>Mateusz added that there is a desire to allow programmers to restrict
+          formatting to basic characters so as to avoid non-basic characters
+          being written in some cases.</li>
+      <li>Mateusz acknowledged that removing the need for multiple symbols would
+          simplify the design.</li>
+      <li>Victor agreed with Corentin and argued for a design that is simple and
+          prioritizes Unicode.</li>
+      <li>Victor stated it should not be necessary to spell out symbols for all
+          five encodings.</li>
+      <li>Victor concurred that the <tt>std::chrono::duration</tt> example is a
+          good model to follow.</li>
+      <li>Tom expressed skepticism regarding an implementation-defined approach
+          since the units library is designed to be user extensible.</li>
+      <li>Tom expressed a preference to specify a design that will work for
+          user code.</li>
+      <li>Corentin replied that the symbols for the unit types defined by the
+          standard library could be implementation-defined.</li>
+      <li>Corentin observed that passing arbitrary string literals as template
+          arguments could cause compatibility issues if a program includes
+          translation units built with different choices of the ordinary
+          literal encoding.</li>
+      <li>Corentin shared
+          <a href="https://godbolt.org/z/8frTvfvoE">https://godbolt.org/z/8frTvfvoE</a>
+          as an example that demonstrates the concern.</li>
+      <li><em>[ Editor's note: The concern is that a string literal like
+          <tt>"µ"</tt> might be differently encoded such that the specialization
+          <tt>prefixed_unit&lt;{"µ", "u"}, ...&gt;</tt> might not coincide
+          across translation units. ]</em></li>
+      <li>Corentin expressed uncertainty regarding catering to programmers that
+          want to avoid seeing non-ASCII characters.</li>
+      <li>Mateusz replied that the concern isn't just for reading the formatted
+          output but that people need to be able to write the characters as
+          well.</li>
+      <li>Mateusz reported that there is no standard for ASCII-only symbol
+          names.</li>
+      <li>Steve agreed that the choice of ordinary literal encoding can create
+          portability problems.</li>
+      <li>Steve advised caution regarding potentially requiring the ordinary
+          literal encoding to be able to accommodate characters not in the
+          basic literal encoding.</li>
+      <li>Elias observed that specifying the symbols as implementation-defined
+          would cause problems for exchange of text.</li>
+      <li>Steve noted that C++23 requires a conforming implementation to
+          support UTF-8.</li>
+      <li>Tom agreed, but noted that the UTF-8 requirement is for the encoding
+          of source files and that the ordinary literal encoding need not
+          support UTF-8.</li>
+      <li>Steve observed that the proposed design would therefore be
+          unimplementable for some implementors.</li>
+      <li>Mark opined that it would be useful to specify alternate symbols for
+          implementations to use.</li>
+      <li>Corentin asserted that ordinary character and string literals can't
+          be used as template arguments due to the possibility of inconsistent
+          ordinary literal encoding.</li>
+      <li>Mateusz pondered whether a Unicode encoding should be used for all
+          the symbols.</li>
+      <li>Corentin replied that he thinks that is necessary to avoid
+          compatibility problems.</li>
+      <li>Steve observed that the compiler can't correct for such
+          incompatibilities because this is effectively a linkage concern.</li>
+      <li>Elias asked if there is a compelling reason for the symbol names to
+          be provided as template arguments.</li>
+      <li>Mark replied that the motivation is to enable a succinct programming
+          style as opposed to specializing a trait.</li>
+      <li>Victor opined that the symbol is data and should not be specified as
+          part of the type.</li>
+      <li>Victor argued that moving the symbol out of the type system would
+          make the design less fragile.</li>
+      <li>Victor stated that macros can be used to provide a succinct
+          programming style.</li>
+      <li>Steve raised a concern that making data part of the type can lead to
+          accidental ABI freezes where, for example, misspellings can't be
+          fixed.</li>
+      <li>Steve noted that such a design limits future extension possibilities
+          as well.</li>
+      <li>Tom asked Mateusz how moving the symbols out of template arguments
+          would impact the design.</li>
+      <li>Mateusz replied that users appreciate the terseness the current
+          design allows and stated that exposing macros as part of a standard
+          interface would not be desired.</li>
+      <li>Mateusz acknowledged such a change would be possible though.</li>
+      <li>Elias cautioned that we don't have an alternative design in front of
+          us to consider and that makes it difficult to evaluate relative
+          benefits.</li>
+      <li>Mateusz stated that strong types are important to the design.</li>
+      <li>Mateusz suggested A CRTP-based design could work.</li>
+      <li>Victor stated that it seems problematic to have the symbol text be
+          part of the identity of the type.</li>
+      <li>Victor suggested that tag types would be more appropriate.</li>
+      <li>Mateusz reported that he ran into difficulties when considering tag
+          types but that he needs to explore some more.</li>
+      <li>Mateusz stated that use of tag types would change the interface
+          considerably.</li>
+      <li>Steve returned discussion to support of multiple encodings and
+          asserted that use of transliteration should be avoided since it can
+          produce surprises like "Ω" (U+03A9 GREEK CAPITAL LETTER OMEGA)
+          getting converted to "O".</li>
+      <li>Tom summarized his impression of where the discussion has been
+          leading:
+        <ul>
+          <li>The proposal authors should explore alternatives to passing
+              symbols as template arguments.</li>
+          <li>There does appear to be a need to specify symbol alternatives
+              for different encodings.</li>
+          <li>A method of specifying a symbol alternative in a UTF form and
+              another as an ordinary string literal should suffice to support
+              all five encodings.</li>
+        </ul>
+      </li>
+      <li>Victor reiterated that exploration of alternative designs should
+          include the option of implementation-defined symbol selection.</li>
+      <li>Tom replied that there is still a need to specify symbol selection
+          for user-defined units.</li>
+      <li>Corentin agreed that there appears to be consensus for a fallback
+          symbol to be used when the preferred symbol is not representable.</li>
+      <li>Corentin expressed uncertainty regarding consensus for a user opt-in
+          to use of a fallback symbol.</li>
+      <li>Mateusz directed discussion toward use of '_' to indicate a
+          subscripted character in cases where Unicode lacks a corresponding
+          character.</li>
+      <li>Steve stated that subscripted characters in Unicode exist solely for
+          compatibility with legacy character sets and that subscripting and
+          superscripting are considered markup.</li>
+      <li>Corentin opined that if subscripting and superscripting can't be done
+          uniformly everywhere, then it should not be done anywhere.</li>
+      <li>Corentin suggested consulting with Robin.</li>
+      <li>Corentin wondered whether the ISO standards on units suggest a
+          solution.</li>
+      <li>Jens stated that he doesn't think there is a portable way to
+          represent physics symbols in ordinary string literals.</li>
+      <li>Jens suggested that it should be possible to allow a user to insert
+          markup for support of subscripting and superscripting.</li>
+      <li>Jens questioned whether support for non-ASCII characters should be
+          provided at all since plain text can't represent the desired
+          formatting.</li>
+      <li>Mateusz replied that others have provided similar feedback such as
+          the ability to produce LaTeX.</li>
+      <li>Mateusz stated that he doesn't know how to do that with
+          <tt>std::format</tt> or <tt>std::print</tt> though.</li>
+      <li>Corentin agreed with Jens that users will want more capabilities and
+          that these symbols are intended for display in a terminal.</li>
+      <li>Steve suggested that, since the library is intended to support
+          user-defined units, perhaps the unit symbols defined by the standard
+          library should be restricted to the basic literal character set and
+          programmers can use whatever characters from the actual ordinary
+          literal encoding that they like for their own unit types.</li>
+      <li>Steve commented that the symbol is significant in the type
+          system.</li>
+      <li>Jens agreed that it is and that units need to be preserved such that
+          <tt>2*speed_of_light == speed_of_light</tt>.</li>
+      <li>Victor agreed with Jens that we shouldn't put too much effort into
+          pretty formatting since users can perform their own formatting.</li>
+      <li>Victor asserted that the main purpose of the library is to provide
+          the unit primitives as opposed to nicely formatted output.</li>
+      <li>Mateusz asked if <tt>std::format</tt> could potentially take a tag
+          type to differentiate behavior.</li>
+      <li>Victor replied that the way to differentiate behavior would be to
+          write separate formatters.</li>
+      <li>Jens noted that the way to opt-in to such differentiated behavior
+          is to wrap types accordingly.</li>
+      <li>Jens suggested updating the narrative of the paper to demonstrate how
+          to produce nicely formatted output for these types.</li>
+      <li>Jens indicated that it would be nice to be able to specify custom
+          formatting with a terse syntax.</li>
+      <li>Mateusz expressed uncertainty regarding how, for example, a
+          <tt>std::vector</tt> of these types could be formatted in a custom
+          way.</li>
+      <li>Jens acknowledged uncertainty regarding whether the
+          <tt>std::vector</tt> formatters could handle that.</li>
+      <li>Jens observed that a <tt>std::vector</tt> wrapper could presumably
+          apply a corresponding wrapper to its elements.</li>
+      <li>Jens suggested that an inability to do so might imply a deficiency
+          in <tt>std::format</tt> that might be worth addressing and stated
+          that an HTML formatter shouldn't require reinventing
+          <tt>std::format</tt>.</li>
+      <li>Eddie opined that, even if formatted symbols are only used for
+          debug-like scenarios, Unicode support is useful and should be a
+          goal.</li>
+      <li>Mateusz reported that none of the units libraries that he is aware
+          of provide such extensive formatting capabilities.</li>
+      <li>Jens opined that such capabilities are not needed for the standard
+          either but that it would be useful to illustrate what a solution
+          might look like.</li>
+      <li>Steve asked for additional topics that would benefit from
+          discussion.</li>
+      <li>Mateusz asked for preferences regarding the return type of
+          <tt>unit_symbol()</tt>.</li>
+      <li>No opinions were offered.</li>
+      <li>Mateusz stated that adding additional iostream manipulators is
+          probably not desireable and recalled that previous discussion
+          settled on just providing <tt>std::format</tt> support.</li>
+      <li>Tom asked Victor if there is an SG16 concern regarding section
+          13.4.1, "Controlling width, fill, and alignment".</li>
+      <li>Victor replied that the behavior should be consistent with other
+          formatters and that any reason to deviate should be discussed.</li>
+      <li>Jens asked for confirmation that nested formatting works with
+          ranges.</li>
+      <li>Mark and Victor both confirmed.</li>
+      <li>Mateusz stated that the proposal uses nested <tt>{}</tt> braces for
+          formatting of subentities.</li>
+      <li>Victor expressed opposition to use of <tt>{}</tt> for nesting
+          because it closes off syntax space that could be used for other
+          extentions.</li>
+      <li>Victor noted that there are other delimiters that can be used.</li>
+      <li>Mateusz stated that the parse context isn't copyable, so there
+          isn't a portable way to handle nesting.</li>
+      <li>Victor replied that implementation is straight forward using
+          implementation internals.</li>
+      <li>Jens noted that, for the purposes of standardization, it doesn't
+          matter if the subentity selection is portably implementable using
+          existing implementations.</li>
+      <li>Corentin stated that the proposed approach doesn't support
+          localization.</li>
+      <li>Tom noted that message formatting capabilities would be required
+          for that.</li>
+    </ul>
+  </li>
+  <li><a href="https://cplusplus.github.io/CWG/issues/2843.html">CWG 2843: Undated reference to Unicode makes C++ a moving target</a>:
+    <ul>
+      <li>Tom apologized for the lack of time for further review of this
+          issue.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will be 2024-02-07.</li>
 </ul>
 
 
