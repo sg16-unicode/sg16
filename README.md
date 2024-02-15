@@ -54,6 +54,7 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P3154][]     | Deprecating signed character types in iostreams
 [P3070][]     | Formatting enums
 [P2873][]     | Remove Deprecated Locale Category Facets For Unicode from C++26
 [P2872][]     | Remove wstring_convert From C++26
@@ -249,6 +250,7 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P3154]: https://wg21.link/p3154
 [P3070]: https://wg21.link/p3070
 [P2909]: https://wg21.link/p2909
 [P2873]: https://wg21.link/p2873
