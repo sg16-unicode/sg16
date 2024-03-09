@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2023-10-11 through 2024-02-07</title>
+<title>SG16: Unicode meeting summaries 2023-10-11 through 2024-02-21</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2024-02-12</td>
+    <td>2024-03-09</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2023-10-11 through 2024-02-07</h1>
+<h1>SG16: Unicode meeting summaries 2023-10-11 through 2024-02-21</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -109,6 +109,8 @@ snapshot of select meeting summaries from that repository.
       January 24th, 2024</a></li>
   <li><a href="#2024_02_07">
       February 7th, 2024</a></li>
+  <li><a href="#2024_02_21">
+      February 21st, 2024</a></li>
 </ul>
 
 <p>
@@ -1884,6 +1886,238 @@ Previously published SG16 meeting summary papers:
   </li>
   <li>Tom announced that the next meeting will be on 2024-07-21 and that the
       agenda is TBD.</li>
+</ul>
+
+
+<h1 id="2024_02_21">February 21st, 2024</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://cplusplus.github.io/CWG/issues/2843.html">CWG 2843: Undated reference to Unicode makes C++ a moving target</a>.
+    <ul>
+      <li>Identify updates needed for UAX #31 changes in Unicode 15.1.0.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/lwg4043">LWG 4043: <tt>"ASCII"</tt> is not a registered character encoding</a>.</li>
+  <li><a href="https://wg21.link/lwg4044">LWG 4044: Confusing requirements for <tt>std::print</tt> on POSIX platforms</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Eddie Nolan</li>
+  <li>Fraser Gordon</li>
+  <li>Jens Maurer</li>
+  <li>Nathan Owens</li>
+  <li>Peter Bindels</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://cplusplus.github.io/CWG/issues/2843.html">CWG 2843: Undated reference to Unicode makes C++ a moving target</a>:
+    <ul>
+      <li>Tom provided a brief introduction:
+        <ul>
+          <li>Unicode 15.1.0 introduced changes to
+              <a href="https://www.unicode.org/reports/tr31/#Default_Identifier_Syntax">default identifier syntax</a>
+              to allow U+200C (ZERO WIDTH NON-JOINER) and
+              U+200D (ZERO WIDTH JOINER) in identifiers.</li>
+          <li>We can choose to accept these changes or to adopt a profile that
+              retains the prior behavior.</li>
+          <li>Regardless, the removal of
+              <a href="https://www.unicode.org/reports/tr31/#R1a">UAX31-R1a</a>
+              necessitates an update to
+              <a href="http://eel.is/c++draft/uaxid.def.rfmt">[uaxid.def.rfmt]</a>
+              in
+              <a href="http://eel.is/c++draft/uaxid">Annex E</a>.</li>
+        </ul>
+      </li>
+      <li>Steve stated that it makes the most sense to defer to Unicode for
+          valid identifier syntax and for individual projects to decide what
+          constitutes a reasonable identifier.</li>
+      <li>Steve asserted that following Unicode guidance should not be an
+          on-going discussion for WG21.</li>
+      <li>Jens reminded the group that we decided to defer to Unicode
+          explicitly so that we would not have to decide what is a valid
+          identifier.</li>
+      <li>Robin explained that this topic is on the agenda because there was a
+          change to UAX #31 and Annex E now has dangling-ish references.</li>
+      <li>Robin reported that the change made to default identifiers was a
+          simplification and that
+          <a href="https://www.unicode.org/reports/tr55/">UTS #55 (Unicode Source Code Handling)</a>
+          gives general guidance for identifiers.</li>
+      <li>Robin noted that the provided guidance suggests adopting a profile
+          from
+          <a href="https://www.unicode.org/reports/tr31/#Mathematical_Compatibility_Notation_Profile">UAX #31 section 7.1</a>
+          to allow additional characters that are not included in default
+          identifiers.</li>
+      <li>Robin stated that some implementations already allow those characters
+          and that formally adding them to C++ should probably be pursued by a
+          separate paper.</li>
+      <li>Tom noted that those additional characters are for some mathematics
+          symbols.</li>
+      <li>Steve agreed that is something to consider, but is unrelated to the
+          current issue.</li>
+      <li>Tom asked if anyone had an argument to offer for why we should not
+          accept the UAX #31 updates.</li>
+      <li>No such arguments were offered.</li>
+      <li>Tom asked for a volunteer to update annex E.</li>
+      <li>Steve volunteered.</li>
+      <li>Robin expressed interest in collaborating on a paper to adopt the
+          <a href="https://www.unicode.org/reports/tr31/#Mathematical_Compatibility_Notation_Profile">Mathematical Compatibility Notation Profile</a>.</li>
+      <li>Tom requested that Steve send updated wording to Jens to be included
+          in the proposed resolution.</li>
+      <li>Jens stated that the proposed resolution will require approval from
+          EWG due to the minimum version requirement.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/lwg4043">LWG 4043: <tt>"ASCII"</tt> is not a registered character encoding</a>:
+    <ul>
+      <li>Tom provided a brief introduction:</li>
+        <ul>
+          <li>Users expect "ASCII" to be a recognized encoding name, existing
+              converters recognize it, the proposed resolution is that it be
+              recognized as an alias of "US-ASCII".</li>
+        </ul>
+      </li>
+      <li>Fraser asked if it is known why "ASCII" isn't already an alias for
+          "US-ASCII" in the
+          <a href="https://www.iana.org/assignments/character-sets/character-sets.xhtml">IANA character set registry</a>.</li>
+      <li>Tom guessed that it is due to historic confusion regarding
+          "extended ASCII" character sets.</li>
+      <li>Tom shared a link to the IANA character set reference and quoted the
+          first paragraph in chat.
+          <blockquote class="quote">
+            These are the official names for character sets that may be used in
+            the Internet and may be referred to in Internet documentation.
+            These names are expressed in ANSI_X3.4-1968 which is commonly called
+            US-ASCII or simply ASCII.
+            The character set most commonly use in the Internet and used
+            especially in protocol standards is US-ASCII, this is strongly
+            encouraged.
+            The use of the name US-ASCII is also encouraged.
+          </blockquote>
+      <li>Steve noted that the IANA registry includes a "csASCII" alias.</li>
+      <li>Fraser opined that this sounds like a historic issue.</li>
+      <li>Steve recalled that some special handling for "cs" prefixed names
+          was adopted.</li>
+      <li>Tom replied that the <tt>std::text_encoding::id</tt> enumerators use
+          the "cs" prefixed aliases with the "cs" prefix removed.</li>
+      <li>Tom asked if anyone is opposed to adding the proposed "ASCII"
+          alias.</li>
+      <li>Jens noted that implementations already have lattitude to add
+          additional names.</li>
+      <li>Jens agreed we should add this particular alias, but not as a
+          precedent for adding additional aliases later.</li>
+      <li>Peter stated that ASCII is deserving of special consideration and is
+          recognized around the world.</li>
+      <li>Victor opined that the motivation in the LWG issue is a little weak,
+          but that he isn't opposed.</li>
+      <li>Tom reported that <tt>iconv()</tt> and ICU will already recognize it
+          and opined that users will expect it to be recognized.</li>
+      <li>Steve noted that implementors don't need our approval to add this
+          alias.</li>
+      <li><b>Poll 1: Approve the addition of "ASCII" as an alias for the US-ASCII IANA encoding.</b>
+        <ul>
+          <li><b>Attendees: 9</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/lwg4044">LWG 4044: Confusing requirements for <tt>std::print</tt> on POSIX platforms</a>:
+    <ul>
+      <li>Victor introduced the issue:
+        <ul>
+          <li>Jonathan Wakely implemented support for <tt>std::print()</tt> in
+              libstdc++ and encountered a significant performance issue due to
+              how he interpreted the standard wording.</li>
+          <li>When discussing <tt>std::print()</tt> in SG16, we didn't consider
+              POSIX streams as a "Native Unicode API".</li>
+          <li>Private correspondence with Jonathan clarified the intent and
+              resolved the performance issues.</li>
+        </ul>
+      </li>
+      <li>Victor guided discussion through the proposed wording.</li>
+      <li>Victor highlighted the removal of the POSIX and <tt>isatty()</tt>
+          related wording as the important change.</li>
+      <li>Victor suggested that the moved text that encourages implementations
+          to diagnose invalid code units be removed.</li>
+      <li>Eddie agreed with striking the wording regarding diagnosing invalid
+          code units.</li>
+      <li>Eddie noted that checking for ill-formed code unit sequences imposes
+          overhead.</li>
+      <li>Steve asserted that <tt>isatty()</tt> is fragile and that its use
+          complicates debugging since it leads to file redirection changing
+          program behavior.</li>
+      <li>Eddie asked Steve for clarification.</li>
+      <li>Steve replied that <tt>isatty()</tt> is fragile because it is easy to
+          cause <tt>isatty()</tt> to return false when the output is still
+          going to the terminal.</li>
+      <li><em>[ Editor's note: Compare the behavior of <tt>ls</tt> vs
+          <tt>ls | cat</tt> on Linux for example. ]</em></li>
+      <li>Eddie opined that tools should check the <tt>NO_COLOR</tt>
+          environment variable.</li>
+      <li>Steve insisted that <tt>isatty()</tt> is too low level for what
+          <tt>std::print()</tt> is intended to do.</li>
+      <li>Tom expressed support for dropping the wording regarding diagnosing
+          invalid code units.</li>
+      <li>Tom asked if the wording should state something else regarding the
+          behavior when invalid code unit sequences are present but concluded
+          that likely falls under implementation-defined behavior related to
+          use of the native Unicode API.</li>
+      <li>Jens asked if the Windows checks for code directed to a console have
+          similar overhead concerns as calls to <tt>isatty()</tt> on POSIX
+          systems.</li>
+      <li>Victor replied affirmatively but noted that there is no known
+          alternative at present.</li>
+      <li>Victor stated that the check could become a no-op in the future if it
+          becomes possible to check for use of a Unicode code page instead.</li>
+      <li>Victor summarized that we can either do the wrong thing quickly or
+          the right thing slowly.</li>
+      <li>Jens expressed agreement for striking the wording regarding diagnosing
+          invalid code unit sequences.</li>
+      <li>Peter opined that the wording appears to be written from a Windows
+          point of view and seems quite strange from a POSIX perspective.</li>
+      <li>Peter suggested that the wording could discuss Windows
+          specifically.</li>
+      <li>Jens replied that Windows is specifically addressed in a note.</li>
+      <li>Tom acknowledged that Peter has a valid point; the
+          "native Unicode API" is only needed when writing directly to the
+          stream is insufficient to produce the right result.</li>
+      <li>Eddie advised caution regarding discounting the possibility that
+          writing directly to the stream could produce the right result on
+          Windows.</li>
+      <li>Tom noted that Microsoft does ship versions of Windows that only
+          support UTF-8 as the active code page and offered HoloLens as an
+          example.</li>
+      <li>Steve asked if implementors need this guidance.</li>
+      <li>Victor replied that they do and that it took considerable exploration
+          to determine exactly which functions were needed to achieve the right
+          results.</li>
+      <li>Jens commented that this is one of those rare places in the standard
+          where we try to tell implementors what to do rather than just
+          specifying the required behavior.</li>
+      <li>Jens stated that the wording needs to be sufficient to guide
+          implementors to the right result.</li>
+      <li><b>Poll 2: Approve the LWG 4044 proposed resolution with the wording about diagnosing invalid code units removed.</b>
+        <ul>
+          <li><b>Attendees: 9</b></li>
+          <li><b>No objection to unanimous consent.</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will be on 2024-03-13; the week
+      before the Tokyo meeting.</li>
+  <li>Tom requested suggestions for any papers or issues that need SG16 review
+      prior to Tokyo.</li>
 </ul>
 
 
