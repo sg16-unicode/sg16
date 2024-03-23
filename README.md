@@ -57,8 +57,6 @@ WG21 Number   | Title/Notes/Links
 [P3154][]     | Deprecating signed character types in iostreams
 [P3070][]     | Formatting enums
 [P2873][]     | Remove Deprecated Locale Category Facets For Unicode from C++26
-[P2872][]     | Remove wstring_convert From C++26
-[P2845][]     | Formatting of std::filesystem::path
 [P2758][]     | Emitting messages at compile time
 [P2749][]     | Down with ”character”
 [P2729][]     | Unicode in the Library, Part 2: Normalization
@@ -78,7 +76,9 @@ WG21 Number   | Title/Notes/Links
 WG21 Number   | Title/Notes/Links
 ------------- | -----
 [P2909][]     | Fix formatting of code units as integers<br/>(Dude, where’s my char?)
+[P2872][]     | Remove wstring_convert From C++26
 [P2871][]     | Remove Deprecated Unicode Conversion Facets From C++26
+[P2845][]     | Formatting of std::filesystem::path
 [P2741][]     | user-generated static_assert messages
 [P2558][]     | Add @, $, and \` to the basic character set
 [P2361][]     | Unevaluated strings literals
