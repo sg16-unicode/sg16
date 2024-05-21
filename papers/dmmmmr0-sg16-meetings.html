@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <head>
-<title>SG16: Unicode meeting summaries 2024-03-13 through 2024-04-10</title>
+<title>SG16: Unicode meeting summaries 2024-03-13 through 2024-05-08</title>
 </head>
 
 <style type="text/css">
@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2024-04-26</td>
+    <td>2024-05-21</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -87,7 +87,7 @@ blockquote.quote
 </table>
 
 
-<h1>SG16: Unicode meeting summaries 2024-03-13 through 2024-04-10</h1>
+<h1>SG16: Unicode meeting summaries 2024-03-13 through 2024-05-08</h1>
 
 <p>
 Summaries of SG16 meetings are maintained at
@@ -101,6 +101,10 @@ snapshot of select meeting summaries from that repository.
       March 13th, 2024</a></li>
   <li><a href="#2024_04_10">
       April 10th, 2024</a></li>
+  <li><a href="#2024_04_24">
+      April 24th, 2024</a></li>
+  <li><a href="#2024_05_08">
+      May 8th, 2024</a></li>
 </ul>
 
 <p>
@@ -622,6 +626,713 @@ Previously published SG16 meeting summary papers:
   <li>Tom announced that the next meeting will be on 2024-04-24 and that he
       would work with authors to get papers scheduled with more advance notice
       this time.</li>
+</ul>
+
+
+<h1 id="2024_04_24">April 24th, 2024</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1953r0">P1953R0: Unicode Identifiers And Reflection</a>.</li>
+  <li><a href="https://wg21.link/p2996r2">P2996R2: Reflection for C++26</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Andrei Alexandrescu</li>
+  <li>Braden Ganetsky</li>
+  <li>Corentin Jabot</li>
+  <li>Dan Katz</li>
+  <li>Daveed Vandevoorde</li>
+  <li>Eddie Nolan</li>
+  <li>Giuseppe D'Angelo</li>
+  <li>Jens Maurer</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owens</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+  <li>Wyatt Childers</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p1953r0">P1953R0: Unicode Identifiers And Reflection</a>:
+    <ul>
+      <li>Corentin provided an introduction:
+        <ul>
+          <li>This is an older paper and reflection has changed in the meantime,
+              but it is still relevant.</li>
+          <li><a href="https://wg21.link/p1949r7">P1949 (C++ Identifier Syntax using Unicode Standard Annex 31)</a>
+              clarified the syntax for identifiers to provide better support for
+              non-English speakers and mathematicians.</li>
+          <li>String literals are converted from the source file encoding to an
+              implementation-defined literal encoding that might not be
+              Unicode.</li>
+          <li><a href="https://wg21.link/p1854r4">P1854R4 (Making non-encodable string literals ill-formed)</a>
+              changed string literals to be ill-formed if they specify
+              characters that are not representable in the associated literal
+              encoding.</li>
+          <li>Characters can always be converted to Unicode encodings without
+              loss of data in C++.</li>
+          <li>Reflection needs to specify the type and encoding used to reflect
+              an identifier.</li>
+          <li>The only solution that works in all cases is to expose identifiers
+              in a UTF encoding.</li>
+          <li>It is not possible to infer the encoding of a string just by
+              looking at the values of its code units.</li>
+        </ul>
+      </li>
+      <li>Daveed commented that there are some encodings that have characters
+          that lack representation in Unicode.</li>
+      <li>Corentin acknowledged such limitations and explained that new
+          characters are regularly invented in some cultures but are not widely
+          used or encoded.</li>
+      <li>Corentin noted that trademarks and various other symbols likewise are
+          not encoded in Unicode.</li>
+      <li><em>[ Editor's note: The editor's Bluetooth stack regretably crashed
+          and a minute or so of Corentin's continued elaborations were not
+          captured. ]</em></li>
+      <li>Victor stated that having reflection expose names solely in
+          <tt>char8_t</tt> would be user hostile since there is little support
+          for <tt>char8_t</tt> in the standard library.</li>
+      <li>Victor reported that his organization bans use of <tt>u8</tt>
+          literals.</li>
+      <li>Victor expressed support for the approach described in section 4.4.6,
+          "<tt>name_of</tt>, <tt>display_name_of</tt>,
+          <tt>source_location_of</tt>" that limits names to characters in the
+          <a href="http://eel.is/c++draft/lex.charset#def:character_set,basic"><em>basic character set</em></a>.</li>
+      <li>Victor asserted that reflection must provide good support for the
+          common case where the ordinary literal encoding is UTF-8.</li>
+      <li>Daveed asked about implications for EBCDIC based platforms.</li>
+      <li>Corentin replied that EBCDIC and UTF-8 encoded data can't be discerned
+          just by looking at the string contents, so reflecting names in UTF-8
+          in <tt>char</tt>-based storage would be problematic for such
+          platforms.</li>
+      <li>Tom replied that there are EBCDIC code pages that are missing
+          representation for some characters from the basic character set but
+          that digraphs are available for those characters so we don't really
+          concern ourselves with them in practice.</li>
+      <li>Steve corrected Tom in the chat; EBCDIC code pages provide
+          representation for all the characters in the basic character set, but
+          not all such characters are encoded with the same value.</li>
+      <li>Jens explained that, for the purpose of this discussion, it is
+          important to recognize that EBCDIC and ASCII map characters of the
+          basic character set to different code points and are therefore not
+          compatible.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2996r2">P2996R2: Reflection for C++26</a>:
+    <ul>
+      <li>Daveed presented:
+        <ul>
+          <li><em>[ Editor's note: Daveed's presentation slides are avilable
+              <a href="https://github.com/sg16-unicode/sg16-meetings/blob/master/presentations/2024-04-24-p2996r2-presentation.pdf">here</a>.
+              ]</em></li>
+          <li>An overview of the proposed reflection syntax was provided.</li>
+          <li>There are three functions that reflect the names of entities at
+              present, but more might be added.</li>
+          <li>There is only one function that consumes names as strings right
+              now, but more might be added.</li>
+          <li>Names provided by some reflection interfaces must be consumable
+              in the same form by other reflection interfaces.</li>
+          <li>The ability to write names to <tt>std::cout</tt> is required.</li>
+          <li>It is ok for the names to not be source-like;
+              <tt>std::meta::display_name_of()</tt> can use a descriptive
+              notation.</li>
+          <li>The translation model is Unicode based so names can be provided in
+              Unicode encodings, but the standard library is missing support for
+              text in <tt>char8_t</tt>.</li>
+          <li>Proposal sketch #1:
+            <ul>
+              <li>Provide names in both <tt>char</tt> and <tt>char8_t</tt> based
+                  storage and associated encodings.</li>
+              <li>Require names to round-trip.</li>
+            </ul>
+          </li>
+          <li>Proposal sketch #2:
+            <ul>
+              <li>Provide names only in <tt>char8_t</tt> based storage and
+                  UTF-8; names naturally round-trip.</li>
+              <li>Make <tt>std::cout</tt> work with UTF-8 text in
+                  <tt>char8_t</tt>.</li>
+            </ul>
+          </li>
+          <li><em>[ Editor's note: Proposal sketch #3 in the linked slides was
+              added after the meeting as inspired by ensuing discussion.
+              ]</em></li>
+        </ul>
+      </li>
+      <li>Jens asked if <tt>name_of()</tt> is proposed as a <tt>consteval</tt>
+          function.</li>
+      <li>Daveed confirmed that it is.</li>
+      <li>Tom asked for clarification regarding the intended use cases for
+          <tt>name_of()</tt>, <tt>qualified_name_of()</tt>, and
+          <tt>display_name_of()</tt>.</li>
+      <li>Daveed replied that <tt>name_of()</tt> is intended to return an
+          identifier or a canonical name such as <tt>operator X</tt> and that
+          <tt>qualified_name_of()</tt> and <tt>display_name_of()</tt> are
+          intended to return potentially localized descriptive text.</li>
+      <li>Andrei observed that programmers might want to pass a
+          <tt>data_member_options_t</tt> object around and that the
+          <tt>optional&lt;string_view&gt;</tt> <tt>name</tt> member is
+          potentially problematic for lifetime reasons.</li>
+      <li>Daveed acknowledged that the data member type might need to be changed
+          to an owning string type.</li>
+      <li>Corentin explained that conversion from an arbitrary encoding to
+          Unicode might not roundtrip because characters like
+          Å (U+212B ANGSTROM SIGN) and
+          Å (U+00C5 LATIN CAPITAL LETTER A WITH RING ABOVE) are distinct in
+          Unicode, but might not be distinct in the ordinary literal
+          encoding.</li>
+      <li><em>[ Editor's note: The
+          Å (U+00C5 LATIN CAPITAL LETTER A WITH RING ABOVE),
+          Å (U+212B ANGSTROM SIGN),
+          A (U+0041 LATIN CAPITAL LETTER A), and
+           ̊ (U+030A COMBINING RING ABOVE)
+          characters are all individually permitted in Unicode identifiers.
+          However, since C++ identifiers are required to be in
+          Unicode normalization form C (NFC), only the first form (U+00C5) is
+          permitted in a C++ identifier.
+          The ordinary literal encoding is not restricted to NFC, so this
+          character could be converted to one of the other forms and therefore
+          fail to round-trip.
+          This could result in a requirement for implementations to perform
+          conversion to NFC when consuming names.
+          See the "Singleton Exclusions" section of
+          <a href="https://unicode.org/reports/tr15">UAX #15 (Unicode Normalization Forms)</a>.
+          ]</em></li>
+      <li>Steve asked if there is a desire or requirement to be able to emit
+          text containing names at compile-time.</li>
+      <li>Daveed responded negatively and stated that the <tt>std::cout</tt>
+          requirement is intended as a debugging aid.</li>
+      <li>Corentin responded to Victor's earlier statements regarding lack of
+          support for <tt>char8_t</tt> in the standard library and asserted that
+          we should fix that.</li>
+      <li>Corentin expressed support for providing names in both <tt>char</tt>
+          and <tt>char8_t</tt>.</li>
+      <li>Corentin stated that reflection is an important feature and that we
+          shouldn't implement hacks just to workaround the missing support for
+          <tt>char8_t</tt>.</li>
+      <li>Corentin insisted that improving support for <tt>char8_t</tt> is a
+          tractable problem and that we have some time for improvements in
+          C++26.</li>
+      <li>Victor opined that reflection should not be dependent on
+          <tt>std::string_view</tt>.</li>
+      <li>Victor stated that it took a long time to properly specify
+          <tt>std::print()</tt> and that we shouldn't implement hacks in
+          iostreams just to make <tt>std::cout</tt> work with <tt>char8_t</tt>
+          in the C++26 timeframe.</li>
+      <li>Victor explained that the model we are moving towards is one where
+          the ordinary literal encoding is UTF-8.</li>
+      <li>Victor suggested that an identifier or name type could be provided
+          instead of a string; this would enable writing formatters for it.</li>
+      <li>Eddie asked Corentin if there are round-trip normalization concerns
+          and whether renormalization is required.</li>
+      <li>Corentin replied negatively and stated that there are characters that
+          are duplicated in Unicode and do not normalize to each other.</li>
+      <li>Eddie replied that identifiers are required to be in NFC.</li>
+      <li>Tom stated that we are not going to be able to reach a conclusion on
+          round-tripping and renormalization now and that we'll need to research
+          and revisit.</li>
+      <li>Tom said he is not convinced that normalization is a significant
+          issue.</li>
+      <li>Daveed asked what the deadline is for new library feature proposals
+          for C++26.</li>
+      <li>Jens provided a link to
+          <a href="https://wg21.link/p1000">P1000R5 (C++ IS schedule)</a>
+          and reported that the Wrocław meeting in November is the last meeting
+          for core language features that require a response from LEWG and that
+          the Hagenberg meeting in February is the last meeting to forward
+          papers to CWG and LWG.</li>
+      <li>Tom expressed support for Victor's suggestion of a distinct
+          formattable type for names and identifiers.</li>
+      <li>Tom agreed with Victor regarding optimizing for the case where UTF-8
+          is the ordinary literal encoding, but disagreed with the suggestion
+          that <tt>char</tt> will ever imply UTF everywhere.</li>
+      <li>Tom expressed a preference for exposing names in both <tt>char</tt>
+          and <tt>char8_t</tt> based storage.</li>
+      <li>Daveed described limitations of constant evaluation that make use of
+          <tt>std::string</tt> problematic, but noted that implementations can
+          provide views backed by data in a string literal pool.</li>
+      <li>Corentin noted that the encoding challenges remain the same if a
+          unique type is used; a solution is still needed to enable printing of
+          it.</li>
+      <li>Corentin acknowledged that an opaque type might confer other
+          benefits.</li>
+      <li>Jens agreed with Tom that, while we might like for UTF-8 to take over
+          everywhere, environments that rely on EBCDIC are likely to
+          remain.</li>
+      <li>Jens asserted that we must take backward compatibility into
+          account.</li>
+      <li>Jens observed that there are two levels of encoding:
+        <ul>
+          <li>At compile-time, data might or might not be UTF-8, but the
+              encoding is known if a name is produced and consumed during
+              constant evaluation.</li>
+          <li>At run-time, the encoding of the environment might be different
+              and might require transcoding or some form of escaping to not
+              lose data.</li>
+        </ul>
+      </li>
+      <li>Jens noted that we explicitly decided not to interfere with the
+          existing behavior of <tt>std::cout</tt> and introduced
+          <tt>std::print()</tt> as a new interface.</li>
+      <li>Jens asked how programmers will produce new names based on reflected
+          ones given that <tt>std::format()</tt> is not declared
+          <tt>constexpr</tt>.</li>
+      <li>Jens expressed uncertainty regarding what locale means during
+          constant evaluation.</li>
+      <li>Jens suggested that returning an opaque type might be useful, but is
+          also not so different from returning <tt>std::string_view</tt> and
+          providing additional library support.</li>
+      <li>Daveed stated that the addition of a distinct type creates some
+          complexity but that it could be associated with statically allocated
+          memory.</li>
+      <li>Daveed noted that the creation of lots of names could produce massive
+          numbers of string literals if names are backed by string pools and
+          stated there could be an advantage to the distinct type approach.</li>
+      <li>Eddie observed that an opaque type that converts to both
+          <tt>std::string_view</tt> and <tt>std::u8string_view</tt> could result
+          in ambiguous conversions for formatted printing.</li>
+      <li>Dan observed that an opaque type helps to make it clear to the user
+          that they might want to perform some operations on it before printing
+          it.</li>
+      <li>Corentin responded to Eddie's observation by stating that, as long as
+          the opaque type doesn't require conversion in order to be printed,
+          then there are no ambiguous conversion concerns.</li>
+      <li>Corentin observed that SG16 talks about EBCDIC a lot, but noted that
+          Windows is not UTF-8 by default and that Shift-JIS is still the main
+          encoding used in Japan.</li>
+      <li>Corentin agreed with Victor that it would be nice to have
+          <tt>char</tt> be synonomous with UTF-8 but stated that isn't the world
+          we live in.</li>
+      <li>Corentin noted that, when writing output to a terminal, we can't
+          guarantee that an identifier can be accurately displayed due to
+          encoding limitations, encoding conversion limitations, and fonts.</li>
+      <li>Corentin stated that <tt>std::format()</tt> and <tt>std::print()</tt>
+          do a much better job than iostreams and that <tt>std::print()</tt>
+          will print Unicode correctly on Windows; that can't be fixed for
+          iostreams.</li>
+      <li>Corentin asked Daveed if non-transient memory allocation is still
+          being pursued.</li>
+      <li>Daveed responded that it probably is not feasible to deliver in
+          C++26.</li>
+      <li>Victor also responded to Eddie's observation by opining that he
+          doesn't think implicit conversions from an opaque type would be an
+          issue for <tt>std::format()</tt> but that he wasn't sure about
+          iostreams.</li>
+      <li>Victor noted that writing <tt>char8_t</tt> to iostreams will be lossy
+          or produce mojibake.</li>
+      <li>Victor stated that <tt>constexpr</tt> support for
+          <tt>std::format()</tt> is frequently requested and asserted that we
+          should prioritize that over adding new support for
+          <tt>char8_t</tt>.</li>
+      <li>Victor reported that proposals for compile-time messages have
+          expressed interest in <tt>constexpr</tt> support for
+          <tt>std::format()</tt>.</li>
+      <li>Tom posted the following candidate polls in the chat:
+        <ul>
+          <li>Candidate poll 1: P2996R2: identifier names should be made
+              available via <tt>char</tt>, <tt>wchar_t</tt>, <tt>char8_t</tt>,
+              <tt>char16_t</tt>, and <tt>char32_t</tt> consistent with
+              <tt>std::filesystem::path</tt> and
+              <a href="https://eel.is/c++draft/fs.path.native.obs">[fs.path.native.obs]</a>.</li>
+          <li>Candidate poll 2: P2996R2: identifier names returned by
+              <tt>name_of()</tt> in <tt>char</tt>-based storage should be
+              encoded in the ordinary literal encoding with non-representable
+              characters rendering the call ill-formed.</li>
+          <li>Candidate poll 3: P2996R2: identifier names returned by
+              <tt>display_name_of()</tt> in <tt>char</tt>-based storage should
+              be encoded in the ordinary literal encoding with non-representable
+              characters escaped as in
+              <a href="https://eel.is/c++draft/format.string.escaped">[format.string.escaped]</a>.</li>
+          <li>Candidate poll 4: P2996R2: <tt>char</tt>-based identifier names
+              accepted by <tt>data_member_spec()</tt>
+              (via <tt>data_member_options_t</tt>) should be encoded in the
+              ordinary literal encoding.</li>
+        </ul>
+      </li>
+      <li>Corentin expressed concern about memory footprint if names are backed
+          by string literals and made available in multiple encodings.</li>
+      <li>Daveed responded that the strings are only generated when you actually
+          use them; Victor's opaque type would effectively have a handle to an
+          internal representation backed by static storage.</li>
+      <li>Tom pointed out that conversions from the internal representation
+          could then be performed at run-time.</li>
+      <li>Victor expressed curiosity about candidate poll 1.</li>
+      <li>Tom explained the thoughts that motivated that poll suggestion;
+          <tt>std::filesystem::path</tt> provides a precedent for providing
+          conversions to various encodings; if this poll has consensus, then
+          there is no need to poll support for individual encodings; if not, we
+          can.</li>
+      <li>Tom posted the following alternatives to candidate poll 1 in the chat:
+        <ul>
+          <li>Candidate poll 1.1: P2996R2: identifier names should be made
+              available in <tt>char</tt>-based storage.</li>
+          <li>Candidate poll 1.2: P2996R2: identifier names should be made
+              available in <tt>char8_t</tt>-based storage.</li>
+          <li>Candidate poll 1.3: P2996R2: identifier names should be made
+              available in <tt>char16_t</tt>-based storage.</li>
+          <li>Candidate poll 1.4: P2996R2: identifier names should be made
+              available in <tt>char32_t</tt>-based storage.</li>
+          <li>Candidate poll 1.5: P2996R2: identifier names should be made
+              available in <tt>wchar_t</tt>-based storage.</li>
+        </ul>
+      </li>
+      <li>Victor expressed support for candidate poll 2, noted that we didn't
+          discuss it yet, but likes that it enables support for all possible
+          identifiers in UTF-8 in <tt>char</tt>-based interfaces when the
+          ordinary literal encoding is UTF-8.</li>
+      <li>Steve noted that there is the possibility of problems caused by
+          translation units being compiled with different ordinary literal
+          encodings.</li>
+      <li>Steve suggested that it might be useful to provide a library interface
+          that can produce strings with UCN-like sequences substituted.</li>
+      <li>Steve noted that use of an opaque type would enable use with any of
+          the range encoding libraries.</li>
+      <li>Daveed stated that the P2996 authors would be opposed to support for
+          all five character types but that they are ok with support for
+          <tt>char</tt> and <tt>char8_t</tt>.</li>
+      <li>Tom asked for clarification regarding opposition for support of the
+          other character types.</li>
+      <li>Daveed responded that common storage can be used to back the same
+          representation for <tt>char</tt> and <tt>char8_t</tt>, but that isn't
+          the case for the other character types.</li>
+      <li>Corentin noted that <tt>char16_t</tt> and <tt>char32_t</tt> are also
+          less efficient to store.</li>
+      <li>Corentin stated that he is not opposed to an opaque type as long as it
+          can be printed as Unicode with good results.</li>
+      <li>Corentin asserted that we still need to make <tt>char8_t</tt> work in
+          the standard library regardless.</li>
+      <li>Corentin expressed opposition to introduction of an escape mechanism
+          that effectively introduces an additional encoding.</li>
+      <li>Corentin suggested that if we want to support <tt>wchar_t</tt>,
+          <tt>char16_t</tt>, and <tt>char32_t</tt>, that we should provide a
+          translation interface rather than duplicating interfaces throughout
+          the standard library.</li>
+      <li>Daveed responded with "Amen, brother!"</li>
+      <li>Eddie stated that
+          <a href="https://wg21.link/p2728">P2728 (Unicode in the Library, Part 1: UTF Transcoding)</a>
+          is fully constexpr and would provide support for conversion to UTF-16
+          in <tt>char16_t</tt> and UTF-32 in <tt>char32_t</tt>.</li>
+    </ul>
+  </li>
+  <li>Tom requested that Daveed make his presentation available for inclusion in
+      the meeting summary.</li>
+  <li>Daveed immediately obliged.</li>
+  <li>Tom announced that the next meeting will be held May 8th and that we'll
+      continue discussion of this paper then.</li>
+  <li>Tom apologized to Corentin and lamented that this will once again delay
+      further review of
+      <a href="https://wg21.link/p2626">P2626 (<tt>charN_t</tt> incremental adoption: Casting pointers of UTF character types)</a>.</li>
+</ul>
+
+
+<h1 id="2024_05_08">May 8th, 2024</h1>
+
+<h2>Draft agenda:</h2>
+
+<ul>
+  <li><a href="https://wg21.link/p3258r0">D3258R0: Formatting of charN_t</a>.</li>
+  <li><a href="https://wg21.link/p2996r2">P2996R2: Reflection for C++26</a>.</li>
+</ul>
+
+<h2>Attendees:</h2>
+
+<ul>
+  <li>Braden Ganetsky</li>
+  <li>Corentin Jabot</li>
+  <li>Dan Katz</li>
+  <li>Eddie Nolan</li>
+  <li>Lauri Vasama</li>
+  <li>Mark de Wever</li>
+  <li>Nathan Owen</li>
+  <li>Peter Bindels</li>
+  <li>Robin Leroy</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
+</ul>
+
+<h2>Meeting summary:</h2>
+
+<ul>
+  <li>Robin provided a report on UTC #179:
+    <ul>
+      <li><em>[ Editor's note: Minutes from the UTC #179 meeting are recorded in
+          <a href="https://www.unicode.org/L2/L2024/24061.htm">L2/24-061</a>.
+          ]</em></li>
+      <li>The alpha review period closed several weeks before the meeting and
+          the UTC WGs then had one week to prepare any material responses for
+          the meeting.</li>
+      <li>The agenda for this meeting included reviewing the alpha feedback and
+          authorizing the beta release with stable specifications.</li>
+      <li>The character repertoire is now frozen.</li>
+      <li>Two recently added characters were removed at the request of the
+          Indian government; see
+          <a href="https://www.unicode.org/L2/L2024/24061.htm#179-C43">consensus item 179-C43</a>.</li>
+      <li>Significant changes were made to the line breaking algorithm, but
+          these changes don't affect current C++.
+        <ul>
+          <li>Improvements were made to the handling of quotation marks in
+              simplified Chinese.</li>
+          <li>Lines are no longer broken after hyphens that separate Hebrew and
+              non-Hebrew text.</li>
+        </ul>
+      </li>
+      <li>Recommendations from the CJK &amp; Unihan Working Group were accepted
+          that will impact the wording currently present in
+          <a href="https://eel.is/c++draft/format.string.std#13">[format.string.std]p13</a>
+          when the C++ standard is rebased on Unicode 16; the set of code points
+          included in bullet 13.2 will be subsumed by 13.1 due to acceptance of
+          <a href="https://www.unicode.org/L2/L2024/24059-eaw-yijing-symbols.pdf">L2/24-059 (Proposal to change the East_Asian_Width property of the Yijing symbols)</a>.</li>
+      <li>Tom stated that we should create an issue to track doing that update
+          when we rebase on Unicode 16 or later.</li>
+      <li><em>[ Editor's note: Tom created
+          <a href="https://github.com/sg16-unicode/sg16/issues/81">SG16 issue 81 (Unicode 16: Updates needed for [format.string.std]p13 field widths)</a>
+          to do so. ]</em></li>
+    </ul>
+  </li>
+  <li>Robin wondered why the code points listed in
+      <a href="https://eel.is/c++draft/format.string.std#13">[format.string.std]p13</a>
+      bullets 13.3 (U+1f300 - U+1f5ff (Miscellaneous Symbols and Pictographs))
+      and 13.4 (U+1f900 - U+1f9ff (Supplemental Symbols and Pictographs)
+      are listed with a field width of 2; these code points aren't wide in text
+      presentation form, but would be in emoji presentation form.</li>
+  <li>Robin shared a
+      <a href="https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%5Cx%7B1F300%7D-%5Cx%7B1F5FF%7D%5D&g=ea&i=">link</a>
+      listing all of the characters covered by bullet 13.3 and noted that some
+      of them, 🖗 for instance, are presented in a narrow form in the Windows
+      terminal for him.</li>
+  <li>Corentin explained that testing revealed that these characters were
+      predmoninantly displayed as wide characters in existing terminals.</li>
+  <li>Eddie reported relevant discussion having occured during the recent
+      meeting of the Unicode Text Terminal Working Group (TTWG); the POSIX
+      <tt>wcswidth()</tt> function maps a code point to a width, but does not
+      account for variation selectors.</li>
+  <li>Eddie stated that there is supposed to be a default for whether text vs
+      emoji presentation form is used, but there is implementation
+      divergence.</li>
+  <li><a href="https://wg21.link/p3258r0">D3258R0: Formatting of charN_t</a>:
+    <ul>
+      <li><em>[ Editor's note: D3258R0 was the active paper under discussion at
+          the telecon.
+          The agenda and links used here reference P3258R0 since the links to
+          the draft paper were ephemeral.
+          The published document may differ from the reviewed draft revision.
+          ]</em></li>
+      <li>Corentin provided an overview of the paper:
+        <ul>
+          <li>The motivation for the paper is to enable the ability to print
+              <tt>char8_t</tt>-based UTF-8 text via <tt>std::format()</tt>.</li>
+          <li>The intent is for something like
+              <tt>std::format("...", std::meta::name_of(^XX))</tt> to just do
+              the right thing.</li>
+          <li>The goal is for semantics to be consistent.</li>
+          <li>The proposal includes support for formatting arguments of type
+              <tt>char8_t</tt>, <tt>char16_t</tt>, and <tt>char32_t</tt> for
+              both <tt>""</tt> and <tt>L""</tt> format strings.</li>
+          <li>No support is proposed for use of <tt>u8""</tt>, <tt>u""</tt>, or
+              <tt>U""</tt> literals as format strings.</li>
+          <li>A replacement character will be substituted for ill-formed code
+              unit sequences.</li>
+          <li>No error mechanism is proposed but one could be added later by
+              adding format specifier options.</li>
+          <li>No support is proposed for formatting arguments of type
+              <tt>char</tt> with a <tt>L""</tt> format string or for formatting
+              arguments of type <tt>wchar_t</tt> with a <tt>""</tt> format
+              string due to potentially ambiguous encoding associations.</li>
+          <li>Formatting of escaping characters and strings will work as
+              expected.</li>
+          <li>For a non-UTF encoding, the replacement character will be
+              <tt>?</tt>; this matches substitutions currently observable with
+              the Microsoft compiler on Windows.</li>
+          <li>No special behavior is proposed for <tt>std::print()</tt>.</li>
+          <li>A prototype implementation was completed for libc++, but libc++
+              only supports the ordinary literal encoding being UTF-8, so that
+              doesn't exercise transcoding scenarios.</li>
+          <li>The C and C++ standards don't provide transcoding facilities other
+              than <tt>mbrtoc8()</tt> and such, but conversions can be done
+              using <tt>iconv</tt>, ICU, or other existing converters.</li>
+          <li>Some transcoding facilities do not offer flexibility for error
+              handling.</li>
+          <li>Support for formatting single code units of <tt>char8_t</tt>,
+              <tt>char16_t</tt>, and <tt>char32_t</tt> is proposed; this is
+              consistent with existing support for <tt>char</tt> and
+              <tt>wchar_t</tt>.</li>
+          <li><tt>constexpr</tt> implementations of <tt>std::format()</tt>
+              already have the ability to perform conversions between the set of
+              literal encodings.</li>
+        </ul>
+      </li>
+      <li>Victor observed that a number of the <tt>std::format()</tt> examples
+          in the paper are syntactically incorrect as presented; likely due to
+          markup issues.</li>
+      <li>Victor explained that <tt>std::vprint_unicode()</tt> and
+          <tt>std::vprint_nonunicode()</tt> are not exposition only so that
+          programmers can provide overloads for their own types with
+          differentiation for UTF and non-UTF encodings.</li>
+      <li>Victor noted that locking variations of these functions are now
+          specified as well.</li>
+      <li><em>[ Editor's note: Locking variations were recently added via the
+          adoption of
+          <a href="https://wg21.link/p3107r5">P3107R5 (Permit an efficient implementation of std::print)</a>
+          during the Tokyo meeting. ]</em></li>
+      <li>Tom asked for an explanation of the ABI limitations on extending
+          format specifiers.</li>
+      <li>Mark explained that the ABI is restricted by
+          <tt>std::basic_format_arg&lt;Context&gt;::visit()</tt>;
+          <tt>std::basic_format_arg</tt> is effectively a discriminated union
+          and the number of discernible types is constrained by the type used to
+          identify them.</li>
+      <li><em>[ Editor's note: See
+          <a href="https://lists.isocpp.org/sg16/2024/05/4302.php">Mark's follow up post to the SG16 mailing list</a>.
+          ]</em></li>
+      <li>Victor replied that it would be possible to use the normal formatter
+          API instead of <tt>std::basic_format_arg</tt>.</li>
+      <li>Victor stated that
+          <a href="https://github.com/fmtlib/fmt">{fmt}</a>
+          already supports <tt>constexpr</tt>, but that there are no immediate
+          plans to propose support for <tt>std::format()</tt> as
+          <tt>constexpr</tt> in the standard.</li>
+      <li>Victor suggested that the paper simply state that <tt>constexpr</tt>
+          support is implementable.</li>
+      <li>Tom directed discussion to whether the proposed capabilities would
+          suffice to meet the minimum requirements for printing of identifiers
+          as desired for the reflection proposal.</li>
+      <li>Dan opined that it does, noted that Daveed would like to have iostream
+          support, but commented that he doesn't feel as strongly about
+          that.</li>
+      <li>Corentin said that he would like to know if anyone felt very strongly
+          about support for iostreams.</li>
+      <li>Corentin stated he would rather focus on support for
+          <tt>std::format()</tt> and <tt>std::print()</tt>, but that he can
+          understand why others might want iostream support specifically.</li>
+      <li>Corentin explained that he did not propose iostream support because he
+          didn't feel like he was the right person to do so.</li>
+      <li>Victor stated that he views the proposed capabilities as a partial
+          solution that is not inline with the <tt>std::format()</tt> design
+          intent to not mix encoding concerns.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2996r2">P2996R2: Reflection for C++26</a>:
+    <ul>
+      <li>Victor expressed strong opposition to only exposing identifiers in
+          <tt>char8_t</tt> and asserted that we need to figure out the story for
+          support of <tt>char</tt>.</li>
+      <li>Dan interpreted Victor's response as meaning that the proposed
+          facilities with only support for <tt>char8_t</tt> does not provide a
+          sufficient solution.</li>
+      <li>Dan stated that the idea of using a magic proxy type seems good and
+          that Daveed has expressed support for it.</li>
+      <li>Eddie reported having recently discussed the proxy type with other
+          attendees of C++Now and that some found it to be an overcomplicated
+          solution.</li>
+      <li>Corentin responded that, if done right, programmers shouldn't be much
+          affected by it.</li>
+      <li>Corentin opined that a proxy type is fine but that a solution that
+          uses an escape mechanism to effectively create a new encoding is
+          not.</li>
+      <li>Tom pondered whether there is a need to distinguish between names and
+          identifiers and noted that many functions, like conversion operators
+          and overloaded operators, don't have associated identifiers but do
+          have names.</li>
+      <li>Corentin indicated that is probably not an SG16 concern.</li>
+      <li>Corentin suggested that reflection use cases are best addressed by
+          performing code injection rather than defining overloaded
+          operators.</li>
+      <li>Corentin agreed that reflection might want to differentiate names and
+          identifiers in a similar manner to how Clang does internally.</li>
+      <li>Dan advised caution regarding exposing a meta type for a name when
+          already working with a meta type.</li>
+      <li>Victor asked if the hypothetical proxy name type might be exposition
+          only with conversion operators.</li>
+      <li>Victor asked what the plan is for exploring the idea of such a
+          type.</li>
+      <li>Corentin asked with a smile whether Victor was volunteering to do
+          so.</li>
+      <li>Dan responded that the P2996 authors can propose a shape for the
+          type.</li>
+      <li>Tom summarized his impression of consensus so far; that it seems that
+          there is good consensus for supporting both <tt>char</tt> and
+          <tt>char8_t</tt>, but since we can't overload based on return types,
+          that use of a distinct type is needed to avoid having to specify
+          distinct names; such a type enables future extension.</li>
+      <li>Corentin asked what the motivation would be for an exposition only
+          type.</li>
+      <li>Dan replied with a smile that it would avoid a bike shedding exercise
+          in LEWG.</li>
+      <li>Dan stated there is a need to be able to perform string comparisons
+          for implementation of <tt>enum_to_string</tt>.</li>
+      <li>Corentin acknowledged that a proxy type makes things easier by adding
+          a layer of indirection.</li>
+      <li>Eddie asked for reasons not to define separate functions for
+          <tt>std::meta::name_of()</tt> and related functions.</li>
+      <li>Dan replied that doing so creates a combinatorial explosion.</li>
+      <li>Eddie asked what would happen in the case of an enumeration that has a
+          set of enumerators that cannot all be converted losslessly to the
+          ordinary literal encoding and where transliteration might produce the
+          same name.</li>
+      <li>Dan suggested use of <tt>char8_t</tt> to avoid such cases.</li>
+      <li>Eddie responded that his concern is whether such a scenario should be
+          possible since it makes it easy to do the wrong thing.</li>
+      <li>Corentin noted that the compiler's internal representation is always
+          able to distinguish such cases.</li>
+      <li>Corentin asked Robin if there are duplicated characters that are valid
+          for use in identifiers and that canonicalize to the same
+          representation.</li>
+      <li>Robin replied that there are reasonable mappings to other character
+          sets that result in ambiguity.</li>
+      <li>Robin provided a reference and some examples in the chat:
+        <ul>
+          <li><a href="https://www.unicode.org/versions/Unicode15.1.0/ch07.pdf#G12477">Unicode 15.1, chapter 7, section 7.2, "Greek", paragraph starting with "Greek Letters as Symbols"</a>:
+          <blockquote class="quote">
+            For compatibility purposes, a few Greek letters are separately
+            encoded as symbols in other character blocks. Examples include
+            U+00B5 µ MICRO SIGN in the Latin-1 Supplement character block and
+            U+2126 Ω OHM SIGN in the Letterlike Symbols character block. The ohm
+            sign is canonically equivalent to the capital omega, and
+            normalization would remove any distinction.  Its use is therefore
+            discouraged in favor of capital omega. The same equivalence does not
+            exist between micro sign and mu, and use of either character as a
+            micro sign is common. For Greek text, only the mu should be used.
+          </blockquote>
+          </li>
+          <li>μ, µ, 𝛍, 𝜇, 𝝁, 𝝻, and 𝞵 are all compatibility equivalent to μ and
+              all are valid C++ identifiers.</li>
+        </ul>
+      </li>
+      <li>Corentin asked whether the roundtrip requirement can actually be
+          satisfied in the presence of arbitrary encodings.</li>
+      <li>Victor replied to the overloading concerns by mentioning that Daveed's
+          original suggestion was for <tt>std::meta::name_of()</tt> and friends
+          to be templated on a character type.</li>
+      <li>Victor noted that roundtrip support can be facilitated with an escape
+          mechanism as in Daveed's preferred option.</li>
+      <li>Tom stated that roundtrip support cannot tolerate lossy conversions
+          and that an attempted conversion that would be lossy must result in an
+          error or substitution of an escape sequence.</li>
+      <li>Eddie expressed concern that conversion to <tt>char</tt> won't work
+          everywhere, but since it will work in most cases such support can lead
+          to broken code that isn't caught by testing.</li>
+      <li>Eddie suggested that the function template idea seems ok if the
+          character template type parameter is specified with a default template
+          argument of <tt>char8_t</tt>.</li>
+      <li>Dan asked what the advantage of a template parameter would be over an
+          opaque type.</li>
+      <li>Eddie replied that it can't be completely hidden away; that it will
+          appear in error messages, on cppreference.com, etc...</li>
+      <li>Corentin stated that programmers don't want to care about this and
+          that they just want the identifier to be printed; if we can make it
+          just work, that is a win.</li>
+    </ul>
+  </li>
+  <li>Tom announced that the next SG16 meeting will be on 2020-05-22 and that he intends to put
+      <a href="https://wg21.link/p2626r0">P2626R0 (charN_t incremental adoption: Casting pointers of UTF character types)</a>
+      on the agenda, perhaps along with some recently created LWG issues.</li>
 </ul>
 
 
