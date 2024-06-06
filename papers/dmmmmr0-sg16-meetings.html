@@ -74,7 +74,7 @@ blockquote.quote
   </tr>
   <tr>
     <th>Date:</th>
-    <td>2024-05-21</td>
+    <td>2024-06-05</td>
   </tr>
   <tr>
     <th>Audience:</th>
@@ -133,16 +133,342 @@ Previously published SG16 meeting summary papers:
 <h2>Draft agenda:</h2>
 
 <ul>
+  <li>Fraser to report on the May 3rd Text Terminal WG meeting.</li>
+  <li>Review results of the 2024 C++ Developer Survey.</li>
+  <li><a href="https://wg21.link/p2626r0">P2626R0: charN_t incremental adoption: Casting pointers of UTF character types</a>.</li>
 </ul>
 
 <h2>Attendees:</h2>
 
 <ul>
+  <li>Braden Ganetsky</li>
+  <li>Corentin Jabot</li>
+  <li>Fraser Gordon</li>
+  <li>Mark de Wever</li>
+  <li>Peter Bindels</li>
+  <li>Robin Leroy</li>
+  <li>Steve Downey</li>
+  <li>Tom Honermann</li>
+  <li>Victor Zverovich</li>
 </ul>
 
 <h2>Meeting summary:</h2>
 
 <ul>
+  <li>Fraser to report on the May 3rd Text Terminal WG meeting:
+    <ul>
+      <li>Fraser provided an overview:
+        <ul>
+          <li>This was the third meeting of the WG.</li>
+          <li>Outreach to the terminal community resulted in many new
+              attendees.</li>
+          <li>Simon Tatham of PuTTY fame attended and demonstrated considerable
+              experience in this area.</li>
+          <li>Representation from WG14 would be appreciated.</li>
+          <li>Representation from the Rust community would also be
+              appreciated.</li>
+          <li>Most of the discussion was process related.</li>
+          <li>No attendees have objected to working in the open.</li>
+          <li>Near term efforts will include deployment of collaboration
+              tools.</li>
+          <li>The next meeting will probably be in July and is expected to focus
+              on establishing scope for the group and beginning technical
+              discussion.</li>
+          <li>The group is feeling positive about making improvements.</li>
+        </ul>
+      </li>
+      <li>Tom suggested reaching out to the WG14 convenor regarding WG14
+          participation.</li>
+      <li>Robin responded that such participation might fall to him as SC22
+          liaison.</li>
+      <li>Tom noted that Eddie had previously reported discussion about
+          <tt>wcwidth()</tt> at the TTWG meeting.</li>
+      <li>Fraser explained that a replacement for <tt>wcwidth()</tt> is likely
+          necessary but might run into opposition in WG14.</li>
+      <li>Corentin responded that <tt>wcwidth()</tt> is part of POSIX, but not
+          included in standard C.</li>
+      <li>Victor asked for more details regarding participation from the
+          terminal community.</li>
+      <li>Fraser responded that participants on the mailing list include people
+          from iTerm, MoSH, PuTTY, xterm, ncurses, and the Far Manager TUI
+          application.</li>
+      <li>Robin noted that the initial effort that resulted in formation of the
+          TTWG group came from Microsoft and that Apple is a Unicode Consortium
+          member.</li>
+      <li>Tom asked if there are still people from Microsoft involved.</li>
+      <li>Fraser replied that there are and that they include the original TTWG
+          chair and people working on
+          <a href="https://github.com/microsoft/terminal">Windows Terminal</a>.</li>
+      <li>PBindels reported having attended and summarized the discussion that
+          led to the determination that <tt>wcwidth()</tt> is not salvageable
+          and will need to be replaced; it can't accommodate variation
+          selectors.</li>
+      <li>Tom explained that the Austin group that maintains the POSIX
+          specification is open and welcoming and offered to help facilitate
+          introduction if doing so would be helpful.</li>
+      <li>Victor asked for more details regarding <tt>wcwidth()</tt> vs
+          <tt>wcswidth()</tt>.</li>
+      <li>PBindels responded that <tt>wcwidth()</tt> is fundamentally broken
+          since it only accepts a single <tt>wchar_t</tt> code unit as input but
+          that <tt>wcswidth()</tt> might be salveageable.</li>
+      <li>Fraser noted that WG14 did consider standardizing the POSIX interfaces
+          back in the C99 time frame.</li>
+      <li>Fraser extended a thank you to anyone that is able to attend future
+          TTWG meetings.</li>
+    </ul>
+  </li>
+  <li>Review results of the 2024 C++ Developer Survey:
+    <ul>
+      <li>Tom briefly reviewed the Unicode related survey results and
+          comments.</li>
+      <li>Tom stated that he was not surprised by the results.</li>
+      <li>Victor expressed surprise that only 16% of respondents reported
+          Unicode related issues as a major pain point.</li>
+      <li>PBindels responded that programmers that write code solely for use in
+          their local region don't tend to have issues because ASCII
+          suffices.</li>
+      <li>Tom pondered how much pain would be reduced by adding conversion
+          facilities.</li>
+      <li>Victor observed that five or six of the Unicode related comments
+          mentioned use of UTF-8 with <tt>char</tt> and noted that as a good
+          fraction of the comments.</li>
+      <li>Victor asserted that we should continue focusing on that like what we
+          did for <tt>std::format()</tt>.</li>
+      <li>Tom expressed strong agreement; Linux, the BSDs, and macOS comprise a
+          huge chunk of the ecosystem.</li>
+      <li>Corentin asserted that we can't just focus on that segment of the
+          ecosystem though and noted that this isn't new information; we are
+          well aware of the need to support UTF-8 with <tt>char</tt>-based
+          types.</li>
+      <li>Victor responded by stating that the new information is the explicit
+          requests to support UTF-8 with no corresponding mention of support for
+          code pages.</li>
+      <li>Corentin stated that we can't extrapolate such comments to the entire
+          C++ community; the number of respondents to the survey is a small
+          fraction of the community and too small to draw conclusions from.</li>
+      <li>Corentin added that we are in a situation of being resource
+          constrained; there are things we know we want, but wanting doesn't
+          make it happen; someone needs to write the corresponding papers.</li>
+      <li>Tom directed discussion to other comments and noted that the mentions
+          regarding <tt>char8_t</tt> also didn't surprise him.</li>
+      <li>Corentin stated that we did the community a disservice by not
+          providing library support for a useful type; <tt>char8_t</tt> is
+          relatively useless right now.</li>
+      <li>Corentin insisted the difficulty with using the type doesn't mean that
+          the motivation for the type has gone away.</li>
+      <li>Tom expressed being a little surprised by the explicit requests to
+          extend <tt>std::from_chars()</tt> and <tt>std::to_chars()</tt> to
+          support <tt>charN_t</tt> types.</li>
+      <li>Corentin expressed uncertainty regarding what was actually being
+          requested; there are several interpretations:
+        <ul>
+          <li>Programmers might just want to use these functions without having
+              to transcode.</li>
+          <li>Programmers might want these functions to support non-ASCII
+              numbers.</li>
+        </ul>
+      </li>
+      <li>Victor replied that <tt>std::from_chars()</tt> and
+          <tt>std::to_chars()</tt> were designed to function as a low level
+          feature and asserted that it wouldn't be right to add
+          internationalization features to them.</li>
+      <li>Victor opined that the author probably just wants support for the
+          <tt>charN_t</tt> code unit types.</li>
+      <li>Victor explained that, since these functions are low level, that he
+          isn't really interested in seeing them expanded; not even to add
+          support for <tt>std::string_view</tt>.</li>
+      <li>Steve noted that <tt>std::from_chars()</tt> and
+          <tt>std::to_chars()</tt> don't even support <tt>wchar_t</tt> right
+          now; these functions were designed to support JSON or XML with basic
+          characters.</li>
+      <li>Corentin agreed with Victor up to the comment regarding
+          <tt>std::string_view</tt>.</li>
+      <li>Corentin noted that <tt>std::from_chars()</tt> is difficult to
+          implement and suggested that we shouldn't make it harder.</li>
+      <li>Steve observed that different names would be required for other
+          character types since it wouldn't be possible to overload
+          <tt>std::to_chars()</tt>.</li>
+      <li>Victor stated that, with regard to <tt>std::string_view</tt>, the
+          interface for these functions is awkward.</li>
+      <li>Victor insisted that we don't want to turn these functions into
+          <tt>std::format</tt>; they should remain minimal.</li>
+      <li>Robin noted that some number systems are not positional and that it
+          would not be advised to add support for them to these functions.</li>
+    </ul>
+  </li>
+  <li><a href="https://wg21.link/p2626r0">P2626R0: charN_t incremental adoption: Casting pointers of UTF character types</a>:
+    <ul>
+      <li>Corentin lamented the absence of core language experts and stated that
+          assistance is needed to make progress as we still have the same
+          questions as the last time the paper was discussed.</li>
+      <li>Corentin presented:
+        <ul>
+          <li>We introduced the <tt>charN_t</tt> code unit types, but they can't
+              interoperate easily with existing functions that operate on
+              <tt>char</tt> or <tt>wchar_t</tt> based storage; we need a
+              mechanism that avoids problems due to type based aliasing.</li>
+          <li>We would ideally allow implicit conversions but that can't work in
+              C++.</li>
+          <li>The currently available options for interoperation include:
+            <ul>
+              <li>performing inefficient copies in and out of temporary buffers;
+                  this works without UB.</li>
+              <li>using <tt>reinterpret_cast</tt>; this results in UB.</li>
+              <li>using <tt>start_lifetime_as</tt>; this results in UB.</li>
+            </ul>
+          </li>
+          <li>The paper proposes a magic library function to facilitate
+              conversions with an appropriate aliasing barrier that prevents UB
+              in very specific circumstances.</li>
+          <li>The proposed semantics effectively end the lifetime of an object
+              and begin the lifetime of a replacement object in place of the
+              original using the same object representation.</li>
+          <li>This is a very sharp tool and we need CWG to assist in specifying
+              what the constraints are; those constraints will help guide what
+              the interface should look like.</li>
+          <li>I'm not interested in a general tool to enable selective aliasing;
+              I want something that is UTF aware with variants that check for
+              well-formed UTF sequences.</li>
+          <li>The proposal is inspired by similar functionality available in
+              Rust; Rust relies on the concept of a safe borrow to ensure the
+              type system is not violated.</li>
+          <li>The proposal includes two functions; one that works on bytes and
+              another that works on code units.</li>
+        </ul>
+      </li>
+      <li>Victor commented on the desire to ensure well-formed UTF sequences but
+          noted that we don't actually enforce well-formed UTF elsewhere.</li>
+      <li>Corentin acknowledged the lack of preconditions on UTF-8 encoded
+          literals or in the standard library at present.</li>
+      <li>Corentin stated that, if he could, he would require UTF-8 literals to
+          be well-formed.</li>
+      <li>Corentin explained that the proposed "unchecked" variant is
+          intentionally named to sound scary.</li>
+      <li>Robin opined that it seems a bit odd to impose such considerations for
+          the proposed conversions when the subscript operator doesn't impose
+          preconditions on data being well-formed.</li>
+      <li>Robin explained that it seems weird since the type itself doesn't
+          offer any guarantees.</li>
+      <li>Corentin replied that the standard library is, unfortunately, focused
+          solely on code units; <tt>std::basic_string</tt> is just a sequence of
+          code units.</li>
+      <li>Corentin described the use case he has in mind; passing data to a
+          function that has such a precondition.</li>
+      <li>Corentin noted that nothing otherwise prevents unintentionally
+          passing, e.g., EBCDIC, to a function that expects UTF-8 when
+          performing a conversion from <tt>char</tt> to <tt>char8_t</tt>.</li>
+      <li>Robin observed that Latin-1 data will appear to be valid UTF-8 when
+          the data contains only ASCII characters; it is the semantic that is
+          important.</li>
+      <li>Corentin agreed that it isn't possible, in general, to know if data
+          was correctly constructed because mojibake doesn't necessarily produce
+          ill-formed encoded text.</li>
+      <li>Robin expressed some discomfort with the "unchecked" terminology since
+          the check doesn't ensure that the semantic was honored.</li>
+      <li>Tom observed that, with a suitable contracts facility, a function with
+          a narrow contract that consumes the converted data would have a
+          precondition for well-formed text.</li>
+      <li>Corentin responded by stating that a checked version isn't proposed at
+          this point; the intent is to provide a scary looking function that
+          makes sure the programmer is aware that they don't necessarily have
+          valid UTF-8 following the conversion.</li>
+      <li>Tom expressed gratitude for that explanation as helpful to explain the
+          motivation for the "unchecked" terminology.</li>
+      <li>Corentin directed discussion back to core functionality concerns and
+          noted that the proposed functions are intended to provide a low level
+          interface; one for which there might be motivation to add a
+          wrapper.</li>
+      <li>Corentin expressed concern that an ergonomic wrapper might provide a
+          false sense of security and noted that it would be very easy to
+          produce UB if a called function stashes pointers.</li>
+      <li>Tom asked how close <tt>std::start_lifetime_as_array()</tt> comes to
+          being the core language facility needed.</li>
+      <li>Corentin replied that it is very close to being what is needed, but
+          that Clang doesn't implement it yet.</li>
+      <li>Tom shared a Compiler Explorer link:
+          <a href="https://godbolt.org/z/9Tejj9TPs">https://godbolt.org/z/9Tejj9TPs</a>.</li>
+      <li>Robin commented that ICU is one of the projects that uses
+          <tt>char16_t</tt>.</li>
+      <li>Robin stated that the ICU maintainers have looked at <tt>char8_t</tt>
+          and have added some functions that work with it.</li>
+      <li>Robin noted that the ICU maintainers have asked how they can enable
+          interoperability with all of the character types but that they have
+          not received a helpful answer.</li>
+      <li>Robin offered to get Corentin in touch with the ICU maintainers to
+          discuss how this would be useful to ICU.</li>
+      <li>Corentin replied that Tom has investigated what ICU does at present;
+          it uses a volatile asm statement as a rudimentary alias barrier, but
+          that doesn't fully work.</li>
+      <li>Robin asked if the proposed feature would work for ICU.</li>
+      <li>Tom replied that the intent is for it to work for ICU and stated that
+          if it doesn't, then we probably wouldn't want to standardize it.</li>
+      <li>Mark asked if the proposed functions provide access to just the
+          element a pointer points to or if they provide access to a range of
+          elements.</li>
+      <li>Corentin replied that answers to such questions are dependent on what
+          we can do within the core language; we need to determine if the
+          interface requires an explicit range.</li>
+      <li>Tom noted that it is complicated and posed a hypothetical question of
+          whether replacing a portion of the elements in an array via the
+          converted type would end the lifetime of the entire array.</li>
+      <li>Corentin replied that the same core question applies for any
+          replacement of a subobject.</li>
+      <li>Corentin noted that such questions might be more relevant for the
+          specification than for implementations.</li>
+      <li>Mark objected to referring to the proposed operation as a cast.</li>
+      <li>Corentin responded by stating that it is similar to
+          <tt>reinterpret_cast</tt>.</li>
+      <li>Corentin expressed that he is open to a better name, but that he wants
+          a name that will scare programmers away from casually using it.</li>
+      <li>Tom directed discussion back to the previously shared
+          <a href="https://godbolt.org/z/9Tejj9TPs">Compiler Explorer link</a>
+          and asked if <tt>g()</tt> looks representative of a common use
+          case.</li>
+      <li>Corentin noted that the example is unsafe if <tt>f()</tt> stashes the
+          pointer passed to it.</li>
+      <li>Corentin stated that he would expect libraries to provide overloads
+          that use these conversions as implementation detail when it is known
+          to be safe to do.</li>
+      <li>Robin provided a hypothetical example of a date parsing function that
+          accepts a pointer to <tt>wchar_t</tt> and uses the proposed features
+          to forward it internally to a function that works with
+          <tt>char16_t</tt>.</li>
+      <li>Robin asked whether the use of the proposed conversion feature would
+          destroy the caller's <tt>wchar_t</tt> string.</li>
+      <li>Corentin responded that the caller is only affected if the callee
+          doesn't undo the operation.</li>
+      <li>Corentin noted that the proposed functionality would only work with
+          types like <tt>char</tt> that are transparently replaceable.</li>
+      <li>Tom asked if <tt>std::start_lifetime_as</tt> has been implemented for
+          gcc yet.</li>
+      <li>Corentin replied that he is unaware of it being implemented anywhere
+          yet.</li>
+      <li>Corentin noted that implementation requires more than just frontend
+          work.</li>
+      <li>Robin stated that, given the low level interfaces proposed, the first
+          thing he would do is write an RAII wrapper to ensure conversions are
+          reversed.</li>
+      <li>Robin asked if the standard library should provide such a
+          wrapper.</li>
+      <li>Corentin replied that he and Tom have discussed that multiple
+          times.</li>
+      <li>Tom opined that Robin is right; that programmers will implement an
+          RAII type to be sure conversions are undone.</li>
+      <li>Tom suggested we do the following:
+        <ul>
+          <li>Ask Jens to schedule time in CWG to discuss the object model
+              concerns.</li>
+          <li>Once we have a better idea of the core language constraints,
+              schedule time with the ICU TC to discuss how and whether the
+              feature could be used with ICU.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Tom announced that the next meeting will be 2024-06-12 and that we have
+      LWG issues to discuss ahead of the St. Louis meeting.</li>
+  <li>Robin informed the group that be will be unable to attend the next meeting
+      on June 12th.</li>
 </ul>
 
 
