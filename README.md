@@ -54,6 +54,10 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P3374][]     | Adding formatter for fpos<mbstate_t>
+[P3364][]     | Remove Deprecated u8path overloads From C++26
+[P3263][]     | Encoding annotated char
+[P3258][]     | Formatting of charN_t
 [P3154][]     | Deprecating signed character types in iostreams
 [P3070][]     | Formatting enums
 [P2873][]     | Remove Deprecated Locale Category Facets For Unicode from C++26
@@ -64,6 +68,7 @@ WG21 Number   | Title/Notes/Links
 [P2626][]     | charN\_t incremental adoption: Casting pointers of UTF character types
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
 [P2348][]     | Whitespaces Wording Revamp
+[P2319][]     | Prevent path presentation problems
 [P1953][]     | Unicode Identifiers And Reflection
 [P1729][]     | Text Parsing
 [P1629][]     | Standard Text Encoding
@@ -253,6 +258,10 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P3374]: https://wg21.link/p3374
+[P3364]: https://wg21.link/p3364
+[P3263]: https://wg21.link/p3263
+[P3258]: https://wg21.link/p3258
 [P3154]: https://wg21.link/p3154
 [P3070]: https://wg21.link/p3070
 [P2909]: https://wg21.link/p2909
@@ -284,6 +293,7 @@ WG14 Number   | Title/Notes/Links
 [P2362]: https://wg21.link/p2362
 [P2361]: https://wg21.link/p2361
 [P2348]: https://wg21.link/p2348
+[P2319]: https://wg21.link/p2319
 [P2316]: https://wg21.link/p2316
 [P2314]: https://wg21.link/p2314
 [P2297]: https://wg21.link/p2297
