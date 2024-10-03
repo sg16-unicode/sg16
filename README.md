@@ -163,7 +163,7 @@ WG21 Number   | Title/Notes/Links
 
 WG14 Number   | Title/Notes/Links
 ------------- | -----
-[N3265][]     | Restartable and Non-Restartable Functions for Efficient Character Conversions, r12<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902], [N2966 (R7)][N2966], [N2999 (R8)][N2999], [N3031 (R9)][N3031], [N3075 (R10)][N3075], [N3095 (R11)][N3095])
+[N3366][]     | Restartable Functions for Efficient Character Conversions, r13<br/>(Previously [N2431 (R0)][N2431], [N2440 (R1)][N2440], [N2500 (R2)][N2500], [N2595 (R3)][N2595], [N2620 (R4)][N2620], [N2730 (R5)][N2730], [N2902 (R6)][N2902], [N2966 (R7)][N2966], [N2999 (R8)][N2999], [N3031 (R9)][N3031], [N3075 (R10)][N3075], [N3095 (R11)][N3095], [N3265 (R12)][N3265])
 [N3145][]     | $ in Identifiers v2<br/>(Previously [N3046 (R0)][N3046])
 [N3124][]     | Aligning Universal Character Names Constraints with C++
 [N3095][]     | 
@@ -194,13 +194,14 @@ WG14 Number   | Title/Notes/Links
 
 WG14 Number   | Title/Notes/Links
 ------------- | -----
-~~[N3095][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r11~~<br/>(Superseded by [N3265][])
-~~[N3075][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r10~~<br/>(Superseded by [N3095][])
+~~[N3265][]~~ | ~~Restartable Functions for Efficient Character Conversions \| r12~~<br/>(Superseded by [N3366][])
+~~[N3095][]~~ | ~~Restartable Functions for Efficient Character Conversions \| r11~~<br/>(Superseded by [N3265][])
+~~[N3075][]~~ | ~~Restartable Functions for Efficient Character Conversions \| r10~~<br/>(Superseded by [N3095][])
 ~~[N3046][]~~ | ~~$ in Identifiers~~<br/>(Superseded by [N3145][])
-~~[N3031][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r9~~<br/>(Superseded by [N3075][])
-~~[N2999][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r8~~<br/>(Superseded by [N3031][])
+~~[N3031][]~~ | ~~Restartable Functions for Efficient Character Conversions \| r9~~<br/>(Superseded by [N3075][])
+~~[N2999][]~~ | ~~Restartable for Efficient Character Conversions \| r8~~<br/>(Superseded by [N3031][])
 ~~[N2983][]~~ | ~~Unicode Length Modifiers v2~~<br/>(Superseded by [N3016][])
-~~[N2966][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r7~~<br/>(Superseded by [N2999][])
+~~[N2966][]~~ | ~~Restartable Functions for Efficient Character Conversions \| r7~~<br/>(Superseded by [N2999][])
 ~~[N2916][]~~ | ~~C Identifier Security using Unicode Standard Annex 39~~<br/>Superseded by [N2932][])
 ~~[N2902][]~~ | ~~Restartable and Non-Restartable Functions for Efficient Character Conversions \| r6~~<br/>(Superseded by [N2966][])
 ~~[N2875][]~~ | ~~Unicode Length Modifiers~~<br/>(Superseded by [N2983][])
@@ -222,6 +223,7 @@ WG14 Number   | Title/Notes/Links
 [WG2-N5168]: https://www.unicode.org/wg2/docs/n5168R1-ISO10646.pdf
 [WG2-N5174]: https://www.unicode.org/wg2/docs/n5174-namesaliases.pdf
 [WG2-N5175]: https://www.unicode.org/wg2/docs/n5175-cdam1.2-repertoire-update.pdf
+[N3366]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3366.htm
 [N3265]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3265.htm
 [N3145]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3145.pdf
 [N3124]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3124.pdf
