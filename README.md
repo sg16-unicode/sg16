@@ -54,6 +54,17 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+[P3733][]     | More named universal character escapes
+[P3717][]     | Update Annex E onto Unicode 16
+[P3695][]     | Deprecate implicit conversions between Unicode character types
+[P3688][]     | ASCII character utilities
+[P3681][]     | char_traits: Stop the bleeding
+[P3677][]     | Preserving LC_CTYPE at program start for UTF-8 locales
+[P3672][]     | On Windows, Systems APIs, Text Encodings, and Pragmatism
+[P3671][]     | Clarifying the interaction of the literal and execution encodings
+[P3658][]     | Adjust identifier following new Unicode recommendations
+[P3556][]     | Input files are source files
+[P3395][]     | Formatting of std::error_code
 [P3374][]     | Adding formatter for fpos<mbstate_t>
 [P3364][]     | Remove Deprecated u8path overloads From C++26
 [P3263][]     | Encoding annotated char
@@ -260,6 +271,17 @@ WG14 Number   | Title/Notes/Links
 [N2418]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2418.pdf
 [N2231]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2231.htm
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
+[P3733]: https://wg21.link/p3733
+[P3717]: https://wg21.link/p3717
+[P3695]: https://wg21.link/p3695
+[P3688]: https://wg21.link/p3688
+[P3681]: https://wg21.link/p3681
+[P3677]: https://wg21.link/p3677
+[P3672]: https://wg21.link/p3672
+[P3671]: https://wg21.link/p3671
+[P3658]: https://wg21.link/p3658
+[P3556]: https://wg21.link/p3556
+[P3395]: https://wg21.link/p3395
 [P3374]: https://wg21.link/p3374
 [P3364]: https://wg21.link/p3364
 [P3263]: https://wg21.link/p3263
