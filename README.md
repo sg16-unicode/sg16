@@ -63,13 +63,18 @@ WG21 Number   | Title/Notes/Links
 [P3672][]     | On Windows, Systems APIs, Text Encodings, and Pragmatism
 [P3671][]     | Clarifying the interaction of the literal and execution encodings
 [P3658][]     | Adjust identifier following new Unicode recommendations
+[P3657][]     | A Grammar for Whitespace Characters
+[P3655][]     | std::zstring_view
 [P3556][]     | Input files are source files
+[P3474][]     | std::arguments
+[P3412][]     | String interpolation
 [P3395][]     | Formatting of std::error_code
 [P3374][]     | Adding formatter for fpos<mbstate_t>
 [P3364][]     | Remove Deprecated u8path overloads From C++26
 [P3263][]     | Encoding annotated char
 [P3258][]     | Formatting of charN_t
 [P3154][]     | Deprecating signed character types in iostreams
+[P3094][]     | std::basic_fixed_string
 [P3070][]     | Formatting enums
 [P2873][]     | Remove Deprecated Locale Category Facets For Unicode from C++26
 [P2758][]     | Emitting messages at compile time
@@ -280,13 +285,18 @@ WG14 Number   | Title/Notes/Links
 [P3672]: https://wg21.link/p3672
 [P3671]: https://wg21.link/p3671
 [P3658]: https://wg21.link/p3658
+[P3657]: https://wg21.link/p3657
+[P3655]: https://wg21.link/p3655
 [P3556]: https://wg21.link/p3556
+[P3474]: https://wg21.link/p3474
+[P3412]: https://wg21.link/p3412
 [P3395]: https://wg21.link/p3395
 [P3374]: https://wg21.link/p3374
 [P3364]: https://wg21.link/p3364
 [P3263]: https://wg21.link/p3263
 [P3258]: https://wg21.link/p3258
 [P3154]: https://wg21.link/p3154
+[P3094]: https://wg21.link/p3094
 [P3070]: https://wg21.link/p3070
 [P2909]: https://wg21.link/p2909
 [P2873]: https://wg21.link/p2873
