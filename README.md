@@ -56,6 +56,8 @@ WG21 Number   | Title/Notes/Links
 ------------- | -----
 [P3733][]     | More named universal character escapes
 [P3717][]     | Update Annex E onto Unicode 16
+[P3711][]     | Safer StringViewLike Functions for Replacing char* strings
+[P3710][]     | zstring_view: a string_view with guaranteed null termination
 [P3695][]     | Deprecate implicit conversions between Unicode character types
 [P3688][]     | ASCII character utilities
 [P3681][]     | char_traits: Stop the bleeding
@@ -65,6 +67,7 @@ WG21 Number   | Title/Notes/Links
 [P3658][]     | Adjust identifier following new Unicode recommendations
 [P3657][]     | A Grammar for Whitespace Characters
 [P3655][]     | std::zstring_view
+[P3566][]     | You shall not pass `char*` - Safety concerns working with unbounded null-terminated strings
 [P3556][]     | Input files are source files
 [P3474][]     | std::arguments
 [P3412][]     | String interpolation
@@ -278,6 +281,8 @@ WG14 Number   | Title/Notes/Links
 [N2198]: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2198.pdf
 [P3733]: https://wg21.link/p3733
 [P3717]: https://wg21.link/p3717
+[P3711]: https://wg21.link/p3711
+[P3710]: https://wg21.link/p3710
 [P3695]: https://wg21.link/p3695
 [P3688]: https://wg21.link/p3688
 [P3681]: https://wg21.link/p3681
@@ -287,6 +292,7 @@ WG14 Number   | Title/Notes/Links
 [P3658]: https://wg21.link/p3658
 [P3657]: https://wg21.link/p3657
 [P3655]: https://wg21.link/p3655
+[P3566]: https://wg21.link/p3566
 [P3556]: https://wg21.link/p3556
 [P3474]: https://wg21.link/p3474
 [P3412]: https://wg21.link/p3412
