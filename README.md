@@ -57,7 +57,6 @@ WG21 Number   | Title/Notes/Links
 [P3733][]     | More named universal character escapes
 [P3717][]     | Update Annex E onto Unicode 16
 [P3711][]     | Safer StringViewLike Functions for Replacing char* strings
-[P3710][]     | zstring_view: a string_view with guaranteed null termination
 [P3695][]     | Deprecate implicit conversions between Unicode character types
 [P3688][]     | ASCII character utilities
 [P3681][]     | char_traits: Stop the bleeding
@@ -159,6 +158,7 @@ The following papers are no longer being pursued.
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
+~~[P3710][]~~ | ~~zstring_view: a string_view with guaranteed null termination~~<br/>(The authors of this paper have agreed to merge their efforts with the authors of [P3655][])
 ~~[P2773][]~~ | ~~Considerations for Unicode algorithms~~<br/>(This is an informational paper and was reviewed by SG16 in February and March of 2023)
 ~~[P2498][]~~ | ~~Forward compatibility of text\_encoding with additional encoding registries~~<br/>(Dropped by the author following lack of consensus for a change in LEWG)
 ~~[P2491][]~~ | ~~Text encodings follow-up~~<br/>(The concerns raised in this paper were avoided by changes made in R10 of [P1885][])
