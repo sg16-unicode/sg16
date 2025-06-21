@@ -86,7 +86,6 @@ WG21 Number   | Title/Notes/Links
 [P2626][]     | charN\_t incremental adoption: Casting pointers of UTF character types
 [P2528][]     | C++ Identifier Security using Unicode Standard Annex 39
 [P2348][]     | Whitespaces Wording Revamp
-[P2319][]     | Prevent path presentation problems
 [P1953][]     | Unicode Identifiers And Reflection
 [P1729][]     | Text Parsing
 [P1629][]     | Standard Text Encoding
@@ -105,6 +104,7 @@ WG21 Number   | Title/Notes/Links
 [P2741][]     | user-generated static_assert messages
 [P2558][]     | Add @, $, and \` to the basic character set
 [P2361][]     | Unevaluated strings literals
+[P2319][]     | Prevent path presentation problems
 [P1885][]     | Naming Text Encodings to Demystify Them
 [P1854][]     | Conversion to execution encoding should not lead to loss of meaning
 
