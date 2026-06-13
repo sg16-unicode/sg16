@@ -54,7 +54,6 @@ WG21 Number   | Title/Notes/Links
 
 WG21 Number   | Title/Notes/Links
 ------------- | -----
-[P3733][]     | More named universal character escapes
 [P3717][]     | Update Annex E onto Unicode 16
 [P3711][]     | Safer StringViewLike Functions for Replacing char* strings
 [P3695][]     | Deprecate implicit conversions between Unicode character types
@@ -63,19 +62,16 @@ WG21 Number   | Title/Notes/Links
 [P3677][]     | Preserving LC_CTYPE at program start for UTF-8 locales
 [P3672][]     | On Windows, Systems APIs, Text Encodings, and Pragmatism
 [P3671][]     | Clarifying the interaction of the literal and execution encodings
-[P3658][]     | Adjust identifier following new Unicode recommendations
 [P3657][]     | A Grammar for Whitespace Characters
 [P3655][]     | std::zstring_view
 [P3566][]     | You shall not pass `char*` - Safety concerns working with unbounded null-terminated strings
 [P3556][]     | Input files are source files
 [P3474][]     | std::arguments
 [P3412][]     | String interpolation
-[P3395][]     | Formatting of std::error_code
 [P3374][]     | Adding formatter for fpos<mbstate_t>
 [P3364][]     | Remove Deprecated u8path overloads From C++26
 [P3263][]     | Encoding annotated char
 [P3258][]     | Formatting of charN_t
-[P3154][]     | Deprecating signed character types in iostreams
 [P3094][]     | std::basic_fixed_string
 [P3070][]     | Formatting enums
 [P2873][]     | Remove Deprecated Locale Category Facets For Unicode from C++26
@@ -92,6 +88,15 @@ WG21 Number   | Title/Notes/Links
 [P1628][]     | Unicode character properties
 [P1030][]     | std::filesystem::path_view
 [P0244][]     | Text\_view: A C++ concepts and range based character encoding and code point enumeration library
+
+## Accepted C++29 Papers
+
+WG21 Number   | Title/Notes/Links
+------------- | -----
+[P3658][]     | Adjust *identifier* following new Unicode recommendations
+[P3733][]     | More named universal character escapes
+[P3395][]     | Formatting of std::error_code
+[P3154][]     | Deprecating signed character types in iostreams
 
 ## Accepted C++26 Papers
 
